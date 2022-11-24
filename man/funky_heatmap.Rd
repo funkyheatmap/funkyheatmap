@@ -19,7 +19,7 @@ funky_heatmap(
 )
 }
 \arguments{
-\item{data}{data}
+\item{data}{A data frame with methods by row, metrics by columns. First column must be a column named \code{id}.}
 
 \item{column_info}{A data frame describing the columns of \code{data}. This data frame should contain the following columns:
 \itemize{
@@ -41,7 +41,7 @@ funky_heatmap(
 
 \item{row_info}{A data frame describing the rows of \code{data}. This data should contain the following columns:`
 \itemize{
-\item \code{id} (\code{character}): The corresponding row name in \code{data}.
+\item \code{id} (\code{character}): Corresponds to the column \code{data$id}.
 \item \code{group} (\code{character}): The group of the row. If all are \code{NA}, the rows will not be split up into groups.
 }}
 
@@ -62,5 +62,5 @@ funky_heatmap(
 \item{removed_methods}{Which methods to not show in the rows}
 }
 \description{
-TODO: params need to be described
+TODO: params need to be described better
 }
