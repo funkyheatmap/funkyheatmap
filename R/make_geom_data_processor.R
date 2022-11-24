@@ -64,7 +64,7 @@ make_geom_data_processor <- function(data, column_pos, row_pos, scale_column, pa
       if (!is.na(column_sel$palette)) {
         palette_sel <- palette_list[[column_sel$palette]]
         
-        if (is.character(dat$value)) {
+        if (is.character(dat$value) | is.factor(dat$value)) {
           dat <- dat %>% mutate(col_value = value)
         } else if (is.numeric(dat$value)) {
           dat <- dat %>% mutate(col_value = round(value * (length(palette_sel) - 1)) + 1)

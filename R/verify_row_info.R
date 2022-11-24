@@ -31,7 +31,7 @@ verify_row_info <- function(row_info, data) {
   assert_that(
     is.data.frame(row_info),
     row_info %has_name% "id",
-    is.character(row_info$id)
+    is.character(row_info$id) | is.factor(row_info$id)
   )
 
   # checking group
@@ -40,7 +40,7 @@ verify_row_info <- function(row_info, data) {
     row_info$group <- NA_character_
   }
   assert_that(
-    is.character(row_info$group)
+    is.character(row_info$group) | is.factor(row_info$group)
   )
 
   row_info
