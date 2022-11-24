@@ -3,12 +3,14 @@
 #' @param data A data frame with items by row and features in the columns.
 #' Must contain one column named `"id"`.
 #'
-#' @param column_info A data frame describing of which columns in `data` to
+#' @param column_info A data frame describing which columns in `data` to
 #' plot. This data frame should contain the following columns:
 #'
 #' * `id` (`character`): The corresponding column name in `data`.
-#' * `name` (`character`): A label for the column.
-#'   If `NA` or `""`, no label will be plotted.
+#' 
+#' * `name` (`character`): A label for the column. If `NA` or `""`,
+#'   no label will be plotted. If this column is missing, `id` will
+#'   be used to generate the `name` column.
 #'
 #' * `geom` (`character`): The geom of the column. Must be one of:
 #'   `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, or `"text"`.
@@ -17,8 +19,8 @@
 #'   For all other geoms, the column must be a `numeric`.
 #'
 #' * `group` (`character`): The grouping id of each column, must match with
-#'   `column_groups$group`. If all values are `NA`, the columns will not be
-#'   split up into groups.
+#'   `column_groups$group`. If this column is missing or all values are `NA`,
+#'   columns are assumed not to be grouped.
 #'
 #' * `palette` (`character`): Which palette to colour the geom by.
 #'   Each value should have a matching value in `palettes$palette`.
@@ -38,8 +40,29 @@
 #' This data should contain two columns:
 #'
 #' * `id` (`character`): Corresponds to the column `data$id`.
+#' 
 #' * `group` (`character`): The group of the row.
 #'   If all are `NA`, the rows will not be split up into groups.
+#'
+#' @param column_groups A data frame describing of how to group the columns
+#' in `column_info`. Can consist of the following columns:
+#'
+#' * `group` (`character`): The corresponding group in `column_info$group`.
+#' * `palette` (`character`, optional): The palette used to colour the
+#'   column group backgrounds.
+#' * `level1` (`character`): The label at the highest level.
+#' * `level2` (`character`, optional): The label at the middle level.
+#' * `level3` (`character`, optional): The label at the lowest level
+#'   (not recommended).
+#'
+#' @param row_groups A data frame describing of how to group the rows
+#' in `row_info`. Can consist of the following columns:
+#'
+#' * `group` (`character`): The corresponding group in `row_info$group`.
+#' * `level1` (`character`): The label at the highest level.
+#' * `level2` (`character`, optional): The label at the middle level.
+#' * `level3` (`character`, optional): The label at the lowest level
+#'   (not recommended).
 #'
 #' @param palettes A named list of palettes. Each entry in `column_info$palette`
 #' should have an entry in this object. If an entry is missing, the type
@@ -50,18 +73,17 @@
 #' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
 #' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
 #'
-#' @param column_groups b
 #'
-#' @param row_groups d
+#' @param scale_column Whether or not to apply min-max scaling to each
+#' numerical column.
 #' 
+#' @param add_abc Whether or not to add subfigure labels to the different
+#' columns groups.
 #' 
-#' * Additional columns (`character`) are plotted at the top of the plot.
-#' 
-#' @param scale_column f
-#' @param add_abc Whether or not to add subfigure labels to the different columns groups.
 #' @param col_annot_offset How much the column annotation will be offset by.
 #' @param row_annot_offset How much the column annotation will be offset by.
-#' @param removed_methods Which methods to not show in the rows
+#' @param removed_entries Which methods to not show in the rows. Missing methods
+#' are replaced by a "Not shown" label.
 #'
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
@@ -69,22 +91,24 @@
 #' @export
 funky_heatmap <- function(
   data,
-  column_info,
-  row_info,
-  palettes,
+  column_info = NULL,
+  row_info = NULL,
   column_groups = NULL,
   row_groups = NULL,
+  palettes = NULL,
   scale_column = TRUE,
   add_abc = TRUE,
   col_annot_offset = 3,
   row_annot_offset = .5,
-  removed_methods = NULL
+  removed_entries = NULL
 ) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
   row_info <- verify_row_info(row_info, data)
-  palettes <- verify_palettes(palettes, column_info, data)
+  column_groups <- verify_column_groups(column_groups, column_info)
+  row_groups <- verify_row_groups(row_groups, row_info)
+  palettes <- verify_palettes(palettes, column_info, data) # todo: add column groups
   
   # no point in making these into parameters
   row_height <- 1
@@ -103,20 +127,12 @@ funky_heatmap <- function(
     plot_row_annotation <- TRUE
   }
 
-  row_pos <-
-    row_info %>%
-    group_by(group) %>%
-    mutate(group_i = row_number()) %>%
-    ungroup() %>%
-    mutate(
-      row_i = row_number(),
-      colour_background = group_i %% 2 == 1,
-      do_spacing = c(FALSE, diff(as.integer(factor(group))) != 0),
-      ysep = ifelse(do_spacing, row_height + 2 * row_space, row_space),
-      y = - (row_i * row_height + cumsum(ysep)),
-      ymin = y - row_height / 2,
-      ymax = y + row_height / 2
-    )
+  row_pos <- calculate_row_positions(
+    row_info,
+    row_height = row_height,
+    row_space = row_space,
+    row_bigspace = row_bigspace
+  )
 
   # DETERMINE COLUMN POSITIONS
   if (!"group" %in% colnames(column_info) || all(is.na(column_info$group))) {
@@ -126,29 +142,18 @@ funky_heatmap <- function(
     plot_column_annotation <- TRUE
   }
 
+  # todo: could this be moved into verify_column_info?
   column_info <-
     column_info %>%
     process_geom_params() %>%
     add_column_if_missing(width = col_width, overlay = FALSE, legend = TRUE)
 
-  column_pos <-
-    column_info %>%
-    mutate(
-      do_spacing = c(FALSE, diff(as.integer(factor(group))) != 0),
-      xsep = case_when(
-        overlay ~ c(0, -head(width, -1)),
-        do_spacing ~ col_bigspace,
-        TRUE ~ col_space
-      ),
-      xwidth = case_when(
-        overlay & width < 0 ~ width - xsep,
-        overlay ~ -xsep,
-        TRUE ~ width
-      ),
-      xmax = cumsum(xwidth + xsep),
-      xmin = xmax - xwidth,
-      x = xmin + xwidth / 2
-    )
+  column_pos <- calculate_column_positions(
+    column_info,
+    col_widths = col_widths,
+    col_space = col_space,
+    col_bigspace = col_bigspace
+  )
 
   # FIGURE OUT PALETTES
   palette_assignment <-
@@ -156,12 +161,16 @@ funky_heatmap <- function(
     filter(!is.na(palette)) %>%
     select(id, palette)
 
-  palette_list <- palettes
-
   ####################################
   ###         PROCESS DATA         ###
   ####################################
-  geom_data_processor <- make_geom_data_processor(data, column_pos, row_pos, scale_column, palette_list)
+  geom_data_processor <- make_geom_data_processor(
+    data,
+    column_pos,
+    row_pos,
+    scale_column,
+    palettes
+  )
 
   # gather segment data
   segment_data <- NULL # placeholder for if this ever gets used
@@ -310,7 +319,9 @@ funky_heatmap <- function(
       ungroup() %>%
       left_join(level_heights, by = "level") %>%
       filter(!is.na(name), grepl("[A-Za-z]", name)) %>%
-      mutate(colour = palette_list$column_annotation[palette])
+      # mutate(colour = palettes$column_annotation[palette])
+      mutate(colour = map_chr(palettes, function(x) x[round(length(x)/2)])[palette])
+      # todo: change colour depending on level height?
 
     rect_data <- rect_data %>% bind_rows(
       column_annotation %>%
@@ -380,7 +391,7 @@ funky_heatmap <- function(
     rel_cols <- column_pos %>% filter(geom == "pie") %>% arrange(x) %>% group_by(palette) %>% slice(1) %>% ungroup()
 
     for (i in seq_len(nrow(rel_cols))) {
-      palette <- palette_list[[rel_cols$palette[[i]]]]
+      palette <- palettes[[rel_cols$palette[[i]]]]
 
       pie_minimum_x <- rel_cols$xmin[[i]]
 
@@ -472,16 +483,27 @@ funky_heatmap <- function(
 
     fr_maximum_x <- max(fr_legend_dat2$xmax)
 
+    # use grey palette for generic funkyrect legend
+    grey_palette <- default_palettes$numerical$Greys
     fr_poly_data2 <-
       transmute(fr_legend_dat2, xmin = x - fr_legend_size / 2, xmax = x + fr_legend_size / 2, ymin = y - fr_legend_size / 2, ymax = y + fr_legend_size / 2, value) %>%
       pmap_df(score_to_funky_rectangle, midpoint = .8) %>%
       mutate(
-        col_value = round(value * (length(palette_list$overall) - 1)) + 1,
-        colour = ifelse(is.na(col_value), "#444444FF", palette_list$overall[col_value])
+        col_value = round(value * (length(grey_palette) - 1)) + 1,
+        colour = ifelse(is.na(col_value), "#444444FF", grey_palette[col_value])
       )
 
     fr_title_data <-
-      tibble(xmin = fr_minimum_x, xmax = fr_maximum_x, ymin = legend_pos - 1.5, ymax = legend_pos - .5, label_value = "Score", hjust = 0, vjust = 1, fontface = "bold")
+      tibble(
+        xmin = fr_minimum_x,
+        xmax = fr_maximum_x,
+        ymin = legend_pos - 1.5,
+        ymax = legend_pos - .5,
+        label_value = "Score",
+        hjust = 0,
+        vjust = 1,
+        fontface = "bold"
+      )
 
     fr_value_data <-
       fr_legend_dat2 %>% filter(value %% .2 == 0) %>% transmute(
@@ -531,15 +553,15 @@ funky_heatmap <- function(
     )
   }
 
-  if (!is.null(removed_methods)) {
+  if (!is.null(removed_entries)) {
     # rm_min_x <- column_pos %>% filter(!group %in% c("method_characteristic", "inferrable_trajtype", "benchmark_metric", "benchmark_source")) %>% slice(1) %>% pull(xmin)
     rm_min_x <- 20
 
     num_cols <- 2
-    num_rows <- ceiling(length(removed_methods) / num_cols)
+    num_rows <- ceiling(length(removed_entries) / num_cols)
 
     rm_lab_df <-
-      tibble(label_value = removed_methods) %>%
+      tibble(label_value = removed_entries) %>%
       mutate(
         row = (row_number() - 1) %% num_rows,
         col = ceiling(row_number()  / num_rows) - 1,
@@ -707,7 +729,7 @@ funky_heatmap <- function(
   # ADD SIZE
   # reserve a bit more room for text that wants to go outside the frame
   # minimum_x <- minimum_x - 2
-  if ("qc_cat_documentation" %in% column_info$id) maximum_x <- maximum_x + 2
+  # maximum_x <- maximum_x + 2
   # minimum_y <- minimum_y - 2
   # maximum_y <- maximum_y + 2
 
