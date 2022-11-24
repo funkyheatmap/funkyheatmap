@@ -22,3 +22,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 LazyData: true
+URL: https://rcannood.github.io/funkyheatmap/
