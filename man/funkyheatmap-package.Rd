@@ -8,6 +8,13 @@
 \description{
 A visualization library for generating benchmarking heatmaps.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rcannood.github.io/funkyheatmap/}
+}
+
+}
 \author{
 \strong{Maintainer}: Robrecht Cannoodt \email{rcannood@gmail.com}
 
