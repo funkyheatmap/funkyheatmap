@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 Load data
 ```{r load-data}
 library(funkyheatmap)
-library(dplyr)
-library(purrr)
-library(tibble)
+library(dplyr, quietly = TRUE)
+library(tibble, quietly = TRUE)
+library(purrr, quietly = TRUE)
 
 data("dynbenchmark_data")
 
