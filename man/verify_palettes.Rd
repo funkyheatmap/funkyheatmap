@@ -82,8 +82,8 @@ verify_palettes(palettes, column_info, data)
 
 # implicit palettes
 palettes <- list(
-  pal1 = "Grays",
-  pal2 = "Reds")
+  pal1 = "Greys",
+  pal2 = "Reds"
 )
 verify_palettes(palettes, column_info, data)
 
