@@ -7,6 +7,8 @@
 \title{funkyheatmap: Generating funky heatmaps for benchmarks}
 \description{
 A visualization library for generating benchmarking heatmaps.
+
+This package heavily depends on the functions provided by \href{https://ggplot2.tidyverse.org/}{\code{ggplot2}} and \href{https://ggforce.data-imaginist.com}{\code{ggforce}}.
 }
 \seealso{
 Useful links:

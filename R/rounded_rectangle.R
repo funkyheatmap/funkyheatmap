@@ -1,5 +1,5 @@
 
-rounded_rectangle <- function(xmin, xmax, ymin, ymax, corner_size) {
+funkyrect_rectangle <- function(xmin, xmax, ymin, ymax, corner_size) {
   # rename for ease of use
   cs <- corner_size
   
