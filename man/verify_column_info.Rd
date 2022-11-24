@@ -57,8 +57,8 @@ data <- tribble(
 column_info <- tribble(
   ~id, ~geom,
   "name", "text",
-  "foo", "funkyrect",
-  "bar", "funkyrect"
+  "x", "funkyrect",
+  "y", "funkyrect"
 )
 verify_column_info(column_info, data)
 }

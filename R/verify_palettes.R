@@ -50,8 +50,8 @@ default_palettes <- list(
 #'
 #' # implicit palettes
 #' palettes <- list(
-#'   pal1 = "Grays",
-#'   pal2 = "Reds")
+#'   pal1 = "Greys",
+#'   pal2 = "Reds"
 #' )
 #' verify_palettes(palettes, column_info, data)
 #'
@@ -115,9 +115,9 @@ verify_palettes <- function(palettes, column_info, data) {
 
     pal_value <- palettes[[palette_id]]
     if (length(pal_value) == 1) {
-      if (pal_value %in% default_palettes$numerical) {
+      if (default_palettes$numerical %has_name% pal_value) {
         pal_value <- default_palettes$numerical[[pal_value]]
-      } else if (pal_value %in% default_palettes$categorical) {
+      } else if (default_palettes$categorical %has_name% pal_value) {
         pal_value <- default_palettes$categorical[[pal_value]]
       }
     }
