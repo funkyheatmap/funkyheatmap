@@ -12,16 +12,19 @@ RoxygenNote: 7.2.1
 Imports:
     cowplot,
     dplyr,
+    dynutils,
     ggforce,
     ggplot2,
     glue,
+    purrr,
     rlang,
     stringr,
     tibble,
     tidyr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    RColorBrewer
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
