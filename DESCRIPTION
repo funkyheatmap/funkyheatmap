@@ -1,6 +1,6 @@
 Package: funkyheatmap
 Title: Generating funky heatmaps for benchmarks
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
   person("Robrecht", "Cannoodt", email="rcannood@gmail.com", role=c("cre", "aut")),
   person("Wouter", "Saelens", email="wouter.saelens@gmail.com", role="aut"))
