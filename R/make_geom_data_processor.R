@@ -34,7 +34,8 @@ make_geom_data_processor <- function(data, column_pos, row_pos, scale_column, pa
       if (nrow(labelcolumn_sel) > 0) {
         label_sel <-
           data %>%
-          select(row_id = id, !!labelcolumn_sel$label) %>%
+          mutate(row_id = id) %>%
+          select(row_id, !!labelcolumn_sel$label) %>%
           gather(label_column, label_value, -row_id) %>%
           left_join(labelcolumn_sel %>% select(label_column = label, column_id), by = "label_column") %>%
           select(-label_column)

@@ -1,0 +1,95 @@
+---
+title: "dynbenchmark"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dynbenchmark}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+# rerun this to update tribble formatting:
+# dynbenchmark::reformat_tribbles("vignettes/smol.Rmd")
+```
+
+Load data
+```{r load-data}
+library(funkyheatmap)
+library(dplyr, quietly = TRUE)
+library(tibble, quietly = TRUE)
+library(purrr, quietly = TRUE)
+
+data("mtcars")
+
+data <- mtcars %>% 
+  rownames_to_column("id") %>% 
+  mutate(group = "test", name = id)
+```
+
+Determine method grouping
+```{r method-grouping}
+row_info <- data %>% select(group, id)
+row_groups <- tibble(Group = "Test", group = "test")
+```
+
+Define column info
+```{r column-info}
+column_info <- tribble( # tribble_start
+  ~group,         ~id,     ~name,                                       ~geom,        ~palette,    ~options,
+  "method_info",  "name",  "",                                          "text",       NA,          list(hjust = 0, width = 10),
+  "overall",      "mpg",   "Miles / gallon",                            "bar",        "palette1",  list(width = 4, legend = FALSE),
+  "overall",      "cyl",   "Number of cylinders",                       "bar",        "palette2",  list(width = 4, legend = FALSE),
+  "group1",       "disp",  "Displacement (cu.in.)",                     "funkyrect",  "palette1",  lst(),
+  "group1",       "hp",    "Gross horsepower",                          "funkyrect",  "palette1",  lst(),
+  "group1",       "drat",  "Rear axle ratio",                           "funkyrect",  "palette1",  lst(),
+  "group1",       "wt",    "Weight (1000 lbs)",                         "funkyrect",  "palette1",  lst(),
+  "group2",       "qsec",  "1/4 mile time",                             "funkyrect",  "palette2",  lst(),
+  "group2",       "vs",    "Engine (0 = V-shaped, 1 = straight)",       "funkyrect",  "palette2",  lst(),
+  "group2",       "am",    "Transmission (0 = automatic, 1 = manual)",  "funkyrect",  "palette2",  lst(),
+  "group2",       "gear",  "Number of forward gears",                   "funkyrect",  "palette2",  lst(),
+  "group2",       "carb",  "Number of carburetors",                     "funkyrect",  "palette2",  lst()
+) # tribble_end
+```
+
+Define column groups
+```{r column-groups}
+column_groups <- tribble( # tribble_start
+  ~Category,  ~group,         ~palette,
+  "\n",       "method_info",  "overall",
+  "Overall",  "overall",      "overall",
+  "Group 1",  "group1",       "palette1",
+  "Group 2",  "group2",       "palette2"
+) # tribble_end
+```
+
+Determine palettes
+```{r column-grouping}
+palettes <- tribble(
+  ~palette,             ~colours,
+  "overall",            grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Greys")[-1]))(101),
+  "palette1",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Blues") %>% c("#011636")))(101),
+  "palette2",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Reds")[-8:-9]))(101),
+  "column_annotation",  c(overall = "#555555", group1 = "#4292c6", group2 = "#f6483a")
+)
+```
+
+Generate funky heatmap
+```{r make-plot, fig.width=22, fig.height=18}
+g <- funky_heatmap(
+  data = data,
+  column_info = column_info,
+  column_groups = column_groups,
+  row_info = row_info,
+  row_groups = row_groups,
+  palettes = palettes
+)
+
+g
+```
+
