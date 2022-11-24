@@ -196,9 +196,9 @@ funky_heatmap <- function(
         r = row_height / 2,
         value = name
       ) %>%
-      filter(rad_end != rad_start) %>%
+      filter(rad_end != rad_start, 1e-10 <= pct) %>%
       ungroup()
-  }) %>% filter(1e-10 <= pct)
+  })
 
   # would be better to have a generic solution for this
   # # hidden feature trajectory plots
