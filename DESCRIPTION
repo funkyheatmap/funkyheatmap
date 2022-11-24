@@ -1,0 +1,24 @@
+Package: funkyheatmap
+Title: Generating funky heatmaps for benchmarks
+Version: 0.0.0.9000
+Authors@R: c(
+  person("Robrecht", "Cannoodt", email="rcannood@gmail.com", role=c("cre", "aut")),
+  person("Wouter", "Saelens", email="wouter.saelens@gmail.com", role="aut"))
+Description: A visualization library for generating benchmarking heatmaps.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    cli,
+    glue,
+    lifecycle,
+    rlang,
+    withr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+LazyData: true
