@@ -7,20 +7,21 @@
 verify_column_info(column_info, data)
 }
 \arguments{
-\item{column_info}{A data frame describing of which columns in \code{data} to
+\item{column_info}{A data frame describing which columns in \code{data} to
 plot. This data frame should contain the following columns:
 \itemize{
 \item \code{id} (\code{character}): The corresponding column name in \code{data}.
-\item \code{name} (\code{character}): A label for the column.
-If \code{NA} or \code{""}, no label will be plotted.
+\item \code{name} (\code{character}): A label for the column. If \code{NA} or \code{""},
+no label will be plotted. If this column is missing, \code{id} will
+be used to generate the \code{name} column.
 \item \code{geom} (\code{character}): The geom of the column. Must be one of:
 \code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, or \code{"text"}.
 For \code{"text"}, the corresponding column in \code{data} must be a \code{character}.
 For \code{"pie"}, the column must be a list of named numeric vectors.
 For all other geoms, the column must be a \code{numeric}.
 \item \code{group} (\code{character}): The grouping id of each column, must match with
-\code{column_groups$group}. If all values are \code{NA}, the columns will not be
-split up into groups.
+\code{column_groups$group}. If this column is missing or all values are \code{NA},
+columns are assumed not to be grouped.
 \item \code{palette} (\code{character}): Which palette to colour the geom by.
 Each value should have a matching value in \code{palettes$palette}.
 \item \code{options} (\code{list}): Column specific options. The content of the list
