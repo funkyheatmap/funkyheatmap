@@ -3,8 +3,8 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   dynbenchmark: dynbenchmark.html
-  smol: smol.html
-last_built: 2022-11-24T15:13Z
+  mtcars: mtcars.html
+last_built: 2022-11-24T15:19Z
 urls:
   reference: https://rcannood.github.io/funkyheatmap/reference
   article: https://rcannood.github.io/funkyheatmap/articles
