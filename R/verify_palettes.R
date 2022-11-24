@@ -22,6 +22,8 @@ default_palettes <- list(
 #' @inheritParams funky_heatmap
 #'
 #' @returns The palettes object with all expected columns.
+#' 
+#' @export
 #'
 #' @examples
 #' library(tibble)
@@ -61,6 +63,7 @@ default_palettes <- list(
 #' )
 #' verify_palettes(palettes, column_info, data)
 verify_palettes <- function(palettes, column_info, data) {
+  # todo: should also check for palettes in column_groups
   if (is.null(palettes)) {
     cli_alert_info("No palettes were provided, trying to automatically assign palettes.")
     palettes <- list()

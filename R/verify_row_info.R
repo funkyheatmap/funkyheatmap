@@ -4,6 +4,8 @@
 #'
 #' @returns The row info object with all expected columns.
 #' 
+#' @export
+#' 
 #' @examples
 #' library(tibble)
 #' data <- tribble(
@@ -26,12 +28,13 @@ verify_row_info <- function(row_info, data) {
 
   if (is.null(row_info)) {
     cli_alert_info("No row info was provided, assuming all rows in `data` are to be plotted.")
-    row_info <- tibble(id = rownames(data))
+    row_info <- tibble(id = data$id)
   }
   assert_that(
     is.data.frame(row_info),
     row_info %has_name% "id",
-    is.character(row_info$id) | is.factor(row_info$id)
+    is.character(row_info$id) | is.factor(row_info$id),
+    all(row_info$id %in% data$id)
   )
 
   # checking group

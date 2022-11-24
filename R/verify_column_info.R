@@ -4,6 +4,8 @@
 #'
 #' @returns The column info object with all expected columns.
 #' 
+#' @export
+#' 
 #' @examples
 #' library(tibble)
 #' data <- tribble(
@@ -26,7 +28,17 @@ verify_column_info <- function(column_info, data) {
   assert_that(
     is.data.frame(column_info),
     column_info %has_name% "id",
-    is.character(column_info$id) | is.factor(column_info$id)
+    is.character(column_info$id) | is.factor(column_info$id),
+    all(column_info$id %in% colnames(data))
+  )
+
+  # checking name
+  if (!column_info %has_name% "name") {
+    cli_alert_info("Column info did not contain column `name`, using `id` to generate it.")
+    column_info$name <- stringr::str_to_title(column_info$id)
+  }
+  assert_that(
+    is.character(column_info$name) | is.factor(column_info$name)
   )
 
   # checking geom
