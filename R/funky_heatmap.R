@@ -1,27 +1,62 @@
 #' Overview heatmap plotting
 #'
-#' TODO: params need to be described better
+#' @param data A data frame with items by row and features in the columns.
+#' Must contain one column named `"id"`.
 #'
-#' @param data A data frame with methods by row, metrics by columns. First column must be a column named `id`.
-#' @param column_info A data frame describing the columns of `data`. This data frame should contain the following columns:
-#'   * `id` (`character`): The corresponding column name in `data`.
-#'   * `name` (`character`): A label for the column. If `NA` or `""`, no label will be plotted.
-#'   * `group` (`character`): The group of the columns. If all are `NA`, the columns will not be split up into groups.
-#'   * `geom` (`character`): The geom of the column. Must be one of: `circle`, `rect`, `bar`, `pie`, or `text`.
-#'   * `palette` (`character`): Which palette to colour the geom by.
-#'   * `options` (`list`): Column specific options. The content of the list will depend on the geom. Options are:
-#'     - `width`: Custom width for this column (default: 1).
-#'     - `overlay`: Whether to overlay this column over the previous column. If so, the width of that column will be inherited.
-#'     - `legend`: Whether or not to add a legend for this column.
-#'     - `hjust`, `vjust`, `size`: see [ggplot2::geom_text].
-#'     - `label` (`geom = "text"`): Which column to use as a label.
-#'     - `hjust` (`geom = "bar"`): Horizontal alignment of the bar, must be between \[0,1\].
-#' @param row_info A data frame describing the rows of `data`. This data should contain the following columns:`
-#'   * `id` (`character`): Corresponds to the column `data$id`.
-#'   * `group` (`character`): The group of the row. If all are `NA`, the rows will not be split up into groups.
-#' @param palettes e
+#' @param column_info A data frame describing of which columns in `data` to
+#' plot. This data frame should contain the following columns:
+#'
+#' * `id` (`character`): The corresponding column name in `data`.
+#' * `name` (`character`): A label for the column.
+#'   If `NA` or `""`, no label will be plotted.
+#'
+#' * `geom` (`character`): The geom of the column. Must be one of:
+#'   `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, or `"text"`.
+#'   For `"text"`, the corresponding column in `data` must be a `character`.
+#'   For `"pie"`, the column must be a list of named numeric vectors.
+#'   For all other geoms, the column must be a `numeric`.
+#'
+#' * `group` (`character`): The grouping id of each column, must match with
+#'   `column_groups$group`. If all values are `NA`, the columns will not be
+#'   split up into groups.
+#'
+#' * `palette` (`character`): Which palette to colour the geom by.
+#'   Each value should have a matching value in `palettes$palette`.
+#'
+#' * `options` (`list`): Column specific options. The content of the list
+#'   will depend on the geom. Options are:
+#'   - `width`: Custom width for this column (default: 1).
+#'   - `overlay`: Whether to overlay this column over the previous column.
+#'     If so, the width of that column will be inherited.
+#'   - `legend`: Whether or not to add a legend for this column.
+#'   - `hjust`, `vjust`, `size`: see [ggplot2::geom_text].
+#'   - `label`: Which column to use as a label (only for `geom = "text"`).
+#'   - `hjust`: Horizontal alignment of the bar, must be between \[0,1\]
+#'     (only for `geom = "bar"`).
+#'
+#' @param row_info A data frame describing the rows of `data`.
+#' This data should contain two columns:
+#'
+#' * `id` (`character`): Corresponds to the column `data$id`.
+#' * `group` (`character`): The group of the row.
+#'   If all are `NA`, the rows will not be split up into groups.
+#'
+#' @param palettes A named list of palettes. Each entry in `column_info$palette`
+#' should have an entry in this object. If an entry is missing, the type
+#' of the column will be inferred (categorical or numerical) and one of the
+#' default palettes will be applied. Alternatively, the name of one of the
+#' standard palette names can be used:
+#'
+#' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
+#' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
+#'
 #' @param column_groups b
+#'
 #' @param row_groups d
+#' 
+#' 
+#' * Additional columns (`character`) are plotted at the top of the plot.
+#' 
 #' @param scale_column f
 #' @param add_abc Whether or not to add subfigure labels to the different columns groups.
 #' @param col_annot_offset How much the column annotation will be offset by.
@@ -45,6 +80,12 @@ funky_heatmap <- function(
   row_annot_offset = .5,
   removed_methods = NULL
 ) {
+  # validate input objects
+  data <- verify_data(data)
+  column_info <- verify_column_info(column_info, data)
+  row_info <- verify_row_info(row_info, data)
+  palettes <- verify_palettes(palettes, column_info, data)
+  
   # no point in making these into parameters
   row_height <- 1
   row_space <- .1

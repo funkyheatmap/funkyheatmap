@@ -13,7 +13,7 @@ score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, value, midpoint = .
       trans <- (value - midpoint) / (1 - midpoint) / 2 + .5
       corner_size <- (.9 - .8 * trans) * min(xmax - xmin, ymax - ymin)
       
-      rounded_rectangle(
+      funkyrect_rectangle(
         xmin = xmin,
         xmax = xmax,
         ymin = ymin,
