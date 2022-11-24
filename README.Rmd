@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # funkyheatmap
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of funkyheatmap is to generate funky heatmaps for benchmarking results.
