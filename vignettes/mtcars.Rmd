@@ -28,32 +28,34 @@ library(purrr, warn.conflicts = FALSE)
 data("mtcars")
 
 data <- mtcars %>% 
-  rownames_to_column("id") %>% 
-  mutate(group = "test", name = id)
+  rownames_to_column("id")
 ```
 
-Determine method grouping
-```{r method-grouping}
-row_info <- data %>% select(group, id)
-row_groups <- tibble(Group = "Test", group = "test")
+We can plot this data frame without any additional formatting, though it doesn't look very nice:
+```{r}
+funky_heatmap(data)
 ```
 
-Define column info
+By defining a few additional formatting parameters, we can get the plot to look much nicer.
+
+## Column info 
+
+
 ```{r column-info}
 column_info <- tribble( # tribble_start
-  ~group,         ~id,     ~name,                                       ~geom,        ~palette,    ~options,
-  "method_info",  "name",  "",                                          "text",       NA,          list(hjust = 0, width = 10),
-  "overall",      "mpg",   "Miles / gallon",                            "bar",        "palette1",  list(width = 4, legend = FALSE),
-  "overall",      "cyl",   "Number of cylinders",                       "bar",        "palette2",  list(width = 4, legend = FALSE),
-  "group1",       "disp",  "Displacement (cu.in.)",                     "funkyrect",  "palette1",  lst(),
-  "group1",       "hp",    "Gross horsepower",                          "funkyrect",  "palette1",  lst(),
-  "group1",       "drat",  "Rear axle ratio",                           "funkyrect",  "palette1",  lst(),
-  "group1",       "wt",    "Weight (1000 lbs)",                         "funkyrect",  "palette1",  lst(),
-  "group2",       "qsec",  "1/4 mile time",                             "funkyrect",  "palette2",  lst(),
-  "group2",       "vs",    "Engine (0 = V-shaped, 1 = straight)",       "funkyrect",  "palette2",  lst(),
-  "group2",       "am",    "Transmission (0 = automatic, 1 = manual)",  "funkyrect",  "palette2",  lst(),
-  "group2",       "gear",  "Number of forward gears",                   "funkyrect",  "palette2",  lst(),
-  "group2",       "carb",  "Number of carburetors",                     "funkyrect",  "palette2",  lst()
+  ~id,     ~group,         ~name,                                       ~geom,        ~palette,    ~options,
+  "id",    "method_info",  "",                                          "text",       NA,          list(hjust = 0, width = 10),
+  "mpg",   "overall",      "Miles / gallon",                            "bar",        "palette1",  list(width = 4, legend = FALSE),
+  "cyl",   "overall",      "Number of cylinders",                       "bar",        "palette2",  list(width = 4, legend = FALSE),
+  "disp",  "group1",       "Displacement (cu.in.)",                     "funkyrect",  "palette1",  lst(),
+  "hp",    "group1",       "Gross horsepower",                          "funkyrect",  "palette1",  lst(),
+  "drat",  "group1",       "Rear axle ratio",                           "funkyrect",  "palette1",  lst(),
+  "wt",    "group1",       "Weight (1000 lbs)",                         "funkyrect",  "palette1",  lst(),
+  "qsec",  "group2",       "1/4 mile time",                             "funkyrect",  "palette2",  lst(),
+  "vs",    "group2",       "Engine (0 = V-shaped, 1 = straight)",       "funkyrect",  "palette2",  lst(),
+  "am",    "group2",       "Transmission (0 = automatic, 1 = manual)",  "funkyrect",  "palette2",  lst(),
+  "gear",  "group2",       "Number of forward gears",                   "funkyrect",  "palette2",  lst(),
+  "carb",  "group2",       "Number of carburetors",                     "funkyrect",  "palette2",  lst()
 ) # tribble_end
 ```
 
@@ -68,16 +70,30 @@ column_groups <- tribble( # tribble_start
 ) # tribble_end
 ```
 
+## Row info
+
+
+Determine method grouping
+```{r method-grouping}
+row_info <- data %>% transmute(id, group = "test")
+row_groups <- tibble(Group = "Test", group = "test")
+```
+
+
+## Palettes
+
+
 Determine palettes
 ```{r column-grouping}
 palettes <- tribble(
   ~palette,             ~colours,
   "overall",            grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Greys")[-1]))(101),
   "palette1",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Blues") %>% c("#011636")))(101),
-  "palette2",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Reds")[-8:-9]))(101),
-  "column_annotation",  c(overall = "#555555", group1 = "#4292c6", group2 = "#f6483a")
+  "palette2",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Reds")[-8:-9]))(101)
 )
 ```
+
+## Funky heatmap
 
 Generate funky heatmap
 ```{r make-plot, fig.width=22, fig.height=18}
@@ -91,5 +107,12 @@ g <- funky_heatmap(
 )
 
 g
+```
+
+`funkyheatmap` automatically recommends a width and height for the generated plot.
+To save your plot, run:
+
+``` r
+ggsave("path_to_plot.pdf", g, device = cairo_pdf, width = g$width/4, height = g$height/4)
 ```
 

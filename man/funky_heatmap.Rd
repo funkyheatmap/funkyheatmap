@@ -6,36 +6,37 @@
 \usage{
 funky_heatmap(
   data,
-  column_info,
-  row_info,
-  palettes,
+  column_info = NULL,
+  row_info = NULL,
   column_groups = NULL,
   row_groups = NULL,
+  palettes = NULL,
   scale_column = TRUE,
   add_abc = TRUE,
   col_annot_offset = 3,
   row_annot_offset = 0.5,
-  removed_methods = NULL
+  removed_entries = NULL
 )
 }
 \arguments{
 \item{data}{A data frame with items by row and features in the columns.
 Must contain one column named \code{"id"}.}
 
-\item{column_info}{A data frame describing of which columns in \code{data} to
+\item{column_info}{A data frame describing which columns in \code{data} to
 plot. This data frame should contain the following columns:
 \itemize{
 \item \code{id} (\code{character}): The corresponding column name in \code{data}.
-\item \code{name} (\code{character}): A label for the column.
-If \code{NA} or \code{""}, no label will be plotted.
+\item \code{name} (\code{character}): A label for the column. If \code{NA} or \code{""},
+no label will be plotted. If this column is missing, \code{id} will
+be used to generate the \code{name} column.
 \item \code{geom} (\code{character}): The geom of the column. Must be one of:
 \code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, or \code{"text"}.
 For \code{"text"}, the corresponding column in \code{data} must be a \code{character}.
 For \code{"pie"}, the column must be a list of named numeric vectors.
 For all other geoms, the column must be a \code{numeric}.
 \item \code{group} (\code{character}): The grouping id of each column, must match with
-\code{column_groups$group}. If all values are \code{NA}, the columns will not be
-split up into groups.
+\code{column_groups$group}. If this column is missing or all values are \code{NA},
+columns are assumed not to be grouped.
 \item \code{palette} (\code{character}): Which palette to colour the geom by.
 Each value should have a matching value in \code{palettes$palette}.
 \item \code{options} (\code{list}): Column specific options. The content of the list
@@ -60,6 +61,28 @@ This data should contain two columns:
 If all are \code{NA}, the rows will not be split up into groups.
 }}
 
+\item{column_groups}{A data frame describing of how to group the columns
+in \code{column_info}. Can consist of the following columns:
+\itemize{
+\item \code{group} (\code{character}): The corresponding group in \code{column_info$group}.
+\item \code{palette} (\code{character}, optional): The palette used to colour the
+column group backgrounds.
+\item \code{level1} (\code{character}): The label at the highest level.
+\item \code{level2} (\code{character}, optional): The label at the middle level.
+\item \code{level3} (\code{character}, optional): The label at the lowest level
+(not recommended).
+}}
+
+\item{row_groups}{A data frame describing of how to group the rows
+in \code{row_info}. Can consist of the following columns:
+\itemize{
+\item \code{group} (\code{character}): The corresponding group in \code{row_info$group}.
+\item \code{level1} (\code{character}): The label at the highest level.
+\item \code{level2} (\code{character}, optional): The label at the middle level.
+\item \code{level3} (\code{character}, optional): The label at the lowest level
+(not recommended).
+}}
+
 \item{palettes}{A named list of palettes. Each entry in \code{column_info$palette}
 should have an entry in this object. If an entry is missing, the type
 of the column will be inferred (categorical or numerical) and one of the
@@ -70,22 +93,18 @@ standard palette names can be used:
 \item \code{categorical}: \code{"Set3"}, \code{"Set1"}, \code{"Set2"}, \code{"Dark2"}
 }}
 
-\item{column_groups}{b}
+\item{scale_column}{Whether or not to apply min-max scaling to each
+numerical column.}
 
-\item{row_groups}{d
-\itemize{
-\item Additional columns (\code{character}) are plotted at the top of the plot.
-}}
-
-\item{scale_column}{f}
-
-\item{add_abc}{Whether or not to add subfigure labels to the different columns groups.}
+\item{add_abc}{Whether or not to add subfigure labels to the different
+columns groups.}
 
 \item{col_annot_offset}{How much the column annotation will be offset by.}
 
 \item{row_annot_offset}{How much the column annotation will be offset by.}
 
-\item{removed_methods}{Which methods to not show in the rows}
+\item{removed_entries}{Which methods to not show in the rows. Missing methods
+are replaced by a "Not shown" label.}
 }
 \description{
 Overview heatmap plotting
