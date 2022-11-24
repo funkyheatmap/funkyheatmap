@@ -1,4 +1,10 @@
-make_geom_data_processor <- function(data, column_pos, row_pos, scale_column, palette_list) {
+make_geom_data_processor <- function(
+  data,
+  column_pos,
+  row_pos,
+  scale_column,
+  palette_list
+) {
   function(geom_types, fun) {
     column_sels <-
       column_pos %>%
@@ -24,8 +30,8 @@ make_geom_data_processor <- function(data, column_pos, row_pos, scale_column, pa
       
       data_sel <-
         data %>%
-        select(row_id = id, !!column_sel$column_id) %>%
-        gather(column_id, value, -row_id)
+        select(row_id = id, value = !!column_sel$column_id) %>%
+        mutate(column_id = column_sel$column_id)
       
       labelcolumn_sel <-
         column_sel %>%
