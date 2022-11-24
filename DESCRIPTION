@@ -15,9 +15,7 @@ Imports:
     dynutils,
     ggforce,
     ggplot2,
-    glue,
     purrr,
-    rlang,
     stringr,
     tibble,
     tidyr
