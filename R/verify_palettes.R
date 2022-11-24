@@ -1,6 +1,9 @@
+#' @importFrom grDevices colorRampPalette
 smear <- function(cols) {
   grDevices::colorRampPalette(cols)(101)
 }
+
+#' @importFrom RColorBrewer brewer.pal
 default_palettes <- list(
   numerical = list(
     "Greys" = RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev %>% smear,
