@@ -26,7 +26,7 @@ verify_column_info <- function(column_info, data) {
   assert_that(
     is.data.frame(column_info),
     column_info %has_name% "id",
-    is.character(column_info$id)
+    is.character(column_info$id) | is.factor(column_info$id)
   )
 
   # checking geom
@@ -35,14 +35,14 @@ verify_column_info <- function(column_info, data) {
     column_info$geom <- map_chr(data, function(x) {
       case_when(
         is.numeric(x) ~ "funkyrect",
-        is.character(x) ~ "text",
+        is.character(x) | is.factor(x) ~ "text",
         is.list(x) && map_lgl(x, function(z) is.numeric(z) && !is.null(names(z))) ~ "pie",
         TRUE ~ NA_character_
       )
     })
   }
   assert_that(
-    is.character(column_info$geom),
+    is.character(column_info$geom) | is.factor(column_info$geom),
     all(column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text"))
   )
 
@@ -52,7 +52,7 @@ verify_column_info <- function(column_info, data) {
     column_info$group <- NA_character_
   }
   assert_that(
-    is.character(column_info$group)
+    is.character(column_info$group) | is.factor(column_info$group)
   )
 
   # checking palette
@@ -61,7 +61,7 @@ verify_column_info <- function(column_info, data) {
     column_info$palette <- NA_character_
   }
   assert_that(
-    is.character(column_info$palette)
+    is.character(column_info$palette) | is.factor(column_info$palette)
   )
 
   # checking options

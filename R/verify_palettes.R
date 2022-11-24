@@ -108,7 +108,7 @@ verify_palettes <- function(palettes, column_info, data) {
       palettes[[palette_id]] <- palette_name
     }
 
-    assert_that(is.character(palettes[[palette_id]]))
+    assert_that(is.character(palettes[[palette_id]]) | is.factor(palettes[[palette_id]]))
 
     pal_value <- palettes[[palette_id]]
     if (length(pal_value) == 1) {
