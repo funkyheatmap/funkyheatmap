@@ -156,7 +156,7 @@ funky_heatmap <- function(
     filter(!is.na(palette)) %>%
     select(id, palette)
 
-  palette_list <- palettes %>% deframe()
+  palette_list <- palettes
 
   ####################################
   ###         PROCESS DATA         ###
