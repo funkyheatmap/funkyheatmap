@@ -127,7 +127,6 @@ Define column groups
 column_groups <- tribble(
   ~Experiment,    ~Category,                                      ~group,                   ~palette,
   "Method",       "\n",                                           "method_characteristic",  "overall",
-  "Method",       "Inferrable trajectory types",                  "inferrable_trajtype",    "overall",
   "Summary",      "Aggregated scores per experiment",             "score_overall",          "overall",
   "Accuracy",     "Per metric",                                   "benchmark_metric",       "benchmark",
   "Accuracy",     "Per dataset source",                           "benchmark_source",       "benchmark",
@@ -156,8 +155,8 @@ palettes <- tribble(
   "stability",          grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "YlOrBr")[-7:-9]))(101),
   "qc",                 grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Greens")[-1] %>% c("#00250f")))(101),
   "error_reasons",      error_reasons %>% select(label, colour) %>% deframe(),
-  "white6black4",       c(rep("white", 3), rep("black", 7)),
-  "column_annotation",  c(overall = "#555555", benchmark = "#4292c6", scaling = "#f6483a", stability = "#fe9929", qc = "#41ab5d")
+  "white6black4",       c(rep("white", 3), rep("black", 7))# ,
+  # "column_annotation",  c(overall = "#555555", benchmark = "#4292c6", scaling = "#f6483a", stability = "#fe9929", qc = "#41ab5d")
 )
 ```
 
