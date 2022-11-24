@@ -21,9 +21,9 @@ knitr::opts_chunk$set(
 Load data
 ```{r load-data}
 library(funkyheatmap)
-library(dplyr, quietly = TRUE)
-library(tibble, quietly = TRUE)
-library(purrr, quietly = TRUE)
+library(dplyr, warn.conflicts = FALSE)
+library(tibble, warn.conflicts = FALSE)
+library(purrr, warn.conflicts = FALSE)
 
 data("mtcars")
 
