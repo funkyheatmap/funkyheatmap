@@ -1,8 +1,8 @@
 #' Overview heatmap plotting
 #'
-#' TODO: params need to be described
+#' TODO: params need to be described better
 #'
-#' @param data data
+#' @param data A data frame with methods by row, metrics by columns. First column must be a column named `id`.
 #' @param column_info A data frame describing the columns of `data`. This data frame should contain the following columns:
 #'   * `id` (`character`): The corresponding column name in `data`.
 #'   * `name` (`character`): A label for the column. If `NA` or `""`, no label will be plotted.
@@ -17,7 +17,7 @@
 #'     - `label` (`geom = "text"`): Which column to use as a label.
 #'     - `hjust` (`geom = "bar"`): Horizontal alignment of the bar, must be between \[0,1\].
 #' @param row_info A data frame describing the rows of `data`. This data should contain the following columns:`
-#'   * `id` (`character`): The corresponding row name in `data`.
+#'   * `id` (`character`): Corresponds to the column `data$id`.
 #'   * `group` (`character`): The group of the row. If all are `NA`, the rows will not be split up into groups.
 #' @param palettes e
 #' @param column_groups b
