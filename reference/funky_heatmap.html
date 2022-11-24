@@ -51,16 +51,16 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">funky_heatmap</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  <span class="va">column_info</span>,</span>
-<span>  <span class="va">row_info</span>,</span>
-<span>  <span class="va">palettes</span>,</span>
+<span>  column_info <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_info <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  palettes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale_column <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add_abc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  col_annot_offset <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  row_annot_offset <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  removed_methods <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  removed_entries <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -72,18 +72,19 @@ Must contain one column named <code>"id"</code>.</p></dd>
 
 
 <dt>column_info</dt>
-<dd><p>A data frame describing of which columns in <code>data</code> to
+<dd><p>A data frame describing which columns in <code>data</code> to
 plot. This data frame should contain the following columns:</p><ul><li><p><code>id</code> (<code>character</code>): The corresponding column name in <code>data</code>.</p></li>
-<li><p><code>name</code> (<code>character</code>): A label for the column.
-If <code>NA</code> or <code>""</code>, no label will be plotted.</p></li>
+<li><p><code>name</code> (<code>character</code>): A label for the column. If <code>NA</code> or <code>""</code>,
+no label will be plotted. If this column is missing, <code>id</code> will
+be used to generate the <code>name</code> column.</p></li>
 <li><p><code>geom</code> (<code>character</code>): The geom of the column. Must be one of:
 <code>"funkyrect"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bar"</code>, <code>"pie"</code>, or <code>"text"</code>.
 For <code>"text"</code>, the corresponding column in <code>data</code> must be a <code>character</code>.
 For <code>"pie"</code>, the column must be a list of named numeric vectors.
 For all other geoms, the column must be a <code>numeric</code>.</p></li>
 <li><p><code>group</code> (<code>character</code>): The grouping id of each column, must match with
-<code>column_groups$group</code>. If all values are <code>NA</code>, the columns will not be
-split up into groups.</p></li>
+<code>column_groups$group</code>. If this column is missing or all values are <code>NA</code>,
+columns are assumed not to be grouped.</p></li>
 <li><p><code>palette</code> (<code>character</code>): Which palette to colour the geom by.
 Each value should have a matching value in <code>palettes$palette</code>.</p></li>
 <li><p><code>options</code> (<code>list</code>): Column specific options. The content of the list
@@ -107,6 +108,28 @@ If all are <code>NA</code>, the rows will not be split up into groups.</p></li>
 </ul></dd>
 
 
+<dt>column_groups</dt>
+<dd><p>A data frame describing of how to group the columns
+in <code>column_info</code>. Can consist of the following columns:</p><ul><li><p><code>group</code> (<code>character</code>): The corresponding group in <code>column_info$group</code>.</p></li>
+<li><p><code>palette</code> (<code>character</code>, optional): The palette used to colour the
+column group backgrounds.</p></li>
+<li><p><code>level1</code> (<code>character</code>): The label at the highest level.</p></li>
+<li><p><code>level2</code> (<code>character</code>, optional): The label at the middle level.</p></li>
+<li><p><code>level3</code> (<code>character</code>, optional): The label at the lowest level
+(not recommended).</p></li>
+</ul></dd>
+
+
+<dt>row_groups</dt>
+<dd><p>A data frame describing of how to group the rows
+in <code>row_info</code>. Can consist of the following columns:</p><ul><li><p><code>group</code> (<code>character</code>): The corresponding group in <code>row_info$group</code>.</p></li>
+<li><p><code>level1</code> (<code>character</code>): The label at the highest level.</p></li>
+<li><p><code>level2</code> (<code>character</code>, optional): The label at the middle level.</p></li>
+<li><p><code>level3</code> (<code>character</code>, optional): The label at the lowest level
+(not recommended).</p></li>
+</ul></dd>
+
+
 <dt>palettes</dt>
 <dd><p>A named list of palettes. Each entry in <code>column_info$palette</code>
 should have an entry in this object. If an entry is missing, the type
@@ -117,21 +140,14 @@ standard palette names can be used:</p><ul><li><p><code>numerical</code>: <code>
 </ul></dd>
 
 
-<dt>column_groups</dt>
-<dd><p>b</p></dd>
-
-
-<dt>row_groups</dt>
-<dd><p>d</p><ul><li><p>Additional columns (<code>character</code>) are plotted at the top of the plot.</p></li>
-</ul></dd>
-
-
 <dt>scale_column</dt>
-<dd><p>f</p></dd>
+<dd><p>Whether or not to apply min-max scaling to each
+numerical column.</p></dd>
 
 
 <dt>add_abc</dt>
-<dd><p>Whether or not to add subfigure labels to the different columns groups.</p></dd>
+<dd><p>Whether or not to add subfigure labels to the different
+columns groups.</p></dd>
 
 
 <dt>col_annot_offset</dt>
@@ -142,8 +158,9 @@ standard palette names can be used:</p><ul><li><p><code>numerical</code>: <code>
 <dd><p>How much the column annotation will be offset by.</p></dd>
 
 
-<dt>removed_methods</dt>
-<dd><p>Which methods to not show in the rows</p></dd>
+<dt>removed_entries</dt>
+<dd><p>Which methods to not show in the rows. Missing methods
+are replaced by a "Not shown" label.</p></dd>
 
 </dl></div>
 

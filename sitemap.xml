@@ -37,6 +37,9 @@
     <loc>https://rcannood.github.io/funkyheatmap/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://rcannood.github.io/funkyheatmap/reference/verify_column_groups.html</loc>
+  </url>
+  <url>
     <loc>https://rcannood.github.io/funkyheatmap/reference/verify_column_info.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>https://rcannood.github.io/funkyheatmap/reference/verify_palettes.html</loc>
+  </url>
+  <url>
+    <loc>https://rcannood.github.io/funkyheatmap/reference/verify_row_groups.html</loc>
   </url>
   <url>
     <loc>https://rcannood.github.io/funkyheatmap/reference/verify_row_info.html</loc>
