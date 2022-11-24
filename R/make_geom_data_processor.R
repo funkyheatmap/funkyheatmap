@@ -52,7 +52,7 @@ make_geom_data_processor <- function(data, column_pos, row_pos, scale_column, pa
         dat <-
           dat %>%
           group_by(column_id) %>%
-          mutate(value = dynutils::scale_minmax(value)) %>%
+          mutate(value = scale_minmax(value)) %>%
           ungroup()
       }
       
