@@ -28,7 +28,8 @@ library(purrr, warn.conflicts = FALSE)
 data("mtcars")
 
 data <- mtcars %>% 
-  rownames_to_column("id")
+  rownames_to_column("id") %>%
+  head(20)
 ```
 
 We can plot this data frame without any additional formatting, though it doesn't look very nice:
@@ -44,7 +45,7 @@ By defining a few additional formatting parameters, we can get the plot to look 
 ```{r column-info}
 column_info <- tribble( # tribble_start
   ~id,     ~group,         ~name,                                       ~geom,        ~palette,    ~options,
-  "id",    "method_info",  "",                                          "text",       NA,          list(hjust = 0, width = 10),
+  "id",    "method_info",  "",                                          "text",       NA,          list(hjust = 0, width = 6),
   "mpg",   "overall",      "Miles / gallon",                            "bar",        "palette1",  list(width = 4, legend = FALSE),
   "cyl",   "overall",      "Number of cylinders",                       "bar",        "palette2",  list(width = 4, legend = FALSE),
   "disp",  "group1",       "Displacement (cu.in.)",                     "funkyrect",  "palette1",  lst(),
