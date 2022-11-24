@@ -2,7 +2,7 @@
 title: "Small funky heatmap using mtcars"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{dynbenchmark}
+  %\VignetteIndexEntry{Small funky heatmap using mtcars}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
