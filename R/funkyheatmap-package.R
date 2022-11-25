@@ -18,7 +18,7 @@ NULL
 #' [`ggforce`](https://ggforce.data-imaginist.com).
 #'
 #' @importFrom assertthat assert_that %has_name%
-#' @importFrom tibble tibble enframe deframe lst tribble as_tibble
+#' @importFrom tibble tibble enframe deframe lst tribble as_tibble rownames_to_column
 #' @importFrom dplyr filter select pull mutate group_by row_number ungroup
 #' @importFrom dplyr case_when transmute slice left_join inner_join n bind_cols
 #' @importFrom dplyr bind_rows rename summarise arrange desc first last distinct
