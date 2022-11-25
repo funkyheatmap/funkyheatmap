@@ -17,8 +17,8 @@ make_geom_data_processor <- function(
       )
     
     if (nrow(column_sels) == 0) {
-      # return(tibble(a = 1) %>% slice(integer()))
-      return(tibble())
+      # return a tibble with one row but no columns
+      return(tibble(a = 1) %>% slice(integer()))
     }
     
     map_df(seq_len(nrow(column_sels)), function(ri) {
@@ -94,9 +94,9 @@ make_geom_data_processor <- function(
         dat <- dat %>%
           mutate(
             colour = ifelse(
-              is.na(.data$col_value), 
-              "#444444FF", 
-              palette_sel[col_value]
+              is.na(.data$col_value),
+              "#444444FF",
+              palette_sel[.data$col_value]
             )
           ) %>%
           select(-.data$value, -.data$col_value)

@@ -43,8 +43,8 @@ data frame has a column named `"id"`.
 
 ```{r example}
 library(funkyheatmap)
-library(tibble)
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
+library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
 
