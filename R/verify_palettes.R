@@ -88,7 +88,7 @@ verify_palettes <- function(palettes, column_info, data) {
   for (palette_id in col_info_palettes) {
     if (!palettes %has_name% palette_id) {
       # take one of the columns with this palette
-      columns <- column_info %>% filter(palette == !!palette_id) %>% slice_head()
+      columns <- column_info %>% filter(.data$palette == !!palette_id) %>% slice_head()
       
       # try to determine palette type (numerical or categorical)
       palette_type <- 
