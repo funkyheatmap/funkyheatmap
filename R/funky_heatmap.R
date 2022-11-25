@@ -84,6 +84,8 @@
 #' @param row_annot_offset How much the column annotation will be offset by.
 #' @param removed_entries Which methods to not show in the rows. Missing methods
 #' are replaced by a "Not shown" label.
+#' 
+#' @param expand A list of directions to expand the plot in.
 #'
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
@@ -100,7 +102,8 @@ funky_heatmap <- function(
   add_abc = TRUE,
   col_annot_offset = 3,
   row_annot_offset = .5,
-  removed_entries = NULL
+  removed_entries = NULL,
+  expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
 ) {
   # validate input objects
   data <- verify_data(data)
@@ -733,12 +736,14 @@ funky_heatmap <- function(
 
   # ADD SIZE
   # reserve a bit more room for text that wants to go outside the frame
-  # minimum_x <- minimum_x - 2
-  # maximum_x <- maximum_x + 2
-  # minimum_y <- minimum_y - 2
-  # maximum_y <- maximum_y + 2
+  expand_li <- as.list(expand)
+  minimum_x <- minimum_x - (expand_li$xmin %||% 0)
+  maximum_x <- maximum_x + (expand_li$xmax %||% 0)
+  minimum_y <- minimum_y - (expand_li$ymin %||% 0)
+  maximum_y <- maximum_y + (expand_li$ymax %||% 0)
+  g <- g + expand_limits(x = c(minimum_x, maximum_x), y = c(minimum_y, maximum_y))
   
-  # store variables
+  # store dimensions
   g$minimum_x <- minimum_x
   g$maximum_x <- maximum_x
   g$minimum_y <- minimum_y
@@ -746,8 +751,7 @@ funky_heatmap <- function(
   g$width <- (maximum_x - minimum_x) / 4
   g$height <- (maximum_y - minimum_y) / 4
 
-  g <- g + expand_limits(x = c(minimum_x, maximum_x), y = c(minimum_y, maximum_y))
-
+  # return plot
   g
 }
 
