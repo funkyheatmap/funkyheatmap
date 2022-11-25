@@ -35,7 +35,8 @@ You can install the development version of funkyheatmap like so:
 devtools::install_github("dynverse/funkyheatmap")
 ```
 
-You can also download `funkyheatmap` as an executable or a Nextflow pipeline.
+You can also download `funkyheatmap` as a [standalone executable](http://funkyheatmap.dynverse.org/articles/executable.html) 
+or a [Nextflow pipeline](http://funkyheatmap.dynverse.org/articles/nextflow.html).
 
 ## Example
 
@@ -101,12 +102,17 @@ g
 ```
 
 ## More information 
-
-* Check out the vignette `vignette("mtcars", "funkyheatmap")` for more 
-  information on how to customize this visualisation.
-
-* The vignette `vignette("dynbenchmark", "funkyheatmap")` displays the code 
-  that was used in Saelens et al. (2019) [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
   
-* The reference documentation on `funky_heatmap()` details the exact formats of 
-  each annotation object that you can pass to it.
+* The [reference documentation](http://funkyheatmap.dynverse.org/reference/index.html)
+  on `funky_heatmap()` details the exact formats of each annotation object that you can pass to it.
+
+* Check out the vignette [`vignette("mtcars", "funkyheatmap")`](http://funkyheatmap.dynverse.org/articles/mtcars.html)
+  for more information on how to customize this visualisation.
+
+* In [`vignette("dynbenchmark", "funkyheatmap")`](http://funkyheatmap.dynverse.org/articles/dynbenchmark.html) we 
+  use funkyheatmap to regenerate the figures from Saelens et al. (2019)
+  [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
+
+* We used [Viash](https://viash.io) to wrap the `funkyheatmap::funky_heatmap()` function
+  as a [standalone executable](http://funkyheatmap.dynverse.org/articles/executable.html) and
+  [Nextflow module](http://funkyheatmap.dynverse.org/articles/nextflow.html).

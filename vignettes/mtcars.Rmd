@@ -1,8 +1,8 @@
 ---
-title: "Small funky heatmap using mtcars"
+title: "Demo with mtcars"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Small funky heatmap using mtcars}
+  %\VignetteIndexEntry{Demo with mtcars}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
