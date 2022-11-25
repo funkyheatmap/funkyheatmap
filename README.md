@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Allows generating beautiful visualisations for benchmark data frames.
@@ -18,7 +18,7 @@ grouping rows and columns together in categories.
 You can install the development version of funkyheatmap like so:
 
 ``` r
-devtools::install_github("rcannood/funkyheatmap")
+devtools::install_github("dynverse/funkyheatmap")
 ```
 
 ## Example

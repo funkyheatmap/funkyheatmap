@@ -21,9 +21,9 @@ This package heavily depends on the functions provided by
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://rcannood.github.io/funkyheatmap}
-  \item \url{https://github.com/rcannood/funkyheatmap}
-  \item Report bugs at \url{https://github.com/rcannood/funkyheatmap/issues}
+  \item \url{https://funkyheatmap.dynverse.org}
+  \item \url{https://github.com/dynverse/funkyheatmap}
+  \item Report bugs at \url{https://github.com/dynverse/funkyheatmap/issues}
 }
 
 }
