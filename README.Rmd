@@ -47,14 +47,11 @@ library(dplyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
-
-data <- mtcars %>%
-  rownames_to_column("id")
 ```
 
 You can visualise the dataset as follows.
 ```{r example-heatmap}
-g <- funky_heatmap(data)
+g <- funky_heatmap(mtcars)
 ```
 
 ```{r include=FALSE}

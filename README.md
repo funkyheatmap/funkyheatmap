@@ -33,15 +33,13 @@ library(dplyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
-
-data <- mtcars %>%
-  rownames_to_column("id")
 ```
 
 You can visualise the dataset as follows.
 
 ``` r
-g <- funky_heatmap(data)
+g <- funky_heatmap(mtcars)
+#> ℹ Could not find column 'id' in data. Using rownames as 'id'.
 #> ℹ No column info was provided, assuming all columns in `data` are to be plotted.
 #> ℹ Column info did not contain column `name`, using `id` to generate it.
 #> ℹ Column info did not contain information on which columns to plot, inferring from `data` types.
