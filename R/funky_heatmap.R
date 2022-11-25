@@ -555,27 +555,38 @@ funky_heatmap <- function(
 
     fr_poly_data1 <-
       fr_legend_dat1 %>%
-      transmute(xmin, xmax, ymin, ymax, value) %>%
+      select("xmin", "xmax", "ymin", "ymax", "value") %>%
       pmap_df(score_to_funky_rectangle, midpoint = .8)
 
     fr_legend_dat2 <-
       fr_poly_data1 %>%
-      filter(!is.na(r)) %>%
-      group_by(value) %>%
-      summarise(minx = min(x - r), maxx = max(x + r), miny = min(y - r), maxy = max(y + r)) %>%
+      filter(!is.na(.data$r)) %>%
+      group_by(.data$value) %>%
+      summarise(
+        minx = min(.data$x - .data$r),
+        maxx = max(.data$x + .data$r),
+        miny = min(.data$y - .data$r),
+        maxy = max(.data$y + .data$r)
+      ) %>%
       mutate(
-        width = maxx - minx,
-        height = maxy - miny,
-        xmin = cumsum(width + fr_legend_space) - width - fr_legend_space,
-        xmin = fr_minimum_x + xmin - min(xmin),
-        xmax = xmin + width,
+        width = .data$maxx - .data$minx,
+        height = .data$maxy - .data$miny,
+        xmin = cumsum(.data$width + fr_legend_space) - .data$width - fr_legend_space,
+        xmin = fr_minimum_x + .data$xmin - min(.data$xmin),
+        xmax = .data$xmin + .data$width,
         ymin = legend_pos - 2.5,
-        ymax = ymin + height
+        ymax = .data$ymin + .data$height
       ) %>%
       transmute(
-        width, height,
-        value, xmin, xmax, ymin, ymax,
-        x = (xmin + xmax) / 2, y = (ymin + ymax) / 2
+        .data$width,
+        .data$height,
+        .data$value,
+        .data$xmin,
+        .data$xmax,
+        .data$ymin,
+        .data$ymax,
+        x = (.data$xmin + .data$xmax) / 2,
+        y = (.data$ymin + .data$ymax) / 2
       )
 
     fr_maximum_x <- max(fr_legend_dat2$xmax)
@@ -583,11 +594,22 @@ funky_heatmap <- function(
     # use grey palette for generic funkyrect legend
     grey_palette <- default_palettes$numerical$Greys
     fr_poly_data2 <-
-      transmute(fr_legend_dat2, xmin = x - fr_legend_size / 2, xmax = x + fr_legend_size / 2, ymin = y - fr_legend_size / 2, ymax = y + fr_legend_size / 2, value) %>%
+      transmute(
+        fr_legend_dat2,
+        xmin = .data$x - fr_legend_size / 2,
+        xmax = .data$x + fr_legend_size / 2,
+        ymin = .data$y - fr_legend_size / 2,
+        ymax = .data$y + fr_legend_size / 2,
+        .data$value
+      ) %>%
       pmap_df(score_to_funky_rectangle, midpoint = .8) %>%
       mutate(
-        col_value = round(value * (length(grey_palette) - 1)) + 1,
-        colour = ifelse(is.na(col_value), "#444444FF", grey_palette[col_value])
+        col_value = round(.data$value * (length(grey_palette) - 1)) + 1,
+        colour = ifelse(
+          is.na(.data$col_value),
+          "#444444FF",
+          grey_palette[.data$col_value]
+        )
       )
 
     fr_title_data <-
@@ -603,14 +625,21 @@ funky_heatmap <- function(
       )
 
     fr_value_data <-
-      fr_legend_dat2 %>% filter(value %% .2 == 0) %>% transmute(
-        ymin = ymin - 1,
-        ymax = ymin,
-        xmin, xmax,
-        hjust = .5,
-        vjust = 0,
-        label_value = ifelse(value %in% c(0, 1), sprintf("%.0f", value), sprintf("%.1f", value))
-      )
+      fr_legend_dat2 %>% 
+        filter(.data$value %% .2 == 0) %>%
+        transmute(
+          ymin = .data$ymin - 1,
+          ymax = .data$ymin,
+          .data$xmin,
+          .data$xmax,
+          hjust = .5,
+          vjust = 0,
+          label_value = ifelse(
+            .data$value %in% c(0, 1),
+            sprintf("%.0f", value),
+            sprintf("%.1f", value)
+          )
+        )
 
     text_data <- bind_rows(
       text_data,
@@ -620,8 +649,12 @@ funky_heatmap <- function(
     funkyrect_data <- bind_rows(funkyrect_data, fr_poly_data2)
   }
 
+  # TODO: remove hard coded column id
   if (any(column_pos$id == "method_priors_required_str")) {
-    pr_minimum_x <- column_pos %>% filter(id == "method_priors_required_str") %>% pull(xmin) %>% min
+    pr_minimum_x <- column_pos %>%
+      filter(.data$id == "method_priors_required_str") %>%
+      pull(.data$xmin) %>%
+      min
 
     legend_vals <- tribble(
       ~symbol, ~value,
