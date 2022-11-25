@@ -1,0 +1,33 @@
+citHeader("To cite funkyheatmap in publications use:")
+
+citEntry(
+  entry    = "Article",
+  author   = c(
+    person("Robrecht", "Cannoodt"),
+    person("Wouter", "Saelens"),
+    person("Helena", "Todorov"),
+    person("Yvan", "Saeys")
+  ),
+  title    = "A comparison of single-cell trajectory inference methods",
+  journal  = "Nature Biotechnology",
+  year     = "2019",
+  month    = "4",
+  doi      = "10.1038/s41587-019-0071-9",
+  url      = "https://doi.org/10.1038/s41587-019-0071-9",
+  textVersion = "Saelens, W., Cannoodt, R., Todorov, H. Saeys, Y. A comparison of single-cell trajectory inference methods. Nat Biotechnol 37, 547–554 (2019). https://doi.org/10.1038/s41587-019-0071-9"
+)
+
+
+citEntry(
+  entry    = "Article",
+  author   = "Robrecht Cannoodt and Wouter Saelens",
+  title    = "funkyheatmap: Generating Funky Heatmaps for Data Frames",
+  journal  = "In Progress",
+  year     = "2023",
+  month    = "",
+  volume   = "",
+  number   = "",
+  pages    = "",
+  doi      = "",
+  textVersion = "Cannoodt R. and Saelens W., funkyheatmap: Generating Funky Heatmaps for Data Frames, In Progress, 2023."
+)
