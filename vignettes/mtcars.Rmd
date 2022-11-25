@@ -44,21 +44,21 @@ By defining a few additional formatting parameters, we can get the plot to look 
 
 
 ```{r column-info}
-column_info <- tribble( # tribble_start
-  ~id,     ~group,         ~name,                                       ~geom,        ~palette,    ~options,
-  "id",    "method_info",  "",                                          "text",       NA,          list(hjust = 0, width = 6),
-  "mpg",   "overall",      "Miles / gallon",                            "bar",        "palette1",  list(width = 4, legend = FALSE),
-  "cyl",   "overall",      "Number of cylinders",                       "bar",        "palette2",  list(width = 4, legend = FALSE),
-  "disp",  "group1",       "Displacement (cu.in.)",                     "funkyrect",  "palette1",  lst(),
-  "hp",    "group1",       "Gross horsepower",                          "funkyrect",  "palette1",  lst(),
-  "drat",  "group1",       "Rear axle ratio",                           "funkyrect",  "palette1",  lst(),
-  "wt",    "group1",       "Weight (1000 lbs)",                         "funkyrect",  "palette1",  lst(),
-  "qsec",  "group2",       "1/4 mile time",                             "funkyrect",  "palette2",  lst(),
-  "vs",    "group2",       "Engine (0 = V-shaped, 1 = straight)",       "funkyrect",  "palette2",  lst(),
-  "am",    "group2",       "Transmission (0 = automatic, 1 = manual)",  "funkyrect",  "palette2",  lst(),
-  "gear",  "group2",       "Number of forward gears",                   "funkyrect",  "palette2",  lst(),
-  "carb",  "group2",       "Number of carburetors",                     "funkyrect",  "palette2",  lst()
-) # tribble_end
+column_info <- tribble(
+  ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
+  "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
+  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",  list(width = 4, legend = FALSE),
+  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",  list(width = 4, legend = FALSE),
+  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1",  lst(),
+  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1",  lst(),
+  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1",  lst(),
+  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1",  lst(),
+  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2",  lst(),
+  "vs",    "group2",       "Engine",                   "circle",     "palette2",  lst(),
+  "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
+  "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
+  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
+)
 ```
 
 Define column groups
@@ -105,7 +105,8 @@ g <- funky_heatmap(
   column_groups = column_groups,
   row_info = row_info,
   row_groups = row_groups,
-  palettes = palettes
+  palettes = palettes,
+  expand = list(xmax = 4)
 )
 ```
 

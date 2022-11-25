@@ -23,17 +23,32 @@ devtools::install_github("rcannood/funkyheatmap")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Let’s use the `mtcars` dataset as an example of what a funky heatmap
+looks like. The only strict requirement that `funky_heatmap()` has is
+that the provided data frame has a column named `"id"`.
 
 ``` r
 library(funkyheatmap)
 library(tibble)
-library(purrr)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 
 data("mtcars")
 
-data <- mtcars %>% rownames_to_column("id")
+data <- mtcars %>%
+  rownames_to_column("id")
+```
 
+You can visualise the dataset as follows.
+
+``` r
 g <- funky_heatmap(data)
 #> ℹ No column info was provided, assuming all columns in `data` are to be plotted.
 #> ℹ Column info did not contain column `name`, using `id` to generate it.
@@ -44,11 +59,67 @@ g <- funky_heatmap(data)
 #> ℹ No row info was provided, assuming all rows in `data` are to be plotted.
 #> ℹ Row info did not contain group information, assuming rows are ungrouped.
 #> ℹ No palettes were provided, trying to automatically assign palettes.
-#> ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Greys'.
+#> ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.
 ```
 
 ``` r
 g
 ```
 
-<img src="man/figures/README-example-heatmap-1.png" width="100%" />
+<img src="man/figures/README-view-heatmap-1.png" width="100%" />
+
+## Customising the plot
+
+However, this plot can look so much better if you provide additional
+metadata for the rows and columns. See more information on how you can
+customise.
+
+``` r
+data <- mtcars %>%
+  rownames_to_column("id") %>%
+  arrange(desc(mpg))
+
+column_info <- tribble(
+  ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
+  "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
+  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",  list(width = 4, legend = FALSE),
+  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",  list(width = 4, legend = FALSE),
+  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1",  lst(),
+  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1",  lst(),
+  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1",  lst(),
+  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1",  lst(),
+  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2",  lst(),
+  "vs",    "group2",       "Engine",                   "circle",     "palette2",  lst(),
+  "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
+  "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
+  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
+)
+
+g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
+#> ℹ No row info was provided, assuming all rows in `data` are to be plotted.
+#> ℹ Row info did not contain group information, assuming rows are ungrouped.
+#> ℹ No column groups was provided, deriving from column info.
+#> ℹ Column groups did not contain a column called 'palette'. Assuming no colour scales need to be used.
+#> ℹ Column groups did not contain a column called 'level1'. Using `column_info$group` as a makeshift column group name.
+#> ℹ No palettes were provided, trying to automatically assign palettes.
+#> ℹ Palette named 'palette1' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.
+#> ℹ Palette named 'palette2' was not defined. Assuming palette is numerical. Automatically selected palette 'Reds'.
+```
+
+``` r
+g
+```
+
+<img src="man/figures/README-view-heatmap-with-colinfo-1.png" width="100%" />
+
+## More information
+
+-   Check out the vignette `vignette("mtcars", "funkyheatmap")` for more
+    information on how to customize this visualisation.
+
+-   The vignette `vignette("dynbenchmark", "funkyheatmap")` displays the
+    code that was used in Saelens et al. (2019)
+    [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
+
+-   The reference documentation on `funky_heatmap()` details the exact
+    formats of each annotation object that you can pass to it.
