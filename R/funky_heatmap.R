@@ -1,4 +1,9 @@
-#' Overview heatmap plotting
+#' Generate a funky heatmaps for benchmarks
+#' 
+#' Allows generating beautiful visualisations for benchmark data 
+#' frames. Funky heatmaps can be fine-tuned by providing annotations of the 
+#' columns and rows, which allows assigning multiple palettes or geometries
+#' or grouping rows and columns together in categories.
 #'
 #' @param data A data frame with items by row and features in the columns.
 #' Must contain one column named `"id"`.
@@ -90,7 +95,19 @@
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
 #'
+#' @returns A ggplot. `.$width` and `.$height` are suggested dimensions for
+#' storing the plot with [ggsave()].
+#' 
 #' @export
+#' 
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#' library(tibble, warn.conflicts = FALSE)
+#' 
+#' data("mtcars")
+#' 
+#' data <- mtcars %>%
+#'   rownames_to_column("id")
 funky_heatmap <- function(
   data,
   column_info = NULL,

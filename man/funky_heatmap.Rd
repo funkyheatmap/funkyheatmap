@@ -2,7 +2,7 @@
 % Please edit documentation in R/funky_heatmap.R
 \name{funky_heatmap}
 \alias{funky_heatmap}
-\title{Overview heatmap plotting}
+\title{Generate a funky heatmaps for benchmarks}
 \usage{
 funky_heatmap(
   data,
@@ -109,6 +109,22 @@ are replaced by a "Not shown" label.}
 
 \item{expand}{A list of directions to expand the plot in.}
 }
+\value{
+A ggplot. \code{.$width} and \code{.$height} are suggested dimensions for
+storing the plot with \code{\link[=ggsave]{ggsave()}}.
+}
 \description{
-Overview heatmap plotting
+Allows generating beautiful visualisations for benchmark data
+frames. Funky heatmaps can be fine-tuned by providing annotations of the
+columns and rows, which allows assigning multiple palettes or geometries
+or grouping rows and columns together in categories.
+}
+\examples{
+library(dplyr, warn.conflicts = FALSE)
+library(tibble, warn.conflicts = FALSE)
+
+data("mtcars")
+
+data <- mtcars \%>\%
+  rownames_to_column("id")
 }

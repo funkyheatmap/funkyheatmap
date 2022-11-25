@@ -8,6 +8,12 @@
 \description{
 Allows generating beautiful visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.
 
+Allows generating beautiful visualisations for benchmark data
+frames. Funky heatmaps can be fine-tuned by providing annotations of the
+columns and rows, which allows assigning multiple palettes or geometries
+or grouping rows and columns together in categories.
+}
+\details{
 This package heavily depends on the functions provided by
 \href{https://ggplot2.tidyverse.org/}{\code{ggplot2}} and
 \href{https://ggforce.data-imaginist.com}{\code{ggforce}}.

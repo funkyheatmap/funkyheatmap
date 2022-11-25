@@ -7,6 +7,11 @@ NULL
 
 
 #' Generating funky heatmaps for benchmarks
+#' 
+#' Allows generating beautiful visualisations for benchmark data 
+#' frames. Funky heatmaps can be fine-tuned by providing annotations of the 
+#' columns and rows, which allows assigning multiple palettes or geometries
+#' or grouping rows and columns together in categories.
 #'
 #' This package heavily depends on the functions provided by
 #' [`ggplot2`](https://ggplot2.tidyverse.org/) and
