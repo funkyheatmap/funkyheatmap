@@ -8,10 +8,11 @@
 [![R-CMD-check](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Allows generating heatmap-like visualisations for benchmark data frames.
-Funky heatmaps can be fine-tuned by providing annotations of the columns
-and rows, which allows assigning multiple palettes or geometries or
-grouping rows and columns together in categories.
+`funkyheatmap` allows generating heatmap-like visualisations for
+benchmark data frames. Funky heatmaps can be fine-tuned by providing
+annotations of the columns and rows, which allows assigning multiple
+palettes or geometries or grouping rows and columns together in
+categories.
 
 ## Installation
 
@@ -21,11 +22,13 @@ You can install the development version of funkyheatmap like so:
 devtools::install_github("dynverse/funkyheatmap")
 ```
 
+You can also download `funkyheatmap` as an executable or a Nextflow
+pipeline.
+
 ## Example
 
 Let’s use the `mtcars` dataset as an example of what a funky heatmap
-looks like. The only strict requirement that `funky_heatmap()` has is
-that the provided data frame has a column named `"id"`.
+looks like.
 
 ``` r
 library(funkyheatmap)

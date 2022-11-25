@@ -8,4 +8,5 @@
 ^pkgdown$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
-^viash$
+^viash_src$
+^bin$
