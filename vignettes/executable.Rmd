@@ -1,0 +1,55 @@
+---
+title: "funky_heatmap as a standalone executable"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{funky_heatmap as a standalone executable}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+`funkyheatmap` is also available as a standalone executable.
+
+## Install
+
+```bash
+wget https://github.com/dynverse/funkyheatmap/releases/latest/download/executable.zip
+unzip executable.zip -d funky_heatmap
+```
+
+In order for this to work, you need to have Docker and Bash installed (nothing else).
+
+
+## View help
+
+Run `--help` to get more information on the arguments of funky heatmap.
+
+```bash
+./funky_heatmap --help
+```
+
+## Example
+
+We also processed the `mtcars` dataset and stored it as a tsv file.
+To generate a plot with it, use the following commands:
+
+```bash
+./funky_heatmap --data funky_heatmap/example_data.tsv --output plot.pdf
+```
+
+    ℹ Could not find column 'id' in data. Using rownames as 'id'.
+    ℹ No column info was provided, assuming all columns in `data` are to be plotted.
+    ℹ Column info did not contain column `name`, using `id` to generate it.
+    ℹ Column info did not contain information on which columns to plot, inferring from `data` types.
+    ℹ Column info did not contain group information, assuming columns are ungrouped.
+    ℹ Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.
+    ℹ Column info did not contain a column called 'options', generating ptions based on the 'geom' column.
+    ℹ No row info was provided, assuming all rows in `data` are to be plotted.
+    ℹ Row info did not contain group information, assuming rows are ungrouped.
+    ℹ No palettes were provided, trying to automatically assign palettes.
+    ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.
+
+## More information
+
+See the [funkyheatmap home page](http://funkyheatmap.dynverse.org/) for more information and documentation.

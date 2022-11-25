@@ -1,8 +1,8 @@
 ---
-title: "dynbenchmark"
+title: "Recreating the dynbenchmark figures"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{dynbenchmark}
+  %\VignetteIndexEntry{Recreating the dynbenchmark figures}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -16,7 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Load data
+In this vignette, we will use `funkyheatmap` to reproduce the [dynbenchmark](https://doi.org/10.1038/s41587-019-0071-9) figures.
+
+## Load data
 ```{r load-data}
 library(funkyheatmap)
 library(dplyr, warn.conflicts = FALSE)
@@ -28,7 +30,7 @@ data("dynbenchmark_data")
 data <- dynbenchmark_data
 ```
 
-Determine method grouping
+## Determine method grouping
 ```{r method-grouping}
 row_info <-
   data %>%
@@ -45,12 +47,8 @@ row_groups <-
   unique()
 ```
 
-Define column info
+## Define column info
 ```{r column-info}
-# please don't use the character " within the tribble below
-# or other parts of the code will flip out.
-# use the character ' instead
-
 column_info <- tribble( # tribble_start
   ~group,                   ~id,                                            ~name,                      ~geom,        ~palette,         ~options,
   "method_characteristic",  "method_name",                                  "",                         "text",       NA,               list(hjust = 0, width = 6),
@@ -121,7 +119,7 @@ column_info <- tribble( # tribble_start
 )
 ```
 
-Define column groups
+## Define column groups
 ```{r column-groups}
 column_groups <- tribble(
   ~Experiment,    ~Category,                                      ~group,                   ~palette,
@@ -138,7 +136,7 @@ column_groups <- tribble(
 )
 ```
 
-Determine palettes
+## Determine palettes
 ```{r column-grouping}
 error_reasons <- tibble(
   name = c("pct_memory_limit", "pct_time_limit", "pct_execution_error", "pct_method_error"),
@@ -159,7 +157,7 @@ palettes <- tribble(
 )
 ```
 
-Generate funky heatmap
+## Generate funky heatmap
 ```{r make-plot}
 g <- funky_heatmap(
   data = data,
