@@ -7,7 +7,7 @@
 #' plot. This data frame should contain the following columns:
 #'
 #' * `id` (`character`): The corresponding column name in `data`.
-#' 
+#'
 #' * `name` (`character`): A label for the column. If `NA` or `""`,
 #'   no label will be plotted. If this column is missing, `id` will
 #'   be used to generate the `name` column.
@@ -40,7 +40,7 @@
 #' This data should contain two columns:
 #'
 #' * `id` (`character`): Corresponds to the column `data$id`.
-#' 
+#'
 #' * `group` (`character`): The group of the row.
 #'   If all are `NA`, the rows will not be split up into groups.
 #'
@@ -111,7 +111,8 @@ funky_heatmap <- function(
   row_info <- verify_row_info(row_info, data)
   column_groups <- verify_column_groups(column_groups, column_info)
   row_groups <- verify_row_groups(row_groups, row_info)
-  palettes <- verify_palettes(palettes, column_info, data) # todo: add column groups
+  palettes <- verify_palettes(palettes, column_info, data)
+  # todo: add column groups to verify_palettes
   
   # no point in making these into parameters
   row_height <- 1
@@ -153,16 +154,10 @@ funky_heatmap <- function(
 
   column_pos <- calculate_column_positions(
     column_info,
-    col_widths = col_widths,
+    col_width = col_width,
     col_space = col_space,
     col_bigspace = col_bigspace
   )
-
-  # FIGURE OUT PALETTES
-  palette_assignment <-
-    column_info %>%
-    filter(!is.na(palette)) %>%
-    select(id, palette)
 
   ####################################
   ###         PROCESS DATA         ###
@@ -180,7 +175,11 @@ funky_heatmap <- function(
 
   # gather circle data
   circle_data <- geom_data_processor("circle", function(dat) {
-    dat %>% mutate(x0 = x, y0 = y, r = row_height / 2 * value)
+    dat %>% mutate(
+      x0 = .data$x,
+      y0 = .data$y,
+      r = row_height / 2 * .data$value
+    )
   })
 
   # gather rect data
@@ -189,7 +188,7 @@ funky_heatmap <- function(
   # gather funkyrect data
   funkyrect_data <- geom_data_processor("funkyrect", function(dat) {
     dat %>%
-      transmute(xmin, xmax, ymin, ymax, value) %>%
+      select("xmin", "xmax", "ymin", "ymax", "value") %>%
       pmap_df(score_to_funky_rectangle, midpoint = .8)
   })
 
@@ -198,65 +197,80 @@ funky_heatmap <- function(
     dat %>%
       add_column_if_missing(hjust = 0) %>%
       mutate(
-        xmin = xmin + (1 - value) * xwidth * hjust,
-        xmax = xmax - (1 - value) * xwidth * (1 - hjust)
+        xmin = .data$xmin + (1 - .data$value) * .data$xwidth * .data$hjust,
+        xmax = .data$xmax - (1 - .data$value) * .data$xwidth * (1 - .data$hjust)
       )
   })
 
   # gather bar guides data
   barguides_data <- geom_data_processor("bar", function(dat) {
     crossing(
-      dat %>% group_by(column_id) %>% slice(1) %>% ungroup() %>% select(xmin, xmax) %>% gather(col, x) %>% transmute(x, xend = x),
-      row_pos %>% select(y = ymin, yend = ymax)
+      dat %>%
+        group_by(.data$column_id) %>%
+        slice(1) %>%
+        ungroup() %>%
+        select(.data$xmin, .data$xmax) %>%
+        gather("col", "x") %>%
+        transmute(.data$x, xend = .data$x),
+      row_pos %>%
+        select(y = .data$ymin, yend = .data$ymax)
     ) %>%
       mutate(palette = NA, value = NA)
   })
   segment_data <-
     bind_rows(
       segment_data,
-      barguides_data %>% mutate(colour = "black", size = .5, linetype = "dashed")
+      barguides_data %>% mutate(
+        colour = "black",
+        size = .5,
+        linetype = "dashed"
+      )
     )
 
   # gather text data
   text_data <- geom_data_processor("text", function(dat) {
-    dat %>% mutate(colour = "black") # colour "black" is overridden if !is.na(palette)
+    dat %>% mutate(colour = "black")
+    # colour "black" is overridden if !is.na(palette)
   })
 
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <-
       inner_join(
-        dat %>% select(-value) %>% mutate(iii = row_number()),
-        dat %>% select(value) %>% mutate(iii = row_number()) %>%
+        dat %>% select(-.data$value) %>% mutate(iii = row_number()),
+        dat %>% select(.data$value) %>% mutate(iii = row_number()) %>%
           dynutils::mapdf_dfr(function(l) {
             enframe(l$value) %>% mutate(iii = l$iii)
           }),
         by = "iii"
       ) %>%
-      select(-iii)
+      select(-.data$iii)
 
     dat %>%
-      group_by(row_id, column_id) %>%
+      group_by(.data$row_id, .data$column_id) %>%
       mutate(
-        y0 = y,
-        x0 = x,
-        pct = ifelse(is.finite(value), value, 0),
-        pct = pct / sum(pct),
-        rad = pct * 2 * pi,
-        rad_end = cumsum(rad),
-        rad_start = rad_end - rad,
+        y0 = .data$y,
+        x0 = .data$x,
+        pct = ifelse(is.finite(.data$value), .data$value, 0),
+        pct = .data$pct / sum(.data$pct),
+        rad = .data$pct * 2 * .data$pi,
+        rad_end = cumsum(.data$rad),
+        rad_start = .data$rad_end - .data$rad,
         r0 = 0,
-        r = row_height / 2,
-        value = name
+        r = .data$row_height / 2,
+        value = .data$name
       ) %>%
-      filter(rad_end != rad_start, 1e-10 <= pct) %>%
+      filter(.data$rad_end != .data$rad_start, 1e-10 <= .data$pct) %>%
       ungroup()
   })
 
   # would be better to have a generic solution for this
   # # hidden feature trajectory plots
   # trajd <- geom_data_processor("traj", function(dat) {
-  #   dat %>% mutate(topinf = gsub("^gray_", "", value), colour = ifelse(grepl("^gray_", value), "#AAAAAA", NA))
+  #   dat %>% mutate(
+  #     topinf = gsub("^gray_", "", value),
+  #     colour = ifelse(grepl("^gray_", value), "#AAAAAA", NA)
+  #   )
   # })
 
   ####################################
@@ -267,89 +281,113 @@ funky_heatmap <- function(
   if (plot_row_annotation) {
     row_annotation <-
       row_groups %>%
-      gather(level, name, -group) %>%
-      left_join(row_pos %>% select(group, ymin, ymax), by = "group") %>%
-      group_by(name) %>%
+      gather("level", "name", -.data$group) %>%
+      left_join(row_pos %>% select("group", "ymin", "ymax"), by = "group") %>%
+      group_by(.data$name) %>%
       summarise(
-        ymin = min(ymin),
-        ymax = max(ymax),
-        y = (ymin + ymax) / 2
+        ymin = min(.data$ymin),
+        ymax = max(.data$ymax),
+        y = (.data$ymin + .data$ymax) / 2
       ) %>%
       ungroup() %>%
       mutate(xmin = -.5, xmax = 5) %>%
-      filter(!is.na(name), name != "")
+      filter(!is.na(.data$name), .data$name != "")
 
     text_data <- text_data %>% bind_rows(
       row_annotation %>%
-        transmute(xmin, xmax, ymin = ymax + row_space, label_value = name %>% gsub("\n", " ", .), hjust = 0, vjust = .5, fontface = "bold") %>%
-        mutate(ymax = ymin + row_height)
+        transmute(
+          .data$xmin,
+          .data$xmax,
+          ymin = .data$ymax + row_space,
+          label_value = .data$name %>% gsub("\n", " ", .),
+          hjust = 0,
+          vjust = .5,
+          fontface = "bold"
+        ) %>%
+        mutate(ymax = .data$ymin + row_height)
     )
   }
 
   # GENERATE COLUMN ANNOTATION
   if (plot_column_annotation) {
     col_join <- column_groups %>%
-      gather(level, name, -group, -palette) %>%
-      left_join(column_pos %>% select(group, xmin, xmax), by = "group")
+      gather("level", "name", -.data$group, -.data$palette) %>%
+      left_join(column_pos %>% select("group", "xmin", "xmax"), by = "group")
 
     text_pct <- .9
     level_heights <-
       col_join %>%
-      group_by(level) %>%
-      summarise(max_newlines = max(str_count(name, "\n"))) %>%
+      group_by(.data$level) %>%
+      summarise(max_newlines = max(str_count(.data$name, "\n"))) %>%
       mutate(
-        height = (max_newlines + 1) * text_pct + (1 - text_pct),
-        levelmatch = match(level, colnames(column_groups))
+        height = (.data$max_newlines + 1) * text_pct + (1 - text_pct),
+        levelmatch = match(.data$level, colnames(column_groups))
       ) %>%
-      arrange(desc(levelmatch)) %>%
+      arrange(desc(.data$levelmatch)) %>%
       mutate(
         ysep = row_space,
-        ymax = col_annot_offset + cumsum(height + ysep) - ysep,
-        ymin = ymax - height,
-        y = (ymin + ymax) / 2
+        ymax = col_annot_offset + cumsum(.data$height + .data$ysep) - .data$ysep,
+        ymin = .data$ymax - .data$height,
+        y = (.data$ymin + .data$ymax) / 2
       )
 
     column_annotation <-
       col_join %>%
-      group_by(level) %>%
-      mutate(max_newlines = max(str_count(name, "\n"))) %>%
+      group_by(.data$level) %>%
+      mutate(max_newlines = max(str_count(.data$name, "\n"))) %>%
       group_by(level, name, palette) %>%
       summarise(
-        xmin = min(xmin),
-        xmax = max(xmax),
-        x = (xmin + xmax) / 2
+        xmin = min(.data$xmin),
+        xmax = max(.data$xmax),
+        x = (.data$xmin + .data$xmax) / 2
       ) %>%
       ungroup() %>%
       left_join(level_heights, by = "level") %>%
       filter(!is.na(name), grepl("[A-Za-z]", name)) %>%
       # mutate(colour = palettes$column_annotation[palette])
-      mutate(colour = map_chr(palettes, function(x) x[round(length(x)/2)])[palette])
+      mutate(colour = map_chr(palettes, function(x) x[round(length(x)/2)])[.data$palette])
       # todo: change colour depending on level height?
 
     rect_data <- rect_data %>% bind_rows(
       column_annotation %>%
-        transmute(xmin, xmax, ymin, ymax, colour, alpha = ifelse(levelmatch == 1, 1, .25), border = FALSE)
+        transmute(
+          .data$xmin,
+          .data$xmax,
+          .data$ymin,
+          .data$ymax,
+          .data$colour,
+          alpha = ifelse(.data$levelmatch == 1, 1, .25),
+          border = FALSE
+        )
     )
 
     text_data <- text_data %>% bind_rows(
       column_annotation %>%
         transmute(
-          xmin, xmax, ymin, ymax,
-          hjust = 0.5, vjust = 0.5,
-          fontface = ifelse(levelmatch == 1, "bold", NA),
-          colour = ifelse(levelmatch == 1, "white", "black"),
-          label_value = name
+          .data$xmin,
+          .data$xmax,
+          .data$ymin,
+          .data$ymax,
+          hjust = 0.5,
+          vjust = 0.5,
+          fontface = ifelse(.data$levelmatch == 1, "bold", NA),
+          colour = ifelse(.data$levelmatch == 1, "white", "black"),
+          label_value = .data$name
         )
     )
 
     if (add_abc) {
       text_data <- text_data %>% bind_rows(
         column_annotation %>%
-          filter(levelmatch == 1) %>%
-          arrange(x) %>%
+          filter(.data$levelmatch == 1) %>%
+          arrange(.data$x) %>%
           transmute(
-            xmin = xmin + col_space, xmax = xmax - col_space, ymin, ymax,
-            hjust = 0, vjust = 0.5,
+            xmin = .data$xmin + col_space,
+            xmax = .data$xmax - col_space,
+            .data$ymin,
+            .data$ymax,
+            hjust = 0,
+            vjust = 0.5,
             fontface = "bold",
             colour = "white",
             label_value = paste0(letters[row_number()], ")")
@@ -359,23 +397,29 @@ funky_heatmap <- function(
   }
 
   # ADD COLUMN NAMES
-  df <- column_pos %>% filter(name != "")
+  df <- column_pos %>% filter(.data$name != "")
   if (nrow(df) > 0) {
     segment_data <- segment_data %>% bind_rows(
-      df %>% transmute(x = x, xend = x, y = -.3, yend = -.1, size = .5)
+      df %>% transmute(
+        x = .data$x,
+        xend = .data$x,
+        y = -.3,
+        yend = -.1,
+        size = .5
+      )
     )
     text_data <-
       bind_rows(
         text_data,
         df %>% transmute(
-          xmin = xmin,
-          xmax = xmax,
-          ymin = 0, 
+          xmin = .data$xmin,
+          xmax = .data$xmax,
+          ymin = 0,
           ymax = col_annot_offset,
-          angle = 30, 
-          vjust = 0, 
+          angle = 30,
+          vjust = 0,
           hjust = 0,
-          label_value = name # TODO: will need to be able to use a nicer label
+          label_value = .data$name
         )
       )
   }
@@ -396,7 +440,12 @@ funky_heatmap <- function(
 
   # CREATE LEGENDS
   if (any(column_pos$geom == "pie")) {
-    rel_cols <- column_pos %>% filter(geom == "pie") %>% arrange(x) %>% group_by(palette) %>% slice(1) %>% ungroup()
+    rel_cols <- column_pos %>%
+      filter(.data$geom == "pie") %>%
+      arrange(.data$x) %>%
+      group_by(.data$palette) %>%
+      slice(1) %>%
+      ungroup()
 
     for (i in seq_len(nrow(rel_cols))) {
       palette <- palettes[[rel_cols$palette[[i]]]]
@@ -409,31 +458,69 @@ funky_heatmap <- function(
         mutate(
           rad_start = seq(0, pi, length.out = n() + 1) %>% head(-1),
           rad_end = seq(0, pi, length.out = n() + 1) %>% tail(-1),
-          rad = (rad_start + rad_end) / 2,
-          colour = rep("black", length(rad)),
-          lab_x = row_height * sin(rad),
-          lab_y = seq(row_height * (cos(first(rad)) + .2), row_height * (cos(last(rad)) - .2), length.out = n()),
-          hjust = rep(0, length(rad)),
-          xpt = row_height * sin(rad),
-          ypt = row_height * cos(rad),
+          rad = (.data$rad_start + .data$rad_end) / 2,
+          colour = rep("black", length(.data$rad)),
+          lab_x = row_height * sin(.data$rad),
+          lab_y = seq(
+            row_height * (cos(first(.data$rad)) + .2),
+            row_height * (cos(last(.data$rad)) - .2),
+            length.out = n()
+          ),
+          hjust = rep(0, length(.data$rad)),
+          xpt = row_height * sin(.data$rad),
+          ypt = row_height * cos(.data$rad),
           vjust = .5
         )
 
       pie_title_data <-
-        tibble(xmin = pie_minimum_x, xmax = pie_minimum_x, ymin = legend_pos - 1.5, ymax = legend_pos - .5, label_value = "Error reason", hjust = 0, vjust = 1, fontface = "bold")
+        tibble(
+          xmin = pie_minimum_x,
+          xmax = pie_minimum_x,
+          ymin = legend_pos - 1.5,
+          ymax = legend_pos - .5,
+          label_value = "Error reason",
+          hjust = 0,
+          vjust = 1,
+          fontface = "bold"
+        )
 
       pie_pie_data <-
         pie_legend_df %>%
-        transmute(x0 = pie_minimum_x, y0 = legend_pos - 2.75, r0 = 0, r = row_height * .75, rad_start, rad_end, colour = fill)
+        transmute(
+          x0 = pie_minimum_x,
+          y0 = legend_pos - 2.75,
+          r0 = 0,
+          r = row_height * .75,
+          .data$rad_start,
+          .data$rad_end,
+          colour = .data$fill
+        )
 
       pie_text_data <-
         pie_legend_df %>%
-        transmute(x = pie_minimum_x + .5 + lab_x, y = legend_pos - 2.75 + lab_y, label_value = name, vjust, hjust, colour) %>%
-        mutate(xmin = x, xmax = x, ymin = y - .4, ymax = y + .4)
+        transmute(
+          x = pie_minimum_x + .5 + .data$lab_x,
+          y = legend_pos - 2.75 + .data$lab_y,
+          label_value = .data$name,
+          .data$vjust,
+          .data$hjust,
+          .data$colour
+        ) %>%
+        mutate(
+          xmin = .data$x,
+          xmax = .data$x,
+          ymin = .data$y - .4,
+          ymax = .data$y + .4
+        )
 
       pie_seg_data <-
         pie_legend_df %>%
-        transmute(x = pie_minimum_x + xpt * .85, xend = pie_minimum_x + xpt * 1.1, y = legend_pos - 2.75 + ypt * .85, yend = legend_pos - 2.75 + ypt * 1.1)
+        transmute(
+          x = pie_minimum_x + .data$xpt * .85,
+          xend = pie_minimum_x + .data$xpt * 1.1,
+          y = legend_pos - 2.75 + .data$ypt * .85,
+          yend = legend_pos - 2.75 + .data$ypt * 1.1
+        )
 
       text_data <- text_data %>% bind_rows(
         pie_title_data,
@@ -452,7 +539,7 @@ funky_heatmap <- function(
 
   # funkyrect legend
   if (any(column_pos$geom == "funkyrect")) {
-    fr_minimum_x <- column_pos %>% filter(geom == "funkyrect") %>% pull(xmin) %>% min
+    fr_minimum_x <- column_pos %>% filter(.data$geom == "funkyrect") %>% pull(.data$xmin) %>% min
 
     fr_legend_size <- 1
     fr_legend_space <- .2
@@ -460,8 +547,10 @@ funky_heatmap <- function(
     fr_legend_dat1 <-
       tibble(
         value = seq(0, 1, by = .1),
-        xmin = 0, xmax = col_width * fr_legend_size,
-        ymin = 0, ymax = col_width * fr_legend_size
+        xmin = 0,
+        xmax = col_width * fr_legend_size,
+        ymin = 0,
+        ymax = col_width * fr_legend_size
       )
 
     fr_poly_data1 <-

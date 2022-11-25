@@ -25,7 +25,10 @@
 verify_row_groups <- function(row_groups, row_info) {
   if (is.null(row_groups) && !all(is.na(row_info$group))) {
     cli_alert_info("No row groups was provided, deriving from row info.")
-    row_groups <- row_info %>% select(group) %>% distinct()
+    row_groups <- row_info %>%
+      select(.data$group) %>%
+      filter(!is.na(.data$group)) %>%
+      distinct()
   }
 
   # if row_groups is still NULL, simply return

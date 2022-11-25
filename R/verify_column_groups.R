@@ -25,7 +25,10 @@
 verify_column_groups <- function(column_groups, column_info) {
   if (is.null(column_groups) && !all(is.na(column_info$group))) {
     cli_alert_info("No column groups was provided, deriving from column info.")
-    column_groups <- column_info %>% select(group) %>% distinct()
+    column_groups <- column_info %>%
+      select(.data$group) %>%
+      filter(!is.na(.data$group)) %>%
+      distinct()
   }
 
   # if column_groups is still NULL, simply return
