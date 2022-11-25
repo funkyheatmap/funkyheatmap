@@ -40,11 +40,13 @@ Imports:
   tibble,
   tidyr
 Suggests: 
-  knitr,
-  rmarkdown
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
   R (>= 2.10)
 LazyData: true
 URL: https://rcannood.github.io/funkyheatmap, https://github.com/rcannood/funkyheatmap
 BugReports: https://github.com/rcannood/funkyheatmap/issues
+Config/testthat/edition: 3
