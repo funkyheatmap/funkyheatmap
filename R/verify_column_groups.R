@@ -37,9 +37,12 @@ verify_column_groups <- function(column_groups, column_info) {
     is.data.frame(column_groups),
     column_groups %has_name% "group",
     is.character(column_groups$group) | is.factor(column_groups$group),
-    all(column_groups$group %in% column_info$group),
     all(is.na(column_info$group) | column_info$group %in% column_groups$group)
   )
+  if (!all(column_groups$group %in% column_info$group)) {
+    unused <- unique(column_groups$group[!column_groups$group %in% column_info$group])
+    cli_alert_warning("Detected unused column groups: {paste(unused, collapse = ', ')}.")
+  }
 
   # checking palette
   if (!column_groups %has_name% "palette") {

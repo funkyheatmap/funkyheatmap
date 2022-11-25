@@ -66,6 +66,7 @@ verify_column_info <- function(column_info, data) {
   assert_that(
     is.character(column_info$group) | is.factor(column_info$group)
   )
+  column_info$group[column_info$group == ""] <- NA_character_
 
   # checking palette
   if (!column_info %has_name% "palette") {

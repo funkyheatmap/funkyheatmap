@@ -46,7 +46,7 @@ By defining a few additional formatting parameters, we can get the plot to look 
 ```{r column-info}
 column_info <- tribble(
   ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
-  "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
+  "id",    NA,             "",                         "text",       NA,          list(hjust = 0, width = 6),
   "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",  list(width = 4, legend = FALSE),
   "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",  list(width = 4, legend = FALSE),
   "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1",  lst(),
@@ -65,7 +65,6 @@ Define column groups
 ```{r column-groups}
 column_groups <- tribble( # tribble_start
   ~Category,  ~group,         ~palette,
-  "\n",       "method_info",  "overall",
   "Overall",  "overall",      "overall",
   "Group 1",  "group1",       "palette1",
   "Group 2",  "group2",       "palette2"
