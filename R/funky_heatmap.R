@@ -1,6 +1,6 @@
 #' Generate a funky heatmaps for benchmarks
 #' 
-#' Allows generating beautiful visualisations for benchmark data 
+#' Allows generating heatmap-like visualisations for benchmark data 
 #' frames. Funky heatmaps can be fine-tuned by providing annotations of the 
 #' columns and rows, which allows assigning multiple palettes or geometries
 #' or grouping rows and columns together in categories.
