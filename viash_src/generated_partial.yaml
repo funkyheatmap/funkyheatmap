@@ -1,0 +1,217 @@
+functionality:
+  name: funky_heatmap
+  version: 0.1.0
+  description: |-
+    Generate a funky heatmaps for benchmarks
+
+    Allows generating heatmap-like visualisations for benchmark data frames.
+    Funky heatmaps can be fine-tuned by providing annotations of the columns
+    and rows, which allows assigning multiple palettes or geometries or
+    grouping rows and columns together in categories.
+  authors:
+  - name: Robrecht Cannoodt
+    email: rcannood@gmail.com
+    props:
+      orcid: 0000-0003-3641-729X
+      github: rcannood
+    roles:
+    - Author
+    - Maintainer
+  - name: Wouter Saelens
+    email: wouter.saelens@gmail.com
+    props:
+      orcid: 0000-0002-7114-6248
+      github: zouter
+    roles: Author
+  arguments:
+  - name: --data
+    description: |-
+      A data frame with items by row and features in the columns. Must
+      contain one column named `"id"`.
+    type: file
+    direction: input
+    required: no
+    example: data.tsv
+    multiple: no
+  - name: --column_info
+    description: |-
+      A data frame describing which columns in `data` to plot. This data
+      frame should contain the following columns:
+
+      -   `id` (`character`): The corresponding column name in `data`.
+
+      -   `name` (`character`): A label for the column. If `NA` or `""`,
+          no label will be plotted. If this column is missing, `id` will
+          be used to generate the `name` column.
+
+      -   `geom` (`character`): The geom of the column. Must be one of:
+          `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, or
+          `"text"`. For `"text"`, the corresponding column in `data` must
+          be a `character`. For `"pie"`, the column must be a list of
+          named numeric vectors. For all other geoms, the column must be a
+          `numeric`.
+
+      -   `group` (`character`): The grouping id of each column, must
+          match with `column_groups$group`. If this column is missing or
+          all values are `NA`, columns are assumed not to be grouped.
+
+      -   `palette` (`character`): Which palette to colour the geom by.
+          Each value should have a matching value in `palettes$palette`.
+
+      -   `options` (`list`): Column specific options. The content of the
+          list will depend on the geom. Options are:
+
+          -   `width`: Custom width for this column (default: 1).
+
+          -   `overlay`: Whether to overlay this column over the previous
+              column. If so, the width of that column will be inherited.
+
+          -   `legend`: Whether or not to add a legend for this column.
+
+          -   `hjust`, `vjust`, `size`: see
+              [ggplot2::geom_text](https://ggplot2.tidyverse.org/reference/geom_text.html).
+
+          -   `label`: Which column to use as a label (only for
+              `geom = "text"`).
+
+          -   `hjust`: Horizontal alignment of the bar, must be between
+              \[0,1\] (only for `geom = "bar"`).
+    type: file
+    direction: input
+    required: no
+    example: column_info.tsv
+    multiple: no
+  - name: --row_info
+    description: |-
+      A data frame describing the rows of `data`. This data should contain
+      two columns:
+
+      -   `id` (`character`): Corresponds to the column `data$id`.
+
+      -   `group` (`character`): The group of the row. If all are `NA`,
+          the rows will not be split up into groups.
+    type: file
+    direction: input
+    required: no
+    example: row_info.tsv
+    multiple: no
+  - name: --column_groups
+    description: |-
+      A data frame describing of how to group the columns in
+      `column_info`. Can consist of the following columns:
+
+      -   `group` (`character`): The corresponding group in
+          `column_info$group`.
+
+      -   `palette` (`character`, optional): The palette used to colour
+          the column group backgrounds.
+
+      -   `level1` (`character`): The label at the highest level.
+
+      -   `level2` (`character`, optional): The label at the middle level.
+
+      -   `level3` (`character`, optional): The label at the lowest level
+          (not recommended).
+    type: file
+    direction: input
+    required: no
+    example: column_groups.tsv
+    multiple: no
+  - name: --row_groups
+    description: |-
+      A data frame describing of how to group the rows in `row_info`. Can
+      consist of the following columns:
+
+      -   `group` (`character`): The corresponding group in
+          `row_info$group`.
+
+      -   `level1` (`character`): The label at the highest level.
+
+      -   `level2` (`character`, optional): The label at the middle level.
+
+      -   `level3` (`character`, optional): The label at the lowest level
+          (not recommended).
+    type: file
+    direction: input
+    required: no
+    example: row_groups.tsv
+    multiple: no
+  - name: --palettes
+    description: |-
+      A named list of palettes. Each entry in `column_info$palette` should
+      have an entry in this object. If an entry is missing, the type of
+      the column will be inferred (categorical or numerical) and one of
+      the default palettes will be applied. Alternatively, the name of one
+      of the standard palette names can be used:
+
+      -   `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`,
+          `"Greens"`
+
+      -   `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
+    type: file
+    direction: input
+    required: no
+    example: palettes.yaml
+    multiple: no
+  - name: --scale_column
+    description: Whether or not to apply min-max scaling to each numerical column.
+    type: boolean
+    direction: input
+    required: no
+    default: yes
+    multiple: no
+  - name: --add_abc
+    description: |-
+      Whether or not to add subfigure labels to the different columns
+      groups.
+    type: boolean
+    direction: input
+    required: no
+    default: yes
+    multiple: no
+  - name: --col_annot_offset
+    description: How much the column annotation will be offset by.
+    type: double
+    direction: input
+    required: no
+    default: 3.0
+    multiple: no
+  - name: --row_annot_offset
+    description: How much the column annotation will be offset by.
+    type: double
+    direction: input
+    required: no
+    default: 0.5
+    multiple: no
+  - name: --removed_entries
+    description: |-
+      Which methods to not show in the rows. Missing methods are replaced
+      by a \"Not shown\" label.
+    type: string
+    direction: input
+    required: no
+    example:
+    - sample1
+    - sample2
+    - sample3
+    multiple: yes
+    multiple_sep: ':'
+  - name: --expand
+    description: A list of directions to expand the plot in.
+    type: double
+    direction: input
+    required: no
+    default:
+    - 0.0
+    - 2.0
+    - 0.0
+    - 0.0
+    multiple: yes
+    multiple_sep: ':'
+  - name: --output
+    description: A funky heatmap.
+    type: file
+    direction: output
+    required: yes
+    example: output.pdf
+    multiple: no
