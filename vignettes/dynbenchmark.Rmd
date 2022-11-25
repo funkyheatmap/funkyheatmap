@@ -36,13 +36,12 @@ row_info <-
 row_groups <-
   data %>%
   transmute(
+    group,
     Group = case_when(
-      group == "graph" ~ "Graph methods",
       group == "cycle" ~ "Cyclic methods",
       TRUE ~ paste0(stringr::str_to_title(group), " methods")
-      
-    ),
-    group) %>%
+    )
+  ) %>%
   unique()
 ```
 
@@ -161,7 +160,7 @@ palettes <- tribble(
 ```
 
 Generate funky heatmap
-```{r make-plot, fig.width=22, fig.height=18}
+```{r make-plot}
 g <- funky_heatmap(
   data = data,
   column_info = column_info,
@@ -171,7 +170,21 @@ g <- funky_heatmap(
   palettes = palettes,
   col_annot_offset = 3.2
 )
+```
 
+
+```{r include=FALSE}
+# set width and height for upcoming plot
+knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
+```
+
+```{r heatmap}
 g
 ```
 
+`funkyheatmap` automatically recommends a width and height for the generated plot.
+To save your plot, run:
+
+``` r
+ggsave("path_to_plot.pdf", g, device = cairo_pdf, width = g$width, height = g$height)
+```

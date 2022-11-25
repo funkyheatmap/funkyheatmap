@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,13 +15,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-# funkyheatmap
+# funkyheatmap: Generating Funky Heatmaps for Data Frames
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rcannood/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of funkyheatmap is to generate funky heatmaps for benchmarking results.
+Allows generating beautiful visualisations for benchmark data 
+frames. Funky heatmaps can be fine-tuned by providing annotations of the 
+columns and rows, which allows assigning multiple palettes or geometries
+or grouping rows and columns together in categories.
 
 ## Installation
 
@@ -31,9 +36,40 @@ devtools::install_github("rcannood/funkyheatmap")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+You can visualise the `mtcars` dataset as follows.
 
 ```{r example}
 library(funkyheatmap)
-## basic example code
+library(tibble)
+library(purrr)
+
+data("mtcars")
+
+data <- mtcars %>% rownames_to_column("id")
+
+g <- funky_heatmap(data)
 ```
+
+```{r include=FALSE}
+# set width and height for upcoming plot
+knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
+```
+
+```{r example-heatmap}
+g
+```
+
+However, this plot can look so much better if you provide additional metadata
+for the rows and columns.
+
+
+## More information 
+
+* Check out the vignette `vignette("mtcars", "funkyheatmap")` for more 
+  information on how to customize this visualisation.
+
+* The vignette `vignette("dynbenchmark", "funkyheatmap")`  displays the code 
+  that was used in Saelens et al. (2019) [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
+  
+* The reference documentation on `funky_heatmap()` details the exact formats of 
+  each annotation object that you can pass to it.
