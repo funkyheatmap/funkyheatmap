@@ -1,15 +1,18 @@
 ---
-title: "funky_heatmap as a standalone executable"
+title: "Standalone executable"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{funky_heatmap as a standalone executable}
+  %\VignetteIndexEntry{Standalone executable}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
 
-`funkyheatmap` is also available as a standalone executable.
+`funkyheatmap` is available as a standalone executable. The data formats
+are very similar as the underlying R function. Instead of data frames
+you should pass TSV files and instead of a named list (for the palettes)
+you should pass a yaml file.
 
 ## Install
 
