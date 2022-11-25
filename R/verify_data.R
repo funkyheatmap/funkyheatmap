@@ -22,7 +22,15 @@ verify_data <- function(data) {
   assert_that(
     is.data.frame(data),
     ncol(data) >= 1,
-    nrow(data) >= 1,
+    nrow(data) >= 1
+  )
+  
+  if (!data %has_name% "id" && !is.null(rownames(data))) {
+    cli_alert_info("Could not find column 'id' in data. Using rownames as 'id'.")
+    data <- data %>% rownames_to_column("id")
+  }
+  
+  assert_that(
     data %has_name% "id"
   )
   

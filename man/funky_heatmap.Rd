@@ -114,7 +114,7 @@ A ggplot. \code{.$width} and \code{.$height} are suggested dimensions for
 storing the plot with \code{\link[=ggsave]{ggsave()}}.
 }
 \description{
-Allows generating beautiful visualisations for benchmark data
+Allows generating heatmap-like visualisations for benchmark data
 frames. Funky heatmaps can be fine-tuned by providing annotations of the
 columns and rows, which allows assigning multiple palettes or geometries
 or grouping rows and columns together in categories.

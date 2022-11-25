@@ -6,9 +6,9 @@
 \alias{funkyheatmap-package}
 \title{funkyheatmap: Generating Funky Heatmaps for Data Frames}
 \description{
-Allows generating beautiful visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.
+Allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories. Saelens et al. (2019) \doi{10.1038/s41587-019-0071-9}.
 
-Allows generating beautiful visualisations for benchmark data
+Allows generating heatmap-likes visualisations for benchmark data
 frames. Funky heatmaps can be fine-tuned by providing annotations of the
 columns and rows, which allows assigning multiple palettes or geometries
 or grouping rows and columns together in categories.
