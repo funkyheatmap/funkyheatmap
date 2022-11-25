@@ -50,9 +50,9 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/dynbenchmark.html">Recreating the dynbenchmark figures</a>
-    <a class="dropdown-item" href="articles/executable.html">funky_heatmap as a standalone executable</a>
-    <a class="dropdown-item" href="articles/mtcars.html">Small funky heatmap using mtcars</a>
-    <a class="dropdown-item" href="articles/nextflow.html">funky_heatmap as a Nextflow module</a>
+    <a class="dropdown-item" href="articles/executable.html">Standalone executable</a>
+    <a class="dropdown-item" href="articles/mtcars.html">Demo with mtcars</a>
+    <a class="dropdown-item" href="articles/nextflow.html">Nextflow module</a>
   </div>
 </li>
 <li class="nav-item">
@@ -89,7 +89,7 @@
 <p>You can install the development version of funkyheatmap like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dynverse/funkyheatmap"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also download <code>funkyheatmap</code> as an executable or a Nextflow pipeline.</p>
+<p>You can also download <code>funkyheatmap</code> as a <a href="http://funkyheatmap.dynverse.org/articles/executable.html" class="external-link">standalone executable</a> or a <a href="http://funkyheatmap.dynverse.org/articles/nextflow.html" class="external-link">Nextflow pipeline</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -161,9 +161,10 @@
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
 <ul>
-<li><p>Check out the vignette <code><a href="articles/mtcars.html">vignette("mtcars", "funkyheatmap")</a></code> for more information on how to customize this visualisation.</p></li>
-<li><p>The vignette <code><a href="articles/dynbenchmark.html">vignette("dynbenchmark", "funkyheatmap")</a></code> displays the code that was used in Saelens et al. (2019) <a href="https://doi.org/10.1038/s41587-019-0071-9" class="external-link">doi:10.1038/s41587-019-0071-9</a>.</p></li>
-<li><p>The reference documentation on <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> details the exact formats of each annotation object that you can pass to it.</p></li>
+<li><p>The <a href="http://funkyheatmap.dynverse.org/reference/index.html" class="external-link">reference documentation</a> on <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> details the exact formats of each annotation object that you can pass to it.</p></li>
+<li><p>Check out the vignette <a href="http://funkyheatmap.dynverse.org/articles/mtcars.html" class="external-link"><code>vignette("mtcars", "funkyheatmap")</code></a> for more information on how to customize this visualisation.</p></li>
+<li><p>In <a href="http://funkyheatmap.dynverse.org/articles/dynbenchmark.html" class="external-link"><code>vignette("dynbenchmark", "funkyheatmap")</code></a> we use funkyheatmap to regenerate the figures from Saelens et al. (2019) <a href="https://doi.org/10.1038/s41587-019-0071-9" class="external-link">doi:10.1038/s41587-019-0071-9</a>.</p></li>
+<li><p>We used <a href="https://viash.io" class="external-link">Viash</a> to wrap the <code><a href="reference/funky_heatmap.html">funkyheatmap::funky_heatmap()</a></code> function as a <a href="http://funkyheatmap.dynverse.org/articles/executable.html" class="external-link">standalone executable</a> and <a href="http://funkyheatmap.dynverse.org/articles/nextflow.html" class="external-link">Nextflow module</a>.</p></li>
 </ul>
 </div>
 </div>
