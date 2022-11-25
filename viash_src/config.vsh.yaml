@@ -1,0 +1,22 @@
+__inherits__: generated_partial.yaml
+functionality:
+  resources:
+    - type: r_script
+      path: script.R
+  test_resources:
+    - type: r_script
+      path: test.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    target_registry: ghcr.io
+    target_organization: dynverse
+    target_image_source: https://github.com/dynverse/funkyheatmap/
+    setup:
+      - type: r
+        github: dynverse/funkyheatmap
+        cran:
+          - readr
+          - yaml
+          - processx
+  - type: nextflow
