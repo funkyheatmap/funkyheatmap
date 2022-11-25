@@ -29,16 +29,8 @@ that the provided data frame has a column named `"id"`.
 
 ``` r
 library(funkyheatmap)
-library(tibble)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
+library(dplyr, warn.conflicts = FALSE)
+library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
 

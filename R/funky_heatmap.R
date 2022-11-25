@@ -2,7 +2,7 @@
 #'
 #' @param data A data frame with items by row and features in the columns.
 #' Must contain one column named `"id"`.
-#'
+#' 
 #' @param column_info A data frame describing which columns in `data` to
 #' plot. This data frame should contain the following columns:
 #'
@@ -253,11 +253,11 @@ funky_heatmap <- function(
         x0 = .data$x,
         pct = ifelse(is.finite(.data$value), .data$value, 0),
         pct = .data$pct / sum(.data$pct),
-        rad = .data$pct * 2 * .data$pi,
+        rad = .data$pct * 2 * pi,
         rad_end = cumsum(.data$rad),
         rad_start = .data$rad_end - .data$rad,
         r0 = 0,
-        r = .data$row_height / 2,
+        r = row_height / 2,
         value = .data$name
       ) %>%
       filter(.data$rad_end != .data$rad_start, 1e-10 <= .data$pct) %>%
@@ -299,7 +299,7 @@ funky_heatmap <- function(
           .data$xmin,
           .data$xmax,
           ymin = .data$ymax + row_space,
-          label_value = .data$name %>% gsub("\n", " ", .),
+          label_value = gsub("\n", " ", .data$name),
           hjust = 0,
           vjust = .5,
           fontface = "bold"
@@ -330,12 +330,14 @@ funky_heatmap <- function(
         ymin = .data$ymax - .data$height,
         y = (.data$ymin + .data$ymax) / 2
       )
+    
+    palette_mids <- map_chr(palettes, function(x) x[round(length(x)/2)])
 
     column_annotation <-
       col_join %>%
       group_by(.data$level) %>%
       mutate(max_newlines = max(str_count(.data$name, "\n"))) %>%
-      group_by(level, name, palette) %>%
+      group_by(.data$level, .data$name, .data$palette) %>%
       summarise(
         xmin = min(.data$xmin),
         xmax = max(.data$xmax),
@@ -343,9 +345,9 @@ funky_heatmap <- function(
       ) %>%
       ungroup() %>%
       left_join(level_heights, by = "level") %>%
-      filter(!is.na(name), grepl("[A-Za-z]", name)) %>%
+      filter(!is.na(.data$name), grepl("[A-Za-z]", .data$name)) %>%
       # mutate(colour = palettes$column_annotation[palette])
-      mutate(colour = map_chr(palettes, function(x) x[round(length(x)/2)])[.data$palette])
+      mutate(colour = palette_mids[.data$palette])
       # todo: change colour depending on level height?
 
     rect_data <- rect_data %>% bind_rows(
@@ -636,8 +638,8 @@ funky_heatmap <- function(
           vjust = 0,
           label_value = ifelse(
             .data$value %in% c(0, 1),
-            sprintf("%.0f", value),
-            sprintf("%.1f", value)
+            sprintf("%.0f", .data$value),
+            sprintf("%.1f", .data$value)
           )
         )
 
@@ -673,9 +675,34 @@ funky_heatmap <- function(
 
     pr_text_data <-
       bind_rows(
-        tibble(xmin = pr_minimum_x, xmax = pr_minimum_x, ymin = legend_pos - 1.5, ymax = legend_pos - .5, label_value = "Prior information required", hjust = 0, vjust = 1, fontface = "bold"),
-        pr_labels_df %>% transmute(xmin = lab_x1, xmax = lab_x1, ymin = lab_y, ymax = lab_y, label_value = symbol, hjust = 0, vjust = 0),
-        pr_labels_df %>% transmute(xmin = lab_x2, xmax = lab_x2, ymin = lab_y, ymax = lab_y, label_value = value, hjust = 0, vjust = 0)
+        tibble(
+          xmin = pr_minimum_x,
+          xmax = pr_minimum_x,
+          ymin = legend_pos - 1.5,
+          max = legend_pos - .5,
+          label_value = "Prior information required",
+          hjust = 0,
+          vjust = 1,
+          fontface = "bold"
+        ),
+        pr_labels_df %>% transmute(
+          xmin = .data$lab_x1,
+          xmax = .data$lab_x1,
+          ymin = .data$lab_y,
+          ymax = .data$lab_y,
+          label_value = .data$symbol,
+          hjust = 0,
+          vjust = 0
+        ),
+        pr_labels_df %>% transmute(
+          xmin = .data$lab_x2,
+          xmax = .data$lab_x2,
+          ymin = .data$lab_y,
+          ymax = .data$lab_y,
+          label_value = .data$value,
+          hjust = 0,
+          vjust = 0
+        )
       )
 
     text_data <- text_data %>% bind_rows(
@@ -700,8 +727,24 @@ funky_heatmap <- function(
       )
     rm_text_data <-
       bind_rows(
-        tibble(xmin = rm_min_x, xmax = rm_min_x, ymin = legend_pos - 1.5, ymax = legend_pos - .5, label_value = "Not shown, insufficient data points", hjust = 0, vjust = 1, fontface = "bold"),
-        rm_lab_df %>% mutate(xmin = x, xmax = x, ymin = y, ymax = y, hjust = 0, vjust = 0)
+        tibble(
+          xmin = rm_min_x,
+          xmax = rm_min_x,
+          ymin = legend_pos - 1.5,
+          ymax = legend_pos - .5,
+          label_value = "Not shown, insufficient data points",
+          hjust = 0,
+          vjust = 1,
+          fontface = "bold"
+        ),
+        rm_lab_df %>% mutate(
+          xmin = .data$x,
+          xmax = .data$x,
+          ymin = .data$y,
+          ymax = .data$y,
+          hjust = 0,
+          vjust = 0
+        )
       )
 
     text_data <- text_data %>% bind_rows(
@@ -717,11 +760,21 @@ funky_heatmap <- function(
 
   # small funkyrects are circles
   if (nrow(funkyrect_data) > 0) {
-    funkyrect_data <- funkyrect_data %>% mutate(is_circle = !is.na(start) & start < 1e-10 & 2 * pi - 1e-10 < end)
-    circle_data <- circle_data %>% bind_rows(
-      funkyrect_data %>% filter(is_circle) %>% select(x0 = x, y0 = y, r, colour)
+    funkyrect_data <- funkyrect_data %>% mutate(
+      is_circle = !is.na(.data$start) & 
+        .data$start < 1e-10 & 2 * pi - 1e-10 < .data$end
     )
-    funkyrect_data <- funkyrect_data %>% filter(!is_circle)
+    circle_data <- circle_data %>% bind_rows(
+      funkyrect_data %>%
+        filter(.data$is_circle) %>%
+        select(
+          x0 = .data$x,
+          y0 = .data$y,
+          .data$r,
+          .data$colour
+        )
+    )
+    funkyrect_data <- funkyrect_data %>% filter(!.data$is_circle)
   }
 
   # bars are rects
@@ -734,13 +787,15 @@ funky_heatmap <- function(
 
   # 100% pies are circles
   if (nrow(pie_data) > 0) {
-    pie_data <- pie_data %>% mutate(pct = (rad_end - rad_start) / 2 / pi)
+    pie_data <- pie_data %>% mutate(
+      pct = (.data$rad_end - .data$rad_start) / 2 / pi
+    )
     # plot 100% pies as circles
     circle_data <- bind_rows(
       circle_data,
-      pie_data %>% filter(pct >= (1-1e-10))
+      pie_data %>% filter(.data$pct >= (1 - 1e-10))
     )
-    pie_data <- pie_data %>% filter(pct < (1-1e-10))
+    pie_data <- pie_data %>% filter(.data$pct < (1 - 1e-10))
   }
 
   ####################################
@@ -758,55 +813,158 @@ funky_heatmap <- function(
     cowplot::theme_nothing()
 
   # PLOT ROW BACKGROUNDS
-  df <- row_pos %>% filter(colour_background)
+  df <- row_pos %>% filter(.data$colour_background)
   if (nrow(df) > 0) {
-    g <- g + geom_rect(aes(xmin = min(column_pos$xmin)-.25, xmax = max(column_pos$xmax)+.25, ymin = ymin - (row_space / 2), ymax = ymax + (row_space / 2)), df, fill = "#DDDDDD")
+    g <- g + geom_rect(
+      aes(
+        xmin = min(column_pos$xmin) - .25,
+        xmax = max(column_pos$xmax) + .25,
+        ymin = .data$ymin - (row_space / 2),
+        ymax = .data$ymax + (row_space / 2)
+      ),
+      df, 
+      fill = "#DDDDDD"
+    )
   }
 
   # PLOT SEGMENTS
   if (nrow(segment_data) > 0) {
     # add defaults for optional values
-    segment_data <- segment_data %>% add_column_if_missing(size = .5, colour = "black", linetype = "solid")
+    segment_data <- segment_data %>% add_column_if_missing(
+      size = .5,
+      colour = "black",
+      linetype = "solid"
+    )
 
-    g <- g + geom_segment(aes(x = x, xend = xend, y = y, yend = yend, size = size, colour = colour, linetype = linetype), segment_data)
+    g <- g + geom_segment(
+      aes(
+        x = .data$x,
+        xend = .data$xend,
+        y = .data$y,
+        yend = .data$yend,
+        size = .data$size,
+        colour = .data$colour,
+        linetype = .data$linetype
+      ),
+      segment_data
+    )
   }
 
   # PLOT RECTANGLES
   if (nrow(rect_data) > 0) {
     # add defaults for optional values
     rect_data <- rect_data %>%
-      add_column_if_missing(alpha = 1, border = TRUE, border_colour = "black") %>%
-      mutate(border_colour = ifelse(border, border_colour, NA))
+      add_column_if_missing(
+        alpha = 1,
+        border = TRUE,
+        border_colour = "black"
+      ) %>%
+      mutate(
+        border_colour = ifelse(.data$border, .data$border_colour, NA_character_)
+      )
 
-    g <- g + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = colour, colour = border_colour, alpha = alpha), rect_data, size = .25)
+    g <- g + geom_rect(
+      aes(
+        xmin = .data$xmin,
+        xmax = .data$xmax,
+        ymin = .data$ymin,
+        ymax = .data$ymax,
+        fill = .data$colour,
+        colour = .data$border_colour,
+        alpha = .data$alpha
+      ),
+      rect_data,
+      size = .25
+    )
   }
 
   # PLOT CIRCLES
   if (nrow(circle_data) > 0) {
-    g <- g + ggforce::geom_circle(aes(x0 = x0, y0 = y0, fill = colour, r = r), circle_data, size = .25)
+    g <- g + ggforce::geom_circle(
+      aes(
+        x0 = .data$x0,
+        y0 = .data$y0,
+        fill = .data$colour,
+        r = .data$r
+      ),
+      circle_data,
+      size = .25
+    )
   }
 
   # PLOT FUNKY RECTANGLES
   if (nrow(funkyrect_data) > 0) {
     # there are polygons and there are quarter-circles to be plotted
     # it's possible to distinguish one from another by looking at the 'r' column
-    funky_poly_data <- funkyrect_data %>% filter(is.na(r))
-    funky_arc_data <- funkyrect_data %>% filter(!is.na(r))
+    funky_poly_data <- funkyrect_data %>% filter(is.na(.data$r))
+    funky_arc_data <- funkyrect_data %>% filter(!is.na(.data$r))
 
     g <- g +
       # plot polygon fill
-      geom_polygon(aes(x, y, group = name, fill = colour), funky_poly_data) +
+      geom_polygon(
+        aes(
+          .data$x,
+          .data$y,
+          group = .data$name,
+          fill = .data$colour
+        ),
+        funky_poly_data
+      ) +
       # plot quarter circle fill
-      ggforce::geom_arc_bar(aes(x0 = x, y0 = y, r0 = 0, r = r, start = start, end = end, fill = colour), funky_arc_data, colour = NA) +
+      ggforce::geom_arc_bar(
+        aes(
+          x0 = .data$x,
+          y0 = .data$y,
+          r0 = 0,
+          r = .data$r,
+          start = .data$start,
+          end = .data$end,
+          fill = .data$colour
+        ),
+        funky_arc_data,
+        colour = NA
+      ) +
       # plot polygon border
-      geom_path(aes(x = x, y = y, group = paste0(name, "_", subgroup)), funky_poly_data, colour = "black", size = .25) +
+      geom_path(
+        aes(
+          x = .data$x,
+          y = .data$y,
+          group = paste0(.data$name, "_", .data$subgroup)
+        ),
+        funky_poly_data,
+        colour = "black",
+        size = .25
+      ) +
       # plot quarter circle border
-      ggforce::geom_arc(aes(x0 = x, y0 = y, r = r, start = start, end = end), funky_arc_data, colour = "black", size = .25)
+      ggforce::geom_arc(
+        aes(
+          x0 = .data$x,
+          y0 = .data$y,
+          r = .data$r,
+          start = .data$start,
+          end = .data$end
+        ),
+        funky_arc_data,
+        colour = "black",
+        size = .25
+      )
   }
 
   # PLOT PIES
   if (nrow(pie_data) > 0) {
-    g <- g + ggforce::geom_arc_bar(aes(x0 = x0, y0 = y0, r0 = r0, r = r, start = rad_start, end = rad_end, fill = colour), data = pie_data, size = .25)
+    g <- g + ggforce::geom_arc_bar(
+      aes(
+        x0 = .data$x0,
+        y0 = .data$y0,
+        r0 = .data$r0,
+        r = .data$r,
+        start = .data$rad_start,
+        end = .data$rad_end,
+        fill = .data$colour
+      ),
+      data = pie_data,
+      size = .25
+    )
   }
 
   # PLOT TEXT
@@ -823,17 +981,34 @@ funky_heatmap <- function(
         angle = 0
       ) %>%
       mutate(
-        angle2 = angle / 360 * 2 * pi,
-        cosa = cos(angle2) %>% round(2),
-        sina = sin(angle2) %>% round(2),
-        alphax = ifelse(cosa < 0, 1 - hjust, hjust) * abs(cosa) + ifelse(sina > 0, 1 - vjust, vjust) * abs(sina),
-        alphay = ifelse(sina < 0, 1 - hjust, hjust) * abs(sina) + ifelse(cosa < 0, 1 - vjust, vjust) * abs(cosa),
-        x = (1 - alphax) * xmin + alphax * xmax,
-        y = (1 - alphay) * ymin + alphay * ymax
+        angle2 = .data$angle / 360 * 2 * pi,
+        cosa = cos(.data$angle2) %>% round(2),
+        sina = sin(.data$angle2) %>% round(2),
+        alphax =
+          ifelse(.data$cosa < 0, 1 - .data$hjust, .data$hjust) * abs(.data$cosa) +
+          ifelse(.data$sina > 0, 1 - .data$vjust, .data$vjust) * abs(.data$sina),
+        alphay =
+          ifelse(.data$sina < 0, 1 - .data$hjust, .data$hjust) * abs(.data$sina) +
+          ifelse(.data$cosa < 0, 1 - .data$vjust, .data$vjust) * abs(.data$cosa),
+        x = (1 - .data$alphax) * .data$xmin + .data$alphax * .data$xmax,
+        y = (1 - .data$alphay) * .data$ymin + .data$alphay * .data$ymax
       ) %>%
-      filter(label_value != "")
+      filter(.data$label_value != "")
 
-    g <- g + geom_text(aes(x = x, y = y, label = label_value, colour = colour, hjust = hjust, vjust = vjust, size = size, fontface = fontface, angle = angle), data = text_data)
+    g <- g + geom_text(
+      aes(
+        x = .data$x,
+        y = .data$y,
+        label = .data$label_value,
+        colour = .data$colour,
+        hjust = .data$hjust,
+        vjust = .data$vjust,
+        size = .data$size,
+        fontface = .data$fontface,
+        angle = .data$angle
+      ),
+      data = text_data
+    )
   }
 
   # todo: need a generic solution
@@ -863,7 +1038,10 @@ funky_heatmap <- function(
   maximum_x <- maximum_x + (expand_li$xmax %||% 0)
   minimum_y <- minimum_y - (expand_li$ymin %||% 0)
   maximum_y <- maximum_y + (expand_li$ymax %||% 0)
-  g <- g + expand_limits(x = c(minimum_x, maximum_x), y = c(minimum_y, maximum_y))
+  g <- g + expand_limits(
+    x = c(minimum_x, maximum_x),
+    y = c(minimum_y, maximum_y)
+  )
   
   # store dimensions
   g$minimum_x <- minimum_x
