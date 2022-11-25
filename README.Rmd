@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+# dynbenchmark::reformat_tribbles("README.Rmd")
 ```
 
 # funkyheatmap: Generating Funky Heatmaps for Data Frames
@@ -36,17 +37,23 @@ devtools::install_github("rcannood/funkyheatmap")
 
 ## Example
 
-You can visualise the `mtcars` dataset as follows.
+Let's use the `mtcars` dataset as an example of what a funky heatmap looks like.
+The only strict requirement that `funky_heatmap()` has is that the provided
+data frame has a column named `"id"`.
 
 ```{r example}
 library(funkyheatmap)
 library(tibble)
-library(purrr)
+library(dplyr)
 
 data("mtcars")
 
-data <- mtcars %>% rownames_to_column("id")
+data <- mtcars %>%
+  rownames_to_column("id")
+```
 
+You can visualise the dataset as follows.
+```{r example-heatmap}
 g <- funky_heatmap(data)
 ```
 
@@ -55,20 +62,53 @@ g <- funky_heatmap(data)
 knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
 ```
 
-```{r example-heatmap}
+```{r view-heatmap}
 g
 ```
 
+## Customising the plot
 However, this plot can look so much better if you provide additional metadata
-for the rows and columns.
+for the rows and columns. See more information on how you can customise.
 
+```{r example-with-colinfo}
+data <- mtcars %>%
+  rownames_to_column("id") %>%
+  arrange(desc(mpg))
+
+column_info <- tribble(
+  ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
+  "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
+  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",  list(width = 4, legend = FALSE),
+  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",  list(width = 4, legend = FALSE),
+  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1",  lst(),
+  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1",  lst(),
+  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1",  lst(),
+  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1",  lst(),
+  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2",  lst(),
+  "vs",    "group2",       "Engine",                   "circle",     "palette2",  lst(),
+  "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
+  "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
+  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
+)
+
+g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
+```
+
+```{r include=FALSE}
+# set width and height for upcoming plot
+knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
+```
+
+```{r view-heatmap-with-colinfo}
+g
+```
 
 ## More information 
 
 * Check out the vignette `vignette("mtcars", "funkyheatmap")` for more 
   information on how to customize this visualisation.
 
-* The vignette `vignette("dynbenchmark", "funkyheatmap")`  displays the code 
+* The vignette `vignette("dynbenchmark", "funkyheatmap")` displays the code 
   that was used in Saelens et al. (2019) [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
   
 * The reference documentation on `funky_heatmap()` details the exact formats of 

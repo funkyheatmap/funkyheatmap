@@ -4,9 +4,9 @@
 \name{funkyheatmap-package}
 \alias{funkyheatmap}
 \alias{funkyheatmap-package}
-\title{funkyheatmap: Generating funky heatmaps for benchmarks}
+\title{funkyheatmap: Generating Funky Heatmaps for Data Frames}
 \description{
-A visualization library for generating benchmarking heatmaps.
+Allows generating beautiful visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.
 
 This package heavily depends on the functions provided by
 \href{https://ggplot2.tidyverse.org/}{\code{ggplot2}} and
@@ -15,16 +15,18 @@ This package heavily depends on the functions provided by
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://rcannood.github.io/funkyheatmap/}
+  \item \url{https://rcannood.github.io/funkyheatmap}
+  \item \url{https://github.com/rcannood/funkyheatmap}
+  \item Report bugs at \url{https://github.com/rcannood/funkyheatmap/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Robrecht Cannoodt \email{rcannood@gmail.com}
+\strong{Maintainer}: Robrecht Cannoodt \email{rcannood@gmail.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID}) (rcannood)
 
 Authors:
 \itemize{
-  \item Wouter Saelens \email{wouter.saelens@gmail.com}
+  \item Wouter Saelens \email{wouter.saelens@gmail.com} (\href{https://orcid.org/0000-0002-7114-6248}{ORCID}) (zouter)
 }
 
 }

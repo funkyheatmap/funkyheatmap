@@ -15,7 +15,8 @@ funky_heatmap(
   add_abc = TRUE,
   col_annot_offset = 3,
   row_annot_offset = 0.5,
-  removed_entries = NULL
+  removed_entries = NULL,
+  expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
 )
 }
 \arguments{
@@ -105,6 +106,8 @@ columns groups.}
 
 \item{removed_entries}{Which methods to not show in the rows. Missing methods
 are replaced by a "Not shown" label.}
+
+\item{expand}{A list of directions to expand the plot in.}
 }
 \description{
 Overview heatmap plotting
