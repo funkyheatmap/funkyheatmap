@@ -254,14 +254,14 @@ funky_heatmap <- function(
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <-
       inner_join(
-        dat %>% select(-.data$value) %>% mutate(iii = row_number()),
-        dat %>% select(.data$value) %>% mutate(iii = row_number()) %>%
+        dat %>% select(-"value") %>% mutate(iii = row_number()),
+        dat %>% select("value") %>% mutate(iii = row_number()) %>%
           dynutils::mapdf_dfr(function(l) {
             enframe(l$value) %>% mutate(iii = l$iii)
           }),
         by = "iii"
       ) %>%
-      select(-.data$iii)
+      select(-"iii")
 
     dat %>%
       group_by(.data$row_id, .data$column_id) %>%
@@ -298,7 +298,7 @@ funky_heatmap <- function(
   if (plot_row_annotation) {
     row_annotation <-
       row_groups %>%
-      gather("level", "name", -.data$group) %>%
+      gather("level", "name", -"group") %>%
       left_join(row_pos %>% select("group", "ymin", "ymax"), by = "group") %>%
       group_by(.data$name) %>%
       summarise(
@@ -328,7 +328,7 @@ funky_heatmap <- function(
   # GENERATE COLUMN ANNOTATION
   if (plot_column_annotation) {
     col_join <- column_groups %>%
-      gather("level", "name", -.data$group, -.data$palette) %>%
+      gather("level", "name", -"group", -"palette") %>%
       left_join(column_pos %>% select("group", "xmin", "xmax"), by = "group")
 
     text_pct <- .9
@@ -785,10 +785,10 @@ funky_heatmap <- function(
       funkyrect_data %>%
         filter(.data$is_circle) %>%
         select(
-          x0 = .data$x,
-          y0 = .data$y,
-          .data$r,
-          .data$colour
+          x0 = "x",
+          y0 = "y",
+          "r",
+          "colour"
         )
     )
     funkyrect_data <- funkyrect_data %>% filter(!.data$is_circle)

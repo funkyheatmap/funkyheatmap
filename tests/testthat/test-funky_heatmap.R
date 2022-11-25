@@ -38,7 +38,6 @@ palettes <- tribble(
 
 test_that("simple funky_heatmap works", {
   g <- funky_heatmap(data)
-  expect_is(g, "ggplot")
   ggsave(nullfile(), g, device = "pdf")
 })
 
@@ -52,7 +51,5 @@ test_that("complex funky_heatmap works", {
     palettes = palettes,
     expand = list(xmax = 4)
   )
-
-  expect_is(g, "ggplot")
   ggsave(nullfile(), g, device = "pdf")
 })
