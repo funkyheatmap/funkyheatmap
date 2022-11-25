@@ -1,7 +1,7 @@
 process_geom_params <- function(column_info) {
   bind_cols(
     column_info %>%
-      select(-.data$options),
+      select(-"options"),
     column_info %>%
       pull(.data$options) %>%
       map_df(function(l) {

@@ -9,7 +9,7 @@ make_geom_data_processor <- function(
     column_sels <-
       column_pos %>%
       filter(.data$geom %in% geom_types) %>%
-      select(-.data$group, -.data$name, -.data$do_spacing) %>%
+      select(-"group", -"name", -"do_spacing") %>%
       rename(column_id = .data$id) %>%
       add_column_if_missing(
         label = NA_character_,
@@ -50,12 +50,12 @@ make_geom_data_processor <- function(
           data %>%
           mutate(row_id = .data$id) %>%
           select(.data$row_id, !!labelcolumn_sel$label) %>%
-          gather("label_column", "label_value", -.data$row_id) %>%
+          gather("label_column", "label_value", -"row_id") %>%
           left_join(
             labelcolumn_sel %>% select(label_column = "label", "column_id"), 
             by = "label_column"
           ) %>%
-          select(-.data$label_column)
+          select(-"label_column")
         data_sel <-
           left_join(data_sel, label_sel, by = c("row_id", "column_id"))
       }
@@ -99,7 +99,7 @@ make_geom_data_processor <- function(
               palette_sel[.data$col_value]
             )
           ) %>%
-          select(-.data$value, -.data$col_value)
+          select(-"value", -"col_value")
       }
       
       dat
