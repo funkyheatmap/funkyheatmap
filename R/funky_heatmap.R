@@ -365,8 +365,13 @@ funky_heatmap <- function(
       bind_rows(
         text_data,
         df %>% transmute(
-          xmin = x, xmax = x, ymin = 0, ymax = 0,
-          angle = 30, vjust = 0, hjust = 0,
+          xmin = xmin,
+          xmax = xmax,
+          ymin = 0, 
+          ymax = col_annot_offset,
+          angle = 30, 
+          vjust = 0, 
+          hjust = 0,
           label_value = name # TODO: will need to be able to use a nicer label
         )
       )
@@ -732,9 +737,14 @@ funky_heatmap <- function(
   # maximum_x <- maximum_x + 2
   # minimum_y <- minimum_y - 2
   # maximum_y <- maximum_y + 2
-
-  g$width <- maximum_x - minimum_x
-  g$height <- maximum_y - minimum_y
+  
+  # store variables
+  g$minimum_x <- minimum_x
+  g$maximum_x <- maximum_x
+  g$minimum_y <- minimum_y
+  g$maximum_y <- maximum_y
+  g$width <- (maximum_x - minimum_x) / 4
+  g$height <- (maximum_y - minimum_y) / 4
 
   g <- g + expand_limits(x = c(minimum_x, maximum_x), y = c(minimum_y, maximum_y))
 
