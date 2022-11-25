@@ -6,11 +6,11 @@ smear <- function(cols) {
 #' @importFrom RColorBrewer brewer.pal
 default_palettes <- list(
   numerical = list(
-    "Greys" = RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev %>% smear,
     "Blues" = RColorBrewer::brewer.pal(9, "Blues") %>% c("#011636") %>% rev %>% smear,
     "Reds" = RColorBrewer::brewer.pal(9, "Reds")[-8:-9] %>% rev %>% smear,
     "YlOrBr" = RColorBrewer::brewer.pal(9, "YlOrBr")[-7:-9] %>% rev %>% smear,
-    "Greens" = RColorBrewer::brewer.pal(9, "Greens")[-1] %>% c("#00250f") %>% rev %>% smear
+    "Greens" = RColorBrewer::brewer.pal(9, "Greens")[-1] %>% c("#00250f") %>% rev %>% smear,
+    "Greys" = RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev %>% smear
   ),
   categorical = list(
     "Set3" = RColorBrewer::brewer.pal(12, "Set3"),
