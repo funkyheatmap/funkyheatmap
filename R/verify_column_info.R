@@ -69,8 +69,12 @@ verify_column_info <- function(column_info, data) {
 
   # checking palette
   if (!column_info %has_name% "palette") {
-    cli_alert_info("Column info did not contain a column called 'palette'. Assuming no colour scales need to be used.")
-    column_info$palette <- NA_character_
+    cli_alert_info("Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.")
+    column_info$palette <- case_when(
+      column_info$geom == "text" ~ NA_character_,
+      column_info$geom == "pie" ~ "categorical_palette",
+      TRUE ~ "numerical_palette"
+    )
   }
   assert_that(
     is.character(column_info$palette) | is.factor(column_info$palette)
@@ -78,8 +82,15 @@ verify_column_info <- function(column_info, data) {
 
   # checking options
   if (!column_info %has_name% "options") {
-    cli_alert_info("Column info did not contain a column called 'options'. Assuming no options need to be used.")
-    column_info$options <- map(seq_len(nrow(column_info)), function(x) list())
+    cli_alert_info("Column info did not contain a column called 'options', generating ptions based on the 'geom' column.")
+    # column_info$options <- map(seq_len(nrow(column_info)), function(x) list())
+    column_info$options <- pmap(column_info, function(geom, ...) {
+      if (geom == "text") {
+        list(width = 6)
+      } else {
+        list()
+      }
+    })
   }
   assert_that(
     is.list(column_info$options),

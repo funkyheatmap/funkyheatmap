@@ -91,11 +91,14 @@ verify_palettes <- function(palettes, column_info, data) {
       columns <- column_info %>% filter(palette == !!palette_id) %>% slice_head()
       
       # try to determine palette type (numerical or categorical)
-      palette_type <- case_when(
-        columns$geom == "pie" ~ "categorical",
-        is.numeric(data[columns$id]) ~ "numerical",
-        TRUE ~ "categorical"
-      )
+      palette_type <- 
+        if (columns$geom == "pie") {
+          "categorical"
+        } else if (is.numeric(data[[columns$id]])) {
+          "numerical"
+        } else {
+          "categorical"
+        }
 
       # fetch palette
       counter <- rotation_counter[[palette_type]]
@@ -108,7 +111,7 @@ verify_palettes <- function(palettes, column_info, data) {
       }
       rotation_counter[[palette_type]] <- counter
       
-      cli_alert_info("Palette '{palette_name}' was not defined. Automatically assigning {palette_type} palette named {palette_name}.")
+      cli_alert_info("Palette named '{palette_id}' was not defined. Assuming palette is {palette_type}. Automatically selected palette '{palette_name}'.")
 
       # assigning palette
       palettes[[palette_id]] <- palette_name
