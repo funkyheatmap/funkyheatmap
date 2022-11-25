@@ -66,7 +66,8 @@
 <span>  add_abc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  col_annot_offset <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  row_annot_offset <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  removed_entries <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  removed_entries <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fl">0</span>, xmax <span class="op">=</span> <span class="fl">2</span>, ymin <span class="op">=</span> <span class="fl">0</span>, ymax <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -167,6 +168,10 @@ columns groups.</p></dd>
 <dt>removed_entries</dt>
 <dd><p>Which methods to not show in the rows. Missing methods
 are replaced by a "Not shown" label.</p></dd>
+
+
+<dt>expand</dt>
+<dd><p>A list of directions to expand the plot in.</p></dd>
 
 </dl></div>
 

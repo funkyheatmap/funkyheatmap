@@ -86,17 +86,27 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>Let’s use the <code>mtcars</code> dataset as an example of what a funky heatmap looks like. The only strict requirement that <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> has is that the provided data frame has a column named <code>"id"</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rcannood.github.io/funkyheatmap">funkyheatmap</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span></span></code></pre></div>
+<p>You can visualise the dataset as follows.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ No column info was provided, assuming all columns in `data` are to be plotted.</span></span>
 <span><span class="co">#&gt; ℹ Column info did not contain column `name`, using `id` to generate it.</span></span>
 <span><span class="co">#&gt; ℹ Column info did not contain information on which columns to plot, inferring from `data` types.</span></span>
@@ -106,10 +116,57 @@
 <span><span class="co">#&gt; ℹ No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
 <span><span class="co">#&gt; ℹ Row info did not contain group information, assuming rows are ungrouped.</span></span>
 <span><span class="co">#&gt; ℹ No palettes were provided, trying to automatically assign palettes.</span></span>
-<span><span class="co">#&gt; ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Greys'.</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-heatmap-1.png" width="100%"></p>
+<p><img src="reference/figures/README-view-heatmap-1.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="customising-the-plot">Customising the plot<a class="anchor" aria-label="anchor" href="#customising-the-plot"></a>
+</h2>
+<p>However, this plot can look so much better if you provide additional metadata for the rows and columns. See more information on how you can customise.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">column_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">id</span>,     <span class="op">~</span><span class="va">group</span>,         <span class="op">~</span><span class="va">name</span>,                      <span class="op">~</span><span class="va">geom</span>,        <span class="op">~</span><span class="va">palette</span>,    <span class="op">~</span><span class="va">options</span>,</span>
+<span>  <span class="st">"id"</span>,    <span class="st">""</span>,             <span class="st">""</span>,                         <span class="st">"text"</span>,       <span class="cn">NA</span>,          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
+<span>  <span class="st">"mpg"</span>,   <span class="st">"overall"</span>,      <span class="st">"Miles / gallon"</span>,           <span class="st">"bar"</span>,        <span class="st">"palette1"</span>,  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>, legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  <span class="st">"cyl"</span>,   <span class="st">"overall"</span>,      <span class="st">"Number of cylinders"</span>,      <span class="st">"bar"</span>,        <span class="st">"palette2"</span>,  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>, legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  <span class="st">"disp"</span>,  <span class="st">"group1"</span>,       <span class="st">"Displacement (cu.in.)"</span>,    <span class="st">"funkyrect"</span>,  <span class="st">"palette1"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"hp"</span>,    <span class="st">"group1"</span>,       <span class="st">"Gross horsepower"</span>,         <span class="st">"funkyrect"</span>,  <span class="st">"palette1"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"drat"</span>,  <span class="st">"group1"</span>,       <span class="st">"Rear axle ratio"</span>,          <span class="st">"funkyrect"</span>,  <span class="st">"palette1"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"wt"</span>,    <span class="st">"group1"</span>,       <span class="st">"Weight (1000 lbs)"</span>,        <span class="st">"funkyrect"</span>,  <span class="st">"palette1"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"qsec"</span>,  <span class="st">"group2"</span>,       <span class="st">"1/4 mile time"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"vs"</span>,    <span class="st">"group2"</span>,       <span class="st">"Engine"</span>,                   <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"am"</span>,    <span class="st">"group2"</span>,       <span class="st">"Transmission"</span>,             <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"gear"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Forward gears"</span>,          <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"carb"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Carburetors"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span>, column_info <span class="op">=</span> <span class="va">column_info</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmax <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
+<span><span class="co">#&gt; ℹ Row info did not contain group information, assuming rows are ungrouped.</span></span>
+<span><span class="co">#&gt; ℹ No column groups was provided, deriving from column info.</span></span>
+<span><span class="co">#&gt; ℹ Column groups did not contain a column called 'palette'. Assuming no colour scales need to be used.</span></span>
+<span><span class="co">#&gt; ℹ Column groups did not contain a column called 'level1'. Using `column_info$group` as a makeshift column group name.</span></span>
+<span><span class="co">#&gt; ℹ No palettes were provided, trying to automatically assign palettes.</span></span>
+<span><span class="co">#&gt; ℹ Palette named 'palette1' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
+<span><span class="co">#&gt; ℹ Palette named 'palette2' was not defined. Assuming palette is numerical. Automatically selected palette 'Reds'.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
+<p><img src="reference/figures/README-view-heatmap-with-colinfo-1.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
+</h2>
+<ul>
+<li><p>Check out the vignette <code><a href="articles/mtcars.html">vignette("mtcars", "funkyheatmap")</a></code> for more information on how to customize this visualisation.</p></li>
+<li><p>The vignette <code><a href="articles/dynbenchmark.html">vignette("dynbenchmark", "funkyheatmap")</a></code> displays the code that was used in Saelens et al. (2019) <a href="https://doi.org/10.1038/s41587-019-0071-9" class="external-link">doi:10.1038/s41587-019-0071-9</a>.</p></li>
+<li><p>The reference documentation on <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> details the exact formats of each annotation object that you can pass to it.</p></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
