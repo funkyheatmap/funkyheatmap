@@ -47,6 +47,6 @@ VignetteBuilder: knitr
 Depends: 
   R (>= 2.10)
 LazyData: true
-URL: https://rcannood.github.io/funkyheatmap, https://github.com/rcannood/funkyheatmap
-BugReports: https://github.com/rcannood/funkyheatmap/issues
+URL: https://funkyheatmap.dynverse.org, https://github.com/dynverse/funkyheatmap
+BugReports: https://github.com/dynverse/funkyheatmap/issues
 Config/testthat/edition: 3
