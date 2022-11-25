@@ -13,10 +13,16 @@
     <loc>https://funkyheatmap.dynverse.org/articles/dynbenchmark.html</loc>
   </url>
   <url>
+    <loc>https://funkyheatmap.dynverse.org/articles/executable.html</loc>
+  </url>
+  <url>
     <loc>https://funkyheatmap.dynverse.org/articles/index.html</loc>
   </url>
   <url>
     <loc>https://funkyheatmap.dynverse.org/articles/mtcars.html</loc>
+  </url>
+  <url>
+    <loc>https://funkyheatmap.dynverse.org/articles/nextflow.html</loc>
   </url>
   <url>
     <loc>https://funkyheatmap.dynverse.org/authors.html</loc>
