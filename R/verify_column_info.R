@@ -35,7 +35,7 @@ verify_column_info <- function(column_info, data) {
   # checking name
   if (!column_info %has_name% "name") {
     cli_alert_info("Column info did not contain column `name`, using `id` to generate it.")
-    column_info$name <- stringr::str_to_title(column_info$id)
+    column_info$name <- stringr::str_to_title(gsub("_", " ", column_info$id))
   }
   assert_that(
     is.character(column_info$name) | is.factor(column_info$name)
@@ -88,6 +88,8 @@ verify_column_info <- function(column_info, data) {
     column_info$options <- pmap(column_info, function(geom, ...) {
       if (geom == "text") {
         list(width = 6)
+      } else if (geom == "bar") {
+        list(width = 4, legend = FALSE)
       } else {
         list()
       }
