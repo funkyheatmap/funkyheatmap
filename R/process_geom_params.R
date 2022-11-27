@@ -1,4 +1,7 @@
 process_geom_params <- function(column_info) {
+  # column_info %>%
+  #   mutate(options = map(options, as_tibble)) %>%
+  #   unnest(cols = "options")
   bind_cols(
     column_info %>%
       select(-"options"),
