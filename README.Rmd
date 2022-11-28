@@ -29,10 +29,10 @@ or grouping rows and columns together in categories.
 
 ## Installation
 
-You can install the development version of funkyheatmap like so:
+You can install funkyheatmap like so:
 
 ``` r
-devtools::install_github("dynverse/funkyheatmap")
+install.packages("funkyheatmap")
 ```
 
 You can also download `funkyheatmap` as a [standalone executable](http://funkyheatmap.dynverse.org/articles/executable.html) 
@@ -51,16 +51,18 @@ data("mtcars")
 ```
 
 You can visualise the dataset as follows.
-```{r example-heatmap}
-g <- funky_heatmap(mtcars)
-```
 
 ```{r include=FALSE}
+g <- funky_heatmap(mtcars)
 # set width and height for upcoming plot
 knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
 ```
 
-```{r view-heatmap}
+```{r eval=FALSE}
+funky_heatmap(mtcars)
+```
+
+```{r heatmap1, echo=FALSE}
 g
 ```
 
@@ -88,16 +90,18 @@ column_info <- tribble(
   "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
   "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
 )
-
-g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 ```
 
 ```{r include=FALSE}
-# set width and height for upcoming plot
+g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
 ```
 
-```{r view-heatmap-with-colinfo}
+```{r eval=FALSE}
+funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
+```
+
+```{r heatmap2, echo=FALSE}
 g
 ```
 
