@@ -86,9 +86,9 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of funkyheatmap like so:</p>
+<p>You can install funkyheatmap like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dynverse/funkyheatmap"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"funkyheatmap"</span><span class="op">)</span></span></code></pre></div>
 <p>You can also download <code>funkyheatmap</code> as a <a href="http://funkyheatmap.dynverse.org/articles/executable.html" class="external-link">standalone executable</a> or a <a href="http://funkyheatmap.dynverse.org/articles/nextflow.html" class="external-link">Nextflow pipeline</a>.</p>
 </div>
 <div class="section level2">
@@ -103,27 +103,14 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span></code></pre></div>
 <p>You can visualise the dataset as follows.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Could not find column 'id' in data. Using rownames as 'id'.</span></span>
-<span><span class="co">#&gt; ℹ No column info was provided, assuming all columns in `data` are to be plotted.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain column `name`, using `id` to generate it.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain information on which columns to plot, inferring from `data` types.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain group information, assuming columns are ungrouped.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain a column called 'options', generating ptions based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; ℹ No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
-<span><span class="co">#&gt; ℹ Row info did not contain group information, assuming rows are ungrouped.</span></span>
-<span><span class="co">#&gt; ℹ No palettes were provided, trying to automatically assign palettes.</span></span>
-<span><span class="co">#&gt; ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<p><img src="reference/figures/README-view-heatmap-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-heatmap1-1.png" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="customising-the-plot">Customising the plot<a class="anchor" aria-label="anchor" href="#customising-the-plot"></a>
 </h2>
 <p>However, this plot can look so much better if you provide additional metadata for the rows and columns. See more information on how you can customise.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
@@ -142,20 +129,10 @@
 <span>  <span class="st">"am"</span>,    <span class="st">"group2"</span>,       <span class="st">"Transmission"</span>,             <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="st">"gear"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Forward gears"</span>,          <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="st">"carb"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Carburetors"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span>, column_info <span class="op">=</span> <span class="va">column_info</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmax <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
-<span><span class="co">#&gt; ℹ Row info did not contain group information, assuming rows are ungrouped.</span></span>
-<span><span class="co">#&gt; ℹ No column groups was provided, deriving from column info.</span></span>
-<span><span class="co">#&gt; ℹ Column groups did not contain a column called 'palette'. Assuming no colour scales need to be used.</span></span>
-<span><span class="co">#&gt; ℹ Column groups did not contain a column called 'level1'. Using `column_info$group` as a makeshift column group name.</span></span>
-<span><span class="co">#&gt; ℹ No palettes were provided, trying to automatically assign palettes.</span></span>
-<span><span class="co">#&gt; ℹ Palette named 'palette1' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
-<span><span class="co">#&gt; ℹ Palette named 'palette2' was not defined. Assuming palette is numerical. Automatically selected palette 'Reds'.</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<p><img src="reference/figures/README-view-heatmap-with-colinfo-1.png" width="100%"></p>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span>, column_info <span class="op">=</span> <span class="va">column_info</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmax <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-heatmap2-1.png" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
@@ -171,6 +148,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=funkyheatmap" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/dynverse/funkyheatmap/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/dynverse/funkyheatmap/issues" class="external-link">Report a bug</a></li>
 </ul>
