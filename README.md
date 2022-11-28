@@ -16,10 +16,10 @@ categories.
 
 ## Installation
 
-You can install the development version of funkyheatmap like so:
+You can install funkyheatmap like so:
 
 ``` r
-devtools::install_github("dynverse/funkyheatmap")
+install.packages("funkyheatmap")
 ```
 
 You can also download `funkyheatmap` as a [standalone
@@ -43,25 +43,10 @@ data("mtcars")
 You can visualise the dataset as follows.
 
 ``` r
-g <- funky_heatmap(mtcars)
-#> ℹ Could not find column 'id' in data. Using rownames as 'id'.
-#> ℹ No column info was provided, assuming all columns in `data` are to be plotted.
-#> ℹ Column info did not contain column `name`, using `id` to generate it.
-#> ℹ Column info did not contain information on which columns to plot, inferring from `data` types.
-#> ℹ Column info did not contain group information, assuming columns are ungrouped.
-#> ℹ Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.
-#> ℹ Column info did not contain a column called 'options', generating ptions based on the 'geom' column.
-#> ℹ No row info was provided, assuming all rows in `data` are to be plotted.
-#> ℹ Row info did not contain group information, assuming rows are ungrouped.
-#> ℹ No palettes were provided, trying to automatically assign palettes.
-#> ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.
+funky_heatmap(mtcars)
 ```
 
-``` r
-g
-```
-
-<img src="man/figures/README-view-heatmap-1.png" width="100%" />
+<img src="man/figures/README-heatmap1-1.png" width="100%" />
 
 ## Customising the plot
 
@@ -89,23 +74,13 @@ column_info <- tribble(
   "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
   "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
 )
-
-g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
-#> ℹ No row info was provided, assuming all rows in `data` are to be plotted.
-#> ℹ Row info did not contain group information, assuming rows are ungrouped.
-#> ℹ No column groups was provided, deriving from column info.
-#> ℹ Column groups did not contain a column called 'palette'. Assuming no colour scales need to be used.
-#> ℹ Column groups did not contain a column called 'level1'. Using `column_info$group` as a makeshift column group name.
-#> ℹ No palettes were provided, trying to automatically assign palettes.
-#> ℹ Palette named 'palette1' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.
-#> ℹ Palette named 'palette2' was not defined. Assuming palette is numerical. Automatically selected palette 'Reds'.
 ```
 
 ``` r
-g
+funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 ```
 
-<img src="man/figures/README-view-heatmap-with-colinfo-1.png" width="100%" />
+<img src="man/figures/README-heatmap2-1.png" width="100%" />
 
 ## More information
 

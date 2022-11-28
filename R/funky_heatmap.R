@@ -86,7 +86,7 @@
 #' columns groups.
 #' 
 #' @param col_annot_offset How much the column annotation will be offset by.
-#' @param row_annot_offset How much the column annotation will be offset by.
+#' @param row_annot_offset How much the row annotation will be offset by.
 #' @param removed_entries Which methods to not show in the rows. Missing methods
 #' are replaced by a "Not shown" label.
 #' 
