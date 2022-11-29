@@ -105,7 +105,8 @@ it doesn’t look very nice:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain information on which columns to plot, inferring from `data` types.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain group information, assuming columns are ungrouped.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'options', generating options based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'width', generating options based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Row info did not contain group information, assuming rows are ungrouped.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No palettes were provided, trying to automatically assign palettes.</span></span>
@@ -174,10 +175,13 @@ plot to look much nicer.</p>
 <span>  row_groups <span class="op">=</span> <span class="va">row_groups</span>,</span>
 <span>  palettes <span class="op">=</span> <span class="va">palettes</span>,</span>
 <span>  expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmax <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Detected unused column groups: group1, group2.</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<p><img src="mtcars_files/figure-html/heatmap-1.png" width="708"></p>
+<code class="sourceCode R"><span><span class="va">g</span></span>
+<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values (`geom_rect()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 4 rows containing missing values (`geom_text()`).</span></span></code></pre></div>
+<p><img src="mtcars_files/figure-html/heatmap-1.png" width="451.2"></p>
 <p><code>funkyheatmap</code> automatically recommends a width and height
 for the generated plot. To save your plot, run:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

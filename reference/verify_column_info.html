@@ -81,16 +81,23 @@ For all other geoms, the column must be a <code>numeric</code>.</p></li>
 columns are assumed not to be grouped.</p></li>
 <li><p><code>palette</code> (<code>character</code>): Which palette to colour the geom by.
 Each value should have a matching value in <code>palettes$palette</code>.</p></li>
-<li><p><code>options</code> (<code>list</code>): Column specific options. The content of the list
-will depend on the geom. Options are:</p><ul><li><p><code>width</code>: Custom width for this column (default: 1).</p></li>
+<li><p><code>width</code>: Custom width for this column (default: 1).</p></li>
 <li><p><code>overlay</code>: Whether to overlay this column over the previous column.
 If so, the width of that column will be inherited.</p></li>
 <li><p><code>legend</code>: Whether or not to add a legend for this column.</p></li>
-<li><p><code>hjust</code>, <code>vjust</code>, <code>size</code>: see <a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text</a>.</p></li>
-<li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
 <li><p><code>hjust</code>: Horizontal alignment of the bar, must be between [0,1]
 (only for <code>geom = "bar"</code>).</p></li>
-</ul></li>
+<li><p><code>hjust</code>: Horizontal alignment of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>vjust</code>: Vertical alignment of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>size</code>: Size of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
+<li><p><code>options</code> (<code>list</code> or <code>json</code>): Any of the options above. Any values in this
+column will be spread across the other columns. This is useful for
+not having to provide a data frame with 1000s of columns.
+This column can be a json string.</p></li>
 </ul></dd>
 
 
@@ -124,13 +131,14 @@ Must contain one column named <code>"id"</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain column `name`, using `id` to generate it.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain group information, assuming columns are ungrouped.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'options', generating options based on the 'geom' column.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   id    geom      name  group palette           options         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> name  text      Name  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                <span style="color: #949494;">&lt;named list [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> x     funkyrect X     <span style="color: #BB0000;">NA</span>    numerical_palette <span style="color: #949494;">&lt;list [0]&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> y     funkyrect Y     <span style="color: #BB0000;">NA</span>    numerical_palette <span style="color: #949494;">&lt;list [0]&gt;</span>      </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'width', generating options based on the 'geom' column.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id    geom      name  group palette           width overlay legend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> name  text      Name  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                    6 FALSE   FALSE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> x     funkyrect X     <span style="color: #BB0000;">NA</span>    numerical_palette     1 FALSE   TRUE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> y     funkyrect Y     <span style="color: #BB0000;">NA</span>    numerical_palette     1 FALSE   TRUE  </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

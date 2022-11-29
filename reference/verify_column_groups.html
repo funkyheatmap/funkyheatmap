@@ -93,16 +93,23 @@ For all other geoms, the column must be a <code>numeric</code>.</p></li>
 columns are assumed not to be grouped.</p></li>
 <li><p><code>palette</code> (<code>character</code>): Which palette to colour the geom by.
 Each value should have a matching value in <code>palettes$palette</code>.</p></li>
-<li><p><code>options</code> (<code>list</code>): Column specific options. The content of the list
-will depend on the geom. Options are:</p><ul><li><p><code>width</code>: Custom width for this column (default: 1).</p></li>
+<li><p><code>width</code>: Custom width for this column (default: 1).</p></li>
 <li><p><code>overlay</code>: Whether to overlay this column over the previous column.
 If so, the width of that column will be inherited.</p></li>
 <li><p><code>legend</code>: Whether or not to add a legend for this column.</p></li>
-<li><p><code>hjust</code>, <code>vjust</code>, <code>size</code>: see <a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text</a>.</p></li>
-<li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
 <li><p><code>hjust</code>: Horizontal alignment of the bar, must be between [0,1]
 (only for <code>geom = "bar"</code>).</p></li>
-</ul></li>
+<li><p><code>hjust</code>: Horizontal alignment of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>vjust</code>: Vertical alignment of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>size</code>: Size of the label, must be between [0,1]
+(only for <code>geom = "text"</code>).</p></li>
+<li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
+<li><p><code>options</code> (<code>list</code> or <code>json</code>): Any of the options above. Any values in this
+column will be spread across the other columns. This is useful for
+not having to provide a data frame with 1000s of columns.
+This column can be a json string.</p></li>
 </ul></dd>
 
 </dl></div>
