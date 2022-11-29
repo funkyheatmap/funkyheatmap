@@ -40,18 +40,23 @@ For all other geoms, the column must be a \code{numeric}.
 columns are assumed not to be grouped.
 \item \code{palette} (\code{character}): Which palette to colour the geom by.
 Each value should have a matching value in \code{palettes$palette}.
-\item \code{options} (\code{list}): Column specific options. The content of the list
-will depend on the geom. Options are:
-\itemize{
 \item \code{width}: Custom width for this column (default: 1).
 \item \code{overlay}: Whether to overlay this column over the previous column.
 If so, the width of that column will be inherited.
 \item \code{legend}: Whether or not to add a legend for this column.
-\item \code{hjust}, \code{vjust}, \code{size}: see \link[ggplot2:geom_text]{ggplot2::geom_text}.
-\item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
 \item \code{hjust}: Horizontal alignment of the bar, must be between [0,1]
 (only for \code{geom = "bar"}).
-}
+\item \code{hjust}: Horizontal alignment of the label, must be between [0,1]
+(only for \code{geom = "text"}).
+\item \code{vjust}: Vertical alignment of the label, must be between [0,1]
+(only for \code{geom = "text"}).
+\item \code{size}: Size of the label, must be between [0,1]
+(only for \code{geom = "text"}).
+\item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
+\item \code{options} (\code{list} or \code{json}): Any of the options above. Any values in this
+column will be spread across the other columns. This is useful for
+not having to provide a data frame with 1000s of columns.
+This column can be a json string.
 }}
 
 \item{row_info}{A data frame describing the rows of \code{data}.
@@ -102,7 +107,7 @@ columns groups.}
 
 \item{col_annot_offset}{How much the column annotation will be offset by.}
 
-\item{row_annot_offset}{How much the column annotation will be offset by.}
+\item{row_annot_offset}{How much the row annotation will be offset by.}
 
 \item{removed_entries}{Which methods to not show in the rows. Missing methods
 are replaced by a "Not shown" label.}

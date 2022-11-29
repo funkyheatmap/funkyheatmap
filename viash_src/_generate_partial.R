@@ -106,6 +106,6 @@ config <- list(
   )
 )
 
-yaml::write_yaml(config, "viash/generated_sections.yaml")
+yaml::write_yaml(config, "viash_src/generated_partial")
 
 

@@ -5,3 +5,4 @@ inst/doc
 .httr-oauth
 .DS_Store
 docs
+examples.md

@@ -58,24 +58,32 @@ functionality:
       -   `palette` (`character`): Which palette to colour the geom by.
           Each value should have a matching value in `palettes$palette`.
 
-      -   `options` (`list`): Column specific options. The content of the
-          list will depend on the geom. Options are:
+      -   `width`: Custom width for this column (default: 1).
 
-          -   `width`: Custom width for this column (default: 1).
+      -   `overlay`: Whether to overlay this column over the previous
+          column. If so, the width of that column will be inherited.
 
-          -   `overlay`: Whether to overlay this column over the previous
-              column. If so, the width of that column will be inherited.
+      -   `legend`: Whether or not to add a legend for this column.
 
-          -   `legend`: Whether or not to add a legend for this column.
+      -   `hjust`: Horizontal alignment of the bar, must be between
+          \[0,1\] (only for `geom = "bar"`).
 
-          -   `hjust`, `vjust`, `size`: see
-              [ggplot2::geom_text](https://ggplot2.tidyverse.org/reference/geom_text.html).
+      -   `hjust`: Horizontal alignment of the label, must be between
+          \[0,1\] (only for `geom = "text"`).
 
-          -   `label`: Which column to use as a label (only for
-              `geom = "text"`).
+      -   `vjust`: Vertical alignment of the label, must be between
+          \[0,1\] (only for `geom = "text"`).
 
-          -   `hjust`: Horizontal alignment of the bar, must be between
-              \[0,1\] (only for `geom = "bar"`).
+      -   `size`: Size of the label, must be between \[0,1\] (only for
+          `geom = "text"`).
+
+      -   `label`: Which column to use as a label (only for
+          `geom = "text"`).
+
+      -   `options` (`list` or `json`): Any of the options above. Any
+          values in this column will be spread across the other columns.
+          This is useful for not having to provide a data frame with 1000s
+          of columns. This column can be a json string.
     type: file
     direction: input
     required: no
@@ -177,7 +185,7 @@ functionality:
     default: 3.0
     multiple: no
   - name: --row_annot_offset
-    description: How much the column annotation will be offset by.
+    description: How much the row annotation will be offset by.
     type: double
     direction: input
     required: no
