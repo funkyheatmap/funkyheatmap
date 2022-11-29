@@ -34,6 +34,7 @@ Imports:
   ggforce,
   ggplot2,
   grDevices,
+  jsonlite,
   purrr,
   RColorBrewer,
   stringr,

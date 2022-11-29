@@ -14,19 +14,25 @@ test_that("verify_column_info works", {
 
   out <- verify_column_info(column_info, data)
 
-  expect_named(
-    out,
-    c("id", "geom", "name", "group", "palette", "options"),
-    ignore.order = TRUE
-  )
+  expect_true(out %has_name% c("id", "geom", "name", "group", "palette", "width"))
 })
 
 test_that("verify_column_info works with no info", {
   out <- verify_column_info(NULL, data)
 
-  expect_named(
-    out, 
-    c("id", "geom", "name", "group", "palette", "options"),
-    ignore.order = TRUE
+  expect_true(out %has_name% c("id", "geom", "name", "group", "palette", "width"))
+})
+
+
+test_that("parsing json works", {
+  column_info <- tribble(
+    ~id, ~geom, ~options,
+    "name", "text", '{"width": 3}',
+    "x", "funkyrect", '{}',
+    "y", "funkyrect", '{"halign": 0.7}',
   )
+  
+  out <- verify_column_info(column_info, data)
+  
+  expect_true(out %has_name% c("id", "geom", "name", "group", "palette", "width"))
 })

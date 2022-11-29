@@ -29,17 +29,32 @@
 #'
 #' * `palette` (`character`): Which palette to colour the geom by.
 #'   Each value should have a matching value in `palettes$palette`.
-#'
-#' * `options` (`list`): Column specific options. The content of the list
-#'   will depend on the geom. Options are:
-#'   - `width`: Custom width for this column (default: 1).
-#'   - `overlay`: Whether to overlay this column over the previous column.
+#'   
+#' * `width`: Custom width for this column (default: 1).
+#' 
+#' * `overlay`: Whether to overlay this column over the previous column.
 #'     If so, the width of that column will be inherited.
-#'   - `legend`: Whether or not to add a legend for this column.
-#'   - `hjust`, `vjust`, `size`: see [ggplot2::geom_text].
-#'   - `label`: Which column to use as a label (only for `geom = "text"`).
-#'   - `hjust`: Horizontal alignment of the bar, must be between \[0,1\]
+#'     
+#' * `legend`: Whether or not to add a legend for this column.
+#' 
+#' * `hjust`: Horizontal alignment of the bar, must be between \[0,1\]
 #'     (only for `geom = "bar"`).
+#'     
+#' * `hjust`: Horizontal alignment of the label, must be between \[0,1\]
+#'     (only for `geom = "text"`).
+#'     
+#' * `vjust`: Vertical alignment of the label, must be between \[0,1\]
+#'     (only for `geom = "text"`).
+#'     
+#' * `size`: Size of the label, must be between \[0,1\]
+#'     (only for `geom = "text"`).
+#' 
+#' * `label`: Which column to use as a label (only for `geom = "text"`).
+#'
+#' * `options` (`list` or `json`): Any of the options above. Any values in this
+#'   column will be spread across the other columns. This is useful for
+#'   not having to provide a data frame with 1000s of columns.
+#'   This column can be a json string.
 #'
 #' @param row_info A data frame describing the rows of `data`.
 #' This data should contain two columns:
@@ -122,6 +137,14 @@ funky_heatmap <- function(
   removed_entries = NULL,
   expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
 ) {
+  # no point in making these into parameters
+  row_height <- 1
+  row_space <- .1
+  row_bigspace <- .5
+  col_width <- 1
+  col_space <- .1
+  col_bigspace <- .5
+  
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -130,14 +153,6 @@ funky_heatmap <- function(
   row_groups <- verify_row_groups(row_groups, row_info)
   palettes <- verify_palettes(palettes, column_info, data)
   # todo: add column groups to verify_palettes
-  
-  # no point in making these into parameters
-  row_height <- 1
-  row_space <- .1
-  row_bigspace <- .5
-  col_width <- 1
-  col_space <- .1
-  col_bigspace <- .5
 
   # DETERMINE ROW POSITIONS
   if (!"group" %in% colnames(row_info) || all(is.na(row_info$group))) {
@@ -162,12 +177,6 @@ funky_heatmap <- function(
   } else {
     plot_column_annotation <- TRUE
   }
-
-  # todo: could this be moved into verify_column_info?
-  column_info <-
-    column_info %>%
-    process_geom_params() %>%
-    add_column_if_missing(width = col_width, overlay = FALSE, legend = TRUE)
 
   column_pos <- calculate_column_positions(
     column_info,

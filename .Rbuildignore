@@ -10,3 +10,4 @@
 ^cran-comments\.md$
 ^viash_src$
 ^bin$
+^examples.md$

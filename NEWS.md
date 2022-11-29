@@ -1,3 +1,14 @@
+# funkyheatmap 0.1.1
+
+## MINOR CHANGES
+
+* The column info data frame can directly contain the `width`, `overlay`, 
+  `legend`, `hjust`, `vjust`, `size`, and `label` columns without having to passed
+  inside the `options` column first.
+
+* The `options` column can now also be a json string which will then first be parsed
+  and processed.
+
 # funkyheatmap 0.1.0
 
 The initial release of funkyheatmap as a standalone package.
