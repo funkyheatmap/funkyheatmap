@@ -12,3 +12,4 @@
 ^bin$
 ^examples.md$
 ^target$
+^data-raw$
