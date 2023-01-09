@@ -37,22 +37,29 @@ The results data is one big data frame.
 
 ```{r}
 data <- dynbenchmark_data$data
-kable(data, "html") %>%
-  scroll_box(width = "150%", height = "600px")
+print(data[,1:12])
 ```
 
-It's possible to preview the results by selecting a few columns, but the
-resulting data frame will not have any of the desired formatting.
-
+Choose a few columns to preview.
 ```{r}
 preview_cols <- c(
   "id",
+  "method_source",
+  "method_platform",
   "benchmark_overall_norm_correlation",
   "benchmark_overall_norm_featureimp_wcor",
   "benchmark_overall_norm_F1_branches",
   "benchmark_overall_norm_him",
   "benchmark_overall_overall"
 )
+kable(data[,preview_cols])
+```
+
+It's possible to use `funky_heatmap()` to visualise the data frame without
+providing additional metadata, but it will likely not have any of the desired
+formatting.
+
+```{r}
 g <- funky_heatmap(data[,preview_cols])
 ```
 
@@ -74,8 +81,7 @@ formatted.
 
 ```{r}
 column_info <- dynbenchmark_data$column_info
-kable(column_info) %>%
-  scroll_box(width = "150%", height = "600px")
+kable(column_info)
 ```
 
 With just the data and the column info, we can already get a pretty good 
