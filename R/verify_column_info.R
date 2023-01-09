@@ -39,7 +39,11 @@ verify_column_info <- function(column_info, data) {
       column_info$options <- map(column_info$options, jsonlite::fromJSON)
     }
     column_info <- column_info %>%
-      mutate(options = map(options, as_tibble)) %>%
+      mutate(options = map(options, function(x) {
+        optdf <- if (is.null(x) || length(x) == 0) tibble(a = 1)[,-1] else as_tibble(x)
+        assert_that(nrow(optdf) == 1, msg = paste0("Trying to convert: ", as.character(x)))
+        optdf
+      })) %>%
       unnest(cols = "options")
   }
 
