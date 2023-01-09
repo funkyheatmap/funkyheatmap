@@ -529,7 +529,7 @@ funky_heatmap <- function(
         transmute(
           x = pie_minimum_x + .5 + .data$lab_x,
           y = legend_pos - 2.75 + .data$lab_y,
-          label_value = .data$name,
+          label_value = as.character(.data$name),
           .data$vjust,
           .data$hjust,
           .data$colour
