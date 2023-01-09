@@ -37,14 +37,17 @@ Imports:
   jsonlite,
   purrr,
   RColorBrewer,
+  Rdpack,
   stringr,
   tibble,
   tidyr
 Suggests: 
+  kableExtra,
   knitr,
   rmarkdown,
   testthat (>= 3.0.0)
 VignetteBuilder: knitr
+RdMacros: Rdpack
 Depends: 
   R (>= 2.10)
 LazyData: true

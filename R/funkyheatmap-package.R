@@ -31,6 +31,7 @@ NULL
 #' @importFrom utils head tail
 #' @importFrom stats na.omit
 #' @importFrom cli cli_alert_warning cli_alert_info
+#' @importFrom Rdpack reprompt
 #' @import ggplot2
 #'
 #' @docType package
