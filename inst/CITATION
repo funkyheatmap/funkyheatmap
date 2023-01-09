@@ -3,8 +3,8 @@ citHeader("To cite funkyheatmap in publications use:")
 citEntry(
   entry    = "Article",
   author   = c(
-    person("Robrecht", "Cannoodt"),
     person("Wouter", "Saelens"),
+    person("Robrecht", "Cannoodt"),
     person("Helena", "Todorov"),
     person("Yvan", "Saeys")
   ),
