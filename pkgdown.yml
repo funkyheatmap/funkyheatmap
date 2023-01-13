@@ -6,7 +6,7 @@ articles:
   executable: executable.html
   mtcars: mtcars.html
   nextflow: nextflow.html
-last_built: 2023-01-09T13:33Z
+last_built: 2023-01-13T10:28Z
 urls:
   reference: https://funkyheatmap.dynverse.org/reference
   article: https://funkyheatmap.dynverse.org/articles
