@@ -102,6 +102,7 @@
 #' 
 #' @param col_annot_offset How much the column annotation will be offset by.
 #' @param row_annot_offset How much the row annotation will be offset by.
+#' @param col_annot_angle The angle of the column annotation labels.
 #' @param removed_entries Which methods to not show in the rows. Missing methods
 #' are replaced by a "Not shown" label.
 #' 
@@ -133,6 +134,7 @@ funky_heatmap <- function(
   scale_column = TRUE,
   add_abc = TRUE,
   col_annot_offset = 3,
+  col_annot_angle = 30,
   row_annot_offset = .5,
   removed_entries = NULL,
   expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
@@ -444,7 +446,7 @@ funky_heatmap <- function(
           xmax = .data$xmax,
           ymin = 0,
           ymax = col_annot_offset,
-          angle = 30,
+          angle = col_annot_angle,
           vjust = 0,
           hjust = 0,
           label_value = .data$name

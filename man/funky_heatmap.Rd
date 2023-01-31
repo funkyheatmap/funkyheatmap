@@ -14,6 +14,7 @@ funky_heatmap(
   scale_column = TRUE,
   add_abc = TRUE,
   col_annot_offset = 3,
+  col_annot_angle = 30,
   row_annot_offset = 0.5,
   removed_entries = NULL,
   expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
@@ -106,6 +107,8 @@ numerical column.}
 columns groups.}
 
 \item{col_annot_offset}{How much the column annotation will be offset by.}
+
+\item{col_annot_angle}{The angle of the column annotation labels.}
 
 \item{row_annot_offset}{How much the row annotation will be offset by.}
 
