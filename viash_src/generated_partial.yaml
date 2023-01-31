@@ -1,6 +1,6 @@
 functionality:
   name: funky_heatmap
-  version: 0.1.1
+  version: 0.2.1
   description: |-
     Generate a funky heatmaps for benchmarks
 
@@ -184,12 +184,12 @@ functionality:
     required: no
     default: 3.0
     multiple: no
-  - name: --row_annot_offset
-    description: How much the row annotation will be offset by.
-    type: double
+  - name: --col_annot_angle
+    description: The angle of the column annotation labels.
+    type: file
     direction: input
     required: no
-    default: 0.5
+    example: col_annot_angle.tsv
     multiple: no
   - name: --removed_entries
     description: |-

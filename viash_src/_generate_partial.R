@@ -41,7 +41,7 @@ arg_tib <-
   mutate(
     type = case_when(
       name %in% c("add_abc", "scale_column") ~ "boolean",
-      name %in% c("col_annot_offset", "row_annot_offset", "expand") ~ "double",
+      name %in% c("col_annot_offset", "expand") ~ "double",
       name %in% c("removed_entries") ~ "string",
       TRUE ~ "file"
     ),
@@ -65,8 +65,6 @@ arg_tib <-
         TRUE
       } else if (name == "col_annot_offset") {
         3
-      } else if (name == "row_annot_offset") {
-        .5
       } else if (name == "expand") {
         c(0, 2, 0, 0)
       } else {
