@@ -1,3 +1,10 @@
+# funkyheatmap 0.2.1
+
+## MINOR CHANGES
+
+* Added a parameter for allowing to change the angle of the column annotation labels,
+  `col_annot_angle`.
+
 # funkyheatmap 0.2.0
 
 ## MAJOR CHANGES
