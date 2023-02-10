@@ -155,6 +155,17 @@ calculate_geom_positions <- function(
       ungroup()
   })
 
+  # gather image data
+  img_data <- geom_data_processor("image", function(dat) {
+    dat %>%
+      mutate(
+        y0 = .data$y - row_height,
+        height = row_height,
+        width = row_height
+      )
+  })
+
+
   # would be better to have a generic solution for this
   # # hidden feature trajectory plots
   # trajd <- geom_data_processor("traj", function(dat) {
@@ -737,6 +748,7 @@ calculate_geom_positions <- function(
     circle_data,
     funkyrect_data,
     pie_data,
+    img_data,
     text_data,
     bounds = lst(
       minimum_x,

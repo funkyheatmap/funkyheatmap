@@ -70,7 +70,7 @@ verify_column_info <- function(column_info, data) {
   }
   assert_that(
     is.character(column_info$geom) | is.factor(column_info$geom),
-    all(column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text"))
+    all(column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image"))
   )
 
   # checking group
