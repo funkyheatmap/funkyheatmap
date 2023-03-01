@@ -126,16 +126,19 @@ calculate_geom_positions <- function(
 
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
-    dat <-
-      inner_join(
-        dat %>% select(-"value") %>% mutate(iii = row_number()),
-        dat %>% select("value") %>% mutate(iii = row_number()) %>%
-          dynutils::mapdf_dfr(function(l) {
-            enframe(l$value) %>% mutate(iii = l$iii)
-          }),
-        by = "iii"
-      ) %>%
-      select(-"iii")
+    dat <- dat %>% 
+      mutate(value = map(.data$value, enframe)) %>%
+      unnest(.data$value)
+    # dat <-
+    #   inner_join(
+    #     dat %>% select(-"value") %>% mutate(iii = row_number()),
+    #     dat %>% select("value") %>% mutate(iii = row_number()) %>%
+    #       dynutils::mapdf_dfr(function(l) {
+    #         enframe(l$value) %>% mutate(iii = l$iii)
+    #       }),
+    #     by = "iii"
+    #   ) %>%
+    #   select(-"iii")
 
     dat %>%
       group_by(.data$row_id, .data$column_id) %>%

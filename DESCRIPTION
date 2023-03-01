@@ -30,7 +30,6 @@ Imports:
   cli,
   cowplot,
   dplyr,
-  dynutils,
   ggforce,
   ggplot2,
   grDevices,

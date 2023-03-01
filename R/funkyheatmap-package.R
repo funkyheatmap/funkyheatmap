@@ -27,7 +27,6 @@ NULL
 #' @importFrom purrr %>% %||% walk set_names map map_dbl map_lgl map_chr map_df
 #' @importFrom purrr map2 map2_dbl map2_lgl map2_chr map2_df pmap_df pmap
 #' @importFrom stringr str_count str_to_title
-#' @importFrom dynutils scale_minmax
 #' @importFrom utils head tail
 #' @importFrom stats na.omit
 #' @importFrom cli cli_alert_warning cli_alert_info
