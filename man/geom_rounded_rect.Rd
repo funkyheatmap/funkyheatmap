@@ -64,11 +64,10 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
-
-\item{radius}{radius of rectangle corners}
 }
 \description{
-Does what \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}} does, only \emph{curvier}.
+Does what \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}} does, only \emph{curvier}. Use the \code{radius} aesthetic
+to change the corner radius.
 }
 \section{Aesthetics}{
 
