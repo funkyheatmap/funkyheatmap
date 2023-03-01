@@ -1,4 +1,8 @@
-# funkyheatmap 0.2.1
+# funkyheatmap 0.3.0
+
+## MAJOR CHANGES
+
+* Funky rectangles are now plotted using `geom_rounded_rect()`, thus simplifying the code quite a bit.
 
 ## MINOR CHANGES
 
