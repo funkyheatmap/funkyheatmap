@@ -9,6 +9,8 @@
 * Added a parameter for allowing to change the angle of the column annotation labels,
   `col_annot_angle`.
 
+* Removed dynutils as a dependency.
+
 ## BREAKING CHANGES
 
 * Removed parameter `row_annot_offset` since it wasn't being used anymore.
