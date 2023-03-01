@@ -6,10 +6,10 @@
 
 #' Rounded rectangles
 #'
-#' Does what [ggplot2::geom_rect()] does, only _curvier_.
+#' Does what [ggplot2::geom_rect()] does, only _curvier_. Use the `radius` aesthetic
+#' to change the corner radius.
 #'
 #' @inherit ggplot2::geom_rect
-#' @param radius radius of rectangle corners
 #' @export
 #' @examples
 #' library(ggplot2)
