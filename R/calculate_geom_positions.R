@@ -80,7 +80,7 @@ calculate_geom_positions <- function(
   funkyrect_data <- geom_data_processor("funkyrect", function(dat) {
     dat %>%
       select("xmin", "xmax", "ymin", "ymax", "value") %>%
-      pmap_df(score_to_funky_rectangle, midpoint = .8)
+      pmap_df(score_to_funky_rectangle)
   })
 
   # gather bar data
@@ -489,17 +489,17 @@ calculate_geom_positions <- function(
     fr_poly_data1 <-
       fr_legend_dat1 %>%
       select("xmin", "xmax", "ymin", "ymax", "value") %>%
-      pmap_df(score_to_funky_rectangle, midpoint = .8)
+      pmap_df(score_to_funky_rectangle)
 
     fr_legend_dat2 <-
       fr_poly_data1 %>%
-      filter(!is.na(.data$r)) %>%
+      # filter(!is.na(.data$r)) %>%
       group_by(.data$value) %>%
       summarise(
-        minx = min(.data$x - .data$r),
-        maxx = max(.data$x + .data$r),
-        miny = min(.data$y - .data$r),
-        maxy = max(.data$y + .data$r)
+        minx = min(.data$xmin),
+        maxx = max(.data$xmax),
+        miny = min(.data$ymin),
+        maxy = max(.data$ymax)
       ) %>%
       mutate(
         width = .data$maxx - .data$minx,
@@ -535,7 +535,7 @@ calculate_geom_positions <- function(
         ymax = .data$y + fr_legend_size / 2,
         .data$value
       ) %>%
-      pmap_df(score_to_funky_rectangle, midpoint = .8) %>%
+      pmap_df(score_to_funky_rectangle) %>%
       mutate(
         col_value = round(.data$value * (length(grey_palette) - 1)) + 1,
         colour = ifelse(
@@ -689,24 +689,24 @@ calculate_geom_positions <- function(
   ###    SIMPLIFY CERTAIN GEOMS    ###
   ####################################
 
-  # small funkyrects are circles
-  if (nrow(funkyrect_data) > 0) {
-    funkyrect_data <- funkyrect_data %>% mutate(
-      is_circle = !is.na(.data$start) & 
-        .data$start < 1e-10 & 2 * pi - 1e-10 < .data$end
-    )
-    circle_data <- circle_data %>% bind_rows(
-      funkyrect_data %>%
-        filter(.data$is_circle) %>%
-        select(
-          x0 = "x",
-          y0 = "y",
-          "r",
-          "colour"
-        )
-    )
-    funkyrect_data <- funkyrect_data %>% filter(!.data$is_circle)
-  }
+  # # small funkyrects are circles
+  # if (nrow(funkyrect_data) > 0) {
+  #   funkyrect_data <- funkyrect_data %>% mutate(
+  #     is_circle = !is.na(.data$start) & 
+  #       .data$start < 1e-10 & 2 * pi - 1e-10 < .data$end
+  #   )
+  #   circle_data <- circle_data %>% bind_rows(
+  #     funkyrect_data %>%
+  #       filter(.data$is_circle) %>%
+  #       select(
+  #         x0 = "x",
+  #         y0 = "y",
+  #         "r",
+  #         "colour"
+  #       )
+  #   )
+  #   funkyrect_data <- funkyrect_data %>% filter(!.data$is_circle)
+  # }
 
   # bars are rects
   rect_data <-
