@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">funkyheatmap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,22 +106,22 @@ package.</p>
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">dynbenchmark_data</span><span class="op">$</span><span class="va">data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 51 × 12</span></span></span>
-<span><span class="co">#&gt;    id    metho…¹ metho…² tool_id metho…³ metho…⁴ metho…⁵ metho…⁶ metho…⁷ wrapp…⁸</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> paga  PAGA    tool    paga    Python  https:… <span style="color: #BB0000;">NA</span>      &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> race… RaceID… tool    raceid… R       https:… <span style="color: #BB0000;">NA</span>      &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> slic… SLICER  tool    slicer  R       https:… GPL-2   &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> slin… Slings… tool    slings… R       https:… Artist… &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> paga… PAGA T… tool    paga    Python  https:… <span style="color: #BB0000;">NA</span>      &lt;list&gt;  <span style="color: #949494;">"</span>This … &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> proj… Projec… tool    slings… R       https:… Artist… &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> mst   MST     offthe… mst     R       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> mono… Monocl… tool    monocle R       https:… Artist… &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> mono… Monocl… tool    monocle R       https:… Artist… &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> pcre… pCreode tool    pcreode Python  https:… GPL-2   &lt;list&gt;   <span style="color: #BB0000;">NA</span>     &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 41 more rows, 2 more variables: wrapper_input_optional &lt;list&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   wrapper_type &lt;chr&gt;, and abbreviated variable names ¹​method_name,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​method_source, ³​method_platform, ⁴​method_url, ⁵​method_license,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​method_authors, ⁷​method_description, ⁸​wrapper_input_required</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    id               method_name method_source tool_id method_platform method_url</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> paga             PAGA        tool          paga    Python          https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> raceid_stemid    RaceID / S… tool          raceid… R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> slicer           SLICER      tool          slicer  R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> slingshot        Slingshot   tool          slings… R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> paga_tree        PAGA Tree   tool          paga    Python          https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> projected_sling… Projected … tool          slings… R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> mst              MST         offtheshelf   mst     R               <span style="color: #BB0000;">NA</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> monocle_ica      Monocle ICA tool          monocle R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> monocle_ddrtree  Monocle DD… tool          monocle R               https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> pcreode          pCreode     tool          pcreode Python          https://g…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: method_license &lt;chr&gt;, method_authors &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   method_description &lt;chr&gt;, wrapper_input_required &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   wrapper_input_optional &lt;list&gt;, wrapper_type &lt;chr&gt;</span></span></span></code></pre></div>
 <p>Choose a few columns to preview.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">preview_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
