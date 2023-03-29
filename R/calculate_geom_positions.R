@@ -562,7 +562,7 @@ calculate_geom_positions <- function(
 
     fr_value_data <-
       fr_legend_dat2 %>% 
-        filter(.data$value %% .2 == 0) %>%
+        filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
         transmute(
           ymin = .data$ymin - 1,
           ymax = .data$ymin,

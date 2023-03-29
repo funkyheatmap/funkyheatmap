@@ -1,3 +1,9 @@
+# funkyheatmap 0.3.1
+
+## BUG FIXES
+
+* Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
+
 # funkyheatmap 0.3.0
 
 ## MAJOR CHANGES
