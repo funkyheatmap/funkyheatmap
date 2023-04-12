@@ -1,16 +1,15 @@
 calculate_geom_positions <- function(
-  data,
-  column_info,
-  row_info,
-  column_groups,
-  row_groups,
-  palettes,
-  scale_column,
-  add_abc,
-  col_annot_offset,
-  col_annot_angle,
-  removed_entries
-) {
+    data,
+    column_info,
+    row_info,
+    column_groups,
+    row_groups,
+    palettes,
+    scale_column,
+    add_abc,
+    col_annot_offset,
+    col_annot_angle,
+    removed_entries) {
   # no point in making these into parameters
   row_height <- 1
   row_space <- .1
@@ -155,8 +154,17 @@ calculate_geom_positions <- function(
       ungroup()
   })
 
+  test_processor <- geom_data_processor("image", function(dat) {
+    dat
+  })
+
   # gather image data
   img_data <- geom_data_processor("image", function(dat) {
+    # If the location of the image is not provided using the "value"
+    # column in the data, construct it from the directory and filename
+    if (!is.null(dat$extension)) {
+      dat$value <- paste0(dat$directory, dat$value, ".", dat$extension)
+    }
     dat %>%
       mutate(
         y0 = .data$y - row_height,
@@ -233,8 +241,8 @@ calculate_geom_positions <- function(
         ymin = .data$ymax - .data$height,
         y = (.data$ymin + .data$ymax) / 2
       )
-    
-    palette_mids <- map_chr(palettes, function(x) x[round(length(x)/2)])
+
+    palette_mids <- map_chr(palettes, function(x) x[round(length(x) / 2)])
 
     column_annotation <-
       col_join %>%
@@ -251,7 +259,7 @@ calculate_geom_positions <- function(
       filter(!is.na(.data$name), grepl("[A-Za-z]", .data$name)) %>%
       # mutate(colour = palettes$column_annotation[palette])
       mutate(colour = palette_mids[.data$palette])
-      # todo: change colour depending on level height?
+    # todo: change colour depending on level height?
 
     rect_data <- rect_data %>% bind_rows(
       column_annotation %>%
@@ -375,7 +383,7 @@ calculate_geom_positions <- function(
       na.rm = TRUE
     )
   })
-  
+
   ####################################
   ###   CREATE HARDCODED LEGENDS   ###
   ####################################
@@ -483,7 +491,10 @@ calculate_geom_positions <- function(
 
   # funkyrect legend
   if (any(column_pos$geom == "funkyrect")) {
-    fr_minimum_x <- column_pos %>% filter(.data$geom == "funkyrect") %>% pull(.data$xmin) %>% min
+    fr_minimum_x <- column_pos %>%
+      filter(.data$geom == "funkyrect") %>%
+      pull(.data$xmin) %>%
+      min()
 
     fr_legend_size <- 1
     fr_legend_space <- .2
@@ -569,21 +580,21 @@ calculate_geom_positions <- function(
       )
 
     fr_value_data <-
-      fr_legend_dat2 %>% 
-        filter(.data$value %% .2 == 0) %>%
-        transmute(
-          ymin = .data$ymin - 1,
-          ymax = .data$ymin,
-          .data$xmin,
-          .data$xmax,
-          hjust = .5,
-          vjust = 0,
-          label_value = ifelse(
-            .data$value %in% c(0, 1),
-            sprintf("%.0f", .data$value),
-            sprintf("%.1f", .data$value)
-          )
+      fr_legend_dat2 %>%
+      filter(.data$value %% .2 == 0) %>%
+      transmute(
+        ymin = .data$ymin - 1,
+        ymax = .data$ymin,
+        .data$xmin,
+        .data$xmax,
+        hjust = .5,
+        vjust = 0,
+        label_value = ifelse(
+          .data$value %in% c(0, 1),
+          sprintf("%.0f", .data$value),
+          sprintf("%.1f", .data$value)
         )
+      )
 
     text_data <- bind_rows(
       text_data,
@@ -598,7 +609,7 @@ calculate_geom_positions <- function(
     pr_minimum_x <- column_pos %>%
       filter(.data$id == "method_priors_required_str") %>%
       pull(.data$xmin) %>%
-      min
+      min()
 
     legend_vals <- tribble(
       ~symbol, ~value,
@@ -663,7 +674,7 @@ calculate_geom_positions <- function(
       tibble(label_value = removed_entries) %>%
       mutate(
         row = (row_number() - 1) %% num_rows,
-        col = ceiling(row_number()  / num_rows) - 1,
+        col = ceiling(row_number() / num_rows) - 1,
         x = rm_min_x + col * 5,
         y = legend_pos - (row + 2) * row_height * .9
       )
@@ -703,7 +714,7 @@ calculate_geom_positions <- function(
   # small funkyrects are circles
   if (nrow(funkyrect_data) > 0) {
     funkyrect_data <- funkyrect_data %>% mutate(
-      is_circle = !is.na(.data$start) & 
+      is_circle = !is.na(.data$start) &
         .data$start < 1e-10 & 2 * pi - 1e-10 < .data$end
     )
     circle_data <- circle_data %>% bind_rows(

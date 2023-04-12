@@ -174,7 +174,7 @@ compose_ggplot <- function(
     # TODO: change to not use this for loop
     for(r in 1:nrow(geom_positions$img_data)) {
       g <- g + cowplot::draw_image(
-                paste0(geom_positions$img_data[r, "path"], "/", geom_positions$img_data[r, "value"], ".", geom_positions$img_data[r, "filetype"]),
+                paste0(geom_positions$img_data[r, "value"]),
                 x = geom_positions$img_data[r, "xmin"],
                 y = geom_positions$img_data[r, "ymin"]
         )

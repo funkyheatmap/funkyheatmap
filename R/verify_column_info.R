@@ -3,9 +3,9 @@
 #' @inheritParams funky_heatmap
 #'
 #' @returns The column info object with all expected columns.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' library(tibble)
 #' data <- tribble(
@@ -31,7 +31,7 @@ verify_column_info <- function(column_info, data) {
     is.character(column_info$id) | is.factor(column_info$id),
     all(column_info$id %in% colnames(data))
   )
-  
+
   # checking options
   if (column_info %has_name% "options") {
     if (is.character(column_info$options)) {
@@ -40,7 +40,7 @@ verify_column_info <- function(column_info, data) {
     }
     column_info <- column_info %>%
       mutate(options = map(options, function(x) {
-        optdf <- if (is.null(x) || length(x) == 0) tibble(a = 1)[,-1] else as_tibble(x)
+        optdf <- if (is.null(x) || length(x) == 0) tibble(a = 1)[, -1] else as_tibble(x)
         assert_that(nrow(optdf) == 1, msg = paste0("Trying to convert: ", as.character(x)))
         optdf
       })) %>%
@@ -111,7 +111,7 @@ verify_column_info <- function(column_info, data) {
     is.numeric(column_info$width)
   )
   column_info$width[is.na(column_info$width)] <- 1
-  
+
   # checking overlay
   if (!column_info %has_name% "overlay") {
     column_info$overlay <- FALSE
@@ -120,7 +120,7 @@ verify_column_info <- function(column_info, data) {
     is.logical(column_info$overlay)
   )
   column_info$overlay[is.na(column_info$overlay)] <- FALSE
-  
+
   # checking legend
   if (!column_info %has_name% "legend") {
     cli_alert_info("Column info did not contain a column called 'legend', generating options based on the 'geom' column.")
@@ -129,6 +129,8 @@ verify_column_info <- function(column_info, data) {
   assert_that(
     is.logical(column_info$legend)
   )
+
+  # TODO: check that directory & extension are correct for image
 
   column_info
 }
