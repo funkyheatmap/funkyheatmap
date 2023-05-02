@@ -1,12 +1,8 @@
-library(tidyverse)
-library(funkyheatmap)
-library(magick)
-
 data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg)) %>%
-  head(20) %>%
-  add_column(type = c(rep("ice", 10), rep("electric", 10)))
+  head(20)
+data$type <- c(rep("ice", 10), rep("electric", 10))
 
 column_info <- tribble(
   ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
@@ -22,14 +18,14 @@ column_info <- tribble(
   "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
   "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
   "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst(),
-  "type",  "group2",       "Type of engine",           "image",      NA,          lst(directory = "tests/testthat/test_images/", extension = "png")
+  "type",  "group2",       "Type of engine",           "image",      "palette2",  lst(directory = "test_images/", extension = "png")
 )
 
 data_path <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg)) %>%
-  head(20) %>%
-  add_column(type = c(rep("tests/testthat/test_images/ice.png", 10), rep("tests/testthat/test_images/electric.png", 10)))
+  head(20)
+data_path$type <- c(rep("test_images/ice.png", 10), rep("test_images/electric.png", 10))
 
 column_info_data_path <- tribble(
   ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
@@ -45,7 +41,7 @@ column_info_data_path <- tribble(
   "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
   "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
   "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst(),
-  "type",  "group2",       "Type of engine",           "image",      NA,          lst()
+  "type",  "group2",       "Type of engine",           "image",      "palette2",  lst()
 )
 
 
@@ -65,7 +61,6 @@ palettes <- tribble(
   "palette1",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Blues") %>% c("#011636")))(101),
   "palette2",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Reds")[-8:-9]))(101)
 )
-
 g <- funky_heatmap(
   data = data,
   column_info = column_info,

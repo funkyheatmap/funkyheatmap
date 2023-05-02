@@ -168,13 +168,11 @@ compose_ggplot <- function(
       size = .25
     )
   }
-
   # PLOT IMAGES
   if (nrow(geom_positions$img_data) > 0) {
-    # TODO: change to not use this for loop
     for(r in 1:nrow(geom_positions$img_data)) {
       g <- g + cowplot::draw_image(
-                paste0(geom_positions$img_data[r, "value"]),
+                geom_positions$img_data[r, "path"],
                 x = geom_positions$img_data[r, "xmin"],
                 y = geom_positions$img_data[r, "ymin"]
         )

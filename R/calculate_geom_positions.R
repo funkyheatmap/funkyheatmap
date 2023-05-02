@@ -154,22 +154,20 @@ calculate_geom_positions <- function(
       ungroup()
   })
 
-  test_processor <- geom_data_processor("image", function(dat) {
-    dat
-  })
-
   # gather image data
   img_data <- geom_data_processor("image", function(dat) {
     # If the location of the image is not provided using the "value"
     # column in the data, construct it from the directory and filename
-    if (!is.null(dat$extension)) {
+    print(dat$extension)
+    if (dat %has_name% "directory") {
       dat$value <- paste0(dat$directory, dat$value, ".", dat$extension)
-    }
+    } 
     dat %>%
       mutate(
         y0 = .data$y - row_height,
         height = row_height,
-        width = row_height
+        width = row_height,
+        path = value
       )
   })
 

@@ -7,9 +7,9 @@ NULL
 
 
 #' Generating funky heatmaps for benchmarks
-#' 
-#' Allows generating heatmap-likes visualisations for benchmark data 
-#' frames. Funky heatmaps can be fine-tuned by providing annotations of the 
+#'
+#' Allows generating heatmap-likes visualisations for benchmark data
+#' frames. Funky heatmaps can be fine-tuned by providing annotations of the
 #' columns and rows, which allows assigning multiple palettes or geometries
 #' or grouping rows and columns together in categories.
 #'
@@ -18,7 +18,7 @@ NULL
 #' [`ggforce`](https://ggforce.data-imaginist.com).
 #'
 #' @importFrom assertthat assert_that %has_name%
-#' @importFrom tibble tibble enframe deframe lst tribble as_tibble rownames_to_column
+#' @importFrom tibble tibble enframe deframe lst tribble as_tibble rownames_to_column add_column
 #' @importFrom dplyr filter select pull mutate group_by row_number ungroup
 #' @importFrom dplyr case_when transmute slice left_join inner_join n bind_cols
 #' @importFrom dplyr bind_rows rename summarise arrange desc first last distinct
@@ -32,6 +32,7 @@ NULL
 #' @importFrom stats na.omit
 #' @importFrom cli cli_alert_warning cli_alert_info
 #' @importFrom Rdpack reprompt
+#' @importFrom cowplot draw_image
 #' @import ggplot2
 #'
 #' @docType package

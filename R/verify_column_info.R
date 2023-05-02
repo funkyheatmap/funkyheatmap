@@ -130,7 +130,5 @@ verify_column_info <- function(column_info, data) {
     is.logical(column_info$legend)
   )
 
-  # TODO: check that directory & extension are correct for image
-
   column_info
 }
