@@ -13,3 +13,5 @@
 ^examples.md$
 ^target$
 ^data-raw$
+^doc$
+^Meta$

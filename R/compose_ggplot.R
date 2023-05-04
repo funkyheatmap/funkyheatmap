@@ -170,7 +170,7 @@ compose_ggplot <- function(
   }
   # PLOT IMAGES
   if (nrow(geom_positions$img_data) > 0) {
-    for(r in 1:nrow(geom_positions$img_data)) {
+    for (r in seq_len(nrow(geom_positions$img_data))) {
       g <- g + cowplot::draw_image(
                 geom_positions$img_data[r, "path"],
                 x = geom_positions$img_data[r, "xmin"],

@@ -25,7 +25,7 @@ plot. This data frame should contain the following columns:
 no label will be plotted. If this column is missing, \code{id} will
 be used to generate the \code{name} column.
 \item \code{geom} (\code{character}): The geom of the column. Must be one of:
-\code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, or \code{"text"}.
+\code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, \code{"text"} or \code{"image"}.
 For \code{"text"}, the corresponding column in \code{data} must be a \code{character}.
 For \code{"pie"}, the column must be a list of named numeric vectors.
 For all other geoms, the column must be a \code{numeric}.
@@ -47,6 +47,8 @@ If so, the width of that column will be inherited.
 \item \code{size}: Size of the label, must be between [0,1]
 (only for \code{geom = "text"}).
 \item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
+\item \code{directory}: Which directory to use to find the images (only for \code{geom = "image"}).
+\item \code{extension}: The extension of the images (only for \code{geom = "image"}).
 \item \code{options} (\code{list} or \code{json}): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.
