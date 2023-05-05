@@ -44,7 +44,7 @@ compose_ggplot <- function(
         xend = .data$xend,
         y = .data$y,
         yend = .data$yend,
-        size = .data$size,
+        size = .data$size, # todo: update to linewidth
         colour = .data$colour,
         linetype = .data$linetype
       ),
@@ -93,63 +93,22 @@ compose_ggplot <- function(
       size = .25
     )
   }
-
+  
   # PLOT FUNKY RECTANGLES
   if (nrow(geom_positions$funkyrect_data) > 0) {
-    # there are polygons and there are quarter-circles to be plotted
-    # it's possible to distinguish one from another by looking at the 'r' column
-    geom_positions$funky_poly_data <- geom_positions$funkyrect_data %>% filter(is.na(.data$r))
-    geom_positions$funky_arc_data <- geom_positions$funkyrect_data %>% filter(!is.na(.data$r))
-
-    g <- g +
-      # plot polygon fill
-      geom_polygon(
-        aes(
-          .data$x,
-          .data$y,
-          group = .data$name,
-          fill = .data$colour
-        ),
-        geom_positions$funky_poly_data
-      ) +
-      # plot quarter circle fill
-      ggforce::geom_arc_bar(
-        aes(
-          x0 = .data$x,
-          y0 = .data$y,
-          r0 = 0,
-          r = .data$r,
-          start = .data$start,
-          end = .data$end,
-          fill = .data$colour
-        ),
-        geom_positions$funky_arc_data,
-        colour = NA
-      ) +
-      # plot polygon border
-      geom_path(
-        aes(
-          x = .data$x,
-          y = .data$y,
-          group = paste0(.data$name, "_", .data$subgroup)
-        ),
-        geom_positions$funky_poly_data,
-        colour = "black",
-        size = .25
-      ) +
-      # plot quarter circle border
-      ggforce::geom_arc(
-        aes(
-          x0 = .data$x,
-          y0 = .data$y,
-          r = .data$r,
-          start = .data$start,
-          end = .data$end
-        ),
-        geom_positions$funky_arc_data,
-        colour = "black",
-        size = .25
-      )
+    g <- g + geom_rounded_rect(
+      aes(
+        xmin = .data$xmin,
+        xmax = .data$xmax,
+        ymin = .data$ymin,
+        ymax = .data$ymax,
+        radius = .data$corner_size,
+        fill = .data$colour
+      ),
+      geom_positions$funkyrect_data,
+      size = .25,
+      colour = "black"
+    )
   }
 
   # PLOT PIES

@@ -1,9 +1,21 @@
-# funkyheatmap 0.2.1
+# funkyheatmap 0.3.1
+
+## BUG FIXES
+
+* Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
+
+# funkyheatmap 0.3.0
+
+## MAJOR CHANGES
+
+* Funky rectangles are now plotted using `geom_rounded_rect()`, thus simplifying the code quite a bit.
 
 ## MINOR CHANGES
 
 * Added a parameter for allowing to change the angle of the column annotation labels,
   `col_annot_angle`.
+
+* Removed dynutils as a dependency.
 
 ## BREAKING CHANGES
 

@@ -5,7 +5,7 @@ Description: Allows generating heatmap-like visualisations for benchmark data
   columns and rows, which allows assigning multiple palettes or geometries
   or grouping rows and columns together in categories.
   Saelens et al. (2019) <doi:10.1038/s41587-019-0071-9>.
-Version: 0.2.1
+Version: 0.3.1
 Authors@R: c(
   person(
     "Robrecht", 
@@ -30,7 +30,6 @@ Imports:
   cli,
   cowplot,
   dplyr,
-  dynutils,
   ggforce,
   ggplot2,
   grDevices,

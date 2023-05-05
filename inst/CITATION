@@ -1,33 +1,51 @@
 citHeader("To cite funkyheatmap in publications use:")
 
-citEntry(
-  entry    = "Article",
-  author   = c(
-    person("Wouter", "Saelens"),
-    person("Robrecht", "Cannoodt"),
-    person("Helena", "Todorov"),
-    person("Yvan", "Saeys")
+bibentry(
+  bibtype = "Article",
+  author = c(
+    person(
+      "Robrecht",
+      "Cannoodt",
+      email = "rcannood@gmail.com",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Wouter",
+      "Saelens",
+      email = "wouter.saelens@gmail.com",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
+    ),
+    person("Helena", "Todorov", comment = c(ORCID = "0000-0002-1594-8609")),
+    person("Yvan", "Saeys", comment = c(ORCID = "0000-0002-0415-1506"))
   ),
-  title    = "A comparison of single-cell trajectory inference methods",
-  journal  = "Nature Biotechnology",
-  year     = "2019",
-  month    = "4",
-  doi      = "10.1038/s41587-019-0071-9",
-  url      = "https://doi.org/10.1038/s41587-019-0071-9",
-  textVersion = "Saelens, W., Cannoodt, R., Todorov, H. Saeys, Y. A comparison of single-cell trajectory inference methods. Nat Biotechnol 37, 547–554 (2019). https://doi.org/10.1038/s41587-019-0071-9"
+  title = "A comparison of single-cell trajectory inference methods.",
+  journal = "Nature Biotechnology",
+  year = "2019",
+  month = "4",
+  doi = "10.1038/s41587-019-0071-9"
 )
 
-
-citEntry(
-  entry    = "Article",
-  author   = "Robrecht Cannoodt and Wouter Saelens",
-  title    = "funkyheatmap: Generating Funky Heatmaps for Data Frames",
-  journal  = "In Progress",
-  year     = "2023",
-  month    = "",
-  volume   = "",
-  number   = "",
-  pages    = "",
-  doi      = "",
-  textVersion = "Cannoodt R. and Saelens W., funkyheatmap: Generating Funky Heatmaps for Data Frames, In Progress, 2023."
+bibentry(
+  bibtype = "Article",
+  author = c(
+    person(
+      "Robrecht",
+      "Cannoodt",
+      email = "rcannood@gmail.com",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Wouter",
+      "Saelens",
+      email = "wouter.saelens@gmail.com",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
+    )
+  ),
+  title = "funkyheatmap: Generating Funky Heatmaps for Data Frames.",
+  journal = "In Progress",
+  year = "2023"
 )
