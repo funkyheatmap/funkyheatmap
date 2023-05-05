@@ -93,7 +93,7 @@ verify_column_info <- function(column_info, data) {
     )
   }
   assert_that(
-    is.character(column_info$palette) | is.factor(column_info$palette)
+    is.character(column_info$palette) | is.factor(column_info$palette) | is.na(column_info$palette)
   )
 
   # checking width
