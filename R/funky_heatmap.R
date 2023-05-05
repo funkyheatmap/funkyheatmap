@@ -18,7 +18,7 @@
 #'   be used to generate the `name` column.
 #'
 #' * `geom` (`character`): The geom of the column. Must be one of:
-#'   `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, or `"text"`.
+#'   `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"` or `"image"`.
 #'   For `"text"`, the corresponding column in `data` must be a `character`.
 #'   For `"pie"`, the column must be a list of named numeric vectors.
 #'   For all other geoms, the column must be a `numeric`.
@@ -50,6 +50,10 @@
 #'     (only for `geom = "text"`).
 #'
 #' * `label`: Which column to use as a label (only for `geom = "text"`).
+#' 
+#' * `directory`: Which directory to use to find the images (only for `geom = "image"`).
+#' 
+#' * `extension`: The extension of the images (only for `geom = "image"`).
 #'
 #' * `options` (`list` or `json`): Any of the options above. Any values in this
 #'   column will be spread across the other columns. This is useful for

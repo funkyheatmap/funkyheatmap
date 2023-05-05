@@ -7,3 +7,5 @@ inst/doc
 docs
 examples.md
 target
+/doc/
+/Meta/

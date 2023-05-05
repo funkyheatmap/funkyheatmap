@@ -1,16 +1,15 @@
 calculate_geom_positions <- function(
-  data,
-  column_info,
-  row_info,
-  column_groups,
-  row_groups,
-  palettes,
-  scale_column,
-  add_abc,
-  col_annot_offset,
-  col_annot_angle,
-  removed_entries
-) {
+    data,
+    column_info,
+    row_info,
+    column_groups,
+    row_groups,
+    palettes,
+    scale_column,
+    add_abc,
+    col_annot_offset,
+    col_annot_angle,
+    removed_entries) {
   # no point in making these into parameters
   row_height <- 1
   row_space <- .1
@@ -158,6 +157,26 @@ calculate_geom_positions <- function(
       ungroup()
   })
 
+  # gather image data
+  img_data <- geom_data_processor("image", function(dat) {
+    # If the location of the image is not provided using the "value"
+    # column in the data, construct it from the directory and filename
+    if (dat %has_name% "directory") {
+      dat$value <- ifelse(is.na(dat$value) | is.na(dat$directory), dat$value, paste0(dat$directory, "/", dat$value))
+    }
+    if (dat %has_name% "extension") {
+      dat$value <- ifelse(is.na(dat$value) | is.na(dat$extension), dat$value, paste0(dat$value, ".", dat$extension))
+    }
+    dat %>%
+      mutate(
+        y0 = .data$y - row_height,
+        height = row_height,
+        width = row_height,
+        path = value
+      )
+  })
+
+
   # would be better to have a generic solution for this
   # # hidden feature trajectory plots
   # trajd <- geom_data_processor("traj", function(dat) {
@@ -225,8 +244,8 @@ calculate_geom_positions <- function(
         ymin = .data$ymax - .data$height,
         y = (.data$ymin + .data$ymax) / 2
       )
-    
-    palette_mids <- map_chr(palettes, function(x) x[round(length(x)/2)])
+
+    palette_mids <- map_chr(palettes, function(x) x[round(length(x) / 2)])
 
     column_annotation <-
       col_join %>%
@@ -243,7 +262,7 @@ calculate_geom_positions <- function(
       filter(!is.na(.data$name), grepl("[A-Za-z]", .data$name)) %>%
       # mutate(colour = palettes$column_annotation[palette])
       mutate(colour = palette_mids[.data$palette])
-      # todo: change colour depending on level height?
+    # todo: change colour depending on level height?
 
     rect_data <- rect_data %>% bind_rows(
       column_annotation %>%
@@ -367,7 +386,7 @@ calculate_geom_positions <- function(
       na.rm = TRUE
     )
   })
-  
+
   ####################################
   ###   CREATE HARDCODED LEGENDS   ###
   ####################################
@@ -475,7 +494,10 @@ calculate_geom_positions <- function(
 
   # funkyrect legend
   if (any(column_pos$geom == "funkyrect")) {
-    fr_minimum_x <- column_pos %>% filter(.data$geom == "funkyrect") %>% pull(.data$xmin) %>% min
+    fr_minimum_x <- column_pos %>%
+      filter(.data$geom == "funkyrect") %>%
+      pull(.data$xmin) %>%
+      min()
 
     fr_legend_size <- 1
     fr_legend_space <- .2
@@ -590,7 +612,7 @@ calculate_geom_positions <- function(
     pr_minimum_x <- column_pos %>%
       filter(.data$id == "method_priors_required_str") %>%
       pull(.data$xmin) %>%
-      min
+      min()
 
     legend_vals <- tribble(
       ~symbol, ~value,
@@ -655,7 +677,7 @@ calculate_geom_positions <- function(
       tibble(label_value = removed_entries) %>%
       mutate(
         row = (row_number() - 1) %% num_rows,
-        col = ceiling(row_number()  / num_rows) - 1,
+        col = ceiling(row_number() / num_rows) - 1,
         x = rm_min_x + col * 5,
         y = legend_pos - (row + 2) * row_height * .9
       )
@@ -740,6 +762,7 @@ calculate_geom_positions <- function(
     circle_data,
     funkyrect_data,
     pie_data,
+    img_data,
     text_data,
     bounds = lst(
       minimum_x,
