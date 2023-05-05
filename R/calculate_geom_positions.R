@@ -598,7 +598,6 @@ calculate_geom_positions <- function(
             sprintf("%.1f", .data$value)
           )
         )
-      )
 
     text_data <- bind_rows(
       text_data,
