@@ -74,7 +74,7 @@ verify_column_info <- function(column_info, data) {
   )
 
   # checking group
-  if (!column_info %has_name% "group") {
+  if (!column_info %has_name% "group" || all(is.na(column_info$group))) {
     cli_alert_info("Column info did not contain group information, assuming columns are ungrouped.")
     column_info$group <- NA_character_
   }
@@ -84,16 +84,17 @@ verify_column_info <- function(column_info, data) {
   column_info$group[column_info$group == ""] <- NA_character_
 
   # checking palette
-  if (!column_info %has_name% "palette") {
+  if (!column_info %has_name% "palette" || all(is.na(column_info$palette))) {
     cli_alert_info("Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.")
     column_info$palette <- case_when(
       column_info$geom == "text" ~ NA_character_,
+      column_info$geom == "image" ~ NA_character_,
       column_info$geom == "pie" ~ "categorical_palette",
       TRUE ~ "numerical_palette"
     )
   }
   assert_that(
-    is.character(column_info$palette) | is.factor(column_info$palette) | is.na(column_info$palette)
+    is.character(column_info$palette) | is.factor(column_info$palette) 
   )
 
   # checking width
