@@ -1,4 +1,14 @@
-# funkyheatmap 0.3.1
+# funkyheatmap 0.4.0
+
+## BREAKING CHANGES
+
+* Deprecated the `col_annot_offset`, `col_annot_angle` and `expand` arguments in 
+  `funky_heatmap()`. Use `position_args = position_arguments(...)` instead.
+
+## NEW FUNCTIONALITY
+
+* Allow modifying the positioning of elements using the `position_args` argument
+  in `funky_heatmap()`.
 
 ## BUG FIXES
 

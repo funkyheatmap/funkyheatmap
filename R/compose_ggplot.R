@@ -1,6 +1,6 @@
 compose_ggplot <- function(
     geom_positions,
-    expand) {
+    position_args) {
   # start ggplot
   g <-
     ggplot() +
@@ -180,33 +180,13 @@ compose_ggplot <- function(
     )
   }
 
-  # todo: need a generic solution
-  # # PLOT TRAJ TYPES
-  # if (nrow(trajd) > 0) {
-  #   g <-
-  #     plot_trajectory_types(
-  #       plot = g,
-  #       trajectory_types = trajd$topinf,
-  #       xmins = trajd$xmin,
-  #       xmaxs = trajd$xmax,
-  #       ymins = trajd$ymin,
-  #       ymaxs = trajd$ymax,
-  #       node_colours = trajd$colour,
-  #       edge_colours = trajd$colour,
-  #       size = 1,
-  #       geom = "circle",
-  #       circ_size = .1
-  #     )
-  # }
-
 
   # ADD SIZE
   # reserve a bit more room for text that wants to go outside the frame
-  expand_li <- as.list(expand)
-  minimum_x <- geom_positions$bounds$minimum_x - (expand_li$xmin %||% 0)
-  maximum_x <- geom_positions$bounds$maximum_x + (expand_li$xmax %||% 0)
-  minimum_y <- geom_positions$bounds$minimum_y - (expand_li$ymin %||% 0)
-  maximum_y <- geom_positions$bounds$maximum_y + (expand_li$ymax %||% 0)
+  minimum_x <- geom_positions$bounds$minimum_x - (position_args$expand_xmin %||% 0)
+  maximum_x <- geom_positions$bounds$maximum_x + (position_args$expand_xmax %||% 0)
+  minimum_y <- geom_positions$bounds$minimum_y - (position_args$expand_ymin %||% 0)
+  maximum_y <- geom_positions$bounds$maximum_y + (position_args$expand_ymax %||% 0)
   g <- g + expand_limits(
     x = c(minimum_x, maximum_x),
     y = c(minimum_y, maximum_y)

@@ -97,6 +97,9 @@
 #' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
 #' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
 #'
+#' @param position_args Sets parameters that affect positioning within a
+#' plot, such as row and column dimensions, annotation details, and the
+#' expansion directions of the plot. See `position_arguments()` for more information.
 #'
 #' @param scale_column Whether or not to apply min-max scaling to each
 #' numerical column.
@@ -104,12 +107,12 @@
 #' @param add_abc Whether or not to add subfigure labels to the different
 #' columns groups.
 #'
-#' @param col_annot_offset How much the column annotation will be offset by.
-#' @param col_annot_angle The angle of the column annotation labels.
 #' @param removed_entries Which methods to not show in the rows. Missing methods
 #' are replaced by a "Not shown" label.
 #'
-#' @param expand A list of directions to expand the plot in.
+#' @param col_annot_offset DEPRECATED: use `position_args = position_arguments(col_annot_offset = ...)` instead.
+#' @param col_annot_angle DEPRECATED: use `position_args = position_arguments(col_annot_angle = ...)` instead.
+#' @param expand DEPRECATED: use `position_args = position_arguments(expand_* = ...)` instead.
 #'
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
@@ -134,12 +137,13 @@ funky_heatmap <- function(
     column_groups = NULL,
     row_groups = NULL,
     palettes = NULL,
+    position_args = position_arguments(),
     scale_column = TRUE,
     add_abc = TRUE,
-    col_annot_offset = 3,
-    col_annot_angle = 30,
     removed_entries = NULL,
-    expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)) {
+    col_annot_offset,
+    col_annot_angle,
+    expand) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -147,6 +151,22 @@ funky_heatmap <- function(
   column_groups <- verify_column_groups(column_groups, column_info)
   row_groups <- verify_row_groups(row_groups, row_info)
   palettes <- verify_palettes(palettes, column_info, data)
+
+  # check deprecated arguments
+  if (!missing(col_annot_offset)) {
+    warning("Argument `col_annot_offset` is deprecated. Use `position_arguments(col_annot_offset = ...)` instead.")
+    position_args$col_annot_offset <- col_annot_offset
+  }
+  if (!missing(col_annot_angle)) {
+    warning("Argument `col_annot_angle` is deprecated. Use `position_arguments(col_annot_angle = ...)` instead.")
+    position_args$col_annot_angle <- col_annot_angle
+  }
+  if (!missing(expand)) {
+    warning("Argument `expand` is deprecated. Use `position_arguments(expand_* = ...)` instead.")
+    for (name in names(expand)) {
+      position_args[[paste0("expand_", name)]] <- expand[[name]]
+    }
+  }
   # todo: add column groups to verify_palettes
 
   geom_positions <- calculate_geom_positions(
@@ -156,15 +176,14 @@ funky_heatmap <- function(
     column_groups,
     row_groups,
     palettes,
+    position_args,
     scale_column,
     add_abc,
-    col_annot_offset,
-    col_annot_angle,
     removed_entries
   )
 
   compose_ggplot(
     geom_positions,
-    expand
+    position_args
   )
 }

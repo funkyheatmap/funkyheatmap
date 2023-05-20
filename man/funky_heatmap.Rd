@@ -11,12 +11,13 @@ funky_heatmap(
   column_groups = NULL,
   row_groups = NULL,
   palettes = NULL,
+  position_args = position_arguments(),
   scale_column = TRUE,
   add_abc = TRUE,
-  col_annot_offset = 3,
-  col_annot_angle = 30,
   removed_entries = NULL,
-  expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
+  col_annot_offset,
+  col_annot_angle,
+  expand
 )
 }
 \arguments{
@@ -101,20 +102,24 @@ standard palette names can be used:
 \item \code{categorical}: \code{"Set3"}, \code{"Set1"}, \code{"Set2"}, \code{"Dark2"}
 }}
 
+\item{position_args}{Sets parameters that affect positioning within a
+plot, such as row and column dimensions, annotation details, and the
+expansion directions of the plot. See \code{position_arguments()} for more information.}
+
 \item{scale_column}{Whether or not to apply min-max scaling to each
 numerical column.}
 
 \item{add_abc}{Whether or not to add subfigure labels to the different
 columns groups.}
 
-\item{col_annot_offset}{How much the column annotation will be offset by.}
-
-\item{col_annot_angle}{The angle of the column annotation labels.}
-
 \item{removed_entries}{Which methods to not show in the rows. Missing methods
 are replaced by a "Not shown" label.}
 
-\item{expand}{A list of directions to expand the plot in.}
+\item{col_annot_offset}{DEPRECATED: use \code{position_args = position_arguments(col_annot_offset = ...)} instead.}
+
+\item{col_annot_angle}{DEPRECATED: use \code{position_args = position_arguments(col_annot_angle = ...)} instead.}
+
+\item{expand}{DEPRECATED: use \verb{position_args = position_arguments(expand_* = ...)} instead.}
 }
 \value{
 A ggplot. \code{.$width} and \code{.$height} are suggested dimensions for
