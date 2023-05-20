@@ -1,8 +1,6 @@
 compose_ggplot <- function(
-  geom_positions,
-  expand
-) {
-
+    geom_positions,
+    expand) {
   # start ggplot
   g <-
     ggplot() +
@@ -93,7 +91,7 @@ compose_ggplot <- function(
       size = .25
     )
   }
-  
+
   # PLOT FUNKY RECTANGLES
   if (nrow(geom_positions$funkyrect_data) > 0) {
     g <- g + geom_rounded_rect(
@@ -131,12 +129,11 @@ compose_ggplot <- function(
   if (nrow(geom_positions$img_data) > 0) {
     for (r in seq_len(nrow(geom_positions$img_data))) {
       g <- g + cowplot::draw_image(
-                geom_positions$img_data[r, "path"],
-                x = geom_positions$img_data[r, "xmin"],
-                y = geom_positions$img_data[r, "ymin"]
-        )
+        geom_positions$img_data[r, "path"],
+        x = geom_positions$img_data[r, "xmin"],
+        y = geom_positions$img_data[r, "ymin"]
+      )
     }
-
   }
 
   # PLOT TEXT
@@ -158,10 +155,10 @@ compose_ggplot <- function(
         sina = sin(.data$angle2) %>% round(2),
         alphax =
           ifelse(.data$cosa < 0, 1 - .data$hjust, .data$hjust) * abs(.data$cosa) +
-          ifelse(.data$sina > 0, 1 - .data$vjust, .data$vjust) * abs(.data$sina),
+            ifelse(.data$sina > 0, 1 - .data$vjust, .data$vjust) * abs(.data$sina),
         alphay =
           ifelse(.data$sina < 0, 1 - .data$hjust, .data$hjust) * abs(.data$sina) +
-          ifelse(.data$cosa < 0, 1 - .data$vjust, .data$vjust) * abs(.data$cosa),
+            ifelse(.data$cosa < 0, 1 - .data$vjust, .data$vjust) * abs(.data$cosa),
         x = (1 - .data$alphax) * .data$xmin + .data$alphax * .data$xmax,
         y = (1 - .data$alphay) * .data$ymin + .data$alphay * .data$ymax
       ) %>%

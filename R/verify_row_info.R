@@ -3,9 +3,9 @@
 #' @inheritParams funky_heatmap
 #'
 #' @returns The row info object with all expected columns.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' library(tibble)
 #' data <- tribble(
