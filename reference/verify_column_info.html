@@ -27,6 +27,7 @@
     <a class="dropdown-item" href="../articles/dynbenchmark.html">Recreating the dynbenchmark figures</a>
     <a class="dropdown-item" href="../articles/executable.html">Standalone executable</a>
     <a class="dropdown-item" href="../articles/mtcars.html">Demo with mtcars</a>
+    <a class="dropdown-item" href="../articles/mtcars_images.html">Demo with mtcars and images</a>
     <a class="dropdown-item" href="../articles/nextflow.html">Nextflow module</a>
   </div>
 </li>
@@ -72,7 +73,7 @@ plot. This data frame should contain the following columns:</p><ul><li><p><code>
 no label will be plotted. If this column is missing, <code>id</code> will
 be used to generate the <code>name</code> column.</p></li>
 <li><p><code>geom</code> (<code>character</code>): The geom of the column. Must be one of:
-<code>"funkyrect"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bar"</code>, <code>"pie"</code>, or <code>"text"</code>.
+<code>"funkyrect"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bar"</code>, <code>"pie"</code>, <code>"text"</code> or <code>"image"</code>.
 For <code>"text"</code>, the corresponding column in <code>data</code> must be a <code>character</code>.
 For <code>"pie"</code>, the column must be a list of named numeric vectors.
 For all other geoms, the column must be a <code>numeric</code>.</p></li>
@@ -94,6 +95,8 @@ If so, the width of that column will be inherited.</p></li>
 <li><p><code>size</code>: Size of the label, must be between [0,1]
 (only for <code>geom = "text"</code>).</p></li>
 <li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
+<li><p><code>directory</code>: Which directory to use to find the images (only for <code>geom = "image"</code>).</p></li>
+<li><p><code>extension</code>: The extension of the images (only for <code>geom = "image"</code>).</p></li>
 <li><p><code>options</code> (<code>list</code> or <code>json</code>): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.
