@@ -3,7 +3,7 @@
 #' @inheritParams funky_heatmap
 #'
 #' @returns The column groups object with all expected columns.
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -58,7 +58,7 @@ verify_column_groups <- function(column_groups, column_info) {
 
   # checking other columns
   column_groups_colnames <- setdiff(colnames(column_groups), c("group", "palette"))
-  
+
   if (length(column_groups_colnames) == 0) {
     cli_alert_info("Column groups did not contain a column called 'level1'. Using `column_info$group` as a makeshift column group name.")
     column_groups$level1 <- stringr::str_to_title(column_groups$group)

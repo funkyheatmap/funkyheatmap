@@ -1,4 +1,4 @@
-data <- mtcars %>% 
+data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg)) %>%
   head(20)

@@ -1,5 +1,5 @@
 # ported from https://github.com/hrbrmstr/ggchicklet/blob/master/R/a-geom-rect.R
-# changes: 
+# changes:
 #  * moved radius to aes
 #  * changed unit to native
 #  * renamed to `geom_rounded_rect()`
@@ -32,7 +32,7 @@
 #'       fill = z
 #'     ),
 #'     colour = "white"
-#'  )
+#'   )
 geom_rounded_rect <- function(
     mapping = NULL,
     data = NULL,
@@ -41,8 +41,7 @@ geom_rounded_rect <- function(
     ...,
     na.rm = FALSE,
     show.legend = NA,
-    inherit.aes = TRUE
-) {
+    inherit.aes = TRUE) {
   layer(
     data = data,
     mapping = mapping,
@@ -60,18 +59,14 @@ geom_rounded_rect <- function(
 
 GeomRoundedRect <- ggplot2::ggproto(
   "GeomRoundedRect", ggplot2::Geom,
-  
   default_aes = ggplot2::aes(
     colour = NA, fill = "grey35", size = 0.5, linetype = 1, alpha = NA,
     radius = 0.5
   ),
-  
   required_aes = c("xmin", "xmax", "ymin", "ymax", "radius"),
-  
   draw_panel = function(self, data, panel_params, coord) {
-    
     coords <- coord$transform(data, panel_params)
-    
+
     gl <- lapply(seq_along(coords$xmin), function(i) {
       grid::roundrectGrob(
         coords$xmin[i], coords$ymax[i],
@@ -89,7 +84,7 @@ GeomRoundedRect <- ggplot2::ggproto(
         )
       )
     })
-    
+
     grobs <- do.call(grid::gList, gl)
     grob <- grid::grobTree(children = grobs)
     grob$name <- grid::grobName(grob, "geom_rounded_rect")
@@ -97,4 +92,3 @@ GeomRoundedRect <- ggplot2::ggproto(
   },
   draw_key = ggplot2::draw_key_polygon
 )
-

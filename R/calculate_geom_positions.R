@@ -125,7 +125,7 @@ calculate_geom_positions <- function(
 
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
-    dat <- dat %>% 
+    dat <- dat %>%
       mutate(value = map(.data$value, enframe)) %>%
       unnest(.data$value)
     # dat <-
@@ -172,7 +172,7 @@ calculate_geom_positions <- function(
         y0 = .data$y - row_height,
         height = row_height,
         width = row_height,
-        path = value
+        path = .data$value
       )
   })
 
@@ -583,21 +583,21 @@ calculate_geom_positions <- function(
       )
 
     fr_value_data <-
-      fr_legend_dat2 %>% 
-        filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
-        transmute(
-          ymin = .data$ymin - 1,
-          ymax = .data$ymin,
-          .data$xmin,
-          .data$xmax,
-          hjust = .5,
-          vjust = 0,
-          label_value = ifelse(
-            .data$value %in% c(0, 1),
-            sprintf("%.0f", .data$value),
-            sprintf("%.1f", .data$value)
-          )
+      fr_legend_dat2 %>%
+      filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
+      transmute(
+        ymin = .data$ymin - 1,
+        ymax = .data$ymin,
+        .data$xmin,
+        .data$xmax,
+        hjust = .5,
+        vjust = 0,
+        label_value = ifelse(
+          .data$value %in% c(0, 1),
+          sprintf("%.0f", .data$value),
+          sprintf("%.1f", .data$value)
         )
+      )
 
     text_data <- bind_rows(
       text_data,
@@ -717,7 +717,7 @@ calculate_geom_positions <- function(
   # # small funkyrects are circles
   # if (nrow(funkyrect_data) > 0) {
   #   funkyrect_data <- funkyrect_data %>% mutate(
-  #     is_circle = !is.na(.data$start) & 
+  #     is_circle = !is.na(.data$start) &
   #       .data$start < 1e-10 & 2 * pi - 1e-10 < .data$end
   #   )
   #   circle_data <- circle_data %>% bind_rows(

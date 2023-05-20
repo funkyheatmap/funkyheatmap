@@ -1,9 +1,8 @@
 calculate_column_positions <- function(
-  column_info,
-  col_width,
-  col_space,
-  col_bigspace
-) {
+    column_info,
+    col_width,
+    col_space,
+    col_bigspace) {
   column_info %>%
     mutate(
       do_spacing = c(FALSE, diff(as.integer(factor(.data$group))) != 0),

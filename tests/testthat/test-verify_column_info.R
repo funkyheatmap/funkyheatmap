@@ -28,11 +28,11 @@ test_that("parsing json works", {
   column_info <- tribble(
     ~id, ~geom, ~options,
     "name", "text", '{"width": 3}',
-    "x", "funkyrect", '{}',
+    "x", "funkyrect", "{}",
     "y", "funkyrect", '{"halign": 0.7}',
   )
-  
+
   out <- verify_column_info(column_info, data)
-  
+
   expect_true(out %has_name% c("id", "geom", "name", "group", "palette", "width"))
 })

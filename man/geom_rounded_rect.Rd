@@ -112,5 +112,5 @@ ggplot(df) +
       fill = z
     ),
     colour = "white"
- )
+  )
 }

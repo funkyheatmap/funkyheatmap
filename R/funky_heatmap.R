@@ -1,7 +1,7 @@
 #' Generate a funky heatmaps for benchmarks
 #'
-#' Allows generating heatmap-like visualisations for benchmark data 
-#' frames. Funky heatmaps can be fine-tuned by providing annotations of the 
+#' Allows generating heatmap-like visualisations for benchmark data
+#' frames. Funky heatmaps can be fine-tuned by providing annotations of the
 #' columns and rows, which allows assigning multiple palettes or geometries
 #' or grouping rows and columns together in categories.
 #'
@@ -50,9 +50,9 @@
 #'     (only for `geom = "text"`).
 #'
 #' * `label`: Which column to use as a label (only for `geom = "text"`).
-#' 
+#'
 #' * `directory`: Which directory to use to find the images (only for `geom = "image"`).
-#' 
+#'
 #' * `extension`: The extension of the images (only for `geom = "image"`).
 #'
 #' * `options` (`list` or `json`): Any of the options above. Any values in this
@@ -128,19 +128,18 @@
 #'
 #' funky_heatmap(data)
 funky_heatmap <- function(
-  data,
-  column_info = NULL,
-  row_info = NULL,
-  column_groups = NULL,
-  row_groups = NULL,
-  palettes = NULL,
-  scale_column = TRUE,
-  add_abc = TRUE,
-  col_annot_offset = 3,
-  col_annot_angle = 30,
-  removed_entries = NULL,
-  expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)
-) {
+    data,
+    column_info = NULL,
+    row_info = NULL,
+    column_groups = NULL,
+    row_groups = NULL,
+    palettes = NULL,
+    scale_column = TRUE,
+    add_abc = TRUE,
+    col_annot_offset = 3,
+    col_annot_angle = 30,
+    removed_entries = NULL,
+    expand = c(xmin = 0, xmax = 2, ymin = 0, ymax = 0)) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -149,7 +148,7 @@ funky_heatmap <- function(
   row_groups <- verify_row_groups(row_groups, row_info)
   palettes <- verify_palettes(palettes, column_info, data)
   # todo: add column groups to verify_palettes
-  
+
   geom_positions <- calculate_geom_positions(
     data,
     column_info,

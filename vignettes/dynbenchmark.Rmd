@@ -37,7 +37,7 @@ The results data is one big data frame.
 
 ```{r}
 data <- dynbenchmark_data$data
-print(data[,1:12])
+print(data[, 1:12])
 ```
 
 Choose a few columns to preview.
@@ -52,7 +52,7 @@ preview_cols <- c(
   "benchmark_overall_norm_him",
   "benchmark_overall_overall"
 )
-kable(data[,preview_cols])
+kable(data[, preview_cols])
 ```
 
 It's possible to use `funky_heatmap()` to visualise the data frame without
@@ -60,7 +60,7 @@ providing additional metadata, but it will likely not have any of the desired
 formatting.
 
 ```{r}
-g <- funky_heatmap(data[,preview_cols])
+g <- funky_heatmap(data[, preview_cols])
 ```
 
 

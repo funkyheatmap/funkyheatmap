@@ -3,7 +3,7 @@
 #' @inheritParams funky_heatmap
 #'
 #' @returns The row groups object with all expected rows.
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -46,7 +46,7 @@ verify_row_groups <- function(row_groups, row_info) {
 
   # checking other rows
   row_groups_colnames <- setdiff(colnames(row_groups), "group")
-  
+
   if (length(row_groups_colnames) == 0) {
     cli_alert_info("Row groups did not contain a row called 'level1'. Using `row_info$group` as a makeshift row group name.")
     row_groups$level1 <- stringr::str_to_title(row_groups$group)
