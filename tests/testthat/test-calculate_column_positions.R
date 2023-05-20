@@ -18,8 +18,7 @@ test_that("calculate_column_positions computes column positions correctly", {
   expect_true(all(result$xmin + result$xwidth == result$xmax))
   expect_true(all(result$xmin + result$xwidth / 2 == result$x))
 
-  # expect column spacing to be applied between groups,
-  # and expect normal column spacing within groups
+  # check spacing
   expect_equal(result$xsep[1:4], c(col_space, col_bigspace, col_space, col_bigspace))
 
   # Expect negative spacing for overlayed elements
