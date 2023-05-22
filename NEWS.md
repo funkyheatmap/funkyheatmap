@@ -1,5 +1,9 @@
 # funkyheatmap 0.3.1
 
+## MAJOR CHANGES
+
+* Plot images as a geom by specifying either a path, or a directory and an extension.
+
 ## BUG FIXES
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
