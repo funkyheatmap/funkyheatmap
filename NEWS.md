@@ -1,8 +1,8 @@
-# funkyheatmap 0.3.1
+# funkyheatmap 0.3.1 (unreleased)
 
 ## MAJOR CHANGES
 
-* Plot images as a geom by specifying either a path, or a directory and an extension. Not yet available on CRAN.
+* Plot images as a geom by specifying either a path, or a directory and an extension.
 
 ## BUG FIXES
 
