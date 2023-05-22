@@ -2,7 +2,7 @@
 
 ## MAJOR CHANGES
 
-* Plot images as a geom by specifying either a path, or a directory and an extension.
+* Plot images as a geom by specifying either a path, or a directory and an extension. Not yet available on CRAN.
 
 ## BUG FIXES
 
