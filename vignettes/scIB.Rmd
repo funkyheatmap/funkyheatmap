@@ -1,0 +1,29 @@
+---
+title: "Recreating the scIB figures"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Recreating the scIB figures}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: ../inst/REFERENCES.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The [single-cell integration benchmarking (scIB)][scib] project was an effort to evaluate and compare the performance of methods for integrating single-cell RNA and ATAC sequencing datasets.
+Many of the results were displayed using custom scripts to create visualisations similar to those produced by `funkyheatmap`.
+
+In this vignette we will show how these figures can be reproduced using `funkyheatmap`.
+
+## References
+
+[scib]: https://theislab.github.io/scib-reproducibility/
