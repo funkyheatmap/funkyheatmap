@@ -19,11 +19,30 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The [single-cell integration benchmarking (scIB)][scib] project was an effort to evaluate and compare the performance of methods for integrating single-cell RNA and ATAC sequencing datasets [@scib_Luecken2021].
+The [single-cell integration benchmarking (scIB)][scib-website] project was an effort to evaluate and compare the performance of methods for integrating single-cell RNA and ATAC sequencing datasets [@scib_Luecken2021].
 Many of the results were displayed using custom scripts to create visualisations similar to those produced by `funkyheatmap`.
 
 In this vignette we will show how these figures can be reproduced using `funkyheatmap`.
 
+## Summary figure
+
+The first figure we will recreate is the summary figure showing the performance of all methods on RNA data. Here is the original for reference:
+
+![scIB RNA summary figure](https://github.com/theislab/scib-reproducibility/blob/main/data/img/best-RNA.png?raw=true){width=100%}
+
+### Data
+
+The steps for summarising the raw metric scores are quite complex so we have included a pre-processed summary table as part of `funkyheatmap` which is produced from the files available in the [scIB reproducibility repository][scib-reproducibility].
+
+```{r summary-data}
+data("scib_summary")
+dplyr::glimpse(scib_summary)
+```
+
+This data frame contains several columns: details of the method version and output, an average rank used to order the table, overall scores and ranks for the performance on each dataset, usability scores and ranks (for the package and paper), and scalability scores and ranks (for both time and memory).
+All of these will go into the summary table.
+
 ## References
 
-[scib]: https://theislab.github.io/scib-reproducibility/
+[scib-website]: https://theislab.github.io/scib-reproducibility/
+[scib-reproducibility]: https://github.com/theislab/scib-reproducibility
