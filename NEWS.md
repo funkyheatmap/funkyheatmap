@@ -1,9 +1,14 @@
+
 # funkyheatmap 0.4.0
 
 ## BREAKING CHANGES
 
 * Deprecated the `col_annot_offset`, `col_annot_angle` and `expand` arguments in 
   `funky_heatmap()`. Use `position_args = position_arguments(...)` instead.
+
+## MAJOR CHANGES
+
+* Plot images as a geom by specifying either a path, or a directory and an extension.
 
 ## NEW FUNCTIONALITY
 
