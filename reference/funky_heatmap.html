@@ -77,12 +77,13 @@ or grouping rows and columns together in categories.</p>
 <span>  column_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  palettes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  position_args <span class="op">=</span> <span class="fu"><a href="position_arguments.html">position_arguments</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  scale_column <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add_abc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  col_annot_offset <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  col_annot_angle <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  removed_entries <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fl">0</span>, xmax <span class="op">=</span> <span class="fl">2</span>, ymin <span class="op">=</span> <span class="fl">0</span>, ymax <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="va">col_annot_offset</span>,</span>
+<span>  <span class="va">col_annot_angle</span>,</span>
+<span>  <span class="va">expand</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -171,6 +172,12 @@ standard palette names can be used:</p><ul><li><p><code>numerical</code>: <code>
 </ul></dd>
 
 
+<dt>position_args</dt>
+<dd><p>Sets parameters that affect positioning within a
+plot, such as row and column dimensions, annotation details, and the
+expansion directions of the plot. See <code><a href="position_arguments.html">position_arguments()</a></code> for more information.</p></dd>
+
+
 <dt>scale_column</dt>
 <dd><p>Whether or not to apply min-max scaling to each
 numerical column.</p></dd>
@@ -181,21 +188,21 @@ numerical column.</p></dd>
 columns groups.</p></dd>
 
 
-<dt>col_annot_offset</dt>
-<dd><p>How much the column annotation will be offset by.</p></dd>
-
-
-<dt>col_annot_angle</dt>
-<dd><p>The angle of the column annotation labels.</p></dd>
-
-
 <dt>removed_entries</dt>
 <dd><p>Which methods to not show in the rows. Missing methods
 are replaced by a "Not shown" label.</p></dd>
 
 
+<dt>col_annot_offset</dt>
+<dd><p>DEPRECATED: use <code>position_args = position_arguments(col_annot_offset = ...)</code> instead.</p></dd>
+
+
+<dt>col_annot_angle</dt>
+<dd><p>DEPRECATED: use <code>position_args = position_arguments(col_annot_angle = ...)</code> instead.</p></dd>
+
+
 <dt>expand</dt>
-<dd><p>A list of directions to expand the plot in.</p></dd>
+<dd><p>DEPRECATED: use <code>position_args = position_arguments(expand_* = ...)</code> instead.</p></dd>
 
 </dl></div>
     <div class="section level2">
