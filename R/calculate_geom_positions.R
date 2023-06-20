@@ -5,18 +5,19 @@ calculate_geom_positions <- function(
     column_groups,
     row_groups,
     palettes,
+    position_args,
     scale_column,
     add_abc,
-    col_annot_offset,
-    col_annot_angle,
     removed_entries) {
-  # no point in making these into parameters
-  row_height <- 1
-  row_space <- .1
-  row_bigspace <- .5
-  col_width <- 1
-  col_space <- .1
-  col_bigspace <- .5
+  # short-hand notations
+  row_height <- position_args[["row_height"]]
+  row_space <- position_args[["row_space"]]
+  row_bigspace <- position_args[["row_bigspace"]]
+  col_width <- position_args[["col_width"]]
+  col_space <- position_args[["col_space"]]
+  col_bigspace <- position_args[["col_bigspace"]]
+  col_annot_offset <- position_args[["col_annot_offset"]]
+  col_annot_angle <- position_args[["col_annot_angle"]]
 
   # DETERMINE ROW POSITIONS
   if (!"group" %in% colnames(row_info) || all(is.na(row_info$group))) {
@@ -175,16 +176,6 @@ calculate_geom_positions <- function(
         path = .data$value
       )
   })
-
-
-  # would be better to have a generic solution for this
-  # # hidden feature trajectory plots
-  # trajd <- geom_data_processor("traj", function(dat) {
-  #   dat %>% mutate(
-  #     topinf = gsub("^gray_", "", value),
-  #     colour = ifelse(grepl("^gray_", value), "#AAAAAA", NA)
-  #   )
-  # })
 
 
   ####################################
