@@ -58,20 +58,18 @@
 <h2 class="pkg-version" data-toc-text="0.4.0" id="funkyheatmap-040">funkyheatmap 0.4.0<a class="anchor" aria-label="anchor" href="#funkyheatmap-040"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-4-0">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h3>
-<ul><li>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead.</li>
+<ul><li>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-functionality-0-4-0">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-0-4-0"></a></h3>
-<ul><li>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="major-changes-0-4-0">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
-<ul><li>Plot images as a geom by specifying either a path, or a directory and an extension.</li>
+<ul><li><p>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/dynverse/funkyheatmap/issues/12" class="external-link">#12</a>).</p></li>
+<li><p>Plot images as a geom by specifying either a path, or a directory and an extension (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-4-0">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
 <ul><li><p>Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.</p></li>
 <li><p>Remove warnings due to changes in tidyselect (<a href="https://github.com/dynverse/funkyheatmap/issues/15" class="external-link">#15</a>).</p></li>
+<li><p>Remove warnings due to ‘size’ being renamed to ‘linewidth’ in ggplot2 v3.4.0 (<a href="https://github.com/dynverse/funkyheatmap/issues/16" class="external-link">#16</a>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
