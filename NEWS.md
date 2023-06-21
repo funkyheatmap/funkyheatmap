@@ -6,18 +6,20 @@
 * Deprecated the `col_annot_offset`, `col_annot_angle` and `expand` arguments in 
   `funky_heatmap()`. Use `position_args = position_arguments(...)` instead.
 
-## MAJOR CHANGES
-
-* Plot images as a geom by specifying either a path, or a directory and an extension.
-
 ## NEW FUNCTIONALITY
 
 * Allow modifying the positioning of elements using the `position_args` argument
   in `funky_heatmap()`.
 
+## MAJOR CHANGES
+
+* Plot images as a geom by specifying either a path, or a directory and an extension.
+
 ## BUG FIXES
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
+
+* Remove warnings due to changes in tidyselect (#15).
 
 # funkyheatmap 0.3.0
 
