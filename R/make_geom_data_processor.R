@@ -33,11 +33,11 @@ make_geom_data_processor <- function(
 
       row_sel <-
         row_pos %>%
-        select(row_id = .data$id, .data$ysep, .data$y, .data$ymin, .data$ymax)
+        select(row_id = "id", "ysep", "y", "ymin", "ymax")
 
       data_sel <-
         data %>%
-        select(row_id = .data$id, value = !!column_sel$column_id) %>%
+        select(row_id = "id", value = !!column_sel$column_id) %>%
         mutate(column_id = column_sel$column_id)
 
       labelcolumn_sel <-
@@ -48,7 +48,7 @@ make_geom_data_processor <- function(
         label_sel <-
           data %>%
           mutate(row_id = .data$id) %>%
-          select(.data$row_id, !!labelcolumn_sel$label) %>%
+          select("row_id", !!labelcolumn_sel$label) %>%
           gather("label_column", "label_value", -"row_id") %>%
           left_join(
             labelcolumn_sel %>% select(label_column = "label", "column_id"),
