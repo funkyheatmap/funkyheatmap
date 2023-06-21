@@ -19,7 +19,7 @@
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
 
-* Fix missing categories when no palette is specified for a pie geom.
+* Fix missing categories when no palette is specified for a pie geom (#17).
 
 # funkyheatmap 0.3.0
 
