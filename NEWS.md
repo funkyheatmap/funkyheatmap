@@ -15,7 +15,7 @@
 
 ## MINOR CHANGES
 
-* Throw warning if magick is not installed or if image is not found.
+* Throw warning if magick is not installed or if image is not found (#18).
 
 ## BUG FIXES
 
