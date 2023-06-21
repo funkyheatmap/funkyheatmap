@@ -31,7 +31,7 @@ Imports:
   cowplot,
   dplyr,
   ggforce,
-  ggplot2,
+  ggplot2 (>= 3.4.0),
   grDevices,
   jsonlite,
   purrr,
