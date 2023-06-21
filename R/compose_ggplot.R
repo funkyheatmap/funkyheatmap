@@ -128,12 +128,25 @@ compose_ggplot <- function(
   }
   # PLOT IMAGES
   if (nrow(geom_positions$img_data) > 0) {
-    for (r in seq_len(nrow(geom_positions$img_data))) {
-      g <- g + cowplot::draw_image(
-        geom_positions$img_data[r, "path"],
-        x = geom_positions$img_data[r, "xmin"],
-        y = geom_positions$img_data[r, "ymin"]
-      )
+    if (!requireNamespace("magick", quietly = TRUE)) {
+      cli_alert_warning("Package `magick` is required to draw images. Skipping columns with geom == \"image\".")
+    } else {
+      for (r in seq_len(nrow(geom_positions$img_data))) {
+        image <- geom_positions$img_data[[r, "path"]]
+        if (!inherits(image, "magick-image")) {
+          if (is.character(image)) {
+            assert_that(file.exists(image), msg = paste0("Image '", image, "' does not exist."))
+          }
+          image <- magick::image_read(image)
+        }
+        g <- g + cowplot::draw_image(
+          image = image,
+          x = geom_positions$img_data[[r, "xmin"]],
+          y = geom_positions$img_data[[r, "ymin"]],
+          width = geom_positions$img_data[[r, "width"]],
+          height = geom_positions$img_data[[r, "height"]]
+        )
+      }
     }
   }
 
