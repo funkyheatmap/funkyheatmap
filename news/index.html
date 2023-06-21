@@ -61,16 +61,17 @@
 <ul><li>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="major-changes-0-4-0">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
-<ul><li>Plot images as a geom by specifying either a path, or a directory and an extension.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="new-functionality-0-4-0">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-0-4-0"></a></h3>
 <ul><li>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="major-changes-0-4-0">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
+<ul><li>Plot images as a geom by specifying either a path, or a directory and an extension.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-0-4-0">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
-<ul><li>Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.</li>
+<ul><li><p>Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.</p></li>
+<li><p>Remove warnings due to changes in tidyselect (<a href="https://github.com/dynverse/funkyheatmap/issues/15" class="external-link">#15</a>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
