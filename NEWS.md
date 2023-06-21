@@ -19,7 +19,7 @@
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
 
-* Remove warnings due to 'size' being renamed to 'linewidth' in ggplot2 v3.4.
+* Remove warnings due to 'size' being renamed to 'linewidth' in ggplot2 v3.4.0 (#16).
 
 # funkyheatmap 0.3.0
 
