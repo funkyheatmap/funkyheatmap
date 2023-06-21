@@ -21,6 +21,8 @@
 
 * Remove warnings due to 'size' being renamed to 'linewidth' in ggplot2 v3.4.0 (#16).
 
+* Fix missing categories when no palette is specified for a pie geom (#17).
+
 # funkyheatmap 0.3.0
 
 ## MAJOR CHANGES

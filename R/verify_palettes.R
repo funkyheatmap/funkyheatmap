@@ -126,7 +126,29 @@ verify_palettes <- function(palettes, column_info, data) {
       if (default_palettes$numerical %has_name% pal_value) {
         pal_value <- default_palettes$numerical[[pal_value]]
       } else if (default_palettes$categorical %has_name% pal_value) {
-        pal_value <- default_palettes$categorical[[pal_value]]
+        columns <- column_info %>%
+          filter(.data$palette == !!palette_id)
+
+        categories_per_column <- pmap(columns, function(id, geom, ...) {
+          dat <- if (geom == "pie") lapply(data[[id]], names) else data[[id]]
+          unique(unlist(dat))
+        })
+
+        categories <- unique(unlist(categories_per_column))
+        pal_values <- default_palettes$categorical[[pal_value]]
+
+        assert_that(
+          length(pal_values) >= length(categories), 
+          msg = paste0(
+            "Number of categories for palette '", palette_id, "' exceeds number of available colours in specified palette name '", pal_value, "'. ",
+            "Please specify a different palette or specify the palette manually."
+          )
+        )
+
+        pal_value <- setNames(
+          pal_values[seq_along(categories)],
+          categories
+        )
       }
     }
     palettes[[palette_id]] <- pal_value
