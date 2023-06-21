@@ -9,6 +9,7 @@ compose_ggplot <- function(
     scale_colour_identity() +
     scale_fill_identity() +
     scale_size_identity() +
+    scale_linewidth_identity() +
     scale_linetype_identity() +
     cowplot::theme_nothing()
 
@@ -42,7 +43,7 @@ compose_ggplot <- function(
         xend = .data$xend,
         y = .data$y,
         yend = .data$yend,
-        size = .data$size, # todo: update to linewidth
+        linewidth = .data$size,
         colour = .data$colour,
         linetype = .data$linetype
       ),
@@ -74,7 +75,7 @@ compose_ggplot <- function(
         alpha = .data$alpha
       ),
       geom_positions$rect_data,
-      size = .25
+      linewidth = .25
     )
   }
 
@@ -88,7 +89,7 @@ compose_ggplot <- function(
         r = .data$r
       ),
       geom_positions$circle_data,
-      size = .25
+      linewidth = .25
     )
   }
 
@@ -122,7 +123,7 @@ compose_ggplot <- function(
         fill = .data$colour
       ),
       data = geom_positions$pie_data,
-      size = .25
+      linewidth = .25
     )
   }
   # PLOT IMAGES

@@ -4,22 +4,22 @@
 ## BREAKING CHANGES
 
 * Deprecated the `col_annot_offset`, `col_annot_angle` and `expand` arguments in 
-  `funky_heatmap()`. Use `position_args = position_arguments(...)` instead.
+  `funky_heatmap()`. Use `position_args = position_arguments(...)` instead (#6).
 
 ## NEW FUNCTIONALITY
 
 * Allow modifying the positioning of elements using the `position_args` argument
-  in `funky_heatmap()`.
+  in `funky_heatmap()` (#12).
 
-## MAJOR CHANGES
-
-* Plot images as a geom by specifying either a path, or a directory and an extension.
+* Plot images as a geom by specifying either a path, or a directory and an extension (#6).
 
 ## BUG FIXES
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
 
 * Remove warnings due to changes in tidyselect (#15).
+
+* Remove warnings due to 'size' being renamed to 'linewidth' in ggplot2 v3.4.0 (#16).
 
 # funkyheatmap 0.3.0
 
