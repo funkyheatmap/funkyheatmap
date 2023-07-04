@@ -70,9 +70,10 @@ GeomRoundedRect <- ggplot2::ggproto(
 
     gl <- lapply(seq_along(coords$xmin), function(i) {
       grid::roundrectGrob(
-        coords$xmin[i], coords$ymax[i],
+        x = coords$xmin[i],
+        y = coords$ymax[i],
         width = (coords$xmax[i] - coords$xmin[i]),
-        height = (coords$ymax[i] - coords$ymin)[i],
+        height = (coords$ymax[i] - coords$ymin[i]),
         r = grid::unit(coords$radius[i], "native"),
         default.units = "native",
         just = c("left", "top"),
