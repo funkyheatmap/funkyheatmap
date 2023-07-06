@@ -182,8 +182,42 @@ funky_heatmap <- function(
     removed_entries
   )
 
-  compose_ggplot(
+  main_plot <- compose_ggplot(
     geom_positions,
     position_args
   )
+
+  # start plotting legends
+  geom_legend_funs <- list(
+    funkyrect = create_funkyrect_legend,
+    pie = create_pie_legend
+  )
+  legends <- column_info %>%
+    select(palette_name = "palette", geom = "geom") %>%
+    na.omit() %>%
+    distinct() %>%
+    filter(geom %in% names(geom_legend_funs)) %>%
+    mutate(
+      palette = map(palette_name, ~ palettes[[.x]]),
+      legend = pmap(
+        lst(geom, palette_name, palette),
+        function(geom, palette_name, palette) {
+          geom_legend_funs[[geom]](palette_name, palette)
+        }
+      ),
+      widths = map_dbl(legend, ~ .x$width),
+      heights = map_dbl(legend, ~ .x$height)
+    )
+  
+  patchwork::wrap_plots(
+    main_plot,
+    patchwork::wrap_plots(
+      legends$legend,
+      nrow = 1,
+      widths = legends$widths
+    ),
+    ncol = 1,
+    heights = c(main_plot$height, max(legends$heights))
+  )
+
 }

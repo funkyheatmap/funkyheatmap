@@ -34,6 +34,7 @@ Imports:
   ggplot2 (>= 3.4.0),
   grDevices,
   jsonlite,
+  patchwork,
   purrr,
   RColorBrewer,
   Rdpack,
