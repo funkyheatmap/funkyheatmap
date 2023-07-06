@@ -68,7 +68,6 @@ create_funkyrect_legend <- function(palette_name, palette, position_args = posit
   fr_maximum_x <- max(fr_legend_dat2$xmax)
 
   # use grey palette for generic funkyrect legend
-  grey_palette <- default_palettes$numerical$Greys
   funkyrect_data <-
     transmute(
       fr_legend_dat2,
@@ -80,11 +79,11 @@ create_funkyrect_legend <- function(palette_name, palette, position_args = posit
     ) %>%
     pmap_df(score_to_funky_rectangle) %>%
     mutate(
-      col_value = round(.data$value * (length(grey_palette) - 1)) + 1,
+      col_value = round(.data$value * (length(palette) - 1)) + 1,
       colour = ifelse(
         is.na(.data$col_value),
         "#444444FF",
-        grey_palette[.data$col_value]
+        palette[.data$col_value]
       )
     )
 
@@ -104,8 +103,10 @@ create_funkyrect_legend <- function(palette_name, palette, position_args = posit
       transmute(
         ymin = .data$ymin - 1,
         ymax = .data$ymin,
-        .data$xmin,
-        .data$xmax,
+        x = (.data$xmin + .data$xmax) / 2,
+        xwidth = pmax(.data$xmax - .data$xmin, .5),
+        xmin = .data$x - .data$xwidth / 2,
+        xmax = .data$x + .data$xwidth / 2,
         hjust = .5,
         vjust = 0,
         label_value = ifelse(

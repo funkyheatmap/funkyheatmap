@@ -116,6 +116,7 @@
 #'
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
+#' @importFrom patchwork wrap_plots plot_spacer
 #'
 #' @returns A ggplot. `.$width` and `.$height` are suggested dimensions for
 #' storing the plot with [ggsave()].
@@ -209,15 +210,21 @@ funky_heatmap <- function(
       heights = map_dbl(legend, ~ .x$height)
     )
   
-  patchwork::wrap_plots(
+  out <- patchwork::wrap_plots(
     main_plot,
+    patchwork::plot_spacer(),
     patchwork::wrap_plots(
       legends$legend,
       nrow = 1,
       widths = legends$widths
     ),
     ncol = 1,
-    heights = c(main_plot$height, max(legends$heights))
+    heights = c(main_plot$height, .1, max(legends$heights))
   )
 
+  # TODO: fix this heuristic
+  out$width <- max(main_plot$width, sum(legends$widths))
+  out$height <- main_plot$height + .1 + max(legends$heights)
+
+  out
 }
