@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# funkyheatmap: Generating Funky Heatmaps for Data Frames
+# `{funkyheatmap}`: Visualising data frames with mixed data types
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`funkyheatmap` allows generating heatmap-like visualisations for
+`{funkyheatmap}` allows generating heatmap-like visualisations for
 benchmark data frames. Funky heatmaps can be fine-tuned by providing
 annotations of the columns and rows, which allows assigning multiple
 palettes or geometries or grouping rows and columns together in
@@ -22,7 +22,7 @@ You can install funkyheatmap like so:
 install.packages("funkyheatmap")
 ```
 
-You can also download `funkyheatmap` as a [standalone
+You can also download `{funkyheatmap}` as a [standalone
 executable](http://funkyheatmap.dynverse.org/articles/executable.html)
 or a [Nextflow
 pipeline](http://funkyheatmap.dynverse.org/articles/nextflow.html).
