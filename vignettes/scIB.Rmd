@@ -26,6 +26,8 @@ In this vignette we will show how these figures can be reproduced using `funkyhe
 
 ```{r libraries}
 library(funkyheatmap)
+library(dplyr)
+library(tibble)
 ```
 
 ## Summary figure
@@ -40,7 +42,7 @@ The steps for summarising the raw metric scores are quite complex so we have inc
 
 ```{r summary-data}
 data("scib_summary")
-dplyr::glimpse(scib_summary)
+glimpse(scib_summary)
 ```
 
 This data frame contains several columns: details of the method version and output, an average rank used to order the table, overall scores and ranks for the performance on each dataset, usability scores and ranks (for the package and paper), and scalability scores and ranks (for both time and memory).
@@ -49,11 +51,16 @@ All of these will go into the summary table.
 The dataset requires some preparation for the `funky_heatmap()` function. We will create an `id` column using the row numbers (the data is already sorted by performance ranking). We also create label columns for each of the scores showing the top 3 performers and relabel some of the columns. Finally, we subset to a the set of columns we want to plot.
 
 ```{r summary-prep}
+label_top_3 <- function(...) {
+  rx <- rank(...)
+  ifelse(rx <= 3, as.character(rx), "")
+}
+
 scib_summary_plot <- scib_summary |>
   # Create an ID column showing the final rank
-  dplyr::mutate(id = as.character(seq_len(nrow(scib_summary)))) |>
+  mutate(id = as.character(seq_len(nrow(scib_summary)))) |>
   # Set the labels for the scaling and features columns
-  dplyr::mutate(
+  mutate(
     scaling = factor(
       scaling,
       levels = c("Unscaled", "Scaled"),
@@ -66,8 +73,8 @@ scib_summary_plot <- scib_summary |>
     )
   ) |>
   # Create a column with paths to output images
-  dplyr::mutate(
-    output_img = dplyr::case_match(
+  mutate(
+    output_img = case_match(
       output,
       "Features"  ~ "images/matrix.png",
       "Embedding" ~ "images/embedding.png",
@@ -75,107 +82,22 @@ scib_summary_plot <- scib_summary |>
     )
   ) |>
   # Create rank labels
-  dplyr::mutate(
-    label_pancreas = dplyr::case_match(
-      rank(rank_pancreas), # We re-rank just the top performing methods
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_lung_atlas = dplyr::case_match(
-      rank(rank_lung_atlas),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_immune_cell_hum = dplyr::case_match(
-      rank(rank_immune_cell_hum),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_immune_cell_hum_mou = dplyr::case_match(
-      rank(rank_immune_cell_hum_mou),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_mouse_brain = dplyr::case_match(
-      rank(rank_mouse_brain),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_simulations_1_1 = dplyr::case_match(
-      rank(rank_simulations_1_1),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    label_simulations_2 = dplyr::case_match(
-      rank(rank_simulations_2),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    package_label = dplyr::case_match(
-      rank(-package_rank, ties.method = "min"),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    paper_label = dplyr::case_match(
-      rank(-paper_rank, ties.method = "min"),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    time_label = dplyr::case_match(
-      rank(-time_rank, ties.method = "min"),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    ),
-    memory_label = dplyr::case_match(
-      rank(-memory_rank, ties.method = "min"),
-      1 ~ "1",
-      2 ~ "2",
-      3 ~ "3"
-    )
-  ) |>
-  # Subset to the columns to plot
-  dplyr::select(
-    id,
-    method,
-    output_img,
-    features,
-    scaling,
-    overall_pancreas,
-    label_pancreas,
-    overall_lung_atlas,
-    label_lung_atlas,
-    overall_immune_cell_hum,
-    label_immune_cell_hum,
-    overall_immune_cell_hum_mou,
-    label_immune_cell_hum_mou,
-    overall_mouse_brain,
-    label_mouse_brain,
-    overall_simulations_1_1,
-    label_simulations_1_1,
-    overall_simulations_2,
-    label_simulations_2,
-    package_score,
-    package_label,
-    paper_score,
-    paper_label,
-    time_score,
-    time_label,
-    memory_score,
-    memory_label
+  mutate(
+    label_pancreas = label_top_3(rank_pancreas),
+    label_lung_atlas = label_top_3(rank_lung_atlas),
+    label_immune_cell_hum = label_top_3(rank_immune_cell_hum),
+    label_immune_cell_hum_mou = label_top_3(rank_immune_cell_hum_mou),
+    label_mouse_brain = label_top_3(rank_mouse_brain),
+    label_simulations_1_1 = label_top_3(rank_simulations_1_1),
+    label_simulations_2 = label_top_3(rank_simulations_2),
+    package_label = label_top_3(-package_rank, ties.method = "min"),
+    paper_label = label_top_3(-paper_rank, ties.method = "min"),
+    time_label = label_top_3(-time_rank, ties.method = "min"),
+    memory_label = label_top_3(-memory_rank, ties.method = "min")
   ) |>
   as.data.frame()
 
-dplyr::glimpse(scib_summary_plot)
+glimpse(scib_summary_plot)
 ```
 
 ### Column information
@@ -183,7 +105,7 @@ dplyr::glimpse(scib_summary_plot)
 The first step in plotting the figure is to create a data frame describing how we want to plot the columns.
 
 ```{r summary-cols}
-column_info <- tibble::tribble(
+column_info <- tribble(
                            ~ id,                  ~ name,  ~ geom,       ~ group, ~ palette, ~ width, ~ legend, ~ hjust, ~ overlay,
                            "id",                  "Rank",  "text",      "Method",        NA,       1,    FALSE,       0,     FALSE,
                        "method",                "Method",  "text",      "Method",        NA,       5,    FALSE,       0,     FALSE,
@@ -194,9 +116,9 @@ column_info <- tibble::tribble(
                "label_pancreas",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
            "overall_lung_atlas",                  "Lung",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
              "label_lung_atlas",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-      "overall_immune_cell_hum",       "Immune\n(human)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+      "overall_immune_cell_hum",        "Immune (human)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
         "label_immune_cell_hum",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-  "overall_immune_cell_hum_mou", "Immune\n(human/mouse)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+  "overall_immune_cell_hum_mou",  "Immune (human/mouse)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
     "label_immune_cell_hum_mou",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
           "overall_mouse_brain",           "Mouse brain",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
             "label_mouse_brain",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
@@ -222,13 +144,13 @@ As shown in the other vignettes this table includes the type of geom for each ea
 We also describe the various column groups.
 
 ```{r summary-col-groups}
-column_groups <- tibble::tribble(
+column_groups <- tribble(
         ~ group,     ~ palette,      ~ level1,
        "Method",      "Method",      "Method",
-          "RNA",         "RNA",         "RNA",
-  "Simulations", "Simulations", "Simulations",
-    "Usability",   "Usability",   "Usability",
-  "Scalability", "Scalability", "Scalability",
+          "RNA",       "blues",         "RNA",
+  "Simulations",      "greens", "Simulations",
+    "Usability",     "oranges",   "Usability",
+  "Scalability",       "greys", "Scalability",
 )
 
 column_groups
@@ -251,7 +173,7 @@ row_info
 The last thing we define is the palettes. This are very similar to the default palettes but we include them here as an example and so they can be easily modified if needed.
 
 ```{r summary-palettes}
-palettes <- tibble::tribble(
+palettes <- tribble(
    ~ palette,                                     ~ colours,
   "features",                             c("green", "red"),
      "blues", grDevices::colorRampPalette(
@@ -281,8 +203,7 @@ funky_heatmap(
   row_info = row_info,
   palettes = palettes,
   scale_column = FALSE,
-  col_annot_angle = 90,
-  col_annot_offset = 5
+  col_annot_offset = 4
 )
 ```
 
