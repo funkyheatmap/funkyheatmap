@@ -8,6 +8,9 @@ create_generic_geom_legend(
   title,
   palette,
   geom = c("circle", "rect", "funkyrect"),
+  labels,
+  size,
+  color,
   position_args = position_arguments()
 )
 }
@@ -17,6 +20,12 @@ create_generic_geom_legend(
 \item{palette}{The palette}
 
 \item{geom}{Which geom to draw.}
+
+\item{labels}{The labels to use for the legend.}
+
+\item{size}{The sizes to use for the legend.}
+
+\item{color}{The colors to use for the legend.}
 
 \item{position_args}{Sets parameters that affect positioning within a
 plot, such as row and column dimensions, annotation details, and the
@@ -29,5 +38,5 @@ Create a generic geom legend (for circles, rects, and funkyrects)
 title <- "Greys"
 palette <- funkyheatmap:::default_palettes$numerical$Greys
 geom <- "circle"
-create_scaling_geom_legend(title, palette, geom)
+create_generic_geom_legend(title, palette, geom)
 }

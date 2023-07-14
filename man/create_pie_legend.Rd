@@ -4,12 +4,25 @@
 \alias{create_pie_legend}
 \title{Create a pie legend}
 \usage{
-create_pie_legend(title, palette, position_args = position_arguments())
+create_pie_legend(
+  title,
+  palette,
+  labels,
+  size,
+  color,
+  position_args = position_arguments()
+)
 }
 \arguments{
 \item{title}{The name of the palette}
 
 \item{palette}{The palette}
+
+\item{labels}{The labels to use for the legend.}
+
+\item{size}{The sizes to use for the legend.}
+
+\item{color}{The colors to use for the legend.}
 
 \item{position_args}{Sets parameters that affect positioning within a
 plot, such as row and column dimensions, annotation details, and the

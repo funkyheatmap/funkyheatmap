@@ -4,7 +4,29 @@
 \alias{create_funkyrect_legend}
 \title{Create a funkyrect legend}
 \usage{
-create_funkyrect_legend(title, palette, position_args = position_arguments())
+create_funkyrect_legend(
+  title,
+  palette,
+  labels,
+  size,
+  color,
+  position_args = position_arguments()
+)
+}
+\arguments{
+\item{title}{The name of the palette}
+
+\item{palette}{The palette}
+
+\item{labels}{The labels to use for the legend.}
+
+\item{size}{The sizes to use for the legend.}
+
+\item{color}{The colors to use for the legend.}
+
+\item{position_args}{Sets parameters that affect positioning within a
+plot, such as row and column dimensions, annotation details, and the
+expansion directions of the plot. See \code{position_arguments()} for more information.}
 }
 \description{
 Create a funkyrect legend
