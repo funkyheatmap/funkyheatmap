@@ -4,26 +4,13 @@
 \alias{create_funkyrect_legend}
 \title{Create a funkyrect legend}
 \usage{
-create_funkyrect_legend(
-  palette_name,
-  palette,
-  position_args = position_arguments()
-)
-}
-\arguments{
-\item{palette_name}{The name of the palette}
-
-\item{palette}{The palette}
-
-\item{position_args}{Sets parameters that affect positioning within a
-plot, such as row and column dimensions, annotation details, and the
-expansion directions of the plot. See \code{position_arguments()} for more information.}
+create_funkyrect_legend(title, palette, position_args = position_arguments())
 }
 \description{
 Create a funkyrect legend
 }
 \examples{
-palette_name <- "Greys"
-palette <- c("#FF0000", "#00FF00", "#0000FF")
-create_funkyrect_legend(palette_name, palette)
+title <- "Greys"
+palette <- funkyheatmap:::default_palettes$numerical$Greys
+create_funkyrect_legend(title, palette)
 }

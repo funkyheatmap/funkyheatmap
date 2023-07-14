@@ -190,9 +190,9 @@ funky_heatmap <- function(
 
   # start plotting legends
   geom_legend_funs <- list(
-    funkyrect = function(...) create_scaling_geom_legend(geom = "funkyrect", ...),
-    circle = function(...) create_scaling_geom_legend(geom = "circle", ...),
-    rect = function(...) create_scaling_geom_legend(geom = "rect", ...),
+    funkyrect = create_funkyrect_legend,
+    circle = create_circle_legend,
+    rect = create_rect_legend,
     pie = create_pie_legend
   )
   legends <- column_info %>%

@@ -1,134 +1,40 @@
 #' Create a funkyrect legend
 #' 
-#' @param title The name of the palette
-#' @param palette The palette
-#' @param position_args Sets parameters that affect positioning within a
-#' plot, such as row and column dimensions, annotation details, and the
-#' expansion directions of the plot. See `position_arguments()` for more information.
+#' @inheritParams create_scaling_geom_legend
 #' 
 #' @examples
 #' title <- "Greys"
 #' palette <- funkyheatmap:::default_palettes$numerical$Greys
 #' create_funkyrect_legend(title, palette)
 create_funkyrect_legend <- function(title, palette, position_args = position_arguments()) {
-  start_x <- 0
-  start_y <- 0
-  
-  col_width <- position_args$col_width
-
-  fr_legend_size <- 1
-  fr_legend_space <- .2
-
-  fr_legend_dat1 <-
-    tibble(
-      value = seq(0, 1, by = .1),
-      xmin = 0,
-      xmax = col_width * fr_legend_size,
-      ymin = 0,
-      ymax = col_width * fr_legend_size
-    )
-
-  fr_poly_data1 <-
-    fr_legend_dat1 %>%
-    select("xmin", "xmax", "ymin", "ymax", "value") %>%
-    pmap_df(score_to_funky_rectangle)
-
-  fr_legend_dat2 <-
-    fr_poly_data1 %>%
-    # filter(!is.na(.data$r)) %>%
-    group_by(.data$value) %>%
-    summarise(
-      minx = min(.data$xmin),
-      maxx = max(.data$xmax),
-      miny = min(.data$ymin),
-      maxy = max(.data$ymax)
-    ) %>%
-    mutate(
-      width = .data$maxx - .data$minx,
-      height = .data$maxy - .data$miny,
-      xmin = cumsum(.data$width + fr_legend_space) - .data$width - fr_legend_space,
-      xmin = start_x + .data$xmin - min(.data$xmin),
-      xmax = .data$xmin + .data$width,
-      ymin = start_y - 2.5,
-      ymax = .data$ymin + .data$height
-    ) %>%
-    transmute(
-      .data$width,
-      .data$height,
-      .data$value,
-      .data$xmin,
-      .data$xmax,
-      .data$ymin,
-      .data$ymax,
-      x = (.data$xmin + .data$xmax) / 2,
-      y = (.data$ymin + .data$ymax) / 2
-    )
-
-  fr_maximum_x <- max(fr_legend_dat2$xmax)
-
-  # use grey palette for generic funkyrect legend
-  funkyrect_data <-
-    transmute(
-      fr_legend_dat2,
-      xmin = .data$x - fr_legend_size / 2,
-      xmax = .data$x + fr_legend_size / 2,
-      ymin = .data$y - fr_legend_size / 2,
-      ymax = .data$y + fr_legend_size / 2,
-      .data$value
-    ) %>%
-    pmap_df(score_to_funky_rectangle) %>%
-    mutate(
-      col_value = round(.data$value * (length(palette) - 1)) + 1,
-      colour = ifelse(
-        is.na(.data$col_value),
-        "#444444FF",
-        palette[.data$col_value]
-      )
-    )
-
-  text_data <- bind_rows(
-    tibble(
-      xmin = start_x,
-      xmax = fr_maximum_x,
-      ymin = start_y - 1.5,
-      ymax = start_y - .5,
-      label_value = title,
-      hjust = 0,
-      vjust = 1,
-      fontface = "bold"
-    ),
-    fr_legend_dat2 %>%
-      filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
-      transmute(
-        ymin = .data$ymin - 1,
-        ymax = .data$ymin,
-        x = (.data$xmin + .data$xmax) / 2,
-        xwidth = pmax(.data$xmax - .data$xmin, .5),
-        xmin = .data$x - .data$xwidth / 2,
-        xmax = .data$x + .data$xwidth / 2,
-        hjust = .5,
-        vjust = 0,
-        label_value = ifelse(
-          .data$value %in% c(0, 1),
-          sprintf("%.0f", .data$value),
-          sprintf("%.1f", .data$value)
-        )
-      )
-  ) %>%
-    mutate(
-      x = (1 - .data$hjust) * .data$xmin + .data$hjust * .data$xmax,
-      y = (1 - .data$vjust) * .data$ymin + .data$vjust * .data$ymax
-    )
-
-  geom_positions <- lst(
-    text_data,
-    funkyrect_data
-  )
-
-  compose_ggplot(geom_positions, list())
+  create_generic_geom_legend(title, palette, "funkyrect", position_args)
 }
 
-#' Create a scaling geom legend
+#' Create a rect legend
+#' 
+#' @inheritParams create_scaling_geom_legend
+#' 
+#' @examples
+#' title <- "Greys"
+#' palette <- funkyheatmap:::default_palettes$numerical$Greys
+#' create_rect_legend(title, palette)
+create_rect_legend <- function(title, palette, position_args = position_arguments()) {
+  create_generic_geom_legend(title, palette, "rect", position_args)
+}
+
+#' Create a circle legend
+#' 
+#' @inheritParams create_scaling_geom_legend
+#' 
+#' @examples
+#' title <- "Greys"
+#' palette <- funkyheatmap:::default_palettes$numerical$Greys
+#' create_circle_legend(title, palette)
+create_circle_legend <- function(title, palette, position_args = position_arguments()) {
+  create_generic_geom_legend(title, palette, "circle", position_args)
+}
+
+#' Create a generic geom legend (for circles, rects, and funkyrects)
 #'
 #' @param title The name of the palette
 #' @param palette The palette
@@ -142,7 +48,7 @@ create_funkyrect_legend <- function(title, palette, position_args = position_arg
 #' palette <- funkyheatmap:::default_palettes$numerical$Greys
 #' geom <- "circle"
 #' create_scaling_geom_legend(title, palette, geom)
-create_scaling_geom_legend <- function(title, palette, geom = c("circle", "rect", "funkyrect"), position_args = position_arguments()) {
+create_generic_geom_legend <- function(title, palette, geom = c("circle", "rect", "funkyrect"), position_args = position_arguments()) {
   geom <- match.arg(geom)
 
   start_x <- 0

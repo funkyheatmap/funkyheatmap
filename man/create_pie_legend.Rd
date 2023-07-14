@@ -4,10 +4,10 @@
 \alias{create_pie_legend}
 \title{Create a pie legend}
 \usage{
-create_pie_legend(palette_name, palette, position_args = position_arguments())
+create_pie_legend(title, palette, position_args = position_arguments())
 }
 \arguments{
-\item{palette_name}{The name of the palette}
+\item{title}{The name of the palette}
 
 \item{palette}{The palette}
 
@@ -19,7 +19,7 @@ expansion directions of the plot. See \code{position_arguments()} for more infor
 Create a pie legend
 }
 \examples{
-palette_name <- "Greys"
+title <- "Greys"
 palette <- c(One = "#FF0000", Two = "#00FF00", Three = "#0000FF")
-create_pie_legend(palette_name, palette)
+create_pie_legend(title, palette)
 }
