@@ -198,61 +198,17 @@ compose_ggplot <- function(
 
   # Compute bounds
   if (is.null(geom_positions$bounds)) {
-    gp <- geom_positions
     # determine size of current geoms
-    suppressWarnings({
-      minimum_x <- min(
-        gp$column_pos$xmin,
-        gp$segment_data$x,
-        gp$segment_data$xend,
-        gp$rect_data$xmin,
-        gp$circle_data$x - gp$circle_data$r,
-        gp$funkyrect_data$x - gp$funkyrect_data$r,
-        gp$pie_data$xmin,
-        gp$text_data$xmin,
-        na.rm = TRUE
-      )
-      maximum_x <- max(
-        gp$column_pos$xmax,
-        gp$segment_data$x,
-        gp$segment_data$xend,
-        gp$rect_data$xmax,
-        gp$circle_data$x + gp$circle_data$r,
-        gp$funkyrect_data$x + gp$funkyrect_data$r,
-        gp$pie_data$xmax,
-        gp$text_data$xmax,
-        na.rm = TRUE
-      )
-      minimum_y <- min(
-        gp$row_pos$ymin,
-        gp$segment_data$y,
-        gp$segment_data$yend,
-        gp$rect_data$ymin,
-        gp$circle_data$y - gp$circle_data$r,
-        gp$funkyrect_data$y - gp$funkyrect_data$r,
-        gp$pie_data$ymin,
-        gp$text_data$ymin,
-        na.rm = TRUE
-      )
-      maximum_y <- max(
-        gp$row_pos$ymax,
-        gp$segment_data$y,
-        gp$segment_data$yend,
-        gp$rect_data$ymax,
-        gp$circle_data$y + gp$circle_data$r,
-        gp$funkyrect_data$y + gp$funkyrect_data$r,
-        gp$pie_data$ymax,
-        gp$text_data$ymax,
-        na.rm = TRUE
-      )
-
-      geom_positions$bounds <- list(
-        minimum_x = minimum_x,
-        maximum_x = maximum_x,
-        minimum_y = minimum_y,
-        maximum_y = maximum_y
-      )
-    })
+    geom_positions$bounds <- compute_bounds(
+      row_pos = geom_positions$row_pos,
+      column_pos = geom_positions$column_pos,
+      segment_data = geom_positions$segment_data,
+      rect_data = geom_positions$rect_data,
+      circle_data = geom_positions$circle_data,
+      funkyrect_data = geom_positions$funkyrect_data,
+      pie_data = geom_positions$pie_data,
+      text_data = geom_positions$text_data
+    )
   }
 
   # ADD SIZE
