@@ -203,7 +203,11 @@ funky_heatmap <- function(
     mutate(
       palette = map(.data$palette_name, ~ palettes[[.x]]),
       legend = pmap(
-        lst(.data$geom, .data$palette_name, .data$palette),
+        list(
+          geom = .data$geom,
+          palette_name = .data$palette_name,
+          palette = .data$palette
+        ),
         function(geom, palette_name, palette) {
           geom_legend_funs[[geom]](palette_name, palette)
         }
@@ -211,6 +215,13 @@ funky_heatmap <- function(
       widths = map_dbl(.data$legend, ~ .x$width),
       heights = map_dbl(.data$legend, ~ .x$height)
     )
+  
+  heights <- main_plot$height
+  width <- main_plot$width
+  if (nrow(legends) > 0) {
+    heights <- c(heights, .1, max(legends$heights))
+    width <- max(width, sum(legends$widths))
+  }
   
   out <- patchwork::wrap_plots(
     main_plot,
@@ -221,12 +232,12 @@ funky_heatmap <- function(
       widths = legends$widths
     ),
     ncol = 1,
-    heights = c(main_plot$height, .1, max(legends$heights))
+    heights = heights
   )
 
   # TODO: fix this heuristic
-  out$width <- max(main_plot$width, sum(legends$widths))
-  out$height <- main_plot$height + .1 + max(legends$heights)
+  out$width <- width
+  out$height <- sum(heights)
 
   out
 }
