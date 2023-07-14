@@ -228,16 +228,19 @@ funky_heatmap <- function(
     }
   }
 
+  if (length(legend_plots) == 0) {
+    return(main_plot)
+  }
+
   legend_widths <- map_dbl(legend_plots, ~ .x$width)
   legend_heights <- map_dbl(legend_plots, ~ .x$height)
   
   heights <- main_plot$height
   width <- main_plot$width
-  if (length(legend_plots) > 0) {
-    heights <- c(heights, .1, max(legend_heights))
-    width <- max(width, sum(legend_widths))
-  }
-  
+
+  heights <- c(heights, .1, max(legend_heights))
+  width <- max(width, sum(legend_widths))
+
   out <- patchwork::wrap_plots(
     main_plot,
     patchwork::plot_spacer(),
