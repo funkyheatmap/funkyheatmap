@@ -8,14 +8,13 @@
 #' 
 #' @examples
 #' title <- "Greys"
-#' palette <- c("#FF0000", "#00FF00", "#0000FF")
+#' palette <- funkyheatmap:::default_palettes$numerical$Greys
 #' create_funkyrect_legend(title, palette)
 create_funkyrect_legend <- function(title, palette, position_args = position_arguments()) {
   start_x <- 0
   start_y <- 0
   
   col_width <- position_args$col_width
-  row_height <- position_args$row_height
 
   fr_legend_size <- 1
   fr_legend_space <- .2
@@ -129,6 +128,123 @@ create_funkyrect_legend <- function(title, palette, position_args = position_arg
   compose_ggplot(geom_positions, list())
 }
 
+#' Create a scaling geom legend
+#'
+#' @param title The name of the palette
+#' @param palette The palette
+#' @param geom Which geom to draw.
+#' @param position_args Sets parameters that affect positioning within a
+#' plot, such as row and column dimensions, annotation details, and the
+#' expansion directions of the plot. See `position_arguments()` for more information.
+#'
+#' @examples
+#' title <- "Greys"
+#' palette <- funkyheatmap:::default_palettes$numerical$Greys
+#' geom <- "circle"
+#' create_scaling_geom_legend(title, palette, geom)
+create_scaling_geom_legend <- function(title, palette, geom = c("circle", "rect", "funkyrect"), position_args = position_arguments()) {
+  geom <- match.arg(geom)
+
+  start_x <- 0
+  start_y <- 0
+  
+  col_width <- position_args$col_width
+
+  legend_size <- 1
+  legend_space <- .2
+
+  # compute sizes of geoms
+  geom_size_data <-
+    if (geom == "funkyrect") {
+      tibble(
+        value = seq(0, 1, by = .1),
+        xmin = - col_width * legend_size / 2,
+        xmax = col_width * legend_size / 2,
+        ymin = - col_width * legend_size / 2,
+        ymax = col_width * legend_size / 2
+      ) %>%
+        # figure out size and radius of funkyrect
+        pmap_df(score_to_funky_rectangle)
+    } else {
+      tibble(
+        value = seq(0, 1, by = .1),
+        xmin = - .data$value * legend_size / 2,
+        xmax = .data$value * legend_size / 2,
+        ymin = - .data$value * legend_size / 2,
+        ymax = .data$value * legend_size / 2,
+        r = .data$value / 2
+      )
+    }
+
+  # compute positions of geoms
+  geom_pos_data <- geom_size_data %>%
+    mutate(
+      width = .data$xmax - .data$xmin,
+      height = .data$ymax - .data$ymin,
+      xmin = cumsum(.data$width + legend_space) - .data$width - legend_space,
+      xmin = start_x + .data$xmin - min(.data$xmin),
+      xmax = .data$xmin + .data$width,
+      ymin = start_y - 2.5,
+      ymax = .data$ymin + .data$height,
+      x = (.data$xmin + .data$xmax) / 2,
+      y = (.data$ymin + .data$ymax) / 2,
+      x0 = .data$x,
+      y0 = .data$y
+    )
+
+  # determine colours of geoms
+  geom_data <- geom_pos_data %>%
+    mutate(
+      col_value = round(.data$value * (length(palette) - 1)) + 1,
+      colour = ifelse(
+        is.na(.data$col_value),
+        "#444444FF",
+        palette[.data$col_value]
+      )
+    )
+
+  maximum_x <- max(geom_data$xmax)
+
+
+  text_data <- bind_rows(
+    tibble(
+      xmin = start_x,
+      xmax = maximum_x,
+      ymin = start_y - 1.5,
+      ymax = start_y - .5,
+      label_value = title,
+      hjust = 0,
+      vjust = 1,
+      fontface = "bold"
+    ),
+    geom_data %>%
+      filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
+      transmute(
+        ymin = .data$ymin - 1,
+        ymax = .data$ymin,
+        x = (.data$xmin + .data$xmax) / 2,
+        xwidth = pmax(.data$xmax - .data$xmin, .5),
+        xmin = .data$x - .data$xwidth / 2,
+        xmax = .data$x + .data$xwidth / 2,
+        hjust = .5,
+        vjust = 0,
+        label_value = ifelse(
+          .data$value %in% c(0, 1),
+          sprintf("%.0f", .data$value),
+          sprintf("%.1f", .data$value)
+        )
+      )
+  ) %>%
+    mutate(
+      x = (1 - .data$hjust) * .data$xmin + .data$hjust * .data$xmax,
+      y = (1 - .data$vjust) * .data$ymin + .data$vjust * .data$ymax
+    )
+
+  geom_positions <- list(text_data = text_data)
+  geom_positions[[paste0(geom, "_data")]] <- geom_data
+
+  compose_ggplot(geom_positions, list())
+}
 
 #' Create a pie legend
 #' @param title The name of the palette

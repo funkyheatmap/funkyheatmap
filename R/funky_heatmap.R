@@ -190,24 +190,26 @@ funky_heatmap <- function(
 
   # start plotting legends
   geom_legend_funs <- list(
-    funkyrect = create_funkyrect_legend,
+    funkyrect = function(...) create_scaling_geom_legend(geom = "funkyrect", ...),
+    circle = function(...) create_scaling_geom_legend(geom = "circle", ...),
+    rect = function(...) create_scaling_geom_legend(geom = "rect", ...),
     pie = create_pie_legend
   )
   legends <- column_info %>%
     select(palette_name = "palette", geom = "geom") %>%
     na.omit() %>%
     distinct() %>%
-    filter(geom %in% names(geom_legend_funs)) %>%
+    filter(.data$geom %in% names(geom_legend_funs)) %>%
     mutate(
-      palette = map(palette_name, ~ palettes[[.x]]),
+      palette = map(.data$palette_name, ~ palettes[[.x]]),
       legend = pmap(
-        lst(geom, palette_name, palette),
+        lst(.data$geom, .data$palette_name, .data$palette),
         function(geom, palette_name, palette) {
           geom_legend_funs[[geom]](palette_name, palette)
         }
       ),
-      widths = map_dbl(legend, ~ .x$width),
-      heights = map_dbl(legend, ~ .x$height)
+      widths = map_dbl(.data$legend, ~ .x$width),
+      heights = map_dbl(.data$legend, ~ .x$height)
     )
   
   out <- patchwork::wrap_plots(
