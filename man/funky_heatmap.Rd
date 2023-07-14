@@ -14,7 +14,6 @@ funky_heatmap(
   position_args = position_arguments(),
   scale_column = TRUE,
   add_abc = TRUE,
-  removed_entries = NULL,
   col_annot_offset,
   col_annot_angle,
   expand
@@ -111,9 +110,6 @@ numerical column.}
 
 \item{add_abc}{Whether or not to add subfigure labels to the different
 columns groups.}
-
-\item{removed_entries}{Which methods to not show in the rows. Missing methods
-are replaced by a "Not shown" label.}
 
 \item{col_annot_offset}{DEPRECATED: use \code{position_args = position_arguments(col_annot_offset = ...)} instead.}
 

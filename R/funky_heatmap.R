@@ -107,9 +107,6 @@
 #' @param add_abc Whether or not to add subfigure labels to the different
 #' columns groups.
 #'
-#' @param removed_entries Which methods to not show in the rows. Missing methods
-#' are replaced by a "Not shown" label.
-#'
 #' @param col_annot_offset DEPRECATED: use `position_args = position_arguments(col_annot_offset = ...)` instead.
 #' @param col_annot_angle DEPRECATED: use `position_args = position_arguments(col_annot_angle = ...)` instead.
 #' @param expand DEPRECATED: use `position_args = position_arguments(expand_* = ...)` instead.
@@ -141,7 +138,6 @@ funky_heatmap <- function(
     position_args = position_arguments(),
     scale_column = TRUE,
     add_abc = TRUE,
-    removed_entries = NULL,
     col_annot_offset,
     col_annot_angle,
     expand) {
@@ -179,8 +175,7 @@ funky_heatmap <- function(
     palettes,
     position_args,
     scale_column,
-    add_abc,
-    removed_entries
+    add_abc
   )
 
   main_plot <- compose_ggplot(

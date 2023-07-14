@@ -7,8 +7,7 @@ calculate_geom_positions <- function(
     palettes,
     position_args,
     scale_column,
-    add_abc,
-    removed_entries) {
+    add_abc) {
   # short-hand notations
   row_height <- position_args[["row_height"]]
   row_space <- position_args[["row_space"]]

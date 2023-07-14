@@ -13,7 +13,6 @@ par <- list(
   "scale_column" = TRUE,
   "add_abc" = TRUE,
   "col_annot_offset" = 3.0,
-  "removed_entries" = NULL,
   "expand" = c(0, 2, 0, 0),
   "output" = "output.pdf"
 )

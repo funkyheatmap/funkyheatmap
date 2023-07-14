@@ -6,6 +6,8 @@
 * Deprecated the `col_annot_offset`, `col_annot_angle` and `expand` arguments in 
   `funky_heatmap()`. Use `position_args = position_arguments(...)` instead (#6).
 
+* Removed the `removed_entries` argument.
+
 ## NEW FUNCTIONALITY
 
 * Allow modifying the positioning of elements using the `position_args` argument
