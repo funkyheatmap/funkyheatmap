@@ -1,16 +1,16 @@
 #' Create a funkyrect legend
 #' 
-#' @param palette_name The name of the palette
+#' @param title The name of the palette
 #' @param palette The palette
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
 #' expansion directions of the plot. See `position_arguments()` for more information.
 #' 
 #' @examples
-#' palette_name <- "Greys"
+#' title <- "Greys"
 #' palette <- c("#FF0000", "#00FF00", "#0000FF")
-#' create_funkyrect_legend(palette_name, palette)
-create_funkyrect_legend <- function(palette_name, palette, position_args = position_arguments()) {
+#' create_funkyrect_legend(title, palette)
+create_funkyrect_legend <- function(title, palette, position_args = position_arguments()) {
   start_x <- 0
   start_y <- 0
   
@@ -93,7 +93,7 @@ create_funkyrect_legend <- function(palette_name, palette, position_args = posit
       xmax = fr_maximum_x,
       ymin = start_y - 1.5,
       ymax = start_y - .5,
-      label_value = palette_name,
+      label_value = title,
       hjust = 0,
       vjust = 1,
       fontface = "bold"
@@ -131,16 +131,16 @@ create_funkyrect_legend <- function(palette_name, palette, position_args = posit
 
 
 #' Create a pie legend
-#' @param palette_name The name of the palette
+#' @param title The name of the palette
 #' @param palette The palette
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
 #' expansion directions of the plot. See `position_arguments()` for more information.
 #' @examples
-#' palette_name <- "Greys"
+#' title <- "Greys"
 #' palette <- c(One = "#FF0000", Two = "#00FF00", Three = "#0000FF")
-#' create_pie_legend(palette_name, palette)
-create_pie_legend <- function(palette_name, palette, position_args = position_arguments()) {
+#' create_pie_legend(title, palette)
+create_pie_legend <- function(title, palette, position_args = position_arguments()) {
   start_x <- 0
   start_y <- 0
   row_height <- position_args$row_height
@@ -169,7 +169,7 @@ create_pie_legend <- function(palette_name, palette, position_args = position_ar
     tibble(
       x = start_x,
       y = start_y - 1,
-      label_value = palette_name,
+      label_value = title,
       hjust = 0,
       vjust = 1,
       fontface = "bold",
@@ -219,9 +219,61 @@ create_pie_legend <- function(palette_name, palette, position_args = position_ar
   geom_positions <- lst(
     segment_data,
     pie_data,
-    # rect_data = text_data %>% mutate(colour = NA),
     text_data
   )
-  
+
   compose_ggplot(geom_positions, list())
+}
+
+
+create_removed <- function(removed_entries, title = "Not shown", position_args = position_arguments()) {
+
+  if (!is.null(removed_entries)) {
+    minimum_x <- 0
+    minimum_y <- 0
+    row_height <- position_args$row_height
+
+    num_cols <- 2
+    num_rows <- ceiling(length(removed_entries) / num_cols)
+
+    rm_lab_df <-
+      tibble(label_value = removed_entries) %>%
+      mutate(
+        row = (row_number() - 1) %% num_rows,
+        col = ceiling(row_number() / num_rows) - 1,
+        x = minimum_x + col * 5,
+        y = minimum_y - (row + 2) * row_height * .9
+      )
+    rm_text_data <-
+      bind_rows(
+        tibble(
+          xmin = minimum_x,
+          xmax = minimum_x,
+          ymin = minimum_y - 1.5,
+          ymax = minimum_y - .5,
+          label_value = title,
+          hjust = 0,
+          vjust = 1,
+          fontface = "bold"
+        ),
+        rm_lab_df %>% mutate(
+          xmin = .data$x,
+          xmax = .data$x,
+          ymin = .data$y,
+          ymax = .data$y,
+          hjust = 0,
+          vjust = 0
+        )
+      )
+
+    text_data <- text_data %>% bind_rows(
+      rm_text_data
+    )
+
+    geom_positions <- lst(
+      text_data
+    )
+    
+    compose_ggplot(geom_positions, list())
+  }
 }

@@ -321,98 +321,6 @@ calculate_geom_positions <- function(
       )
   }
 
-  # determine size of current geoms
-  suppressWarnings({
-    minimum_x <- min(
-      column_pos$xmin,
-      segment_data$x,
-      segment_data$xend,
-      rect_data$xmin,
-      circle_data$x - circle_data$r,
-      funkyrect_data$x - funkyrect_data$r,
-      pie_data$xmin,
-      text_data$xmin,
-      na.rm = TRUE
-    )
-    maximum_x <- max(
-      column_pos$xmax,
-      segment_data$x,
-      segment_data$xend,
-      rect_data$xmax,
-      circle_data$x + circle_data$r,
-      funkyrect_data$x + funkyrect_data$r,
-      pie_data$xmax,
-      text_data$xmax,
-      na.rm = TRUE
-    )
-    minimum_y <- min(
-      row_pos$ymin,
-      segment_data$y,
-      segment_data$yend,
-      rect_data$ymin,
-      circle_data$y - circle_data$r,
-      funkyrect_data$y - funkyrect_data$r,
-      pie_data$ymin,
-      text_data$ymin,
-      na.rm = TRUE
-    )
-    maximum_y <- max(
-      row_pos$ymax,
-      segment_data$y,
-      segment_data$yend,
-      rect_data$ymax,
-      circle_data$y + circle_data$r,
-      funkyrect_data$y + funkyrect_data$r,
-      pie_data$ymax,
-      text_data$ymax,
-      na.rm = TRUE
-    )
-  })
-
-  if (!is.null(removed_entries)) {
-    # rm_min_x <- column_pos %>% filter(!group %in% c("method_characteristic", "inferrable_trajtype", "benchmark_metric", "benchmark_source")) %>% slice(1) %>% pull(xmin)
-    rm_min_x <- 20
-
-    num_cols <- 2
-    num_rows <- ceiling(length(removed_entries) / num_cols)
-
-    rm_lab_df <-
-      tibble(label_value = removed_entries) %>%
-      mutate(
-        row = (row_number() - 1) %% num_rows,
-        col = ceiling(row_number() / num_rows) - 1,
-        x = rm_min_x + col * 5,
-        y = legend_pos - (row + 2) * row_height * .9
-      )
-    rm_text_data <-
-      bind_rows(
-        tibble(
-          xmin = rm_min_x,
-          xmax = rm_min_x,
-          ymin = legend_pos - 1.5,
-          ymax = legend_pos - .5,
-          label_value = "Not shown, insufficient data points",
-          hjust = 0,
-          vjust = 1,
-          fontface = "bold"
-        ),
-        rm_lab_df %>% mutate(
-          xmin = .data$x,
-          xmax = .data$x,
-          ymin = .data$y,
-          ymax = .data$y,
-          hjust = 0,
-          vjust = 0
-        )
-      )
-
-    text_data <- text_data %>% bind_rows(
-      rm_text_data
-    )
-  }
-
-  minimum_y <- min(minimum_y, min(text_data$ymin, na.rm = TRUE))
-
   ####################################
   ###    SIMPLIFY CERTAIN GEOMS    ###
   ####################################
@@ -448,12 +356,6 @@ calculate_geom_positions <- function(
     pie_data,
     img_data,
     text_data,
-    # bounds = lst(
-    #   minimum_x,
-    #   maximum_x,
-    #   minimum_y,
-    #   maximum_y
-    # ),
     viz_params = lst(
       row_space
     )
