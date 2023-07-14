@@ -51,9 +51,13 @@ All of these will go into the summary table.
 The dataset requires some preparation for the `funky_heatmap()` function. We will create an `id` column using the row numbers (the data is already sorted by performance ranking). We also create label columns for each of the scores showing the top 3 performers and relabel some of the columns. Finally, we subset to a the set of columns we want to plot.
 
 ```{r summary-prep}
-label_top_3 <- function(...) {
-  rx <- rank(...)
-  ifelse(rx <= 3, as.character(rx), "")
+# A small helper function for creating rank labels for each column.
+# It takes a scores, ranks them and returns a character vector with labels for
+# the top 3 scores. Any additional arguments are passed to the `rank()`
+# function.
+label_top_3 <- function(scores, ...) {
+  ranks <- rank(scores, ...)
+  ifelse(ranks <= 3, as.character(ranks), "")
 }
 
 scib_summary_plot <- scib_summary |>
@@ -106,34 +110,34 @@ The first step in plotting the figure is to create a data frame describing how w
 
 ```{r summary-cols}
 column_info <- tribble(
-                           ~ id,                  ~ name,  ~ geom,       ~ group, ~ palette, ~ width, ~ legend, ~ hjust, ~ overlay,
-                           "id",                  "Rank",  "text",      "Method",        NA,       1,    FALSE,       0,     FALSE,
-                       "method",                "Method",  "text",      "Method",        NA,       5,    FALSE,       0,     FALSE,
-                   "output_img",                "Output", "image",      "Method",        NA,       1,    FALSE,     0.5,     FALSE,
-                     "features",              "Features",  "text",      "Method",        NA,       2,    FALSE,     0.5,     FALSE,
-                      "scaling",               "Scaling",  "text",      "Method",        NA,       1,     TRUE,     0.5,     FALSE,
-             "overall_pancreas",              "Pancreas",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
-               "label_pancreas",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-           "overall_lung_atlas",                  "Lung",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
-             "label_lung_atlas",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-      "overall_immune_cell_hum",        "Immune (human)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
-        "label_immune_cell_hum",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-  "overall_immune_cell_hum_mou",  "Immune (human/mouse)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
-    "label_immune_cell_hum_mou",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-          "overall_mouse_brain",           "Mouse brain",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
-            "label_mouse_brain",                      NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
-      "overall_simulations_1_1",                 "Sim 1",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
-        "label_simulations_1_1",                      NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
-        "overall_simulations_2",                 "Sim 2",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
-          "label_simulations_2",                      NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
-                "package_score",               "Package",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
-                "package_label",                      NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
-                  "paper_score",                 "Paper",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
-                  "paper_label",                      NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
-                   "time_score",                  "Time",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
-                   "time_label",                      NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
-                 "memory_score",                "Memory",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
-                 "memory_label",                      NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                           ~ id,                 ~ name,  ~ geom,       ~ group, ~ palette, ~ width, ~ legend, ~ hjust, ~ overlay,
+                           "id",                 "Rank",  "text",      "Method",        NA,       1,    FALSE,       0,     FALSE,
+                       "method",               "Method",  "text",      "Method",        NA,       5,    FALSE,       0,     FALSE,
+                   "output_img",               "Output", "image",      "Method",        NA,       1,    FALSE,     0.5,     FALSE,
+                     "features",             "Features",  "text",      "Method",        NA,       2,    FALSE,     0.5,     FALSE,
+                      "scaling",              "Scaling",  "text",      "Method",        NA,       1,     TRUE,     0.5,     FALSE,
+             "overall_pancreas",             "Pancreas",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+               "label_pancreas",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+           "overall_lung_atlas",                 "Lung",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+             "label_lung_atlas",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+      "overall_immune_cell_hum",       "Immune (human)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+        "label_immune_cell_hum",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+  "overall_immune_cell_hum_mou", "Immune (human/mouse)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+    "label_immune_cell_hum_mou",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+          "overall_mouse_brain",          "Mouse brain",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+            "label_mouse_brain",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+      "overall_simulations_1_1",                "Sim 1",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
+        "label_simulations_1_1",                     NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
+        "overall_simulations_2",                "Sim 2",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
+          "label_simulations_2",                     NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
+                "package_score",              "Package",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
+                "package_label",                     NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                  "paper_score",                "Paper",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
+                  "paper_label",                     NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                   "time_score",                 "Time",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
+                   "time_label",                     NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                 "memory_score",               "Memory",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
+                 "memory_label",                     NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
 )
 
 column_info
