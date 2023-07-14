@@ -17,6 +17,8 @@
 
 * Throw warning if magick is not installed or if image is not found (#18).
 
+* Minor fixes to the documentation (#22).
+
 ## BUG FIXES
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
