@@ -1,11 +1,11 @@
-#' Create a funkyrect legend
-#' 
-#' @inheritParams create_generic_geom_legend
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_funkyrect_legend(title, palette)
+# Create a funkyrect legend
+# 
+# @inheritParams create_generic_geom_legend
+# 
+# @examples
+# title <- "Greys"
+# palette <- funkyheatmap:::default_palettes$numerical$Greys
+# create_funkyrect_legend(title, palette)
 create_funkyrect_legend <- function(
   title,
   palette,
@@ -17,14 +17,14 @@ create_funkyrect_legend <- function(
   create_generic_geom_legend(title, palette, "funkyrect", labels, size, color, position_args)
 }
 
-#' Create a rect legend
-#' 
-#' @inheritParams create_generic_geom_legend
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_rect_legend(title, palette)
+# Create a rect legend
+# 
+# @inheritParams create_generic_geom_legend
+# 
+# @examples
+# title <- "Greys"
+# palette <- funkyheatmap:::default_palettes$numerical$Greys
+# create_rect_legend(title, palette)
 create_rect_legend <- function(
   title,
   palette,
@@ -36,14 +36,14 @@ create_rect_legend <- function(
   create_generic_geom_legend(title, palette, "rect", labels, size, color, position_args)
 }
 
-#' Create a circle legend
-#' 
-#' @inheritParams create_generic_geom_legend
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_circle_legend(title, palette)
+# Create a circle legend
+# 
+# @inheritParams create_generic_geom_legend
+# 
+# @examples
+# title <- "Greys"
+# palette <- funkyheatmap:::default_palettes$numerical$Greys
+# create_circle_legend(title, palette)
 create_circle_legend <- function(
   title,
   palette,
@@ -55,23 +55,23 @@ create_circle_legend <- function(
   create_generic_geom_legend(title, palette, "circle", labels, size, color, position_args)
 }
 
-#' Create a generic geom legend (for circles, rects, and funkyrects)
-#'
-#' @param title The name of the palette
-#' @param palette The palette
-#' @param geom Which geom to draw.
-#' @param labels The labels to use for the legend.
-#' @param size The sizes to use for the legend.
-#' @param color The colors to use for the legend.
-#' @param position_args Sets parameters that affect positioning within a
-#' plot, such as row and column dimensions, annotation details, and the
-#' expansion directions of the plot. See `position_arguments()` for more information.
-#'
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' geom <- "circle"
-#' create_generic_geom_legend(title, palette, geom)
+# Create a generic geom legend (for circles, rects, and funkyrects)
+#
+# @param title The name of the palette
+# @param palette The palette
+# @param geom Which geom to draw.
+# @param labels The labels to use for the legend.
+# @param size The sizes to use for the legend.
+# @param color The colors to use for the legend.
+# @param position_args Sets parameters that affect positioning within a
+# plot, such as row and column dimensions, annotation details, and the
+# expansion directions of the plot. See `position_arguments()` for more information.
+#
+# @examples
+# title <- "Greys"
+# palette <- funkyheatmap:::default_palettes$numerical$Greys
+# geom <- "circle"
+# create_generic_geom_legend(title, palette, geom)
 create_generic_geom_legend <- function(
   title,
   palette,
@@ -106,26 +106,6 @@ create_generic_geom_legend <- function(
     geom_size_data <- geom_size_data %>%
       mutate(r = size / 2)
   }
-    # if (geom == "funkyrect") {
-    #   tibble(
-    #     value = seq(0, 1, by = .1),
-    #     xmin = - col_width * legend_size / 2,
-    #     xmax = col_width * legend_size / 2,
-    #     ymin = - col_width * legend_size / 2,
-    #     ymax = col_width * legend_size / 2
-    #   ) %>%
-    #     # figure out size and radius of funkyrect
-    #     pmap_df(score_to_funky_rectangle)
-    # } else {
-    #   tibble(
-    #     value = seq(0, 1, by = .1),
-    #     xmin = - .data$value * legend_size / 2,
-    #     xmax = .data$value * legend_size / 2,
-    #     ymin = - .data$value * legend_size / 2,
-    #     ymax = .data$value * legend_size / 2,
-    #     r = .data$value / 2
-    #   )
-    # }
 
   # add metadata
   geom_size_data <- geom_size_data %>%
@@ -205,12 +185,12 @@ create_generic_geom_legend <- function(
   compose_ggplot(geom_positions, list())
 }
 
-#' Create a pie legend
-#' @inheritParams create_generic_geom_legend
-#' @examples
-#' title <- "Greys"
-#' palette <- c(One = "#FF0000", Two = "#00FF00", Three = "#0000FF")
-#' create_pie_legend(title, palette)
+# Create a pie legend
+# @inheritParams create_generic_geom_legend
+# @examples
+# title <- "Greys"
+# palette <- c(One = "#FF0000", Two = "#00FF00", Three = "#0000FF")
+# create_pie_legend(title, palette)
 create_pie_legend <- function(
   title,
   palette, # not used
