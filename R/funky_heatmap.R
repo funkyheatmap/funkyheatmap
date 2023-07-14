@@ -40,13 +40,10 @@
 #' * `hjust`: Horizontal alignment of the bar, must be between \[0,1\]
 #'     (only for `geom = "bar"`).
 #'
-#' * `hjust`: Horizontal alignment of the label, must be between \[0,1\]
-#'     (only for `geom = "text"`).
-#'
 #' * `vjust`: Vertical alignment of the label, must be between \[0,1\]
 #'     (only for `geom = "text"`).
 #'
-#' * `size`: Size of the label, must be between \[0,1\]
+#' * `size`: Size of the label, must be a numeric value
 #'     (only for `geom = "text"`).
 #'
 #' * `label`: Which column to use as a label (only for `geom = "text"`).
