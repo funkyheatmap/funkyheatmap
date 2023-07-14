@@ -167,11 +167,7 @@ create_generic_geom_legend <- function(
         xmax = .data$x + .data$xwidth / 2,
         hjust = .5,
         vjust = 0,
-        label_value = ifelse(
-          .data$value %in% c(0, 1),
-          sprintf("%.0f", .data$value),
-          sprintf("%.1f", .data$value)
-        )
+        label_value = as.character(.data$label)
       )
   ) %>%
     mutate(
