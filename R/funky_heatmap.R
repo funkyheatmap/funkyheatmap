@@ -96,6 +96,24 @@
 #'
 #' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
 #' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
+#' 
+#' @param legends A list of legends to add to the plot. Each entry in
+#' `column_info$legend` should have a corresponding entry in this object.
+#' Each entry should be a list with the following names:
+#'  * `palette` (`character`): The palette to use for the legend. Must be
+#'   a value in `palettes`.
+#'  * `geom` (`character`): The geom of the legend. Must be one of:
+#'    `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`.
+#'  * `title` (`character`, optional): The title of the legend. Defaults
+#'    to the palette name.
+#'  * `enabled` (`logical`, optional): Whether or not to add the legend.
+#'    Defaults to `TRUE`.
+#'  * `labels` (`character`, optional): The labels to use for the legend.
+#'    The defaults depend on the selected geom.
+#'  * `size` (`numeric`, optional): The size of the listed geoms.
+#'    The defaults depend on the selected geom.
+#'  * `color` (`character`, optional): The color of the listed geoms.
+#'    The defaults depend on the selected geom.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
@@ -129,18 +147,20 @@
 #'
 #' funky_heatmap(data)
 funky_heatmap <- function(
-    data,
-    column_info = NULL,
-    row_info = NULL,
-    column_groups = NULL,
-    row_groups = NULL,
-    palettes = NULL,
-    position_args = position_arguments(),
-    scale_column = TRUE,
-    add_abc = TRUE,
-    col_annot_offset,
-    col_annot_angle,
-    expand) {
+  data,
+  column_info = NULL,
+  row_info = NULL,
+  column_groups = NULL,
+  row_groups = NULL,
+  palettes = NULL,
+  legends = NULL,
+  position_args = position_arguments(),
+  scale_column = TRUE,
+  add_abc = TRUE,
+  col_annot_offset,
+  col_annot_angle,
+  expand
+) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -148,6 +168,7 @@ funky_heatmap <- function(
   column_groups <- verify_column_groups(column_groups, column_info)
   row_groups <- verify_row_groups(row_groups, row_info)
   palettes <- verify_palettes(palettes, column_info, data)
+  legends <- verify_legends(legends, palettes, column_info, data)
 
   # check deprecated arguments
   if (!missing(col_annot_offset)) {
@@ -189,42 +210,41 @@ funky_heatmap <- function(
     circle = create_circle_legend,
     rect = create_rect_legend,
     pie = create_pie_legend
+    # todo: add text legend
+    # todo: add bar legend
   )
-  legends <- column_info %>%
-    select(palette_name = "palette", geom = "geom") %>%
-    na.omit() %>%
-    distinct() %>%
-    filter(.data$geom %in% names(geom_legend_funs)) %>%
-    mutate(
-      palette = map(.data$palette_name, ~ palettes[[.x]]),
-      legend = pmap(
-        list(
-          geom = .data$geom,
-          palette_name = .data$palette_name,
-          palette = .data$palette
-        ),
-        function(geom, palette_name, palette) {
-          geom_legend_funs[[geom]](palette_name, palette)
-        }
-      ),
-      widths = map_dbl(.data$legend, ~ .x$width),
-      heights = map_dbl(.data$legend, ~ .x$height)
-    )
+  legend_plots <- list()
+  for (legend in legends) {
+    if (legend$enabled) {
+      legend_plot <- geom_legend_funs[[legend$geom]](
+        title = legend$title,
+        palette = palettes[[legend$palette]],
+        labels = legend$labels,
+        size = legend$size,
+        color = legend$color,
+        position_args = position_args
+      )
+      legend_plots <- c(legend_plots, list(legend_plot))
+    }
+  }
+
+  legend_widths <- map_dbl(legend_plots, ~ .x$width)
+  legend_heights <- map_dbl(legend_plots, ~ .x$height)
   
   heights <- main_plot$height
   width <- main_plot$width
-  if (nrow(legends) > 0) {
-    heights <- c(heights, .1, max(legends$heights))
-    width <- max(width, sum(legends$widths))
+  if (length(legend_plots) > 0) {
+    heights <- c(heights, .1, max(legend_heights))
+    width <- max(width, sum(legend_widths))
   }
   
   out <- patchwork::wrap_plots(
     main_plot,
     patchwork::plot_spacer(),
     patchwork::wrap_plots(
-      legends$legend,
+      legend_plots,
       nrow = 1,
-      widths = legends$widths
+      widths = legend_widths
     ),
     ncol = 1,
     heights = heights
