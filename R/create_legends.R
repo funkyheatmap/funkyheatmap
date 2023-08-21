@@ -85,7 +85,7 @@ create_generic_geom_legend <- function(
 
   start_x <- 0
   start_y <- 0
-  
+
   legend_size <- 1
   legend_space <- .2
 
@@ -98,7 +98,7 @@ create_generic_geom_legend <- function(
       ymin = - size * legend_size / 2,
       ymax = size * legend_size / 2
     )
-  
+
   if (geom == "funkyrect") {
     geom_size_data <- geom_size_data %>%
       pmap_df(score_to_funky_rectangle)
@@ -116,7 +116,7 @@ create_generic_geom_legend <- function(
     )
 
   # compute positions of geoms
-  geom_pos_data <- geom_size_data %>%
+  geom_data <- geom_size_data %>%
     mutate(
       width = .data$xmax - .data$xmin,
       height = .data$ymax - .data$ymin,
@@ -130,18 +130,6 @@ create_generic_geom_legend <- function(
       x0 = .data$x,
       y0 = .data$y
     )
-
-  geom_data <- geom_pos_data
-  # # determine colours of geoms
-  # geom_data <- geom_pos_data %>%
-  #   mutate(
-  #     col_value = round(.data$value * (length(palette) - 1)) + 1,
-  #     colour = ifelse(
-  #       is.na(.data$col_value),
-  #       "#444444FF",
-  #       palette[.data$col_value]
-  #     )
-  #   )
 
   maximum_x <- max(geom_data$xmax)
 
@@ -251,20 +239,18 @@ create_pie_legend <- function(
       ymax = .data$y + .data$yheight * (1 - .data$vjust)
     )
 
-  pie_data <-
-    pie_legend_df %>%
-      transmute(
-        x0 = start_x,
-        y0 = start_y - 2.75,
-        r0 = 0,
-        r = row_height * .75,
-        .data$rad_start,
-        .data$rad_end,
-        colour = .data$fill
-      )
+  pie_data <- pie_legend_df %>%
+    transmute(
+      x0 = start_x,
+      y0 = start_y - 2.75,
+      r0 = 0,
+      r = row_height * .75,
+      .data$rad_start,
+      .data$rad_end,
+      colour = .data$fill
+    )
 
-  segment_data <-
-    pie_legend_df %>%
+  segment_data <- pie_legend_df %>%
     transmute(
       x = start_x + .data$xpt * .85,
       xend = start_x + .data$xpt * 1.1,
