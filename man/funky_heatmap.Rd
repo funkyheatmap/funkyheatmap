@@ -109,7 +109,7 @@ Each entry should be a list with the following names:
 \item \code{palette} (\code{character}): The palette to use for the legend. Must be
 a value in \code{palettes}.
 \item \code{geom} (\code{character}): The geom of the legend. Must be one of:
-\code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, \code{"text"}.
+\code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, \code{"text"}, \code{"image"}.
 \item \code{title} (\code{character}, optional): The title of the legend. Defaults
 to the palette name.
 \item \code{enabled} (\code{logical}, optional): Whether or not to add the legend.
@@ -120,6 +120,7 @@ The defaults depend on the selected geom.
 The defaults depend on the selected geom.
 \item \code{color} (\code{character}, optional): The color of the listed geoms.
 The defaults depend on the selected geom.
+\item \code{value} (optional): Used as values for the text and image geoms.
 }}
 
 \item{position_args}{Sets parameters that affect positioning within a

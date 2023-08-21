@@ -74,8 +74,7 @@ functionality:
       -   `vjust`: Vertical alignment of the label, must be between
           \[0,1\] (only for `geom = "text"`).
 
-      -   `size`: Size of the label, must be between \[0,1\] (only for
-          `geom = "text"`).
+      -   `size`: Size of the label (only for `geom = "text"`).
 
       -   `label`: Which column to use as a label (only for
           `geom = "text"`).

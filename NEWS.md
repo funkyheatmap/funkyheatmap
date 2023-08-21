@@ -15,6 +15,10 @@
 
 * Plot images as a geom by specifying either a path, or a directory and an extension (#6).
 
+* Overhaul of the way legends are plotted (#23).
+
+* Allow customizing legends using the `legend` argument in `funky_heatmap()` (#23).
+
 ## MINOR CHANGES
 
 * Throw warning if magick is not installed or if image is not found (#18).

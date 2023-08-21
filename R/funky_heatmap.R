@@ -103,7 +103,7 @@
 #'  * `palette` (`character`): The palette to use for the legend. Must be
 #'   a value in `palettes`.
 #'  * `geom` (`character`): The geom of the legend. Must be one of:
-#'    `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`.
+#'    `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`, `"image"`.
 #'  * `title` (`character`, optional): The title of the legend. Defaults
 #'    to the palette name.
 #'  * `enabled` (`logical`, optional): Whether or not to add the legend.
@@ -114,6 +114,7 @@
 #'    The defaults depend on the selected geom.
 #'  * `color` (`character`, optional): The color of the listed geoms.
 #'    The defaults depend on the selected geom.
+#'  * `value` (optional): Used as values for the text and image geoms.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
@@ -209,21 +210,24 @@ funky_heatmap <- function(
     funkyrect = create_funkyrect_legend,
     circle = create_circle_legend,
     rect = create_rect_legend,
-    pie = create_pie_legend
+    pie = create_pie_legend,
+    text = create_text_legend,
+    # image = create_image_legend
     # todo: add text legend
     # todo: add bar legend
   )
   legend_plots <- list()
   for (legend in legends) {
     if (legend$enabled) {
-      legend_plot <- geom_legend_funs[[legend$geom]](
-        title = legend$title,
-        palette = palettes[[legend$palette]],
-        labels = legend$labels,
-        size = legend$size,
-        color = legend$color,
-        position_args = position_args
-      )
+      legend_fun <- geom_legend_funs[[legend$geom]]
+      legend_args <- legend
+      legend_args$geom <- NULL
+      legend_args$enabled <- NULL
+      if (!is.null(legend$palette)) {
+        legend_args$palette <- palettes[[legend$palette]]
+      }
+      legend_args$position_args <- position_args
+      legend_plot <- do.call(legend_fun, legend_args)
       legend_plots <- c(legend_plots, list(legend_plot))
     }
   }

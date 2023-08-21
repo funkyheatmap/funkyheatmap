@@ -9,6 +9,7 @@
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
 #' expansion directions of the plot. See `position_arguments()` for more information.
+#' @param values Used as value for the 'image' and 'text' geom.
 #' 
 #' @noRd
 #'
@@ -192,7 +193,9 @@ create_pie_legend <- function(
   labels,
   size, # not used
   color,
-  position_args = position_arguments()
+  position_args = position_arguments(),
+  # TODO: if we could determine the width of the labels, this would not be needed
+  label_width = 2
 ) {
   start_x <- 0
   start_y <- 0
@@ -241,8 +244,7 @@ create_pie_legend <- function(
       )
   ) %>%
     mutate(
-      # todo: need to find a better width
-      xwidth = nchar(.data$label_value),
+      xwidth = label_width,
       yheight = row_height,
       xmin = .data$x - .data$xwidth * .data$hjust,
       xmax = .data$x + .data$xwidth * (1 - .data$hjust),
@@ -277,3 +279,111 @@ create_pie_legend <- function(
 
   compose_ggplot(geom_positions, list())
 }
+
+
+
+
+
+
+#' Create a text legend
+#' @inheritParams create_generic_geom_legend
+#' 
+#' @noRd
+#' 
+#' @examples
+#' title <- "Greys"
+#' labels <- c("A", "B", "C")
+#' values <- c("One", "Two", "Three")
+#' create_text_legend(title, values = values, labels = labels)
+create_text_legend <- function(
+  title,
+  palette,
+  labels,
+  size,
+  color,
+  values,
+  position_args = position_arguments(),
+  # TODO: if we could determine the width of the labels, this would not be needed
+  label_width = 1,
+  value_width = 2
+) {
+  start_x <- 0
+  start_y <- 0
+  row_height <- position_args$row_height
+
+  data_df <-
+    tibble(
+      name = labels,
+      value = values,
+      colour = color,
+      size = size,
+      vjust = .5,
+      hjust = 0,
+      lab_y = - row_height * (seq_along(labels) - 1)
+    )
+
+  text_data <- bind_rows(
+    tibble(
+      x = start_x,
+      y = start_y - 1,
+      label_value = title,
+      hjust = 0,
+      vjust = 1,
+      fontface = "bold",
+      colour = "black"
+    ),
+    data_df %>%
+      transmute(
+        x = start_x + .5,
+        y = start_y - 2 + .data$lab_y,
+        label_value = as.character(.data$name),
+        .data$vjust,
+        .data$hjust,
+        .data$colour
+      ),
+    data_df %>%
+      transmute(
+        x = start_x + 2 * .5 + label_width,
+        y = start_y - 2 + .data$lab_y,
+        label_value = as.character(.data$value),
+        .data$vjust,
+        .data$hjust,
+        .data$colour
+      )
+  ) %>%
+    mutate(
+      # todo: need to find a better width
+      xwidth = 2 * .5 + label_width + value_width,
+      yheight = row_height,
+      xmin = .data$x - .data$xwidth * .data$hjust,
+      xmax = .data$x + .data$xwidth * (1 - .data$hjust),
+      ymin = .data$y - .data$yheight * .data$vjust,
+      ymax = .data$y + .data$yheight * (1 - .data$vjust)
+    )
+
+
+  geom_positions <- lst(
+    text_data
+  )
+
+  compose_ggplot(geom_positions, list())
+}
+
+
+
+# #' Create an image legend
+# #' @inheritParams create_generic_geom_legend
+# #' 
+# #' @noRd
+# create_image_legend <- function(
+#   title,
+#   palette,
+#   labels,
+#   size,
+#   color,
+#   values,
+#   position_args = position_arguments()
+# ) {
+#   warning("Image legend not yet implemented.")
+#   NULL
+# }

@@ -92,12 +92,14 @@ verify_legends <- function(legends, palettes, column_info, data) {
       )
     }
 
-    if (legend %has_name% "enabled") {
-      assert_that(
-        is.logical(legend$enabled),
-        msg = paste0("Legend ", i, " has invalid enabled value '", legend$enabled, "'.")
-      )
+    # check enabled
+    if (!legend %has_name% "enabled") {
+      legend$enabled <- TRUE
     }
+    assert_that(
+      is.logical(legend$enabled),
+      msg = paste0("Legend ", i, " has invalid enabled value '", legend$enabled, "'.")
+    )
     if (!legend$enabled) {
       return(legend)
     }
@@ -152,10 +154,15 @@ verify_legends <- function(legends, palettes, column_info, data) {
       msg = paste0("Legend '", i, "' has invalid labels.")
     )
 
-    if (legend$geom %in% c("circle", "funkyrect", "rect")) {
+    # check size
+    if (legend$geom %in% c("circle", "funkyrect", "rect", "text")) {
       if (!legend %has_name% "size") {
-        cli_alert_info(paste0("Legend ", i, " did not contain size, inferring from the labels."))
-        legend$size <- seq(0, 1, length.out = length(legend$labels))
+        if (legend$geom == "text") {
+          legend$size <- 3.88 # this appears to be the default of geom_text
+        } else {
+          cli_alert_info(paste0("Legend ", i, " did not contain size, inferring from the labels."))
+          legend$size <- seq(0, 1, length.out = length(legend$labels))
+        }
       }
       assert_that(
         is.numeric(legend$size),
@@ -167,14 +174,19 @@ verify_legends <- function(legends, palettes, column_info, data) {
       legend$size <- rep(legend$size, length(legend$labels))
     }
     
+    # check colour/color
     if (legend %has_name% "colour") {
       legend$color <- legend$colour
       legend$colour <- NULL
     }
-    if (!legend %has_name% "color" && legend %has_name% "palette") {
-      cli_alert_info(paste0("Legend ", i, " did not contain color, inferring from the palette."))
-      colors <- unname(palettes[[legend$palette]])
-      legend$color <- colors[round(seq(1, length(colors), length.out = length(legend$labels)))]
+    if (!legend %has_name% "color") {
+      if (legend %has_name% "palette") {
+        cli_alert_info(paste0("Legend ", i, " did not contain color, inferring from the palette."))
+        colors <- unname(palettes[[legend$palette]])
+        legend$color <- colors[round(seq(1, length(colors), length.out = length(legend$labels)))]
+      } else if (legend$geom == "text") {
+        legend$color <- "black"
+      }
     }
     assert_that(
       is.character(legend$color),
