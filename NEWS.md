@@ -35,7 +35,7 @@
 
 * Fix missing categories when no palette is specified for a pie geom (#17).
 
-* Fix issue with rendering non-character columns as text.
+* Fix issue with rendering non-character columns as text (#5, #26).
 
 # funkyheatmap 0.3.0
 
