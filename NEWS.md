@@ -15,7 +15,7 @@
 
 * Plot images as a geom by specifying either a path, or a directory and an extension (#6).
 
-* Overhaul of the way legends are plotted (#23).
+* Overhaul of the way legends are plotted (#23). Legends are now separate ggplots, the positioning of which is solved via patchwork.
 
 * Allow customizing legends using the `legend` argument in `funky_heatmap()` (#23).
 
