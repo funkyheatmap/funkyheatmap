@@ -1508,7 +1508,13 @@ have any of the desired formatting.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Row info did not contain group information, assuming rows are ungrouped.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No palettes were provided, trying to automatically assign palettes.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain size, inferring from the labels.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain color, inferring from the palette.</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
 <p><img src="dynbenchmark_files/figure-html/heatmap_preview-1.png" width="616.8"></p>
@@ -2849,11 +2855,28 @@ good funky heatmap:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'stability' was not defined. Assuming palette is numerical. Automatically selected palette 'Greens'.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'qc' was not defined. Assuming palette is numerical. Automatically selected palette 'Greys'.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'error_reasons' was not defined. Assuming palette is categorical. Automatically selected palette 'Set3'.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'white6black4' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'white6black4' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 1 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 2 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 2 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 3 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 3 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 4 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 4 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 5 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 5 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 7 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 7 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 7 has geom 'text' but no specified labels, so disabling this legend for now.</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span>
-<span><span class="co">#&gt; Warning: Removed 17 rows containing missing values (`geom_rect()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values (`geom_text()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 17 rows containing missing values (`geom_rect()`).</span></span></code></pre></div>
 <p><img src="dynbenchmark_files/figure-html/heatmap_withcolinfo-1.png" width="2107.2"></p>
 </div>
 <div class="section level2">
@@ -3542,13 +3565,30 @@ Figure 2 were generated by making different subsets of the
 <span>  palettes <span class="op">=</span> <span class="va">palettes</span>,</span>
 <span>  col_annot_offset <span class="op">=</span> <span class="fl">3.2</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 1 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 2 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 2 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 3 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 3 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 4 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 4 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 5 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 5 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 7 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 7 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 7 has geom 'text' but no specified labels, so disabling this legend for now.</span></span>
 <span><span class="co">#&gt; Warning in funky_heatmap(data = data, column_info = column_info, column_groups</span></span>
 <span><span class="co">#&gt; = column_groups, : Argument `col_annot_offset` is deprecated. Use</span></span>
 <span><span class="co">#&gt; `position_arguments(col_annot_offset = ...)` instead.</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span>
-<span><span class="co">#&gt; Warning: Removed 17 rows containing missing values (`geom_rect()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values (`geom_text()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 17 rows containing missing values (`geom_rect()`).</span></span></code></pre></div>
 <p><img src="dynbenchmark_files/figure-html/heatmap-1.png" width="2121.6"></p>
 <p><code>funkyheatmap</code> automatically recommends a width and height
 for the generated plot. To save your plot, run:</p>

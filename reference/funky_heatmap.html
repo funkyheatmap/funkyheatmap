@@ -78,10 +78,10 @@ or grouping rows and columns together in categories.</p>
 <span>  column_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  palettes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  legends <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  position_args <span class="op">=</span> <span class="fu"><a href="position_arguments.html">position_arguments</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  scale_column <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add_abc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  removed_entries <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">col_annot_offset</span>,</span>
 <span>  <span class="va">col_annot_angle</span>,</span>
 <span>  <span class="va">expand</span></span>
@@ -171,6 +171,27 @@ standard palette names can be used:</p><ul><li><p><code>numerical</code>: <code>
 </ul></dd>
 
 
+<dt>legends</dt>
+<dd><p>A list of legends to add to the plot. Each entry in
+<code>column_info$legend</code> should have a corresponding entry in this object.
+Each entry should be a list with the following names:</p><ul><li><p><code>palette</code> (<code>character</code>): The palette to use for the legend. Must be
+a value in <code>palettes</code>.</p></li>
+<li><p><code>geom</code> (<code>character</code>): The geom of the legend. Must be one of:
+<code>"funkyrect"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bar"</code>, <code>"pie"</code>, <code>"text"</code>, <code>"image"</code>.</p></li>
+<li><p><code>title</code> (<code>character</code>, optional): The title of the legend. Defaults
+to the palette name.</p></li>
+<li><p><code>enabled</code> (<code>logical</code>, optional): Whether or not to add the legend.
+Defaults to <code>TRUE</code>.</p></li>
+<li><p><code>labels</code> (<code>character</code>, optional): The labels to use for the legend.
+The defaults depend on the selected geom.</p></li>
+<li><p><code>size</code> (<code>numeric</code>, optional): The size of the listed geoms.
+The defaults depend on the selected geom.</p></li>
+<li><p><code>color</code> (<code>character</code>, optional): The color of the listed geoms.
+The defaults depend on the selected geom.</p></li>
+<li><p><code>value</code> (optional): Used as values for the text and image geoms.</p></li>
+</ul></dd>
+
+
 <dt>position_args</dt>
 <dd><p>Sets parameters that affect positioning within a
 plot, such as row and column dimensions, annotation details, and the
@@ -185,11 +206,6 @@ numerical column.</p></dd>
 <dt>add_abc</dt>
 <dd><p>Whether or not to add subfigure labels to the different
 columns groups.</p></dd>
-
-
-<dt>removed_entries</dt>
-<dd><p>Which methods to not show in the rows. Missing methods
-are replaced by a "Not shown" label.</p></dd>
 
 
 <dt>col_annot_offset</dt>
@@ -232,6 +248,12 @@ storing the plot with <code>ggsave()</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Row info did not contain group information, assuming rows are ungrouped.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> No palettes were provided, trying to automatically assign palettes.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain labels, inferring from the geom.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain size, inferring from the labels.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain color, inferring from the palette.</span>
 <span class="r-plt img"><img src="funky_heatmap-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

@@ -59,12 +59,15 @@
 <h2 class="pkg-version" data-toc-text="0.4.0" id="funkyheatmap-040">funkyheatmap 0.4.0<a class="anchor" aria-label="anchor" href="#funkyheatmap-040"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-4-0">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h3>
-<ul><li>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</li>
+<ul><li><p>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
+<li><p>Removed the <code>removed_entries</code> argument.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-functionality-0-4-0">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-0-4-0"></a></h3>
 <ul><li><p>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/dynverse/funkyheatmap/issues/12" class="external-link">#12</a>).</p></li>
 <li><p>Plot images as a geom by specifying either a path, or a directory and an extension (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
+<li><p>Overhaul of the way legends are plotted (<a href="https://github.com/dynverse/funkyheatmap/issues/23" class="external-link">#23</a>). Legends are now separate ggplots, the positioning of which is solved via patchwork.</p></li>
+<li><p>Allow customizing legends using the <code>legend</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/dynverse/funkyheatmap/issues/23" class="external-link">#23</a>).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-4-0">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-0"></a></h3>
