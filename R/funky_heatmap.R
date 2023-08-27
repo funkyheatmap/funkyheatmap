@@ -93,6 +93,25 @@
 #'
 #' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
 #' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
+#' 
+#' @param legends A list of legends to add to the plot. Each entry in
+#' `column_info$legend` should have a corresponding entry in this object.
+#' Each entry should be a list with the following names:
+#'  * `palette` (`character`): The palette to use for the legend. Must be
+#'   a value in `palettes`.
+#'  * `geom` (`character`): The geom of the legend. Must be one of:
+#'    `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`, `"image"`.
+#'  * `title` (`character`, optional): The title of the legend. Defaults
+#'    to the palette name.
+#'  * `enabled` (`logical`, optional): Whether or not to add the legend.
+#'    Defaults to `TRUE`.
+#'  * `labels` (`character`, optional): The labels to use for the legend.
+#'    The defaults depend on the selected geom.
+#'  * `size` (`numeric`, optional): The size of the listed geoms.
+#'    The defaults depend on the selected geom.
+#'  * `color` (`character`, optional): The color of the listed geoms.
+#'    The defaults depend on the selected geom.
+#'  * `value` (optional): Used as values for the text and image geoms.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
@@ -104,15 +123,13 @@
 #' @param add_abc Whether or not to add subfigure labels to the different
 #' columns groups.
 #'
-#' @param removed_entries Which methods to not show in the rows. Missing methods
-#' are replaced by a "Not shown" label.
-#'
 #' @param col_annot_offset DEPRECATED: use `position_args = position_arguments(col_annot_offset = ...)` instead.
 #' @param col_annot_angle DEPRECATED: use `position_args = position_arguments(col_annot_angle = ...)` instead.
 #' @param expand DEPRECATED: use `position_args = position_arguments(expand_* = ...)` instead.
 #'
 #' @importFrom ggforce geom_arc_bar geom_circle geom_arc
 #' @importFrom cowplot theme_nothing
+#' @importFrom patchwork wrap_plots plot_spacer
 #'
 #' @returns A ggplot. `.$width` and `.$height` are suggested dimensions for
 #' storing the plot with [ggsave()].
@@ -128,19 +145,20 @@
 #'
 #' funky_heatmap(data)
 funky_heatmap <- function(
-    data,
-    column_info = NULL,
-    row_info = NULL,
-    column_groups = NULL,
-    row_groups = NULL,
-    palettes = NULL,
-    position_args = position_arguments(),
-    scale_column = TRUE,
-    add_abc = TRUE,
-    removed_entries = NULL,
-    col_annot_offset,
-    col_annot_angle,
-    expand) {
+  data,
+  column_info = NULL,
+  row_info = NULL,
+  column_groups = NULL,
+  row_groups = NULL,
+  palettes = NULL,
+  legends = NULL,
+  position_args = position_arguments(),
+  scale_column = TRUE,
+  add_abc = TRUE,
+  col_annot_offset,
+  col_annot_angle,
+  expand
+) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -148,6 +166,7 @@ funky_heatmap <- function(
   column_groups <- verify_column_groups(column_groups, column_info)
   row_groups <- verify_row_groups(row_groups, row_info)
   palettes <- verify_palettes(palettes, column_info, data)
+  legends <- verify_legends(legends, palettes, column_info, data)
 
   # check deprecated arguments
   if (!missing(col_annot_offset)) {
@@ -175,12 +194,69 @@ funky_heatmap <- function(
     palettes,
     position_args,
     scale_column,
-    add_abc,
-    removed_entries
+    add_abc
   )
 
-  compose_ggplot(
+  main_plot <- compose_ggplot(
     geom_positions,
     position_args
   )
+
+  # start plotting legends
+  geom_legend_funs <- list(
+    funkyrect = create_funkyrect_legend,
+    circle = create_circle_legend,
+    rect = create_rect_legend,
+    pie = create_pie_legend,
+    text = create_text_legend
+    # image = create_image_legend
+    # todo: add text legend
+    # todo: add bar legend
+  )
+  legend_plots <- list()
+  for (legend in legends) {
+    if (legend$enabled) {
+      legend_fun <- geom_legend_funs[[legend$geom]]
+      legend_args <- legend
+      legend_args$geom <- NULL
+      legend_args$enabled <- NULL
+      if (!is.null(legend$palette)) {
+        legend_args$palette <- palettes[[legend$palette]]
+      }
+      legend_args$position_args <- position_args
+      legend_plot <- do.call(legend_fun, legend_args)
+      legend_plots <- c(legend_plots, list(legend_plot))
+    }
+  }
+
+  if (length(legend_plots) == 0) {
+    return(main_plot)
+  }
+
+  legend_widths <- map_dbl(legend_plots, ~ .x$width)
+  legend_heights <- map_dbl(legend_plots, ~ .x$height)
+  
+  heights <- main_plot$height
+  width <- main_plot$width
+
+  heights <- c(heights, .1, max(legend_heights))
+  width <- max(width, sum(legend_widths))
+
+  out <- patchwork::wrap_plots(
+    main_plot,
+    patchwork::plot_spacer(),
+    patchwork::wrap_plots(
+      legend_plots,
+      nrow = 1,
+      widths = legend_widths
+    ),
+    ncol = 1,
+    heights = heights
+  )
+
+  # TODO: fix this heuristic
+  out$width <- width
+  out$height <- sum(heights)
+
+  out
 }

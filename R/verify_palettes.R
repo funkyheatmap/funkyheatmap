@@ -145,10 +145,8 @@ verify_palettes <- function(palettes, column_info, data) {
           )
         )
 
-        pal_value <- setNames(
-          pal_values[seq_along(categories)],
-          categories
-        )
+        pal_value <- pal_values[seq_along(categories)]
+        names(pal_value) <- categories
       }
     }
     palettes[[palette_id]] <- pal_value

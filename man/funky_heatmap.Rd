@@ -11,10 +11,10 @@ funky_heatmap(
   column_groups = NULL,
   row_groups = NULL,
   palettes = NULL,
+  legends = NULL,
   position_args = position_arguments(),
   scale_column = TRUE,
   add_abc = TRUE,
-  removed_entries = NULL,
   col_annot_offset,
   col_annot_angle,
   expand
@@ -100,6 +100,27 @@ standard palette names can be used:
 \item \code{categorical}: \code{"Set3"}, \code{"Set1"}, \code{"Set2"}, \code{"Dark2"}
 }}
 
+\item{legends}{A list of legends to add to the plot. Each entry in
+\code{column_info$legend} should have a corresponding entry in this object.
+Each entry should be a list with the following names:
+\itemize{
+\item \code{palette} (\code{character}): The palette to use for the legend. Must be
+a value in \code{palettes}.
+\item \code{geom} (\code{character}): The geom of the legend. Must be one of:
+\code{"funkyrect"}, \code{"circle"}, \code{"rect"}, \code{"bar"}, \code{"pie"}, \code{"text"}, \code{"image"}.
+\item \code{title} (\code{character}, optional): The title of the legend. Defaults
+to the palette name.
+\item \code{enabled} (\code{logical}, optional): Whether or not to add the legend.
+Defaults to \code{TRUE}.
+\item \code{labels} (\code{character}, optional): The labels to use for the legend.
+The defaults depend on the selected geom.
+\item \code{size} (\code{numeric}, optional): The size of the listed geoms.
+The defaults depend on the selected geom.
+\item \code{color} (\code{character}, optional): The color of the listed geoms.
+The defaults depend on the selected geom.
+\item \code{value} (optional): Used as values for the text and image geoms.
+}}
+
 \item{position_args}{Sets parameters that affect positioning within a
 plot, such as row and column dimensions, annotation details, and the
 expansion directions of the plot. See \code{position_arguments()} for more information.}
@@ -109,9 +130,6 @@ numerical column.}
 
 \item{add_abc}{Whether or not to add subfigure labels to the different
 columns groups.}
-
-\item{removed_entries}{Which methods to not show in the rows. Missing methods
-are replaced by a "Not shown" label.}
 
 \item{col_annot_offset}{DEPRECATED: use \code{position_args = position_arguments(col_annot_offset = ...)} instead.}
 

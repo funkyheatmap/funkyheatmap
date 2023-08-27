@@ -74,8 +74,7 @@ functionality:
       -   `vjust`: Vertical alignment of the label, must be between
           \[0,1\] (only for `geom = "text"`).
 
-      -   `size`: Size of the label, must be between \[0,1\] (only for
-          `geom = "text"`).
+      -   `size`: Size of the label (only for `geom = "text"`).
 
       -   `label`: Which column to use as a label (only for
           `geom = "text"`).
@@ -191,19 +190,6 @@ functionality:
     required: no
     example: col_annot_angle.tsv
     multiple: no
-  - name: --removed_entries
-    description: |-
-      Which methods to not show in the rows. Missing methods are replaced
-      by a \"Not shown\" label.
-    type: string
-    direction: input
-    required: no
-    example:
-    - sample1
-    - sample2
-    - sample3
-    multiple: yes
-    multiple_sep: ':'
   - name: --expand
     description: A list of directions to expand the plot in.
     type: double
