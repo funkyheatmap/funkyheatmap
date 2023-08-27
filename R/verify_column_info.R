@@ -62,15 +62,18 @@ verify_column_info <- function(column_info, data) {
     column_info$geom <- map_chr(data, function(x) {
       case_when(
         is.numeric(x) ~ "funkyrect",
-        is.character(x) | is.factor(x) ~ "text",
+        is.character(x) | is.factor(x) | is.logical(x) ~ "text",
         is.list(x) && map_lgl(x, function(z) is.numeric(z) && !is.null(names(z))) ~ "pie",
         TRUE ~ NA_character_
       )
     })
   }
+  check_geom <-
+    (is.character(column_info$geom) | is.factor(column_info$geom)) &
+    column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image")
   assert_that(
-    is.character(column_info$geom) | is.factor(column_info$geom),
-    all(column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image"))
+    all(check_geom),
+    msg = paste0("Invalid geom types for columns: '", paste0(column_info$id[!check_geom], collapse = "', '"), "'")
   )
 
   # checking group
