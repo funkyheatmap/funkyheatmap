@@ -13,7 +13,7 @@ test_that("image geom with full paths", {
   g <- funky_heatmap(
     data = data,
     column_info = column_info,
-    expand = list(xmax = 4)
+    position_args = position_arguments(expand_xmax = 4)
   )
   expect_true(ggplot2::is.ggplot(g))
 })

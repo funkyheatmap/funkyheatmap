@@ -1,6 +1,7 @@
 compose_ggplot <- function(
-    geom_positions,
-    position_args) {
+  geom_positions,
+  position_args
+) {
   # start ggplot
   g <-
     ggplot() +
@@ -14,8 +15,9 @@ compose_ggplot <- function(
     cowplot::theme_nothing()
 
   # PLOT ROW BACKGROUNDS
-  df <- geom_positions$row_pos %>% filter(.data$colour_background)
-  if (nrow(df) > 0) {
+  row_pos <- (geom_positions$row_pos %||% tibble(colour_background = logical(0))) %>%
+    filter(.data$colour_background)
+  if (nrow(row_pos) > 0) {
     g <- g + geom_rect(
       aes(
         xmin = min(geom_positions$column_pos$xmin) - .25,
@@ -23,13 +25,13 @@ compose_ggplot <- function(
         ymin = .data$ymin - (geom_positions$viz_params$row_space / 2),
         ymax = .data$ymax + (geom_positions$viz_params$row_space / 2)
       ),
-      df,
+      row_pos,
       fill = "#DDDDDD"
     )
   }
 
   # PLOT SEGMENTS
-  if (nrow(geom_positions$segment_data) > 0) {
+  if (nrow(geom_positions$segment_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$segment_data <- geom_positions$segment_data %>% add_column_if_missing(
       size = .5,
@@ -52,7 +54,7 @@ compose_ggplot <- function(
   }
 
   # PLOT RECTANGLES
-  if (nrow(geom_positions$rect_data) > 0) {
+  if (nrow(geom_positions$rect_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$rect_data <- geom_positions$rect_data %>%
       add_column_if_missing(
@@ -80,7 +82,7 @@ compose_ggplot <- function(
   }
 
   # PLOT CIRCLES
-  if (nrow(geom_positions$circle_data) > 0) {
+  if (nrow(geom_positions$circle_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_circle(
       aes(
         x0 = .data$x0,
@@ -94,7 +96,7 @@ compose_ggplot <- function(
   }
 
   # PLOT FUNKY RECTANGLES
-  if (nrow(geom_positions$funkyrect_data) > 0) {
+  if (nrow(geom_positions$funkyrect_data %||% tibble()) > 0) {
     g <- g + geom_rounded_rect(
       aes(
         xmin = .data$xmin,
@@ -111,7 +113,7 @@ compose_ggplot <- function(
   }
 
   # PLOT PIES
-  if (nrow(geom_positions$pie_data) > 0) {
+  if (nrow(geom_positions$pie_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_arc_bar(
       aes(
         x0 = .data$x0,
@@ -127,7 +129,7 @@ compose_ggplot <- function(
     )
   }
   # PLOT IMAGES
-  if (nrow(geom_positions$img_data) > 0) {
+  if (nrow(geom_positions$img_data %||% tibble()) > 0) {
     if (!requireNamespace("magick", quietly = TRUE)) {
       cli_alert_warning("Package `magick` is required to draw images. Skipping columns with geom == \"image\".")
     } else {
@@ -151,7 +153,7 @@ compose_ggplot <- function(
   }
 
   # PLOT TEXT
-  if (nrow(geom_positions$text_data) > 0) {
+  if (nrow(geom_positions$text_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$text_data <- geom_positions$text_data %>%
       add_column_if_missing(
@@ -194,6 +196,20 @@ compose_ggplot <- function(
     )
   }
 
+  # Compute bounds
+  if (is.null(geom_positions$bounds)) {
+    # determine size of current geoms
+    geom_positions$bounds <- compute_bounds(
+      row_pos = geom_positions$row_pos,
+      column_pos = geom_positions$column_pos,
+      segment_data = geom_positions$segment_data,
+      rect_data = geom_positions$rect_data,
+      circle_data = geom_positions$circle_data,
+      funkyrect_data = geom_positions$funkyrect_data,
+      pie_data = geom_positions$pie_data,
+      text_data = geom_positions$text_data
+    )
+  }
 
   # ADD SIZE
   # reserve a bit more room for text that wants to go outside the frame

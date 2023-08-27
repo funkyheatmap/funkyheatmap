@@ -42,7 +42,6 @@ arg_tib <-
     type = case_when(
       name %in% c("add_abc", "scale_column") ~ "boolean",
       name %in% c("col_annot_offset", "expand") ~ "double",
-      name %in% c("removed_entries") ~ "string",
       TRUE ~ "file"
     ),
     direction = ifelse(name == "output", "output", "input"),
@@ -54,8 +53,6 @@ arg_tib <-
         paste0(name, ".pdf")
       } else if (type == "file") {
         paste0(name, ".tsv")
-      } else if (name == "removed_entries") {
-        c("sample1", "sample2", "sample3")
       } else {
         NA_character_
       }
@@ -71,7 +68,7 @@ arg_tib <-
         NA_character_
       }
     }),
-    multiple = name %in% c("removed_entries", "expand"),
+    multiple = name %in% c("expand"),
     multiple_sep = ifelse(multiple, ":", NA_character_),
     name = paste0("--", name)
   )

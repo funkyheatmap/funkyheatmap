@@ -1,3 +1,10 @@
+# funkyheatmap 0.3.0
+
+## MAJOR CHANGES
+
+* Refactor legend rendering. The legend is now rendered as separate ggplots, which
+  are then combined into a single plot using the `patchwork` package.
+
 # funkyheatmap 0.2.0
 
 ## MAJOR CHANGES

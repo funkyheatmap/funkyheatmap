@@ -1,0 +1,219 @@
+---
+title: "Recreating the scIB figures"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Recreating the scIB figures}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: ../inst/REFERENCES.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The [single-cell integration benchmarking (scIB)][scib-website] project was an effort to evaluate and compare the performance of methods for integrating single-cell RNA and ATAC sequencing datasets [@scib_Luecken2021].
+Many of the results were displayed using custom scripts to create visualisations similar to those produced by `funkyheatmap`.
+
+In this vignette we will show how these figures can be reproduced using `funkyheatmap`.
+
+```{r libraries}
+library(funkyheatmap)
+library(dplyr)
+library(tibble)
+```
+
+## Summary figure
+
+The first figure we will recreate is the summary figure showing the performance of all methods on RNA data. Here is the original for reference:
+
+![scIB RNA summary figure](https://github.com/theislab/scib-reproducibility/blob/main/data/img/best-RNA.png?raw=true){width=100%}
+
+### Data
+
+The steps for summarising the raw metric scores are quite complex so we have included a pre-processed summary table as part of `funkyheatmap` which is produced from the files available in the [scIB reproducibility repository][scib-reproducibility].
+
+```{r summary-data}
+data("scib_summary")
+glimpse(scib_summary)
+```
+
+This data frame contains several columns: details of the method version and output, an average rank used to order the table, overall scores and ranks for the performance on each dataset, usability scores and ranks (for the package and paper), and scalability scores and ranks (for both time and memory).
+All of these will go into the summary table.
+
+The dataset requires some preparation for the `funky_heatmap()` function. We will create an `id` column using the row numbers (the data is already sorted by performance ranking). We also create label columns for each of the scores showing the top 3 performers and relabel some of the columns. Finally, we subset to a the set of columns we want to plot.
+
+```{r summary-prep}
+# A small helper function for creating rank labels for each column.
+# It takes a scores, ranks them and returns a character vector with labels for
+# the top 3 scores. Any additional arguments are passed to the `rank()`
+# function.
+label_top_3 <- function(scores, ...) {
+  ranks <- rank(scores, ...)
+  ifelse(ranks <= 3, as.character(ranks), "")
+}
+
+scib_summary_plot <- scib_summary |>
+  # Create an ID column showing the final rank
+  mutate(id = as.character(seq_len(nrow(scib_summary)))) |>
+  # Set the labels for the scaling and features columns
+  mutate(
+    scaling = factor(
+      scaling,
+      levels = c("Unscaled", "Scaled"),
+      labels = c("-", "+")
+    ),
+    features = factor(
+      features,
+      levels = c("Full", "HVG"),
+      labels = c("FULL", "HVG")
+    )
+  ) |>
+  # Create a column with paths to output images
+  mutate(
+    output_img = case_match(
+      output,
+      "Features"  ~ "images/matrix.png",
+      "Embedding" ~ "images/embedding.png",
+      "Graph"     ~ "images/graph.png"
+    )
+  ) |>
+  # Create rank labels
+  mutate(
+    label_pancreas = label_top_3(rank_pancreas),
+    label_lung_atlas = label_top_3(rank_lung_atlas),
+    label_immune_cell_hum = label_top_3(rank_immune_cell_hum),
+    label_immune_cell_hum_mou = label_top_3(rank_immune_cell_hum_mou),
+    label_mouse_brain = label_top_3(rank_mouse_brain),
+    label_simulations_1_1 = label_top_3(rank_simulations_1_1),
+    label_simulations_2 = label_top_3(rank_simulations_2),
+    package_label = label_top_3(-package_rank, ties.method = "min"),
+    paper_label = label_top_3(-paper_rank, ties.method = "min"),
+    time_label = label_top_3(-time_rank, ties.method = "min"),
+    memory_label = label_top_3(-memory_rank, ties.method = "min")
+  ) |>
+  as.data.frame()
+
+glimpse(scib_summary_plot)
+```
+
+### Column information
+
+The first step in plotting the figure is to create a data frame describing how we want to plot the columns.
+
+```{r summary-cols}
+column_info <- tribble(
+                           ~ id,                 ~ name,  ~ geom,       ~ group, ~ palette, ~ width, ~ legend, ~ hjust, ~ overlay,
+                           "id",                 "Rank",  "text",      "Method",        NA,       1,    FALSE,       0,     FALSE,
+                       "method",               "Method",  "text",      "Method",        NA,       5,    FALSE,       0,     FALSE,
+                   "output_img",               "Output", "image",      "Method",        NA,       1,    FALSE,     0.5,     FALSE,
+                     "features",             "Features",  "text",      "Method",        NA,       2,    FALSE,     0.5,     FALSE,
+                      "scaling",              "Scaling",  "text",      "Method",        NA,       1,     TRUE,     0.5,     FALSE,
+             "overall_pancreas",             "Pancreas",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+               "label_pancreas",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+           "overall_lung_atlas",                 "Lung",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+             "label_lung_atlas",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+      "overall_immune_cell_hum",       "Immune (human)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+        "label_immune_cell_hum",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+  "overall_immune_cell_hum_mou", "Immune (human/mouse)",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+    "label_immune_cell_hum_mou",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+          "overall_mouse_brain",          "Mouse brain",   "bar",         "RNA",   "blues",     1.5,     TRUE,      NA,     FALSE,
+            "label_mouse_brain",                     NA,  "text",         "RNA",        NA,      NA,    FALSE,     0.1,      TRUE,
+      "overall_simulations_1_1",                "Sim 1",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
+        "label_simulations_1_1",                     NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
+        "overall_simulations_2",                "Sim 2",   "bar", "Simulations",  "greens",     1.5,     TRUE,      NA,     FALSE,
+          "label_simulations_2",                     NA,  "text", "Simulations",        NA,      NA,    FALSE,     0.1,      TRUE,
+                "package_score",              "Package",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
+                "package_label",                     NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                  "paper_score",                "Paper",   "bar",   "Usability", "oranges",     1.5,     TRUE,      NA,     FALSE,
+                  "paper_label",                     NA,  "text",   "Usability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                   "time_score",                 "Time",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
+                   "time_label",                     NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
+                 "memory_score",               "Memory",   "bar", "Scalability",   "greys",     1.5,     TRUE,      NA,     FALSE,
+                 "memory_label",                     NA,  "text", "Scalability",        NA,      NA,    FALSE,     0.1,      TRUE,
+)
+
+column_info
+```
+
+As shown in the other vignettes this table includes the type of geom for each each column and how they are grouped as well as some configuration options for how they are displayed. Note that we overlay the labels for each score over the corresponding bars.
+
+We also describe the various column groups.
+
+```{r summary-col-groups}
+column_groups <- tribble(
+        ~ group,     ~ palette,      ~ level1,
+       "Method",      "Method",      "Method",
+          "RNA",       "blues",         "RNA",
+  "Simulations",      "greens", "Simulations",
+    "Usability",     "oranges",   "Usability",
+  "Scalability",       "greys", "Scalability",
+)
+
+column_groups
+```
+
+There isn't much customisation here, we are mostly just defining the labels for each group.
+
+### Row information
+
+We aren't applying any grouping to the rows so the row information is very basic.
+
+```{r summary-rows}
+row_info <- data.frame(id = scib_summary_plot$id, group = NA_character_)
+
+row_info
+```
+
+### Palettes
+
+The last thing we define is the palettes. This are very similar to the default palettes but we include them here as an example and so they can be easily modified if needed.
+
+```{r summary-palettes}
+palettes <- tribble(
+   ~ palette,                                     ~ colours,
+  "features",                             c("green", "red"),
+     "blues", grDevices::colorRampPalette(
+                rev(RColorBrewer::brewer.pal(9, "Blues"))
+              )(101),
+    "greens", grDevices::colorRampPalette(
+                rev(RColorBrewer::brewer.pal(9, "Greens"))
+              )(101),
+   "oranges", grDevices::colorRampPalette(
+                rev(RColorBrewer::brewer.pal(9, "Oranges"))
+              )(101),
+     "greys", grDevices::colorRampPalette(
+                rev(RColorBrewer::brewer.pal(9, "Greys"))
+              )(101)
+)
+```
+
+### Figure
+
+Now that we have defined everything we can make the summary figure.
+
+```{r summary-figure, fig.width=8, fig.height=8}
+funky_heatmap(
+  scib_summary_plot,
+  column_info = column_info,
+  column_groups = column_groups,
+  row_info = row_info,
+  palettes = palettes,
+  scale_column = FALSE,
+  col_annot_offset = 4
+)
+```
+
+This isn't exactly like the original figure but it is fairly close. Most of the differences are cosmetic such as alignment of labels and the lack of fancy headings (which were created in an image editing program for the original figure). Perhaps the most significant difference is that here the bars are coloured by the scores while in the original they were coloured by rank. This is currently a limitation of `funky_heatmap()` that one variable is use for both colour and length of the bars. If you compare closely to the original figure you may also notice some changes in the method ranking compared to the original figure due to small difference in the pre-processing of the raw data.
+
+## References
+
+[scib-website]: https://theislab.github.io/scib-reproducibility/
+[scib-reproducibility]: https://github.com/theislab/scib-reproducibility

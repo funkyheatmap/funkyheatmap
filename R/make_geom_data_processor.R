@@ -9,7 +9,7 @@ make_geom_data_processor <- function(
       column_pos %>%
       filter(.data$geom %in% geom_types) %>%
       select(-"group", -"name", -"do_spacing") %>%
-      rename(column_id = .data$id) %>%
+      rename(column_id = "id") %>%
       add_column_if_missing(
         label = NA_character_,
         scale = TRUE
