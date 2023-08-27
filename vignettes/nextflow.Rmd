@@ -47,4 +47,4 @@ nextflow run funky_heatmap/main.nf \
 
 ## More information
 
-See the [funkyheatmap home page](http://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.
+See the [funkyheatmap home page](https://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.

@@ -55,4 +55,4 @@ To generate a plot with it, use the following commands:
 
 ## More information
 
-See the [funkyheatmap home page](http://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.
+See the [funkyheatmap home page](https://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.
