@@ -211,7 +211,7 @@ funky_heatmap <- function(
     circle = create_circle_legend,
     rect = create_rect_legend,
     pie = create_pie_legend,
-    text = create_text_legend,
+    text = create_text_legend
     # image = create_image_legend
     # todo: add text legend
     # todo: add bar legend
