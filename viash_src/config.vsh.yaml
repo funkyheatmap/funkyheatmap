@@ -21,10 +21,10 @@ platforms:
     image: eddelbuettel/r2u:22.04
     target_registry: ghcr.io
     target_organization: dynverse
-    target_image_source: https://github.com/dynverse/funkyheatmap/
+    target_image_source: https://github.com/funkyheatmap/funkyheatmap/
     setup:
       - type: r
-        github: dynverse/funkyheatmap
+        github: funkyheatmap/funkyheatmap
         cran:
           - readr
           - yaml

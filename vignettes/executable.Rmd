@@ -17,7 +17,7 @@ you should pass a yaml file.
 ## Install
 
 ```bash
-wget https://github.com/dynverse/funkyheatmap/releases/latest/download/executable.zip
+wget https://github.com/funkyheatmap/funkyheatmap/releases/latest/download/executable.zip
 unzip executable.zip -d funky_heatmap
 ```
 
@@ -55,4 +55,4 @@ To generate a plot with it, use the following commands:
 
 ## More information
 
-See the [funkyheatmap home page](http://funkyheatmap.dynverse.org/) for more information and documentation.
+See the [funkyheatmap home page](http://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.

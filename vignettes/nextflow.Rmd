@@ -17,7 +17,7 @@ you should pass a yaml file.
 ## Install
 
 ```bash
-wget https://github.com/dynverse/funkyheatmap/releases/latest/download/nextflow.zip
+wget https://github.com/funkyheatmap/funkyheatmap/releases/latest/download/nextflow.zip
 unzip nextflow.zip -d funky_heatmap
 ```
 
@@ -47,4 +47,4 @@ nextflow run funky_heatmap/main.nf \
 
 ## More information
 
-See the [funkyheatmap home page](http://funkyheatmap.dynverse.org/) for more information and documentation.
+See the [funkyheatmap home page](http://funkyheatmap.github.io/funkyheatmap/) for more information and documentation.
