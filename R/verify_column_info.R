@@ -73,6 +73,20 @@ verify_column_info <- function(column_info, data) {
     all(column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image"))
   )
 
+  # checking color
+  if (!column_info %has_name% "color") {
+    cli_alert_info("Column info did not contain column `color`, assuming color is defined by the 'id' column.")
+    column_info$color <- case_when(
+      column_info$geom == "text" ~ NA_character_,
+      column_info$geom == "image" ~ NA_character_,
+      TRUE ~ column_info$id
+    )
+  }
+  assert_that(
+    is.character(column_info$color),
+    all(is.na(column_info$color) | is_color(column_info$color) | column_info$color %in% colnames(data))
+  )
+
   # checking group
   if (!column_info %has_name% "group" || all(is.na(column_info$group))) {
     cli_alert_info("Column info did not contain group information, assuming columns are ungrouped.")
@@ -132,4 +146,9 @@ verify_column_info <- function(column_info, data) {
   )
 
   column_info
+}
+
+# Function to check if a string represents a color
+is_color <- function(x) {
+  x %in% colors() | grepl("^#[0-9A-Fa-f]{6}$", x)
 }

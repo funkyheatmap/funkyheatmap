@@ -9,7 +9,10 @@ make_geom_data_processor <- function(
       column_pos %>%
       filter(.data$geom %in% geom_types) %>%
       select(-"group", -"name", -"do_spacing") %>%
-      rename(column_id = "id") %>%
+      rename(
+        column_id = "id",
+        column_color = "color"
+      ) %>%
       add_column_if_missing(
         label = NA_character_,
         scale = TRUE
@@ -26,7 +29,7 @@ make_geom_data_processor <- function(
         column_sels %>%
         slice(ri) %>%
         mutate(label = ifelse(
-          .data$geom == "text" & is.na(.data$label),
+          is.na(.data$label),
           .data$column_id,
           .data$label
         ))
@@ -37,8 +40,16 @@ make_geom_data_processor <- function(
 
       data_sel <-
         data %>%
-        select(row_id = "id", value = !!column_sel$column_id) %>%
+        select(
+          row_id = "id",
+          value = !!column_sel$column_id
+        ) %>%
         mutate(column_id = column_sel$column_id)
+      if (!is.na(column_sel$column_color)) {
+        data_sel$color_value <- data[[column_sel$column_color]]
+      } else {
+        data_sel$color_value <- NA
+      }
 
       labelcolumn_sel <-
         column_sel %>%
@@ -66,11 +77,18 @@ make_geom_data_processor <- function(
 
       # scale data, if need be
       if (scale_column && column_sel$scale && is.numeric(dat$value)) {
-        dat <-
-          dat %>%
-          group_by(.data$column_id) %>%
-          mutate(value = scale_minmax(.data$value)) %>%
-          ungroup()
+        # dat <-
+        #   dat %>%
+        #   group_by(.data$column_id) %>%
+        #   mutate(
+        #     value = scale_minmax(.data$value),
+        #     color_value = scale_minmax(.data$color_value)
+        #   ) %>%
+        #   ungroup()
+        dat$value <- scale_minmax(dat$value)
+        if (is.null(dat$color_value) && !all(is.na(dat$color_value))) {
+          dat$color_value <- scale_minmax(dat$color_value)
+        }
       }
 
       # apply function
@@ -80,11 +98,11 @@ make_geom_data_processor <- function(
       if (!is.na(column_sel$palette)) {
         palette_sel <- palette_list[[column_sel$palette]]
 
-        if (is.character(dat$value) | is.factor(dat$value)) {
-          dat <- dat %>% mutate(col_value = .data$value)
-        } else if (is.numeric(dat$value)) {
+        if (is.character(dat$color_value) | is.factor(dat$color_value)) {
+          dat <- dat %>% mutate(col_value = .data$color_value)
+        } else if (is.numeric(dat$color_value)) {
           dat <- dat %>% mutate(
-            col_value = round(.data$value * (length(palette_sel) - 1)) + 1
+            col_value = round(.data$color_value * (length(palette_sel) - 1)) + 1
           )
         } else {
           dat$col_value <- NA
@@ -98,7 +116,7 @@ make_geom_data_processor <- function(
               palette_sel[.data$col_value]
             )
           ) %>%
-          select(-"value", -"col_value")
+          select(-"value", -"col_value", -"color_value")
       }
 
       dat

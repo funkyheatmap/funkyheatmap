@@ -78,7 +78,7 @@ calculate_geom_positions <- function(
   # gather funkyrect data
   funkyrect_data <- geom_data_processor("funkyrect", function(dat) {
     dat %>%
-      select("xmin", "xmax", "ymin", "ymax", "value") %>%
+      select("xmin", "xmax", "ymin", "ymax", "value", "color_value") %>%
       pmap_df(score_to_funky_rectangle)
   })
 
@@ -105,7 +105,7 @@ calculate_geom_positions <- function(
       row_pos %>%
         select(y = "ymin", yend = "ymax")
     ) %>%
-      mutate(palette = NA, value = NA)
+      mutate(palette = NA, value = NA, color_value = NA)
   })
   segment_data <-
     bind_rows(
@@ -340,7 +340,7 @@ calculate_geom_positions <- function(
     # plot 100% pies as circles
     circle_data <- bind_rows(
       circle_data,
-      pie_data %>% filter(.data$pct >= (1 - 1e-10))
+      pie_data %>% filter(.data$pct >= (1 - 1e-10)) %>% select(-"label_value")
     )
     pie_data <- pie_data %>% filter(.data$pct < (1 - 1e-10))
   }
