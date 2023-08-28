@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="index.html">funkyheatmap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/dynverse/funkyheatmap/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/funkyheatmap/funkyheatmap/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,21 +85,21 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://funkyheatmap.dynverse.org">funkyheatmap</a> allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.</p>
+<p><a href="https://funkyheatmap.github.io/funkyheatmap">funkyheatmap</a> allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install funkyheatmap like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"funkyheatmap"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also download <a href="https://funkyheatmap.dynverse.org">funkyheatmap</a> as a <a href="http://funkyheatmap.dynverse.org/articles/executable.html" class="external-link">standalone executable</a> or a <a href="http://funkyheatmap.dynverse.org/articles/nextflow.html" class="external-link">Nextflow pipeline</a>.</p>
+<p>You can also download <a href="https://funkyheatmap.github.io/funkyheatmap">funkyheatmap</a> as a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/executable.html">standalone executable</a> or a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html">Nextflow pipeline</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>Let’s use the <code>mtcars</code> dataset as an example of what a funky heatmap looks like.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://funkyheatmap.dynverse.org">funkyheatmap</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://funkyheatmap.github.io/funkyheatmap">funkyheatmap</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -141,10 +141,10 @@
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
 <ul>
-<li><p>The <a href="http://funkyheatmap.dynverse.org/reference/index.html" class="external-link">reference documentation</a> on <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> details the exact formats of each annotation object that you can pass to it.</p></li>
-<li><p>Check out the vignette <a href="http://funkyheatmap.dynverse.org/articles/mtcars.html" class="external-link"><code>vignette("mtcars", "funkyheatmap")</code></a> for more information on how to customize this visualisation.</p></li>
-<li><p>In <a href="http://funkyheatmap.dynverse.org/articles/dynbenchmark.html" class="external-link"><code>vignette("dynbenchmark", "funkyheatmap")</code></a> we use funkyheatmap to regenerate the figures from Saelens et al. (2019) <a href="https://doi.org/10.1038/s41587-019-0071-9" class="external-link">doi:10.1038/s41587-019-0071-9</a>.</p></li>
-<li><p>We used <a href="https://viash.io" class="external-link">Viash</a> to wrap the <code><a href="reference/funky_heatmap.html">funkyheatmap::funky_heatmap()</a></code> function as a <a href="http://funkyheatmap.dynverse.org/articles/executable.html" class="external-link">standalone executable</a> and <a href="http://funkyheatmap.dynverse.org/articles/nextflow.html" class="external-link">Nextflow module</a>.</p></li>
+<li><p>The <a href="https://funkyheatmap.github.io/funkyheatmap/reference/index.html">reference documentation</a> on <code><a href="reference/funky_heatmap.html">funky_heatmap()</a></code> details the exact formats of each annotation object that you can pass to it.</p></li>
+<li><p>Check out the vignette <a href="https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html"><code>vignette("mtcars", "funkyheatmap")</code></a> for more information on how to customize this visualisation.</p></li>
+<li><p>In <a href="https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html"><code>vignette("dynbenchmark", "funkyheatmap")</code></a> we use funkyheatmap to regenerate the figures from Saelens et al. (2019) <a href="https://doi.org/10.1038/s41587-019-0071-9" class="external-link">doi:10.1038/s41587-019-0071-9</a>.</p></li>
+<li><p>We used <a href="https://viash.io" class="external-link">Viash</a> to wrap the <code><a href="reference/funky_heatmap.html">funkyheatmap::funky_heatmap()</a></code> function as a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/executable.html">standalone executable</a> and <a href="https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html">Nextflow module</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -152,8 +152,8 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=funkyheatmap" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/dynverse/funkyheatmap/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/dynverse/funkyheatmap/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/funkyheatmap/funkyheatmap/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/funkyheatmap/funkyheatmap/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -185,7 +185,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 

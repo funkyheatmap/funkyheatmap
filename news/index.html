@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">funkyheatmap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/dynverse/funkyheatmap/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/funkyheatmap/funkyheatmap/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -52,34 +52,38 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/dynverse/funkyheatmap/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="funkyheatmap-040">funkyheatmap 0.4.0<a class="anchor" aria-label="anchor" href="#funkyheatmap-040"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-4-0">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h3>
-<ul><li><p>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
+<ul><li><p>Deprecated the <code>col_annot_offset</code>, <code>col_annot_angle</code> and <code>expand</code> arguments in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code>. Use <code>position_args = position_arguments(...)</code> instead (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
 <li><p>Removed the <code>removed_entries</code> argument.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-functionality-0-4-0">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-0-4-0"></a></h3>
-<ul><li><p>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/dynverse/funkyheatmap/issues/12" class="external-link">#12</a>).</p></li>
-<li><p>Plot images as a geom by specifying either a path, or a directory and an extension (<a href="https://github.com/dynverse/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
-<li><p>Overhaul of the way legends are plotted (<a href="https://github.com/dynverse/funkyheatmap/issues/23" class="external-link">#23</a>). Legends are now separate ggplots, the positioning of which is solved via patchwork.</p></li>
-<li><p>Allow customizing legends using the <code>legend</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/dynverse/funkyheatmap/issues/23" class="external-link">#23</a>).</p></li>
+<ul><li><p>Allow modifying the positioning of elements using the <code>position_args</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/12" class="external-link">#12</a>).</p></li>
+<li><p>Plot images as a geom by specifying either a path, or a directory and an extension (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/6" class="external-link">#6</a>).</p></li>
+<li><p>Overhaul of the way legends are plotted (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/23" class="external-link">#23</a>). Legends are now separate ggplots, the positioning of which is solved via patchwork.</p></li>
+<li><p>Allow customizing legends using the <code>legend</code> argument in <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/23" class="external-link">#23</a>).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-4-0">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-0"></a></h3>
-<ul><li><p>Throw warning if magick is not installed or if image is not found (<a href="https://github.com/dynverse/funkyheatmap/issues/18" class="external-link">#18</a>).</p></li>
-<li><p>Minor fixes to the documentation (<a href="https://github.com/dynverse/funkyheatmap/issues/22" class="external-link">#22</a>).</p></li>
+<ul><li><p>Throw warning if magick is not installed or if image is not found (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/18" class="external-link">#18</a>).</p></li>
+<li><p>Minor fixes to the documentation (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/22" class="external-link">#22</a>).</p></li>
+<li><p>Assume logical columns are meant to be displayed as text (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/26" class="external-link">#26</a>).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-4-0">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
 <ul><li><p>Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.</p></li>
-<li><p>Remove warnings due to changes in tidyselect (<a href="https://github.com/dynverse/funkyheatmap/issues/15" class="external-link">#15</a>).</p></li>
-<li><p>Remove warnings due to ‘size’ being renamed to ‘linewidth’ in ggplot2 v3.4.0 (<a href="https://github.com/dynverse/funkyheatmap/issues/16" class="external-link">#16</a>).</p></li>
-<li><p>Fix missing categories when no palette is specified for a pie geom (<a href="https://github.com/dynverse/funkyheatmap/issues/17" class="external-link">#17</a>).</p></li>
+<li><p>Remove warnings due to changes in tidyselect (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/15" class="external-link">#15</a>).</p></li>
+<li><p>Remove warnings due to ‘size’ being renamed to ‘linewidth’ in ggplot2 v3.4.0 (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/16" class="external-link">#16</a>).</p></li>
+<li><p>Fix missing categories when no palette is specified for a pie geom (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/17" class="external-link">#17</a>).</p></li>
+<li><p>Fix issue with rendering non-character columns as text (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/5" class="external-link">#5</a>, <a href="https://github.com/funkyheatmap/funkyheatmap/issues/26" class="external-link">#26</a>).</p></li>
+<li><p>Fix error messge (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/1" class="external-link">#1</a>, <a href="https://github.com/funkyheatmap/funkyheatmap/issues/26" class="external-link">#26</a>).</p></li>
+<li><p>Fix domain url, which has moved from <a href="https://funkyheatmap.dynverse.org" class="external-link uri">https://funkyheatmap.dynverse.org</a> to <a href="https://funkyheatmap.github.io/funkyheatmap" class="uri">https://funkyheatmap.github.io/funkyheatmap</a> (<a href="https://github.com/funkyheatmap/funkyheatmap/issues/26" class="external-link">#26</a>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -117,7 +121,7 @@
 <li><p>Split up code into different helper functions.</p></li>
 <li><p>Added <code>verify_*()</code> functions for checking the file format of input objects and trying to provide helpful messages when the format is not correct.</p></li>
 <li><p>Added documentation, unit tests and examples.</p></li>
-<li><p>Website is published at <a href="https://funkyheatmap.dynverse.org">funkyheatmap.dynverse.org</a>.</p></li>
+<li><p>Website is published at <a href="https://funkyheatmap.github.io/funkyheatmap">funkyheatmap.github.io/funkyheatmap</a>.</p></li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

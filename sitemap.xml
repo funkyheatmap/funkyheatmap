@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://funkyheatmap.dynverse.org/404.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/404.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/LICENSE-text.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/LICENSE.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/dynbenchmark.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/executable.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/executable.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/index.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/mtcars.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/mtcars_images.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/mtcars_images.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/nextflow.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/articles/scIB.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/articles/scIB.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/authors.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/authors.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/index.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/index.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/news/index.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/news/index.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/dynbenchmark_data.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/dynbenchmark_data.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/funky_heatmap.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/funky_heatmap.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/funkyheatmap-package.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/funkyheatmap-package.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/geom_rounded_rect.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/geom_rounded_rect.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/index.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/position_arguments.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/position_arguments.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/scib_summary.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/scib_summary.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_column_groups.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_column_groups.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_column_info.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_column_info.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_data.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_data.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_legends.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_legends.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_palettes.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_palettes.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_row_groups.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_row_groups.html</loc>
   </url>
   <url>
-    <loc>https://funkyheatmap.dynverse.org/reference/verify_row_info.html</loc>
+    <loc>https://funkyheatmap.github.io/funkyheatmap/reference/verify_row_info.html</loc>
   </url>
 </urlset>
