@@ -25,6 +25,8 @@
 
 * Minor fixes to the documentation (#22).
 
+* Assume logical columns are meant to be displayed as text (#26).
+
 ## BUG FIXES
 
 * Fix missing 1.0 label in legend due to limitations in floating-point arithmetic.
@@ -34,6 +36,12 @@
 * Remove warnings due to 'size' being renamed to 'linewidth' in ggplot2 v3.4.0 (#16).
 
 * Fix missing categories when no palette is specified for a pie geom (#17).
+
+* Fix issue with rendering non-character columns as text (#5, #26).
+
+* Fix error messge (#1, #26).
+
+* Fix domain url, which has moved from https://funkyheatmap.dynverse.org to https://funkyheatmap.github.io/funkyheatmap (#26).
 
 # funkyheatmap 0.3.0
 
@@ -84,4 +92,4 @@ The initial release of funkyheatmap as a standalone package.
 
 * Added documentation, unit tests and examples.
 
-* Website is published at [funkyheatmap.dynverse.org](https://funkyheatmap.dynverse.org).
+* Website is published at [funkyheatmap.github.io/funkyheatmap](https://funkyheatmap.github.io/funkyheatmap).

@@ -42,11 +42,9 @@ If so, the width of that column will be inherited.
 \item \code{legend}: Whether or not to add a legend for this column.
 \item \code{hjust}: Horizontal alignment of the bar, must be between [0,1]
 (only for \code{geom = "bar"}).
-\item \code{hjust}: Horizontal alignment of the label, must be between [0,1]
-(only for \code{geom = "text"}).
 \item \code{vjust}: Vertical alignment of the label, must be between [0,1]
 (only for \code{geom = "text"}).
-\item \code{size}: Size of the label, must be between [0,1]
+\item \code{size}: Size of the label, must be a numeric value
 (only for \code{geom = "text"}).
 \item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
 \item \code{directory}: Which directory to use to find the images (only for \code{geom = "image"}).
