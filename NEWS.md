@@ -39,7 +39,7 @@
 
 * Fix issue with rendering non-character columns as text (#5, #26).
 
-* Fix error messge (#1, #26).
+* Fix error message (#1, #26).
 
 * Fix domain url, which has moved from https://funkyheatmap.dynverse.org to https://funkyheatmap.github.io/funkyheatmap (#26).
 
