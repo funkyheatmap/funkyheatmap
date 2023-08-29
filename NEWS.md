@@ -41,7 +41,7 @@
 
 * Fix error messge (#1, #26).
 
-* Fix domain url, which has moved from https://funkyheatmap.dynverse.org to https://funkyheatmap.github.io/funkyheatmap (#26).
+* Fix domain url (#26).
 
 # funkyheatmap 0.3.0
 
@@ -92,4 +92,4 @@ The initial release of funkyheatmap as a standalone package.
 
 * Added documentation, unit tests and examples.
 
-* Website is published at [funkyheatmap.github.io/funkyheatmap](https://funkyheatmap.github.io/funkyheatmap).
+* Website is published at [funkyheatmap.github.io/funkyheatmap](https://funkyheatmap.github.io/funkyheatmap/).
