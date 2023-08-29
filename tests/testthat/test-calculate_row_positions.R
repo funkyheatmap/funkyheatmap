@@ -9,7 +9,7 @@ test_that("calculate_row_positions computes row positions correctly", {
 
   row_height <- 1
   row_space <- .1
-  row_bigspace <- .5
+  row_bigspace <- 1.2
 
   result <- calculate_row_positions(row_info, row_height, row_space, row_bigspace)
 
@@ -18,7 +18,7 @@ test_that("calculate_row_positions computes row positions correctly", {
   expect_true(all(result$ymin + row_height / 2 == result$y))
 
   # check spacing
-  expect_equal(result$ysep, c(row_space, row_space, row_bigspace, row_space))
+  expect_equal(result$ysep, c(row_space, row_space, row_height + 2 * row_space, row_space))
 
   # Verify spacing calculation
   expect_equal(result$ysep[1], row_space)
