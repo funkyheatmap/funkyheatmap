@@ -13,7 +13,7 @@ test_that("image geom with full paths", {
   g <- funky_heatmap(
     data = data,
     column_info = column_info,
-    expand = list(xmax = 4)
+    position_args = position_arguments(expand_xmax = 4)
   )
   expect_true(ggplot2::is.ggplot(g))
 })
@@ -27,13 +27,13 @@ test_that("image geom with directory and extension options", {
     ~id, ~group, ~name, ~geom, ~palette, ~options,
     "id", NA_character_, "", "text", NA_character_, list(hjust = 0, width = 6),
     "mpg", NA_character_, "Miles / gallon", "bar", NA_character_, list(width = 4, legend = FALSE),
-    "type", NA_character_, "Type of engine", "image", NA_character_, lst(directory = "test_images/", extension = "png")
+    "type", NA_character_, "Type of engine", "image", NA_character_, list(directory = "test_images/", extension = "png")
   )
 
   g <- funky_heatmap(
     data = data,
     column_info = column_info,
-    expand = list(xmax = 4)
+    position_args = position_arguments(expand_xmax = 4)
   )
   expect_true(ggplot2::is.ggplot(g))
 })

@@ -1,6 +1,7 @@
 compose_ggplot <- function(
-    geom_positions,
-    expand) {
+  geom_positions,
+  position_args
+) {
   # start ggplot
   g <-
     ggplot() +
@@ -9,12 +10,14 @@ compose_ggplot <- function(
     scale_colour_identity() +
     scale_fill_identity() +
     scale_size_identity() +
+    scale_linewidth_identity() +
     scale_linetype_identity() +
     cowplot::theme_nothing()
 
   # PLOT ROW BACKGROUNDS
-  df <- geom_positions$row_pos %>% filter(.data$colour_background)
-  if (nrow(df) > 0) {
+  row_pos <- (geom_positions$row_pos %||% tibble(colour_background = logical(0))) %>%
+    filter(.data$colour_background)
+  if (nrow(row_pos) > 0) {
     g <- g + geom_rect(
       aes(
         xmin = min(geom_positions$column_pos$xmin) - .25,
@@ -22,13 +25,13 @@ compose_ggplot <- function(
         ymin = .data$ymin - (geom_positions$viz_params$row_space / 2),
         ymax = .data$ymax + (geom_positions$viz_params$row_space / 2)
       ),
-      df,
+      row_pos,
       fill = "#DDDDDD"
     )
   }
 
   # PLOT SEGMENTS
-  if (nrow(geom_positions$segment_data) > 0) {
+  if (nrow(geom_positions$segment_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$segment_data <- geom_positions$segment_data %>% add_column_if_missing(
       size = .5,
@@ -42,7 +45,7 @@ compose_ggplot <- function(
         xend = .data$xend,
         y = .data$y,
         yend = .data$yend,
-        size = .data$size, # todo: update to linewidth
+        linewidth = .data$size,
         colour = .data$colour,
         linetype = .data$linetype
       ),
@@ -51,7 +54,7 @@ compose_ggplot <- function(
   }
 
   # PLOT RECTANGLES
-  if (nrow(geom_positions$rect_data) > 0) {
+  if (nrow(geom_positions$rect_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$rect_data <- geom_positions$rect_data %>%
       add_column_if_missing(
@@ -74,12 +77,12 @@ compose_ggplot <- function(
         alpha = .data$alpha
       ),
       geom_positions$rect_data,
-      size = .25
+      linewidth = .25
     )
   }
 
   # PLOT CIRCLES
-  if (nrow(geom_positions$circle_data) > 0) {
+  if (nrow(geom_positions$circle_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_circle(
       aes(
         x0 = .data$x0,
@@ -88,12 +91,12 @@ compose_ggplot <- function(
         r = .data$r
       ),
       geom_positions$circle_data,
-      size = .25
+      linewidth = .25
     )
   }
 
   # PLOT FUNKY RECTANGLES
-  if (nrow(geom_positions$funkyrect_data) > 0) {
+  if (nrow(geom_positions$funkyrect_data %||% tibble()) > 0) {
     g <- g + geom_rounded_rect(
       aes(
         xmin = .data$xmin,
@@ -110,7 +113,7 @@ compose_ggplot <- function(
   }
 
   # PLOT PIES
-  if (nrow(geom_positions$pie_data) > 0) {
+  if (nrow(geom_positions$pie_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_arc_bar(
       aes(
         x0 = .data$x0,
@@ -122,22 +125,35 @@ compose_ggplot <- function(
         fill = .data$colour
       ),
       data = geom_positions$pie_data,
-      size = .25
+      linewidth = .25
     )
   }
   # PLOT IMAGES
-  if (nrow(geom_positions$img_data) > 0) {
-    for (r in seq_len(nrow(geom_positions$img_data))) {
-      g <- g + cowplot::draw_image(
-        geom_positions$img_data[r, "path"],
-        x = geom_positions$img_data[r, "xmin"],
-        y = geom_positions$img_data[r, "ymin"]
-      )
+  if (nrow(geom_positions$img_data %||% tibble()) > 0) {
+    if (!requireNamespace("magick", quietly = TRUE)) {
+      cli_alert_warning("Package `magick` is required to draw images. Skipping columns with geom == \"image\".")
+    } else {
+      for (r in seq_len(nrow(geom_positions$img_data))) {
+        image <- geom_positions$img_data[[r, "path"]]
+        if (!inherits(image, "magick-image")) {
+          if (is.character(image)) {
+            assert_that(file.exists(image), msg = paste0("Image '", image, "' does not exist."))
+          }
+          image <- magick::image_read(image)
+        }
+        g <- g + cowplot::draw_image(
+          image = image,
+          x = geom_positions$img_data[[r, "xmin"]],
+          y = geom_positions$img_data[[r, "ymin"]],
+          width = geom_positions$img_data[[r, "width"]],
+          height = geom_positions$img_data[[r, "height"]]
+        )
+      }
     }
   }
 
   # PLOT TEXT
-  if (nrow(geom_positions$text_data) > 0) {
+  if (nrow(geom_positions$text_data %||% tibble()) > 0) {
     # add defaults for optional values
     geom_positions$text_data <- geom_positions$text_data %>%
       add_column_if_missing(
@@ -180,33 +196,27 @@ compose_ggplot <- function(
     )
   }
 
-  # todo: need a generic solution
-  # # PLOT TRAJ TYPES
-  # if (nrow(trajd) > 0) {
-  #   g <-
-  #     plot_trajectory_types(
-  #       plot = g,
-  #       trajectory_types = trajd$topinf,
-  #       xmins = trajd$xmin,
-  #       xmaxs = trajd$xmax,
-  #       ymins = trajd$ymin,
-  #       ymaxs = trajd$ymax,
-  #       node_colours = trajd$colour,
-  #       edge_colours = trajd$colour,
-  #       size = 1,
-  #       geom = "circle",
-  #       circ_size = .1
-  #     )
-  # }
-
+  # Compute bounds
+  if (is.null(geom_positions$bounds)) {
+    # determine size of current geoms
+    geom_positions$bounds <- compute_bounds(
+      row_pos = geom_positions$row_pos,
+      column_pos = geom_positions$column_pos,
+      segment_data = geom_positions$segment_data,
+      rect_data = geom_positions$rect_data,
+      circle_data = geom_positions$circle_data,
+      funkyrect_data = geom_positions$funkyrect_data,
+      pie_data = geom_positions$pie_data,
+      text_data = geom_positions$text_data
+    )
+  }
 
   # ADD SIZE
   # reserve a bit more room for text that wants to go outside the frame
-  expand_li <- as.list(expand)
-  minimum_x <- geom_positions$bounds$minimum_x - (expand_li$xmin %||% 0)
-  maximum_x <- geom_positions$bounds$maximum_x + (expand_li$xmax %||% 0)
-  minimum_y <- geom_positions$bounds$minimum_y - (expand_li$ymin %||% 0)
-  maximum_y <- geom_positions$bounds$maximum_y + (expand_li$ymax %||% 0)
+  minimum_x <- geom_positions$bounds$minimum_x - (position_args$expand_xmin %||% 0)
+  maximum_x <- geom_positions$bounds$maximum_x + (position_args$expand_xmax %||% 0)
+  minimum_y <- geom_positions$bounds$minimum_y - (position_args$expand_ymin %||% 0)
+  maximum_y <- geom_positions$bounds$maximum_y + (position_args$expand_ymax %||% 0)
   g <- g + expand_limits(
     x = c(minimum_x, maximum_x),
     y = c(minimum_y, maximum_y)

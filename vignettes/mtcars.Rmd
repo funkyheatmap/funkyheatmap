@@ -107,7 +107,7 @@ g <- funky_heatmap(
   row_info = row_info,
   row_groups = row_groups,
   palettes = palettes,
-  expand = list(xmax = 4)
+  position_args = position_arguments(expand_xmax = 4)
 )
 ```
 
