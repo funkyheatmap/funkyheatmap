@@ -94,7 +94,6 @@ calculate_geom_positions <- function(
   })
 
   # gather bar guides data
-  # TODO: if barguides
   barguides_data <- geom_data_processor("bar", function(dat) {
     if (!is.null(dat$draw_outline)) {
       dat <- dat %>%
