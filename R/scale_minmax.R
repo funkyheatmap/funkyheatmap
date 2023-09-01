@@ -1,9 +1,9 @@
-#' Scale a vector to the range [0, 1]
-#' 
+#' Scale a vector to the range \[0, 1\]
+#'
 #' @param x A numeric vector
-#' @return A numeric vector
+#' @return A numeric vector scaled to the range \[0, 1\]
 #' @export
-#' 
+#'
 #' @examples
 #' scale_minmax(c(1, 2, 3))
 scale_minmax <- function(x) {

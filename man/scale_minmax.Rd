@@ -2,7 +2,7 @@
 % Please edit documentation in R/scale_minmax.R
 \name{scale_minmax}
 \alias{scale_minmax}
-\title{Scale a vector to the range \link{0, 1}}
+\title{Scale a vector to the range [0, 1]}
 \usage{
 scale_minmax(x)
 }
@@ -10,10 +10,10 @@ scale_minmax(x)
 \item{x}{A numeric vector}
 }
 \value{
-A numeric vector
+A numeric vector scaled to the range [0, 1]
 }
 \description{
-Scale a vector to the range \link{0, 1}
+Scale a vector to the range [0, 1]
 }
 \examples{
 scale_minmax(c(1, 2, 3))
