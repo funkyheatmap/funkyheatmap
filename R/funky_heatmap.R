@@ -60,6 +60,9 @@
 #'
 #' * `extension`: The extension of the images (only for `geom = "image"`).
 #'
+#' * `draw_outline`: Whether or not to draw bounding guides (only for `geom == "bar"`).
+#'   Default: `TRUE`.
+#'
 #' * `options` (`list` or `json`): Any of the options above. Any values in this
 #'   column will be spread across the other columns. This is useful for
 #'   not having to provide a data frame with 1000s of columns.

@@ -1,3 +1,10 @@
+# funkyheatmap 0.5.0
+
+## NEW FUNCTIONALITY
+
+* Allow specifying different columns in `data` for determining the colour and size of the geom using `id_colour` and `id_size`, respectively (#25).
+
+* Allow turning off bar outlines using `draw_outline` equal to `FALSE` for geom `"bar"` (#25).
 
 # funkyheatmap 0.4.0
 

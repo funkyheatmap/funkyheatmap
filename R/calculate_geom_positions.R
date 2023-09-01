@@ -96,12 +96,16 @@ calculate_geom_positions <- function(
   # gather bar guides data
   # TODO: if barguides
   barguides_data <- geom_data_processor("bar", function(dat) {
+    if (!is.null(dat$draw_outline)) {
+      dat <- dat %>%
+        filter(ifelse(is.na(.data$draw_outline), TRUE, .data$draw_outline))
+    }
     crossing(
       dat %>%
         group_by(.data$column_id) %>%
         slice(1) %>%
         ungroup() %>%
-        select("xmin", "xmax") %>%
+        select("xmin", "xmax", "draw_outline") %>%
         gather("col", "x") %>%
         transmute(.data$x, xend = .data$x),
       row_pos %>%
@@ -109,15 +113,18 @@ calculate_geom_positions <- function(
     ) %>%
       mutate(palette = NA, size_value = NA, color_value = NA)
   })
-  segment_data <-
-    bind_rows(
-      segment_data,
-      barguides_data %>% mutate(
-        colour = "black",
-        size = .5,
-        linetype = "dashed"
+  if (nrow(barguides_data) > 0) {
+    segment_data <-
+      bind_rows(
+        segment_data,
+        barguides_data %>%
+          mutate(
+            colour = "black",
+            size = .5,
+            linetype = "dashed"
+          )
       )
-    )
+  }
 
   # gather text data
   text_data <- geom_data_processor("text", function(dat) {

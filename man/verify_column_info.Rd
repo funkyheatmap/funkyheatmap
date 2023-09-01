@@ -43,6 +43,8 @@ If so, the width of that column will be inherited.
 \item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
 \item \code{directory}: Which directory to use to find the images (only for \code{geom = "image"}).
 \item \code{extension}: The extension of the images (only for \code{geom = "image"}).
+\item \code{draw_outline}: Whether or not to draw bounding guides (only for \code{geom == "bar"}).
+Default: \code{TRUE}.
 \item \code{options} (\code{list} or \code{json}): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.
