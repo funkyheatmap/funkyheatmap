@@ -101,7 +101,7 @@ scib_summary_plot <- scib_summary |>
   ) |>
   mutate_at(
     c("rank_pancreas", "rank_lung_atlas", "rank_immune_cell_hum", "rank_immune_cell_hum_mou", "rank_mouse_brain", "rank_simulations_1_1", "rank_simulations_2", "package_rank", "paper_rank", "time_rank", "memory_rank"),
-    function(x) { dynutils::scale_minmax(-x) }
+    function(x) { scale_minmax(-x) }
   ) |>
   as.data.frame()
 

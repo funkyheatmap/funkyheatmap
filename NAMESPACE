@@ -3,6 +3,7 @@
 export(funky_heatmap)
 export(geom_rounded_rect)
 export(position_arguments)
+export(scale_minmax)
 export(verify_column_groups)
 export(verify_column_info)
 export(verify_data)
