@@ -68,13 +68,7 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>column_info</dt>
 <dd><p>A data frame describing which columns in <code>data</code> to
-plot. This data frame should contain the following columns:</p><ul><li><p><code>id</code> (<code>character</code>, required): A column name in <code>data</code> to plot. Determines the
-size of the resulting geoms, and also the color unless <code>color</code> is
-specified.</p></li>
-<li><p><code>id_color</code> (<code>character</code>): A column name in <code>data</code> to use for the color
-of the resulting geoms. If <code>NA</code>, the <code>id</code> column will be used.</p></li>
-<li><p><code>id_size</code> (<code>character</code>): A column name in <code>data</code> to use for the size
-of the resulting geoms. If <code>NA</code>, the <code>id</code> column will be used.</p></li>
+plot. This data frame should contain the following columns:</p><ul><li><p><code>id</code> (<code>character</code>): The corresponding column name in <code>data</code>.</p></li>
 <li><p><code>name</code> (<code>character</code>): A label for the column. If <code>NA</code> or <code>""</code>,
 no label will be plotted. If this column is missing, <code>id</code> will
 be used to generate the <code>name</code> column.</p></li>
@@ -101,8 +95,6 @@ If so, the width of that column will be inherited.</p></li>
 <li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
 <li><p><code>directory</code>: Which directory to use to find the images (only for <code>geom = "image"</code>).</p></li>
 <li><p><code>extension</code>: The extension of the images (only for <code>geom = "image"</code>).</p></li>
-<li><p><code>draw_outline</code>: Whether or not to draw bounding guides (only for <code>geom == "bar"</code>).
-Default: <code>TRUE</code>.</p></li>
 <li><p><code>options</code> (<code>list</code> or <code>json</code>): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.
@@ -142,13 +134,12 @@ Must contain one column named <code>"id"</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'width', generating options based on the 'geom' column.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   id    geom      name  id_color id_size group palette      width overlay legend</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> name  text      Name  <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>               6 FALSE   FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> x     funkyrect X     x        x       <span style="color: #BB0000;">NA</span>    numerical_p…     1 FALSE   TRUE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> y     funkyrect Y     y        y       <span style="color: #BB0000;">NA</span>    numerical_p…     1 FALSE   TRUE  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: draw_outline &lt;lgl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id    geom      name  group palette           width overlay legend</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> name  text      Name  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                    6 FALSE   FALSE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> x     funkyrect X     <span style="color: #BB0000;">NA</span>    numerical_palette     1 FALSE   TRUE  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> y     funkyrect Y     <span style="color: #BB0000;">NA</span>    numerical_palette     1 FALSE   TRUE  </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
