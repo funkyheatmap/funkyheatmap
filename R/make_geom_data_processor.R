@@ -1,9 +1,10 @@
 make_geom_data_processor <- function(
-    data,
-    column_pos,
-    row_pos,
-    scale_column,
-    palette_list) {
+  data,
+  column_pos,
+  row_pos,
+  scale_column,
+  palettes
+) {
   function(geom_types, fun) {
     column_sels <-
       column_pos %>%
@@ -11,7 +12,8 @@ make_geom_data_processor <- function(
       select(-"group", -"name", -"do_spacing") %>%
       rename(
         column_id = "id",
-        column_color = "color"
+        column_color = "id_color",
+        column_size = "id_size"
       ) %>%
       add_column_if_missing(
         label = NA_character_,
@@ -43,12 +45,23 @@ make_geom_data_processor <- function(
         select(
           row_id = "id",
           value = !!column_sel$column_id
+          # color_value = !!column_sel$column_color,
+          # size_value = !!column_sel$column_size
         ) %>%
-        mutate(column_id = column_sel$column_id)
+        mutate(
+          column_id = column_sel$column_id,
+          column_color = column_sel$column_color,
+          column_size = column_sel$column_size,
+        )
       if (!is.na(column_sel$column_color)) {
         data_sel$color_value <- data[[column_sel$column_color]]
       } else {
         data_sel$color_value <- NA
+      }
+      if (!is.na(column_sel$column_size)) {
+        data_sel$size_value <- data[[column_sel$column_size]]
+      } else {
+        data_sel$size_value <- NA
       }
 
       labelcolumn_sel <-
@@ -76,18 +89,15 @@ make_geom_data_processor <- function(
         left_join(row_sel, by = "row_id")
 
       # scale data, if need be
-      if (scale_column && column_sel$scale && is.numeric(dat$value)) {
-        # dat <-
-        #   dat %>%
-        #   group_by(.data$column_id) %>%
-        #   mutate(
-        #     value = scale_minmax(.data$value),
-        #     color_value = scale_minmax(.data$color_value)
-        #   ) %>%
-        #   ungroup()
-        dat$value <- scale_minmax(dat$value)
-        if (is.null(dat$color_value) && !all(is.na(dat$color_value))) {
+      if (scale_column && column_sel$scale) {
+        if (is.numeric(dat$value)) {
+          dat$value <- scale_minmax(dat$value)
+        }
+        if (!is.null(dat$color_value) && !all(is.na(dat$color_value))) {
           dat$color_value <- scale_minmax(dat$color_value)
+        }
+        if (!is.null(dat$size_value) && !all(is.na(dat$size_value))) {
+          dat$size_value <- scale_minmax(dat$size_value)
         }
       }
 
@@ -96,27 +106,26 @@ make_geom_data_processor <- function(
 
       # determine colours
       if (!is.na(column_sel$palette)) {
-        palette_sel <- palette_list[[column_sel$palette]]
+        palette_sel <- palettes[[column_sel$palette]]
 
-        if (is.character(dat$color_value) | is.factor(dat$color_value)) {
-          dat <- dat %>% mutate(col_value = .data$color_value)
-        } else if (is.numeric(dat$color_value)) {
-          dat <- dat %>% mutate(
-            col_value = round(.data$color_value * (length(palette_sel) - 1)) + 1
-          )
-        } else {
-          dat$col_value <- NA
-        }
+        col_value <-
+          if (is.character(dat$color_value) | is.factor(dat$color_value)) {
+            dat$color_value
+          } else if (is.numeric(dat$color_value)) {
+            round(dat$color_value * (length(palette_sel) - 1)) + 1
+          } else {
+            NA
+          }
 
         dat <- dat %>%
           mutate(
             colour = ifelse(
-              is.na(.data$col_value),
+              is.na(col_value),
               "#444444FF",
-              palette_sel[.data$col_value]
+              palette_sel[col_value]
             )
-          ) %>%
-          select(-"value", -"col_value", -"color_value")
+          )
+        # TODO: previously 'value' was being removed here. Should 'value', 'color_value' and 'size_value' be removed?
       }
 
       dat

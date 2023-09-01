@@ -76,18 +76,40 @@ verify_column_info <- function(column_info, data) {
     msg = paste0("Invalid geom types for columns: '", paste0(column_info$id[!check_geom], collapse = "', '"), "'")
   )
 
-  # checking color
-  if (!column_info %has_name% "color") {
-    cli_alert_info("Column info did not contain column `color`, assuming color is defined by the 'id' column.")
-    column_info$color <- case_when(
-      column_info$geom == "text" ~ NA_character_,
-      column_info$geom == "image" ~ NA_character_,
-      TRUE ~ column_info$id
-    )
+  # checking id_color
+  if (column_info %has_name% "id_colour") {
+    # rename id_colour to id_color
+    column_info$id_color <- column_info$id_colour
+    column_info$id_colour <- NULL
+  }
+  if (!column_info %has_name% "id_color") {
+    column_info$id_color <- NA_character_
   }
   assert_that(
-    is.character(column_info$color),
-    all(is.na(column_info$color) | is_color(column_info$color) | column_info$color %in% colnames(data))
+    is.character(column_info$id_color),
+    all(is.na(column_info$id_color) | is_color(column_info$id_color) | column_info$id_color %in% colnames(data))
+  )
+  column_info$id_color <- case_when(
+    !is.na(column_info$id_color) ~ column_info$id_color,
+    column_info$geom == "text" ~ NA_character_,
+    column_info$geom == "image" ~ NA_character_,
+    TRUE ~ column_info$id
+  )
+
+  # checking id_size
+  if (!column_info %has_name% "id_size") {
+    column_info$id_size <- NA_character_
+  }
+  assert_that(
+    is.character(column_info$id_size),
+    all(is.na(column_info$id_size) | column_info$id_size %in% colnames(data))
+  )
+  column_info$id_size <- case_when(
+    !is.na(column_info$id_size) ~ column_info$id_size,
+    column_info$geom == "text" ~ NA_character_,
+    column_info$geom == "image" ~ NA_character_,
+    column_info$geom == "rect" ~ NA_character_, # replicate legacy behaviour?
+    TRUE ~ column_info$id
   )
 
   # checking group

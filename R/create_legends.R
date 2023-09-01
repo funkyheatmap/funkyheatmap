@@ -38,7 +38,8 @@ create_generic_geom_legend <- function(
   # compute sizes of geoms
   geom_size_data <-
     tibble(
-      value = size,
+      size_value = size,
+      color_value = color,
       xmin = - size * legend_size / 2,
       xmax = size * legend_size / 2,
       ymin = - size * legend_size / 2,
@@ -91,7 +92,7 @@ create_generic_geom_legend <- function(
       fontface = "bold"
     ),
     geom_data %>%
-      filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
+      filter(abs((.data$size_value * 10) %% 2) < 1e-10) %>%
       transmute(
         ymin = .data$ymin - 1,
         ymax = .data$ymin,

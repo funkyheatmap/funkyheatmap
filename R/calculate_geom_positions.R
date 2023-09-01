@@ -1,13 +1,14 @@
 calculate_geom_positions <- function(
-    data,
-    column_info,
-    row_info,
-    column_groups,
-    row_groups,
-    palettes,
-    position_args,
-    scale_column,
-    add_abc) {
+  data,
+  column_info,
+  row_info,
+  column_groups,
+  row_groups,
+  palettes,
+  position_args,
+  scale_column,
+  add_abc
+) {
   # short-hand notations
   row_height <- position_args[["row_height"]]
   row_space <- position_args[["row_space"]]
@@ -68,7 +69,7 @@ calculate_geom_positions <- function(
     dat %>% mutate(
       x0 = .data$x,
       y0 = .data$y,
-      r = row_height / 2 * .data$value
+      r = row_height / 2 * .data$size_value
     )
   })
 
@@ -78,7 +79,7 @@ calculate_geom_positions <- function(
   # gather funkyrect data
   funkyrect_data <- geom_data_processor("funkyrect", function(dat) {
     dat %>%
-      select("xmin", "xmax", "ymin", "ymax", "value", "color_value") %>%
+      select("xmin", "xmax", "ymin", "ymax", "size_value", "color_value") %>%
       pmap_df(score_to_funky_rectangle)
   })
 
@@ -87,12 +88,13 @@ calculate_geom_positions <- function(
     dat %>%
       add_column_if_missing(hjust = 0) %>%
       mutate(
-        xmin = .data$xmin + (1 - .data$value) * .data$xwidth * .data$hjust,
-        xmax = .data$xmax - (1 - .data$value) * .data$xwidth * (1 - .data$hjust)
+        xmin = .data$xmin + (1 - .data$size_value) * .data$xwidth * .data$hjust,
+        xmax = .data$xmax - (1 - .data$size_value) * .data$xwidth * (1 - .data$hjust)
       )
   })
 
   # gather bar guides data
+  # TODO: if barguides
   barguides_data <- geom_data_processor("bar", function(dat) {
     crossing(
       dat %>%
@@ -105,7 +107,7 @@ calculate_geom_positions <- function(
       row_pos %>%
         select(y = "ymin", yend = "ymax")
     ) %>%
-      mutate(palette = NA, value = NA, color_value = NA)
+      mutate(palette = NA, size_value = NA, color_value = NA)
   })
   segment_data <-
     bind_rows(
@@ -129,22 +131,22 @@ calculate_geom_positions <- function(
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <- dat %>%
-      mutate(value = map(.data$value, enframe)) %>%
-      unnest("value")
+      mutate(size_value = map(.data$size_value, enframe)) %>%
+      unnest("size_value")
 
     dat %>%
       group_by(.data$row_id, .data$column_id) %>%
       mutate(
         y0 = .data$y,
         x0 = .data$x,
-        pct = ifelse(is.finite(.data$value), .data$value, 0),
+        pct = ifelse(is.finite(.data$size_value), .data$size_value, 0),
         pct = .data$pct / sum(.data$pct),
         rad = .data$pct * 2 * pi,
         rad_end = cumsum(.data$rad),
         rad_start = .data$rad_end - .data$rad,
         r0 = 0,
         r = row_height / 2,
-        value = .data$name
+        size_value = .data$name
       ) %>%
       filter(.data$rad_end != .data$rad_start, 1e-10 <= .data$pct) %>%
       ungroup()
