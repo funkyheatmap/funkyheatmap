@@ -83,7 +83,12 @@ The defaults depend on the selected geom.</p></li>
 The defaults depend on the selected geom.</p></li>
 <li><p><code>color</code> (<code>character</code>, optional): The color of the listed geoms.
 The defaults depend on the selected geom.</p></li>
-<li><p><code>value</code> (optional): Used as values for the text and image geoms.</p></li>
+<li><p><code>values</code> (optional): Used as values for the text and image geoms.</p></li>
+<li><p><code>label_width</code> (<code>numeric</code>, optional): The width of the labels
+(only for <code>geom = "text"</code> or <code>geom = "image"</code>). Defaults to <code>1</code>
+for text and <code>2</code> for images.</p></li>
+<li><p><code>value_width</code> (<code>numeric</code>, optional): The width of the values
+(only for <code>geom = "text"</code>). Defaults to <code>2</code>.</p></li>
 </ul></dd>
 
 
@@ -99,7 +104,13 @@ standard palette names can be used:</p><ul><li><p><code>numerical</code>: <code>
 
 <dt>column_info</dt>
 <dd><p>A data frame describing which columns in <code>data</code> to
-plot. This data frame should contain the following columns:</p><ul><li><p><code>id</code> (<code>character</code>): The corresponding column name in <code>data</code>.</p></li>
+plot. This data frame should contain the following columns:</p><ul><li><p><code>id</code> (<code>character</code>, required): A column name in <code>data</code> to plot. Determines the
+size of the resulting geoms, and also the color unless <code>color</code> is
+specified.</p></li>
+<li><p><code>id_color</code> (<code>character</code>): A column name in <code>data</code> to use for the color
+of the resulting geoms. If <code>NA</code>, the <code>id</code> column will be used.</p></li>
+<li><p><code>id_size</code> (<code>character</code>): A column name in <code>data</code> to use for the size
+of the resulting geoms. If <code>NA</code>, the <code>id</code> column will be used.</p></li>
 <li><p><code>name</code> (<code>character</code>): A label for the column. If <code>NA</code> or <code>""</code>,
 no label will be plotted. If this column is missing, <code>id</code> will
 be used to generate the <code>name</code> column.</p></li>
@@ -126,6 +137,8 @@ If so, the width of that column will be inherited.</p></li>
 <li><p><code>label</code>: Which column to use as a label (only for <code>geom = "text"</code>).</p></li>
 <li><p><code>directory</code>: Which directory to use to find the images (only for <code>geom = "image"</code>).</p></li>
 <li><p><code>extension</code>: The extension of the images (only for <code>geom = "image"</code>).</p></li>
+<li><p><code>draw_outline</code>: Whether or not to draw bounding guides (only for <code>geom == "bar"</code>).
+Default: <code>TRUE</code>.</p></li>
 <li><p><code>options</code> (<code>list</code> or <code>json</code>): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.
