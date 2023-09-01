@@ -11,12 +11,15 @@
 #' @param column_info A data frame describing which columns in `data` to
 #' plot. This data frame should contain the following columns:
 #'
-#' * `id` (`character`): A column name in `data` to plot. Determines the
+#' * `id` (`character`, required): A column name in `data` to plot. Determines the
 #'   size of the resulting geoms, and also the color unless `color` is
 #'   specified.
 #' 
-#' * `color` (`character`): A column name in `data` to use for the color
-#'   of the resulting geoms. If `NA` or `""`, the `id` column will be used.
+#' * `id_color` (`character`): A column name in `data` to use for the color
+#'   of the resulting geoms. If `NA`, the `id` column will be used.
+#' 
+#' * `id_size` (`character`): A column name in `data` to use for the size
+#'   of the resulting geoms. If `NA`, the `id` column will be used.
 #'
 #' * `name` (`character`): A label for the column. If `NA` or `""`,
 #'   no label will be plotted. If this column is missing, `id` will
