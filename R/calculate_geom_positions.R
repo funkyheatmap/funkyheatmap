@@ -98,7 +98,7 @@ calculate_geom_positions <- function(
   barguides_data <- geom_data_processor("bar", function(dat) {
     if (!is.null(dat$draw_outline)) {
       dat <- dat %>%
-        filter(ifelse(is.na(.data$draw_outline), TRUE, .data$draw_outline))
+        filter(.data$draw_outline)
     }
     crossing(
       dat %>%
@@ -138,7 +138,7 @@ calculate_geom_positions <- function(
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <- dat %>%
-      mutate(size_value = map(.data$size_value, enframe)) %>%
+      mutate(size_value = map(.data$size_value, enframe, value = "size_value")) %>%
       unnest("size_value")
 
     dat %>%
@@ -161,20 +161,19 @@ calculate_geom_positions <- function(
 
   # gather image data
   img_data <- geom_data_processor("image", function(dat) {
-    # If the location of the image is not provided using the "value"
-    # column in the data, construct it from the directory and filename
+    dat$path <- dat$value
     if (dat %has_name% "directory") {
-      dat$value <- ifelse(is.na(dat$value) | is.na(dat$directory), dat$value, paste0(dat$directory, "/", dat$value))
+      dat$path <- ifelse(is.na(dat$path) | is.na(dat$directory), dat$path, paste0(dat$directory, "/", dat$path))
     }
     if (dat %has_name% "extension") {
-      dat$value <- ifelse(is.na(dat$value) | is.na(dat$extension), dat$value, paste0(dat$value, ".", dat$extension))
+      dat$path <- ifelse(is.na(dat$path) | is.na(dat$extension), dat$path, paste0(dat$path, ".", dat$extension))
     }
     dat %>%
       mutate(
         y0 = .data$y - row_height,
         height = row_height,
         width = row_height,
-        path = .data$value
+        path = .data$path
       )
   })
 

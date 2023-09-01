@@ -45,13 +45,9 @@ make_geom_data_processor <- function(
         select(
           row_id = "id",
           value = !!column_sel$column_id
-          # color_value = !!column_sel$column_color,
-          # size_value = !!column_sel$column_size
         ) %>%
         mutate(
-          column_id = column_sel$column_id,
-          column_color = column_sel$column_color,
-          column_size = column_sel$column_size,
+          column_id = column_sel$column_id
         )
       if (!is.na(column_sel$column_color)) {
         data_sel$color_value <- data[[column_sel$column_color]]
@@ -93,16 +89,17 @@ make_geom_data_processor <- function(
         if (is.numeric(dat$value)) {
           dat$value <- scale_minmax(dat$value)
         }
-        if (!is.null(dat$color_value) && !all(is.na(dat$color_value))) {
+        if (!is.null(dat$color_value) && is.numeric(dat$color_value) && !all(is.na(dat$color_value))) {
           dat$color_value <- scale_minmax(dat$color_value)
         }
-        if (!is.null(dat$size_value) && !all(is.na(dat$size_value))) {
+        if (!is.null(dat$size_value) && is.numeric(dat$size_value) && !all(is.na(dat$size_value))) {
           dat$size_value <- scale_minmax(dat$size_value)
         }
       }
 
       # apply function
       dat <- fun(dat)
+      dat$value <- NULL # this column is no longer needed
 
       # determine colours
       if (!is.na(column_sel$palette)) {
@@ -117,15 +114,9 @@ make_geom_data_processor <- function(
             NA
           }
 
-        dat <- dat %>%
-          mutate(
-            colour = ifelse(
-              is.na(col_value),
-              "#444444FF",
-              palette_sel[col_value]
-            )
-          )
-        # TODO: previously 'value' was being removed here. Should 'value', 'color_value' and 'size_value' be removed?
+        dat <- dat %>% mutate(
+          colour = ifelse(is.na(col_value), "#444444FF", palette_sel[col_value])
+        )
       }
 
       dat

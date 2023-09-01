@@ -118,7 +118,8 @@ verify_column_info <- function(column_info, data) {
     column_info$group <- NA_character_
   }
   assert_that(
-    is.character(column_info$group) | is.factor(column_info$group)
+    is.character(column_info$group) | is.factor(column_info$group),
+    msg = "Column info 'group' must be character or factor."
   )
   column_info$group[column_info$group == ""] <- NA_character_
 
@@ -133,7 +134,8 @@ verify_column_info <- function(column_info, data) {
     )
   }
   assert_that(
-    is.character(column_info$palette) | is.factor(column_info$palette)
+    is.character(column_info$palette) | is.factor(column_info$palette),
+    msg = "Column info 'palette' must be character or factor."
   )
 
   # checking width
@@ -147,27 +149,46 @@ verify_column_info <- function(column_info, data) {
       )
     )
   }
-  assert_that(
-    is.numeric(column_info$width)
-  )
   column_info$width[is.na(column_info$width)] <- 1
+  assert_that(
+    is.numeric(column_info$width),
+    msg = "Column info 'width' must be numeric."
+  )
 
   # checking overlay
   if (!column_info %has_name% "overlay") {
     column_info$overlay <- FALSE
   }
-  assert_that(
-    is.logical(column_info$overlay)
-  )
   column_info$overlay[is.na(column_info$overlay)] <- FALSE
+  assert_that(
+    is.logical(column_info$overlay),
+    all(!is.na(column_info$overlay)),
+    msg = "Column info 'overlay' must be logical."
+  )
 
   # checking legend
   if (!column_info %has_name% "legend") {
     cli_alert_info("Column info did not contain a column called 'legend', generating options based on the 'geom' column.")
-    column_info <- column_info %>% mutate(legend = .data$geom != "text")
+    columns_info$legend <- NA
   }
+  column_info <- column_info %>% mutate(
+    legend = ifelse(is.na(.data$legend), .data$geom != "text", .data$legend)
+  )
   assert_that(
-    is.logical(column_info$legend)
+    is.logical(column_info$legend),
+    all(!is.na(column_info$legend)),
+    msg = "Column info 'legend' must be logical."
+  )
+
+  # checking draw_outline
+  if (!column_info %has_name% "draw_outline") {
+    column_info$draw_outline <- TRUE
+  }
+  column_info$draw_outline[is.na(column_info$draw_outline)] <- TRUE
+  assert_that(
+    is.logical(column_info$draw_outline),
+    all(!is.na(column_info$draw_outline)),
+    msg = "Column info 'draw_outline' must be logical."
   )
 
   column_info
