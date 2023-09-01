@@ -1,13 +1,14 @@
 calculate_geom_positions <- function(
-    data,
-    column_info,
-    row_info,
-    column_groups,
-    row_groups,
-    palettes,
-    position_args,
-    scale_column,
-    add_abc) {
+  data,
+  column_info,
+  row_info,
+  column_groups,
+  row_groups,
+  palettes,
+  position_args,
+  scale_column,
+  add_abc
+) {
   # short-hand notations
   row_height <- position_args[["row_height"]]
   row_space <- position_args[["row_space"]]
@@ -68,7 +69,7 @@ calculate_geom_positions <- function(
     dat %>% mutate(
       x0 = .data$x,
       y0 = .data$y,
-      r = row_height / 2 * .data$value
+      r = row_height / 2 * .data$size_value
     )
   })
 
@@ -78,7 +79,7 @@ calculate_geom_positions <- function(
   # gather funkyrect data
   funkyrect_data <- geom_data_processor("funkyrect", function(dat) {
     dat %>%
-      select("xmin", "xmax", "ymin", "ymax", "value") %>%
+      select("xmin", "xmax", "ymin", "ymax", "size_value", "color_value") %>%
       pmap_df(score_to_funky_rectangle)
   })
 
@@ -87,13 +88,17 @@ calculate_geom_positions <- function(
     dat %>%
       add_column_if_missing(hjust = 0) %>%
       mutate(
-        xmin = .data$xmin + (1 - .data$value) * .data$xwidth * .data$hjust,
-        xmax = .data$xmax - (1 - .data$value) * .data$xwidth * (1 - .data$hjust)
+        xmin = .data$xmin + (1 - .data$size_value) * .data$xwidth * .data$hjust,
+        xmax = .data$xmax - (1 - .data$size_value) * .data$xwidth * (1 - .data$hjust)
       )
   })
 
   # gather bar guides data
   barguides_data <- geom_data_processor("bar", function(dat) {
+    if (!is.null(dat$draw_outline)) {
+      dat <- dat %>%
+        filter(.data$draw_outline)
+    }
     crossing(
       dat %>%
         group_by(.data$column_id) %>%
@@ -105,17 +110,20 @@ calculate_geom_positions <- function(
       row_pos %>%
         select(y = "ymin", yend = "ymax")
     ) %>%
-      mutate(palette = NA, value = NA)
+      mutate(palette = NA, size_value = NA, color_value = NA)
   })
-  segment_data <-
-    bind_rows(
-      segment_data,
-      barguides_data %>% mutate(
-        colour = "black",
-        size = .5,
-        linetype = "dashed"
+  if (nrow(barguides_data) > 0) {
+    segment_data <-
+      bind_rows(
+        segment_data,
+        barguides_data %>%
+          mutate(
+            colour = "black",
+            size = .5,
+            linetype = "dashed"
+          )
       )
-    )
+  }
 
   # gather text data
   text_data <- geom_data_processor("text", function(dat) {
@@ -129,22 +137,27 @@ calculate_geom_positions <- function(
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <- dat %>%
-      mutate(value = map(.data$value, enframe)) %>%
-      unnest("value")
+      select(-"color_value") %>%
+      mutate(
+        size_value = map(.data$size_value, function(x) {
+          enframe(x, name = "color_value", value = "size_value")
+        })
+      ) %>%
+      unnest("size_value")
 
     dat %>%
       group_by(.data$row_id, .data$column_id) %>%
       mutate(
         y0 = .data$y,
         x0 = .data$x,
-        pct = ifelse(is.finite(.data$value), .data$value, 0),
+        pct = ifelse(is.finite(.data$size_value), .data$size_value, 0),
         pct = .data$pct / sum(.data$pct),
         rad = .data$pct * 2 * pi,
         rad_end = cumsum(.data$rad),
         rad_start = .data$rad_end - .data$rad,
         r0 = 0,
         r = row_height / 2,
-        value = .data$name
+        color_value = .data$color_value
       ) %>%
       filter(.data$rad_end != .data$rad_start, 1e-10 <= .data$pct) %>%
       ungroup()
@@ -152,20 +165,18 @@ calculate_geom_positions <- function(
 
   # gather image data
   img_data <- geom_data_processor("image", function(dat) {
-    # If the location of the image is not provided using the "value"
-    # column in the data, construct it from the directory and filename
+    dat$path <- dat$value
     if (dat %has_name% "directory") {
-      dat$value <- ifelse(is.na(dat$value) | is.na(dat$directory), dat$value, paste0(dat$directory, "/", dat$value))
+      dat$path <- ifelse(is.na(dat$path) | is.na(dat$directory), dat$path, paste0(dat$directory, "/", dat$path))
     }
     if (dat %has_name% "extension") {
-      dat$value <- ifelse(is.na(dat$value) | is.na(dat$extension), dat$value, paste0(dat$value, ".", dat$extension))
+      dat$path <- ifelse(is.na(dat$path) | is.na(dat$extension), dat$path, paste0(dat$path, ".", dat$extension))
     }
     dat %>%
       mutate(
         y0 = .data$y - row_height,
         height = row_height,
-        width = row_height,
-        path = .data$value
+        width = row_height
       )
   })
 
@@ -343,7 +354,7 @@ calculate_geom_positions <- function(
     # plot 100% pies as circles
     circle_data <- bind_rows(
       circle_data,
-      pie_data %>% filter(.data$pct >= (1 - 1e-10))
+      pie_data %>% filter(.data$pct >= (1 - 1e-10)) %>% select(-"label_value")
     )
     pie_data <- pie_data %>% filter(.data$pct < (1 - 1e-10))
   }

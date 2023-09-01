@@ -25,7 +25,12 @@ The defaults depend on the selected geom.
 The defaults depend on the selected geom.
 \item \code{color} (\code{character}, optional): The color of the listed geoms.
 The defaults depend on the selected geom.
-\item \code{value} (optional): Used as values for the text and image geoms.
+\item \code{values} (optional): Used as values for the text and image geoms.
+\item \code{label_width} (\code{numeric}, optional): The width of the labels
+(only for \code{geom = "text"} or \code{geom = "image"}). Defaults to \code{1}
+for text and \code{2} for images.
+\item \code{value_width} (\code{numeric}, optional): The width of the values
+(only for \code{geom = "text"}). Defaults to \code{2}.
 }}
 
 \item{palettes}{A named list of palettes. Each entry in \code{column_info$palette}
@@ -41,7 +46,13 @@ standard palette names can be used:
 \item{column_info}{A data frame describing which columns in \code{data} to
 plot. This data frame should contain the following columns:
 \itemize{
-\item \code{id} (\code{character}): The corresponding column name in \code{data}.
+\item \code{id} (\code{character}, required): A column name in \code{data} to plot. Determines the
+size of the resulting geoms, and also the color unless \code{color} is
+specified.
+\item \code{id_color} (\code{character}): A column name in \code{data} to use for the color
+of the resulting geoms. If \code{NA}, the \code{id} column will be used.
+\item \code{id_size} (\code{character}): A column name in \code{data} to use for the size
+of the resulting geoms. If \code{NA}, the \code{id} column will be used.
 \item \code{name} (\code{character}): A label for the column. If \code{NA} or \code{""},
 no label will be plotted. If this column is missing, \code{id} will
 be used to generate the \code{name} column.
@@ -68,6 +79,8 @@ If so, the width of that column will be inherited.
 \item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
 \item \code{directory}: Which directory to use to find the images (only for \code{geom = "image"}).
 \item \code{extension}: The extension of the images (only for \code{geom = "image"}).
+\item \code{draw_outline}: Whether or not to draw bounding guides (only for \code{geom == "bar"}).
+Default: \code{TRUE}.
 \item \code{options} (\code{list} or \code{json}): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.

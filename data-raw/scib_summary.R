@@ -250,8 +250,8 @@ usability <- usability |>
   ) |>
   # Add ranks
   dplyr::mutate(
-    package_rank = rank(package_score),
-    paper_rank = rank(paper_score)
+    package_rank = rank(-package_score),
+    paper_rank = rank(-paper_score)
   ) |>
   dplyr::select(method, package_score, package_rank, paper_score, paper_rank)
 
@@ -290,7 +290,7 @@ scalability_time <- readr::read_csv(
       labels = names(labels$methods)
     )
   ) |>
-  dplyr::mutate(time_rank = rank(time_score))
+  dplyr::mutate(time_rank = rank(-time_score))
 
 scalability_mem_url <- "https://github.com/theislab/scib-reproducibility/raw/main/visualization/data/scalability_score_memory.csv"
 
@@ -327,7 +327,7 @@ scalability_mem <- readr::read_csv(
       labels = names(labels$methods)
     )
   ) |>
-  dplyr::mutate(memory_rank = rank(memory_score))
+  dplyr::mutate(memory_rank = rank(-memory_score))
 
 scib_summary <- scores |>
   dplyr::left_join(usability, by = "method") |>

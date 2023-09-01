@@ -1,15 +1,20 @@
 make_geom_data_processor <- function(
-    data,
-    column_pos,
-    row_pos,
-    scale_column,
-    palette_list) {
+  data,
+  column_pos,
+  row_pos,
+  scale_column,
+  palettes
+) {
   function(geom_types, fun) {
     column_sels <-
       column_pos %>%
       filter(.data$geom %in% geom_types) %>%
       select(-"group", -"name", -"do_spacing") %>%
-      rename(column_id = "id") %>%
+      rename(
+        column_id = "id",
+        column_color = "id_color",
+        column_size = "id_size"
+      ) %>%
       add_column_if_missing(
         label = NA_character_,
         scale = TRUE
@@ -26,7 +31,7 @@ make_geom_data_processor <- function(
         column_sels %>%
         slice(ri) %>%
         mutate(label = ifelse(
-          .data$geom == "text" & is.na(.data$label),
+          is.na(.data$label),
           .data$column_id,
           .data$label
         ))
@@ -37,8 +42,23 @@ make_geom_data_processor <- function(
 
       data_sel <-
         data %>%
-        select(row_id = "id", value = !!column_sel$column_id) %>%
-        mutate(column_id = column_sel$column_id)
+        select(
+          row_id = "id",
+          value = !!column_sel$column_id
+        ) %>%
+        mutate(
+          column_id = column_sel$column_id
+        )
+      if (!is.na(column_sel$column_color)) {
+        data_sel$color_value <- data[[column_sel$column_color]]
+      } else {
+        data_sel$color_value <- NA
+      }
+      if (!is.na(column_sel$column_size)) {
+        data_sel$size_value <- data[[column_sel$column_size]]
+      } else {
+        data_sel$size_value <- NA
+      }
 
       labelcolumn_sel <-
         column_sel %>%
@@ -65,40 +85,38 @@ make_geom_data_processor <- function(
         left_join(row_sel, by = "row_id")
 
       # scale data, if need be
-      if (scale_column && column_sel$scale && is.numeric(dat$value)) {
-        dat <-
-          dat %>%
-          group_by(.data$column_id) %>%
-          mutate(value = scale_minmax(.data$value)) %>%
-          ungroup()
+      if (scale_column && column_sel$scale) {
+        if (is.numeric(dat$value)) {
+          dat$value <- scale_minmax(dat$value)
+        }
+        if (!is.null(dat$color_value) && is.numeric(dat$color_value) && !all(is.na(dat$color_value))) {
+          dat$color_value <- scale_minmax(dat$color_value)
+        }
+        if (!is.null(dat$size_value) && is.numeric(dat$size_value) && !all(is.na(dat$size_value))) {
+          dat$size_value <- scale_minmax(dat$size_value)
+        }
       }
 
       # apply function
       dat <- fun(dat)
+      dat$value <- NULL # this column is no longer needed
 
       # determine colours
       if (!is.na(column_sel$palette)) {
-        palette_sel <- palette_list[[column_sel$palette]]
+        palette_sel <- palettes[[column_sel$palette]]
 
-        if (is.character(dat$value) | is.factor(dat$value)) {
-          dat <- dat %>% mutate(col_value = .data$value)
-        } else if (is.numeric(dat$value)) {
-          dat <- dat %>% mutate(
-            col_value = round(.data$value * (length(palette_sel) - 1)) + 1
-          )
-        } else {
-          dat$col_value <- NA
-        }
+        col_value <-
+          if (is.character(dat$color_value) | is.factor(dat$color_value)) {
+            dat$color_value
+          } else if (is.numeric(dat$color_value)) {
+            round(dat$color_value * (length(palette_sel) - 1)) + 1
+          } else {
+            NA
+          }
 
-        dat <- dat %>%
-          mutate(
-            colour = ifelse(
-              is.na(.data$col_value),
-              "#444444FF",
-              palette_sel[.data$col_value]
-            )
-          ) %>%
-          select(-"value", -"col_value")
+        dat <- dat %>% mutate(
+          colour = ifelse(is.na(col_value), "#444444FF", palette_sel[col_value])
+        )
       }
 
       dat

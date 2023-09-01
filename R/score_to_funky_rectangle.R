@@ -1,13 +1,13 @@
-score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, value) {
+score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, size_value, color_value) {
   midpoint <- .8
 
-  if (is.na(value)) {
+  if (is.na(size_value)) {
     return(NULL)
   }
 
-  if (value >= midpoint) {
+  if (size_value >= midpoint) {
     # transform value to a 0.5 .. 1.0 range
-    trans <- (value - midpoint) / (1 - midpoint) / 2 + .5
+    trans <- (size_value - midpoint) / (1 - midpoint) / 2 + .5
     corner_size <- (.9 - .8 * trans) * min(xmax - xmin, ymax - ymin)
   } else {
     x <- xmin / 2 + xmax / 2
@@ -15,7 +15,7 @@ score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, value) {
     corner_size <- .5
 
     # transform value to a 0.0 .. 0.5 range
-    trans <- value / midpoint
+    trans <- size_value / midpoint
 
     # scale xmin, xmax, ymin and ymax
     width <- (trans * .9 + .1) * min(xmax - xmin, ymax - ymin)
@@ -25,5 +25,5 @@ score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, value) {
     ymax <- y + width / 2
   }
 
-  tibble(xmin, xmax, ymin, ymax, corner_size, value)
+  tibble(xmin, xmax, ymin, ymax, corner_size, size_value, color_value)
 }

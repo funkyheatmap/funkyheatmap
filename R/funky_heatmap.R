@@ -11,7 +11,15 @@
 #' @param column_info A data frame describing which columns in `data` to
 #' plot. This data frame should contain the following columns:
 #'
-#' * `id` (`character`): The corresponding column name in `data`.
+#' * `id` (`character`, required): A column name in `data` to plot. Determines the
+#'   size of the resulting geoms, and also the color unless `color` is
+#'   specified.
+#' 
+#' * `id_color` (`character`): A column name in `data` to use for the color
+#'   of the resulting geoms. If `NA`, the `id` column will be used.
+#' 
+#' * `id_size` (`character`): A column name in `data` to use for the size
+#'   of the resulting geoms. If `NA`, the `id` column will be used.
 #'
 #' * `name` (`character`): A label for the column. If `NA` or `""`,
 #'   no label will be plotted. If this column is missing, `id` will
@@ -51,6 +59,9 @@
 #' * `directory`: Which directory to use to find the images (only for `geom = "image"`).
 #'
 #' * `extension`: The extension of the images (only for `geom = "image"`).
+#'
+#' * `draw_outline`: Whether or not to draw bounding guides (only for `geom == "bar"`).
+#'   Default: `TRUE`.
 #'
 #' * `options` (`list` or `json`): Any of the options above. Any values in this
 #'   column will be spread across the other columns. This is useful for
@@ -111,7 +122,12 @@
 #'    The defaults depend on the selected geom.
 #'  * `color` (`character`, optional): The color of the listed geoms.
 #'    The defaults depend on the selected geom.
-#'  * `value` (optional): Used as values for the text and image geoms.
+#'  * `values` (optional): Used as values for the text and image geoms.
+#'  * `label_width` (`numeric`, optional): The width of the labels
+#'    (only for `geom = "text"` or `geom = "image"`). Defaults to `1`
+#'    for text and `2` for images.
+#'  * `value_width` (`numeric`, optional): The width of the values
+#'    (only for `geom = "text"`). Defaults to `2`.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
@@ -220,9 +236,7 @@ funky_heatmap <- function(
       legend_args <- legend
       legend_args$geom <- NULL
       legend_args$enabled <- NULL
-      if (!is.null(legend$palette)) {
-        legend_args$palette <- palettes[[legend$palette]]
-      }
+      legend_args$palette <- NULL
       legend_args$position_args <- position_args
       legend_plot <- do.call(legend_fun, legend_args)
       legend_plots <- c(legend_plots, list(legend_plot))

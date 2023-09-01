@@ -20,7 +20,13 @@ standard palette names can be used:
 \item{column_info}{A data frame describing which columns in \code{data} to
 plot. This data frame should contain the following columns:
 \itemize{
-\item \code{id} (\code{character}): The corresponding column name in \code{data}.
+\item \code{id} (\code{character}, required): A column name in \code{data} to plot. Determines the
+size of the resulting geoms, and also the color unless \code{color} is
+specified.
+\item \code{id_color} (\code{character}): A column name in \code{data} to use for the color
+of the resulting geoms. If \code{NA}, the \code{id} column will be used.
+\item \code{id_size} (\code{character}): A column name in \code{data} to use for the size
+of the resulting geoms. If \code{NA}, the \code{id} column will be used.
 \item \code{name} (\code{character}): A label for the column. If \code{NA} or \code{""},
 no label will be plotted. If this column is missing, \code{id} will
 be used to generate the \code{name} column.
@@ -47,6 +53,8 @@ If so, the width of that column will be inherited.
 \item \code{label}: Which column to use as a label (only for \code{geom = "text"}).
 \item \code{directory}: Which directory to use to find the images (only for \code{geom = "image"}).
 \item \code{extension}: The extension of the images (only for \code{geom = "image"}).
+\item \code{draw_outline}: Whether or not to draw bounding guides (only for \code{geom == "bar"}).
+Default: \code{TRUE}.
 \item \code{options} (\code{list} or \code{json}): Any of the options above. Any values in this
 column will be spread across the other columns. This is useful for
 not having to provide a data frame with 1000s of columns.

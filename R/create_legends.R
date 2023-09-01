@@ -12,15 +12,8 @@
 #' @param values Used as value for the 'image' and 'text' geom.
 #' 
 #' @noRd
-#'
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' geom <- "circle"
-#' create_generic_geom_legend(title, palette, geom)
 create_generic_geom_legend <- function(
   title,
-  palette,
   geom = c("circle", "rect", "funkyrect"),
   labels,
   size,
@@ -38,7 +31,8 @@ create_generic_geom_legend <- function(
   # compute sizes of geoms
   geom_size_data <-
     tibble(
-      value = size,
+      size_value = size,
+      color_value = color,
       xmin = - size * legend_size / 2,
       xmax = size * legend_size / 2,
       ymin = - size * legend_size / 2,
@@ -91,7 +85,7 @@ create_generic_geom_legend <- function(
       fontface = "bold"
     ),
     geom_data %>%
-      filter(abs((.data$value * 10) %% 2) < 1e-10) %>%
+      filter(abs((.data$size_value * 10) %% 2) < 1e-10) %>%
       transmute(
         ymin = .data$ymin - 1,
         ymax = .data$ymin,
@@ -120,20 +114,14 @@ create_generic_geom_legend <- function(
 #' @inheritParams create_generic_geom_legend
 #' 
 #' @noRd
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_funkyrect_legend(title, palette)
 create_funkyrect_legend <- function(
   title,
-  palette,
   labels,
   size,
   color,
   position_args = position_arguments()
 ) {
-  create_generic_geom_legend(title, palette, "funkyrect", labels, size, color, position_args)
+  create_generic_geom_legend(title, "funkyrect", labels, size, color, position_args)
 }
 
 #' Create a rect legend
@@ -141,20 +129,14 @@ create_funkyrect_legend <- function(
 #' @inheritParams create_generic_geom_legend
 #' 
 #' @noRd
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_rect_legend(title, palette)
 create_rect_legend <- function(
   title,
-  palette,
   labels,
   size,
   color,
   position_args = position_arguments()
 ) {
-  create_generic_geom_legend(title, palette, "rect", labels, size, color, position_args)
+  create_generic_geom_legend(title, "rect", labels, size, color, position_args)
 }
 
 #' Create a circle legend
@@ -162,34 +144,22 @@ create_rect_legend <- function(
 #' @inheritParams create_generic_geom_legend
 #' 
 #' @noRd
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- funkyheatmap:::default_palettes$numerical$Greys
-#' create_circle_legend(title, palette)
 create_circle_legend <- function(
   title,
-  palette,
   labels,
   size,
   color,
   position_args = position_arguments()
 ) {
-  create_generic_geom_legend(title, palette, "circle", labels, size, color, position_args)
+  create_generic_geom_legend(title, "circle", labels, size, color, position_args)
 }
 
 #' Create a pie legend
 #' @inheritParams create_generic_geom_legend
 #' 
 #' @noRd
-#' 
-#' @examples
-#' title <- "Greys"
-#' palette <- c(One = "#FF0000", Two = "#00FF00", Three = "#0000FF")
-#' create_pie_legend(title, palette)
 create_pie_legend <- function(
   title,
-  palette, # not used
   labels,
   size, # not used
   color,
@@ -297,7 +267,6 @@ create_pie_legend <- function(
 #' create_text_legend(title, values = values, labels = labels)
 create_text_legend <- function(
   title,
-  palette,
   labels,
   size,
   color,
@@ -373,11 +342,8 @@ create_text_legend <- function(
 
 # #' Create an image legend
 # #' @inheritParams create_generic_geom_legend
-# #' 
-# #' @noRd
 # create_image_legend <- function(
 #   title,
-#   palette,
 #   labels,
 #   size,
 #   color,

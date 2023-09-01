@@ -76,13 +76,50 @@ verify_column_info <- function(column_info, data) {
     msg = paste0("Invalid geom types for columns: '", paste0(column_info$id[!check_geom], collapse = "', '"), "'")
   )
 
+  # checking id_color
+  if (column_info %has_name% "id_colour") {
+    # rename id_colour to id_color
+    column_info$id_color <- column_info$id_colour
+    column_info$id_colour <- NULL
+  }
+  if (!column_info %has_name% "id_color") {
+    column_info$id_color <- NA_character_
+  }
+  assert_that(
+    is.character(column_info$id_color),
+    all(is.na(column_info$id_color) | is_color(column_info$id_color) | column_info$id_color %in% colnames(data))
+  )
+  column_info$id_color <- case_when(
+    !is.na(column_info$id_color) ~ column_info$id_color,
+    column_info$geom == "text" ~ NA_character_,
+    column_info$geom == "image" ~ NA_character_,
+    TRUE ~ column_info$id
+  )
+
+  # checking id_size
+  if (!column_info %has_name% "id_size") {
+    column_info$id_size <- NA_character_
+  }
+  assert_that(
+    is.character(column_info$id_size),
+    all(is.na(column_info$id_size) | column_info$id_size %in% colnames(data))
+  )
+  column_info$id_size <- case_when(
+    !is.na(column_info$id_size) ~ column_info$id_size,
+    column_info$geom == "text" ~ NA_character_,
+    column_info$geom == "image" ~ NA_character_,
+    column_info$geom == "rect" ~ NA_character_, # replicate legacy behaviour?
+    TRUE ~ column_info$id
+  )
+
   # checking group
   if (!column_info %has_name% "group" || all(is.na(column_info$group))) {
     cli_alert_info("Column info did not contain group information, assuming columns are ungrouped.")
     column_info$group <- NA_character_
   }
   assert_that(
-    is.character(column_info$group) | is.factor(column_info$group)
+    is.character(column_info$group) | is.factor(column_info$group),
+    msg = "Column info 'group' must be character or factor."
   )
   column_info$group[column_info$group == ""] <- NA_character_
 
@@ -97,7 +134,8 @@ verify_column_info <- function(column_info, data) {
     )
   }
   assert_that(
-    is.character(column_info$palette) | is.factor(column_info$palette)
+    is.character(column_info$palette) | is.factor(column_info$palette),
+    msg = "Column info 'palette' must be character or factor."
   )
 
   # checking width
@@ -111,27 +149,46 @@ verify_column_info <- function(column_info, data) {
       )
     )
   }
-  assert_that(
-    is.numeric(column_info$width)
-  )
   column_info$width[is.na(column_info$width)] <- 1
+  assert_that(
+    is.numeric(column_info$width),
+    msg = "Column info 'width' must be numeric."
+  )
 
   # checking overlay
   if (!column_info %has_name% "overlay") {
     column_info$overlay <- FALSE
   }
-  assert_that(
-    is.logical(column_info$overlay)
-  )
   column_info$overlay[is.na(column_info$overlay)] <- FALSE
+  assert_that(
+    is.logical(column_info$overlay),
+    all(!is.na(column_info$overlay)),
+    msg = "Column info 'overlay' must be logical."
+  )
 
   # checking legend
   if (!column_info %has_name% "legend") {
     cli_alert_info("Column info did not contain a column called 'legend', generating options based on the 'geom' column.")
-    column_info <- column_info %>% mutate(legend = .data$geom != "text")
+    column_info$legend <- NA
   }
+  column_info <- column_info %>% mutate(
+    legend = ifelse(is.na(.data$legend), .data$geom != "text", .data$legend)
+  )
   assert_that(
-    is.logical(column_info$legend)
+    is.logical(column_info$legend),
+    all(!is.na(column_info$legend)),
+    msg = "Column info 'legend' must be logical."
+  )
+
+  # checking draw_outline
+  if (!column_info %has_name% "draw_outline") {
+    column_info$draw_outline <- TRUE
+  }
+  column_info$draw_outline[is.na(column_info$draw_outline)] <- TRUE
+  assert_that(
+    is.logical(column_info$draw_outline),
+    all(!is.na(column_info$draw_outline)),
+    msg = "Column info 'draw_outline' must be logical."
   )
 
   column_info
