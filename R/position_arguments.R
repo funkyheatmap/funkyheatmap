@@ -24,7 +24,7 @@
 position_arguments <- function(
   row_height = 1,
   row_space = .1,
-  row_bigspace = .5,
+  row_bigspace = 1.2,
   col_width = 1,
   col_space = .1,
   col_bigspace = .5,
