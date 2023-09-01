@@ -122,7 +122,12 @@
 #'    The defaults depend on the selected geom.
 #'  * `color` (`character`, optional): The color of the listed geoms.
 #'    The defaults depend on the selected geom.
-#'  * `value` (optional): Used as values for the text and image geoms.
+#'  * `values` (optional): Used as values for the text and image geoms.
+#'  * `label_width` (`numeric`, optional): The width of the labels
+#'    (only for `geom = "text"` or `geom = "image"`). Defaults to `1`
+#'    for text and `2` for images.
+#'  * `value_width` (`numeric`, optional): The width of the values
+#'    (only for `geom = "text"`). Defaults to `2`.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the

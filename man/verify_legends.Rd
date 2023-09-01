@@ -25,7 +25,12 @@ The defaults depend on the selected geom.
 The defaults depend on the selected geom.
 \item \code{color} (\code{character}, optional): The color of the listed geoms.
 The defaults depend on the selected geom.
-\item \code{value} (optional): Used as values for the text and image geoms.
+\item \code{values} (optional): Used as values for the text and image geoms.
+\item \code{label_width} (\code{numeric}, optional): The width of the labels
+(only for \code{geom = "text"} or \code{geom = "image"}). Defaults to \code{1}
+for text and \code{2} for images.
+\item \code{value_width} (\code{numeric}, optional): The width of the values
+(only for \code{geom = "text"}). Defaults to \code{2}.
 }}
 
 \item{palettes}{A named list of palettes. Each entry in \code{column_info$palette}
