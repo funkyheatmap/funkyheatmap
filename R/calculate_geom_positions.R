@@ -105,7 +105,7 @@ calculate_geom_positions <- function(
         group_by(.data$column_id) %>%
         slice(1) %>%
         ungroup() %>%
-        select("xmin", "xmax", "draw_outline") %>%
+        select("xmin", "xmax") %>%
         gather("col", "x") %>%
         transmute(.data$x, xend = .data$x),
       row_pos %>%
