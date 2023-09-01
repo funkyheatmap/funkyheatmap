@@ -236,9 +236,7 @@ funky_heatmap <- function(
       legend_args <- legend
       legend_args$geom <- NULL
       legend_args$enabled <- NULL
-      if (!is.null(legend$palette)) {
-        legend_args$palette <- palettes[[legend$palette]]
-      }
+      legend_args$palette <- NULL
       legend_args$position_args <- position_args
       legend_plot <- do.call(legend_fun, legend_args)
       legend_plots <- c(legend_plots, list(legend_plot))
