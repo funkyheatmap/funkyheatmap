@@ -79,16 +79,14 @@ verify_legends <- function(legends, palettes, column_info, data) {
 
     # check data structure
     assert_that(
-      is.list(legend),
-      msg = paste0("Legend '", i, "' is not a list.")
+      is.list(legend)
     )
 
     # check palette
     if (legend %has_name% "palette") {
       assert_that(
         is.character(legend$palette) || is.factor(legend$palette),
-        legend$palette %in% names(palettes),
-        msg = paste0("Legend '", i, "' has invalid palette '", legend$palette, "'.")
+        legend$palette %in% names(palettes)
       )
     }
 
@@ -97,8 +95,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
       legend$enabled <- TRUE
     }
     assert_that(
-      is.logical(legend$enabled),
-      msg = paste0("Legend ", i, " has invalid enabled value '", legend$enabled, "'.")
+      is.logical(legend$enabled)
     )
     if (!legend$enabled) {
       return(legend)
@@ -111,8 +108,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
     }
     assert_that(
       legend %has_name% "title",
-      is.character(legend$title) || is.factor(legend$title),
-      msg = paste0("Legend ", i, " has invalid title.")
+      is.character(legend$title) || is.factor(legend$title)
     )
 
     # check geom
@@ -122,8 +118,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
     }
     assert_that(
       legend %has_name% "geom",
-      legend$geom %in% c("circle", "rect", "funkyrect", "text", "pie", "continuous", "discrete", "bar"),
-      msg = paste0("Legend '", i, "' has invalid geom '", legend$geom, "'.")
+      legend$geom %in% c("circle", "rect", "funkyrect", "text", "pie", "continuous", "discrete", "bar")
     )
 
     if (legend$geom == "bar") {
@@ -150,8 +145,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
       }
     }
     assert_that(
-      is.character(legend$labels) || is.factor(legend$labels),
-      msg = paste0("Legend '", i, "' has invalid labels.")
+      is.character(legend$labels) || is.factor(legend$labels)
     )
 
     # check size
@@ -166,8 +160,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
       }
       assert_that(
         is.numeric(legend$size),
-        length(legend$size) == 1L || length(legend$size) == length(legend$labels),
-        msg = paste0("Legend '", i, "' has invalid size value '", legend$size, "'.")
+        length(legend$size) == 1L || length(legend$size) == length(legend$labels)
       )
     }
     if (length(legend$size) == 1L) {
@@ -190,8 +183,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
     }
     assert_that(
       is.character(legend$color),
-      length(legend$color) == 1L || length(legend$color) == length(legend$labels),
-      msg = paste0("Legend ", i, " has invalid color value.")
+      length(legend$color) == 1L || length(legend$color) == length(legend$labels)
     )
     if (length(legend$color) == 1L) {
       legend$color <- rep(legend$color, length(legend$labels))
