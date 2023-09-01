@@ -19,6 +19,7 @@ default_palettes <- list(
     "Dark2" = RColorBrewer::brewer.pal(8, "Dark2")
   )
 )
+default_palettes$numerical$Grays <- default_palettes$numerical$Greys
 
 #' Verify the integrity of the palettes object
 #'
