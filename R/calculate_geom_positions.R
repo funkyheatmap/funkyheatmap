@@ -177,8 +177,7 @@ calculate_geom_positions <- function(
       mutate(
         y0 = .data$y - row_height,
         height = row_height,
-        width = row_height,
-        path = .data$path
+        width = row_height
       )
   })
 
