@@ -169,7 +169,7 @@ verify_column_info <- function(column_info, data) {
   # checking legend
   if (!column_info %has_name% "legend") {
     cli_alert_info("Column info did not contain a column called 'legend', generating options based on the 'geom' column.")
-    columns_info$legend <- NA
+    column_info$legend <- NA
   }
   column_info <- column_info %>% mutate(
     legend = ifelse(is.na(.data$legend), .data$geom != "text", .data$legend)
