@@ -138,7 +138,12 @@ calculate_geom_positions <- function(
   # gather pie data
   pie_data <- geom_data_processor("pie", function(dat) {
     dat <- dat %>%
-      mutate(size_value = map(.data$size_value, enframe, value = "size_value")) %>%
+      select(-"color_value") %>%
+      mutate(
+        size_value = map(.data$size_value, function(x) {
+          enframe(x, name = "color_value", value = "size_value")
+        })
+      ) %>%
       unnest("size_value")
 
     dat %>%
@@ -153,7 +158,7 @@ calculate_geom_positions <- function(
         rad_start = .data$rad_end - .data$rad,
         r0 = 0,
         r = row_height / 2,
-        size_value = .data$name
+        color_value = .data$color_value
       ) %>%
       filter(.data$rad_end != .data$rad_start, 1e-10 <= .data$pct) %>%
       ungroup()

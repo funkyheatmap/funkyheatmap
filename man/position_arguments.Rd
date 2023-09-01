@@ -7,7 +7,7 @@
 position_arguments(
   row_height = 1,
   row_space = 0.1,
-  row_bigspace = 0.5,
+  row_bigspace = 1.2,
   col_width = 1,
   col_space = 0.1,
   col_bigspace = 0.5,
