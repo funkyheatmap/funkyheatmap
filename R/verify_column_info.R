@@ -172,8 +172,3 @@ verify_column_info <- function(column_info, data) {
 
   column_info
 }
-
-# Function to check if a string represents a color
-is_color <- function(x) {
-  x %in% colors() | grepl("^#[0-9A-Fa-f]{6}$", x)
-}
