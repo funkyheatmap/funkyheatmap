@@ -119,7 +119,10 @@ calculate_geom_positions <- function(
 
   # gather text data
   text_data <- geom_data_processor("text", function(dat) {
-    dat %>% mutate(colour = "black")
+    dat %>% mutate(
+      colour = "black",
+      label_value = as.character(.data$label_value)
+    )
     # colour "black" is overridden if !is.na(palette)
   })
 

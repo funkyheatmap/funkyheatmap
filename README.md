@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dynverse/funkyheatmap/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `{funkyheatmap}` allows generating heatmap-like visualisations for
@@ -23,9 +23,9 @@ install.packages("funkyheatmap")
 ```
 
 You can also download `{funkyheatmap}` as a [standalone
-executable](http://funkyheatmap.dynverse.org/articles/executable.html)
+executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
 or a [Nextflow
-pipeline](http://funkyheatmap.dynverse.org/articles/nextflow.html).
+pipeline](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
 
 ## Example
 
@@ -85,22 +85,22 @@ funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 ## More information
 
 -   The [reference
-    documentation](http://funkyheatmap.dynverse.org/reference/index.html)
+    documentation](https://funkyheatmap.github.io/funkyheatmap/reference/index.html)
     on `funky_heatmap()` details the exact formats of each annotation
     object that you can pass to it.
 
 -   Check out the vignette
-    [`vignette("mtcars", "funkyheatmap")`](http://funkyheatmap.dynverse.org/articles/mtcars.html)
+    [`vignette("mtcars", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html)
     for more information on how to customize this visualisation.
 
 -   In
-    [`vignette("dynbenchmark", "funkyheatmap")`](http://funkyheatmap.dynverse.org/articles/dynbenchmark.html)
+    [`vignette("dynbenchmark", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html)
     we use funkyheatmap to regenerate the figures from Saelens et
     al. (2019)
     [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
 
 -   We used [Viash](https://viash.io) to wrap the
     `funkyheatmap::funky_heatmap()` function as a [standalone
-    executable](http://funkyheatmap.dynverse.org/articles/executable.html)
+    executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
     and [Nextflow
-    module](http://funkyheatmap.dynverse.org/articles/nextflow.html).
+    module](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).

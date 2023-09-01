@@ -5,7 +5,7 @@ Description: Allows generating heatmap-like visualisations for benchmark data
   columns and rows, which allows assigning multiple palettes or geometries
   or grouping rows and columns together in categories.
   Saelens et al. (2019) <doi:10.1038/s41587-019-0071-9>.
-Version: 0.3.1
+Version: 0.4.0
 Authors@R: c(
   person(
     "Robrecht", 
@@ -52,6 +52,6 @@ RdMacros: Rdpack
 Depends: 
   R (>= 2.10)
 LazyData: true
-URL: https://funkyheatmap.dynverse.org, https://github.com/dynverse/funkyheatmap
-BugReports: https://github.com/dynverse/funkyheatmap/issues
+URL: https://funkyheatmap.github.io/funkyheatmap/, https://github.com/funkyheatmap/funkyheatmap
+BugReports: https://github.com/funkyheatmap/funkyheatmap/issues
 Config/testthat/edition: 3
