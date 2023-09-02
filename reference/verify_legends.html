@@ -85,10 +85,13 @@ The defaults depend on the selected geom.</p></li>
 The defaults depend on the selected geom.</p></li>
 <li><p><code>values</code> (optional): Used as values for the text and image geoms.</p></li>
 <li><p><code>label_width</code> (<code>numeric</code>, optional): The width of the labels
-(only for <code>geom = "text"</code> or <code>geom = "image"</code>). Defaults to <code>1</code>
+(only when geom is <code>text</code> or <code>pie</code>). Defaults to <code>1</code>
 for text and <code>2</code> for images.</p></li>
 <li><p><code>value_width</code> (<code>numeric</code>, optional): The width of the values
 (only for <code>geom = "text"</code>). Defaults to <code>2</code>.</p></li>
+<li><p><code>label_hjust</code> (<code>numeric</code>, optional): The horizontal alignment of the
+labels (only when geom is <code>circle</code>, <code>rect</code> or <code>funkyrect</code>).
+Defaults to <code>0.5</code>.</p></li>
 </ul></dd>
 
 
@@ -214,6 +217,9 @@ Must contain one column named <code>"id"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#000000" "#252525" "#252525" "#525252" "#737373" "#737373" "#969696"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#BDBDBD" "#D9D9D9" "#D9D9D9" "#F0F0F0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$label_hjust</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$title</span>
@@ -237,6 +243,9 @@ Must contain one column named <code>"id"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$color</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "#CB181D" "#EF3B2C" "#EF3B2C" "#FB6A4A" "#FB6A4A" "#FC9272" "#FCBBA1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "#FCBBA1" "#FEE0D2" "#FEE0D2" "#FFF5F0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$label_hjust</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
