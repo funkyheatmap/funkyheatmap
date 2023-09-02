@@ -1,4 +1,4 @@
-score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, size_value, color_value) {
+score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, size_value, ...) {
   midpoint <- .8
 
   if (is.na(size_value)) {
@@ -25,5 +25,5 @@ score_to_funky_rectangle <- function(xmin, xmax, ymin, ymax, size_value, color_v
     ymax <- y + width / 2
   }
 
-  tibble(xmin, xmax, ymin, ymax, corner_size, size_value, color_value)
+  tibble(xmin, xmax, ymin, ymax, corner_size, size_value, ...)
 }

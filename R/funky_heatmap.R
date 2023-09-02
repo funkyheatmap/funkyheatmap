@@ -124,10 +124,13 @@
 #'    The defaults depend on the selected geom.
 #'  * `values` (optional): Used as values for the text and image geoms.
 #'  * `label_width` (`numeric`, optional): The width of the labels
-#'    (only for `geom = "text"` or `geom = "image"`). Defaults to `1`
+#'    (only when geom is `text` or `pie`). Defaults to `1`
 #'    for text and `2` for images.
 #'  * `value_width` (`numeric`, optional): The width of the values
 #'    (only for `geom = "text"`). Defaults to `2`.
+#'  * `label_hjust` (`numeric`, optional): The horizontal alignment of the
+#'    labels (only when geom is `circle`, `rect` or `funkyrect`). 
+#'    Defaults to `0.5`.
 #'
 #' @param position_args Sets parameters that affect positioning within a
 #' plot, such as row and column dimensions, annotation details, and the
