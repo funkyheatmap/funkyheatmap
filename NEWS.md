@@ -6,6 +6,8 @@
 
 * Allow turning off bar outlines using `draw_outline` equal to `FALSE` for geom `"bar"` (#25).
 
+* Allow specifying a horizontal justification for the legend labels using `legend_hjust` (#30).
+
 # funkyheatmap 0.4.0
 
 ## BREAKING CHANGES

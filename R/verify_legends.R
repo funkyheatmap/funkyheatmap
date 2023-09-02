@@ -189,6 +189,59 @@ verify_legends <- function(legends, palettes, column_info, data) {
       legend$color <- rep(legend$color, length(legend$labels))
     }
 
+    # check label_hjust
+    if (!legend %has_name% "label_hjust") {
+      legend$label_hjust <-
+        if (legend$geom %in% c("funkyrect", "rect", "circle")) {
+          .5
+        } else {
+          NULL
+        }
+    }
+    if (legend %has_name% "label_hjust") {
+      assert_that(
+        is.numeric(legend$label_hjust),
+        length(legend$label_hjust) == 1L || length(legend$label_hjust) == length(legend$labels)
+      )
+      if (length(legend$label_hjust) == 1L) {
+        legend$label_hjust <- rep(legend$label_hjust, length(legend$labels))
+      }
+    }
+
+    # check label_width
+    if (!legend %has_name% "label_width") {
+      legend$label_width <-
+        if (legend$geom == "text") {
+          1
+        } else if (legend$geom == "pie") {
+          2
+        } else {
+          NULL
+        }
+    }
+    if (legend %has_name% "label_width") {
+      assert_that(
+        is.numeric(legend$label_width),
+        length(legend$label_width) == 1L
+      )
+    }
+
+    # check value_width
+    if (!legend %has_name% "value_width") {
+      legend$value_width <-
+        if (legend$geom == "text") {
+          2
+        } else {
+          NULL
+        }
+    }
+    if (legend %has_name% "value_width") {
+      assert_that(
+        is.numeric(legend$value_width),
+        length(legend$value_width) == 1L
+      )
+    }
+
     legend
   })
 }

@@ -128,10 +128,13 @@ The defaults depend on the selected geom.
 The defaults depend on the selected geom.
 \item \code{values} (optional): Used as values for the text and image geoms.
 \item \code{label_width} (\code{numeric}, optional): The width of the labels
-(only for \code{geom = "text"} or \code{geom = "image"}). Defaults to \code{1}
+(only when geom is \code{text} or \code{pie}). Defaults to \code{1}
 for text and \code{2} for images.
 \item \code{value_width} (\code{numeric}, optional): The width of the values
 (only for \code{geom = "text"}). Defaults to \code{2}.
+\item \code{label_hjust} (\code{numeric}, optional): The horizontal alignment of the
+labels (only when geom is \code{circle}, \code{rect} or \code{funkyrect}).
+Defaults to \code{0.5}.
 }}
 
 \item{position_args}{Sets parameters that affect positioning within a

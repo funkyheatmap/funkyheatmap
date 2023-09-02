@@ -18,7 +18,8 @@ create_generic_geom_legend <- function(
   labels,
   size,
   color,
-  position_args = position_arguments()
+  position_args = position_arguments(),
+  label_hjust = .5
 ) {
   geom <- match.arg(geom)
 
@@ -29,34 +30,30 @@ create_generic_geom_legend <- function(
   legend_space <- .2
 
   # compute sizes of geoms
-  geom_size_data <-
+  legend_data <-
     tibble(
       size_value = size,
       color_value = color,
       xmin = - size * legend_size / 2,
       xmax = size * legend_size / 2,
       ymin = - size * legend_size / 2,
-      ymax = size * legend_size / 2
+      ymax = size * legend_size / 2,
+      label = labels,
+      colour = color,
+      size = size,
+      label_hjust = label_hjust
     )
 
   if (geom == "funkyrect") {
-    geom_size_data <- geom_size_data %>%
+    legend_data <- legend_data %>%
       pmap_df(score_to_funky_rectangle)
   } else if (geom == "circle") {
-    geom_size_data <- geom_size_data %>%
+    legend_data <- legend_data %>%
       mutate(r = size / 2)
   }
 
-  # add metadata
-  geom_size_data <- geom_size_data %>%
-    mutate(
-      label = labels,
-      colour = color,
-      size = size
-    )
-
   # compute positions of geoms
-  geom_data <- geom_size_data %>%
+  geom_data <- legend_data %>%
     mutate(
       width = .data$xmax - .data$xmin,
       height = .data$ymax - .data$ymin,
@@ -85,15 +82,12 @@ create_generic_geom_legend <- function(
       fontface = "bold"
     ),
     geom_data %>%
-      filter(abs((.data$size_value * 10) %% 2) < 1e-10) %>%
       transmute(
+        xmin = .data$xmin,
+        xmax = .data$xmax,
         ymin = .data$ymin - 1,
         ymax = .data$ymin,
-        x = (.data$xmin + .data$xmax) / 2,
-        xwidth = pmax(.data$xmax - .data$xmin, .5),
-        xmin = .data$x - .data$xwidth / 2,
-        xmax = .data$x + .data$xwidth / 2,
-        hjust = .5,
+        hjust = .data$label_hjust,
         vjust = 0,
         label_value = as.character(.data$label)
       )
@@ -119,9 +113,18 @@ create_funkyrect_legend <- function(
   labels,
   size,
   color,
-  position_args = position_arguments()
+  position_args = position_arguments(),
+  label_hjust = .5
 ) {
-  create_generic_geom_legend(title, "funkyrect", labels, size, color, position_args)
+  create_generic_geom_legend(
+    title = title,
+    geom = "funkyrect",
+    labels = labels,
+    size = size,
+    color = color,
+    position_args = position_args,
+    label_hjust = label_hjust
+  )
 }
 
 #' Create a rect legend
@@ -134,9 +137,18 @@ create_rect_legend <- function(
   labels,
   size,
   color,
-  position_args = position_arguments()
+  position_args = position_arguments(),
+  label_hjust = .5
 ) {
-  create_generic_geom_legend(title, "rect", labels, size, color, position_args)
+  create_generic_geom_legend(
+    title = title,
+    geom = "rect",
+    labels = labels,
+    size = size,
+    color = color,
+    position_args = position_args,
+    label_hjust = label_hjust
+  )
 }
 
 #' Create a circle legend
@@ -149,9 +161,18 @@ create_circle_legend <- function(
   labels,
   size,
   color,
-  position_args = position_arguments()
+  position_args = position_arguments(),
+  label_hjust = .5
 ) {
-  create_generic_geom_legend(title, "circle", labels, size, color, position_args)
+  create_generic_geom_legend(
+    title = title,
+    geom = "circle",
+    labels = labels,
+    size = size,
+    color = color,
+    position_args = position_args,
+    label_hjust = label_hjust
+  )
 }
 
 #' Create a pie legend
@@ -171,7 +192,7 @@ create_pie_legend <- function(
   start_y <- 0
   row_height <- position_args$row_height
 
-  pie_legend_df <-
+  legend_data <-
     tibble(
       name = labels,
       fill = color
@@ -203,7 +224,7 @@ create_pie_legend <- function(
       fontface = "bold",
       colour = "black"
     ),
-    pie_legend_df %>%
+    legend_data %>%
       transmute(
         x = start_x + .5 + .data$lab_x,
         y = start_y - 2.75 + .data$lab_y,
@@ -222,7 +243,7 @@ create_pie_legend <- function(
       ymax = .data$y + .data$yheight * (1 - .data$vjust)
     )
 
-  pie_data <- pie_legend_df %>%
+  pie_data <- legend_data %>%
     transmute(
       x0 = start_x,
       y0 = start_y - 2.75,
@@ -233,7 +254,7 @@ create_pie_legend <- function(
       colour = .data$fill
     )
 
-  segment_data <- pie_legend_df %>%
+  segment_data <- legend_data %>%
     transmute(
       x = start_x + .data$xpt * .85,
       xend = start_x + .data$xpt * 1.1,
