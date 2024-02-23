@@ -54,3 +54,5 @@ LazyData: true
 URL: https://funkyheatmap.github.io/funkyheatmap/, https://github.com/funkyheatmap/funkyheatmap
 BugReports: https://github.com/funkyheatmap/funkyheatmap/issues
 Config/testthat/edition: 3
+Remotes:
+  rcannood/pkgdown
