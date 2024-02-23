@@ -1,6 +1,6 @@
 # this config inherits from a partial yaml containing
 # all of the arguments.
-__inherits__: generated_partial.yaml
+__merge__: generated_partial.yaml
 functionality:
   name: funky_heatmap
   description: |-

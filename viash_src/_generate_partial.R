@@ -60,10 +60,6 @@ arg_tib <-
     default = map(name, function(name) {
       if (name %in% c("scale_column", "add_abc")) {
         TRUE
-      } else if (name == "col_annot_offset") {
-        3
-      } else if (name == "expand") {
-        c(0, 2, 0, 0)
       } else {
         NA_character_
       }
@@ -80,12 +76,12 @@ arguments <- purrr::transpose(arg_tib) %>% map(function(x) {
 # generate authors
 role_map <- c(aut = "Author", cre = "Maintainer")
 authors <- map(pkg$desc$get_authors(), function(aut) {
-  props <- as.list(aut$comment)
-  names(props) <- tolower(names(props))
+  info <- as.list(aut$comment)
+  names(info) <- tolower(names(info))
   list(
     name = paste0(aut$given, " ", aut$family),
     email = aut$email,
-    props = props,
+    info = info,
     roles = role_map[aut$role]
   )
 })
