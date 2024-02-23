@@ -45,7 +45,8 @@ Suggests:
   kableExtra,
   quarto,
   testthat (>= 3.0.0),
-  magick
+  magick,
+  pkgdown
 VignetteBuilder: quarto
 RdMacros: Rdpack
 Depends: 
