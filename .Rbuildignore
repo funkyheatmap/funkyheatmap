@@ -16,7 +16,7 @@
 ^data-raw$
 ^doc$
 ^Meta$
-^vignettes/mtcars_images
+^vignettes/images
 ^vignettes/nextflow
 ^vignettes/executable
 ^vignettes/dynbenchmark

@@ -43,8 +43,7 @@ Imports:
   tidyr
 Suggests: 
   kableExtra,
-  knitr,
-  rmarkdown,
+  quarto,
   testthat (>= 3.0.0),
   magick
 VignetteBuilder: quarto
