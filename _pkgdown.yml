@@ -1,16 +1,3 @@
 url: https://funkyheatmap.github.io/funkyheatmap/
 template:
   bootstrap: 5
-
-# navbar:
-#   components:
-#     mtcars:
-#       text: Demo with mtcars
-#       href: articles/mtcars.html
-    
-articles:
-  mtcars: mtcars.html
-  dynbenchmark: dynbenchmark.html
-  scIB: scIB.html
-  executable: executable.html
-  
