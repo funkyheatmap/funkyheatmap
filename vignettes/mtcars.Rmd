@@ -35,14 +35,24 @@ data <- mtcars %>%
 ```
 
 We can plot this data frame without any additional formatting, though it doesn't look very nice:
+
 ```{r}
-funky_heatmap(data)
+g <- funky_heatmap(data)
 ```
+
+```{r include=FALSE}
+# set width and height for upcoming plot
+knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
+```
+
+```{r heatmap}
+g
+```
+
 
 By defining a few additional formatting parameters, we can get the plot to look much nicer.
 
 ## Column info 
-
 
 ```{r column-info}
 column_info <- tribble(
@@ -64,6 +74,7 @@ column_info <- tribble(
 ```
 
 Define column groups
+
 ```{r column-groups}
 column_groups <- tribble( # tribble_start
   ~Category,  ~group,         ~palette,
@@ -75,8 +86,8 @@ column_groups <- tribble( # tribble_start
 
 ## Row info
 
-
 Determine method grouping
+
 ```{r method-grouping}
 row_info <- data %>% transmute(id, group = "test")
 row_groups <- tibble(Group = "Test", group = "test")
@@ -85,8 +96,8 @@ row_groups <- tibble(Group = "Test", group = "test")
 
 ## Palettes
 
-
 Determine palettes
+
 ```{r column-grouping}
 palettes <- tribble(
   ~palette,             ~colours,
@@ -99,7 +110,8 @@ palettes <- tribble(
 ## Funky heatmap
 
 Generate funky heatmap
-```{r make-plot, fig.width=4.5, fig.height=10}
+
+```{r make-plot}
 g <- funky_heatmap(
   data = data,
   column_info = column_info,
@@ -107,7 +119,11 @@ g <- funky_heatmap(
   row_info = row_info,
   row_groups = row_groups,
   palettes = palettes,
-  position_args = position_arguments(expand_xmax = 4)
+  position_args = position_arguments(
+    expand_xmax = 4,
+    col_annot_offset = 4
+  ),
+  add_abc = FALSE
 )
 ```
 
@@ -126,4 +142,3 @@ To save your plot, run:
 ``` r
 ggsave("path_to_plot.pdf", g, device = cairo_pdf, width = g$width, height = g$height)
 ```
-
