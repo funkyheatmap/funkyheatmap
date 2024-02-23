@@ -44,7 +44,7 @@ g <- funky_heatmap(data)
 knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
 ```
 
-```{r heatmap}
+```{r heatmap_preview}
 g
 ```
 
