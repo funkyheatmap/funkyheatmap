@@ -1,10 +1,9 @@
 ---
 title: "Recreating the scIB figures"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Recreating the scIB figures}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
 editor_options: 
   chunk_output_type: console
 bibliography: ../inst/REFERENCES.bib

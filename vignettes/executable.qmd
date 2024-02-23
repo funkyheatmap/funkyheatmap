@@ -1,10 +1,9 @@
 ---
 title: "Standalone executable"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Standalone executable}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
 editor_options: 
   chunk_output_type: console
 ---

@@ -47,7 +47,7 @@ Suggests:
   rmarkdown,
   testthat (>= 3.0.0),
   magick
-VignetteBuilder: knitr
+VignetteBuilder: quarto
 RdMacros: Rdpack
 Depends: 
   R (>= 2.10)

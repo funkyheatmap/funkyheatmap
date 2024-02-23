@@ -1,10 +1,9 @@
 ---
 title: "Demo with mtcars"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Demo with mtcars}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
 editor_options: 
   chunk_output_type: console
 ---

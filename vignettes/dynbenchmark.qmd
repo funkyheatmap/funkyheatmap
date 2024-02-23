@@ -1,12 +1,9 @@
 ---
 title: "Recreating the dynbenchmark figures"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Recreating the dynbenchmark figures}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEngine{quarto::html}
 bibliography: ../inst/REFERENCES.bib
 ---
 

@@ -9,8 +9,9 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^viash_src$
+^_viash\.yaml$
 ^bin$
-^examples.md$
+^examples\.md$
 ^target$
 ^data-raw$
 ^doc$
@@ -19,3 +20,4 @@
 ^vignettes/nextflow
 ^vignettes/executable
 ^vignettes/dynbenchmark
+^vignettes/*_files$
