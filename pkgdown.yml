@@ -1,8 +1,12 @@
 pandoc: 2.19.2
-pkgdown: 2.0.7
-pkgdown_sha: ~
-articles: {}
-last_built: 2024-02-23T12:12Z
+pkgdown: 2.0.7.9000
+pkgdown_sha: b93d1e8df407ba70714eb533ec6421b8fe78c4a3
+articles:
+  dynbenchmark: dynbenchmark.html
+  executable: executable.html
+  mtcars: mtcars.html
+  scIB: scIB.html
+last_built: 2024-02-23T12:30Z
 urls:
   reference: https://funkyheatmap.github.io/funkyheatmap/reference
   article: https://funkyheatmap.github.io/funkyheatmap/articles
