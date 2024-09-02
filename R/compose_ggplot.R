@@ -107,7 +107,7 @@ compose_ggplot <- function(
         fill = .data$colour
       ),
       geom_positions$funkyrect_data,
-      size = .25,
+      linewidth = .25,
       colour = "black"
     )
   }
