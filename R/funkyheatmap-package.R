@@ -1,11 +1,3 @@
-#' @keywords internal
-"_PACKAGE"
-
-## usethis namespace: start
-## usethis namespace: end
-NULL
-
-
 #' Generating funky heatmaps for benchmarks
 #'
 #' Allows generating heatmap-likes visualisations for benchmark data
@@ -13,10 +5,16 @@ NULL
 #' columns and rows, which allows assigning multiple palettes or geometries
 #' or grouping rows and columns together in categories.
 #'
+#' To learn more about funkyheatmap, please visit the
+#' [project page](https://funkyheatmap.github.io/funkyheatmap).
+#'
 #' This package heavily depends on the functions provided by
 #' [`ggplot2`](https://ggplot2.tidyverse.org/) and
 #' [`ggforce`](https://ggforce.data-imaginist.com).
-#'
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
 #' @importFrom assertthat assert_that %has_name%
 #' @importFrom tibble tibble enframe deframe lst tribble as_tibble rownames_to_column add_column
 #' @importFrom dplyr filter select pull mutate group_by row_number ungroup
@@ -33,7 +31,5 @@ NULL
 #' @importFrom Rdpack reprompt
 #' @importFrom cowplot draw_image
 #' @import ggplot2
-#'
-#' @docType package
-#' @name funkyheatmap-package
+## usethis namespace: end
 NULL
