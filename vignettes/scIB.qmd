@@ -11,8 +11,6 @@ knitr:
   opts_chunk: 
     collapse: true
     comment: "#>"
-resource-path:
-  - images/*.png
 ---
 
 
@@ -117,7 +115,7 @@ column_info <- tribble(# tribble_start
                               ~id,                   ~id_color,                   ~name,    ~geom,         ~group,                                                      ~options,
                              "id",                          NA,                  "Rank",   "text",       "Method",                                               list(hjust = 0),
                          "method",                          NA,                "Method",   "text",       "Method",                                    list(hjust = 0, width = 5),
-                    #  "output_img",                          NA,                "Output",  "image",       "Method",                                                        list(),
+                     "output_img",                          NA,                "Output",  "image",       "Method",                                                        list(),
                        "features",                  "features",              "Features",   "text",       "Method",                         list(palette = "features", width = 2),
                         "scaling",                          NA,               "Scaling",   "text",       "Method",                                       list(fontface = "bold"),
                "overall_pancreas",             "rank_pancreas",              "Pancreas",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),

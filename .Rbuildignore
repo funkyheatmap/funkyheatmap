@@ -16,7 +16,6 @@
 ^data-raw$
 ^doc$
 ^Meta$
-^vignettes/images
 ^vignettes/nextflow
 ^vignettes/executable
 ^vignettes/dynbenchmark
