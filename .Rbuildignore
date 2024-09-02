@@ -21,3 +21,4 @@
 ^vignettes/executable
 ^vignettes/dynbenchmark
 ^vignettes/*_files$
+^\.vscode$

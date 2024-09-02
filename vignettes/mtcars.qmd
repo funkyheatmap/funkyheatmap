@@ -6,16 +6,20 @@ vignette: >
   %\VignetteEngine{quarto::html}
 editor_options: 
   chunk_output_type: console
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>"
+resource-path:
+  - images/*.png
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-# rerun this to update tribble formatting:
-# dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
+<!--
+rerun this to update tribble formatting:
+```r
+dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 ```
+-->
 
 Load data
 ```{r load-data}

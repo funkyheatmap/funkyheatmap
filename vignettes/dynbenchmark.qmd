@@ -5,14 +5,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
 bibliography: ../inst/REFERENCES.bib
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>"
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
 In this vignette, we will use `funkyheatmap` to reproduce the figures by @comparisonsinglecell_saelens2019.
 
