@@ -139,7 +139,7 @@ verify_palettes <- function(palettes, column_info, data) {
         pal_values <- default_palettes$categorical[[pal_value]]
 
         assert_that(
-          length(pal_values) >= length(categories), 
+          length(pal_values) >= length(categories),
           msg = paste0(
             "Number of categories for palette '", palette_id, "' exceeds number of available colours in specified palette name '", pal_value, "'. ",
             "Please specify a different palette or specify the palette manually."

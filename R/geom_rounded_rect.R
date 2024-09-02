@@ -64,7 +64,6 @@ GeomRoundedRect <- ggplot2::ggproto(
     radius = 0.5
   ),
   required_aes = c("xmin", "xmax", "ymin", "ymax", "radius"),
-
   draw_panel = function(self, data, panel_params, coord, lineend = "butt", linejoin = "mitre") {
     coords <- coord$transform(data, panel_params)
 

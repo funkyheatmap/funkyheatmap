@@ -120,7 +120,7 @@ metrics <- metrics_raw |>
   dplyr::mutate(
     dplyr::across(
       tidyselect::where(is.numeric),
-      function (x) {
+      function(x) {
         if (all(is.na(x))) {
           return(x)
         }

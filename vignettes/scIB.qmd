@@ -77,9 +77,9 @@ scib_summary_plot <- scib_summary |>
   mutate(
     output_img = case_match(
       output,
-      "Features"  ~ "images/matrix.png",
+      "Features" ~ "images/matrix.png",
       "Embedding" ~ "images/embedding.png",
-      "Graph"     ~ "images/graph.png"
+      "Graph" ~ "images/graph.png"
     )
   ) |>
   # Create rank labels
@@ -99,7 +99,9 @@ scib_summary_plot <- scib_summary |>
   # scale rank columns between [0, 1] because `scale_column` is set to FALSE.
   mutate_at(
     c("rank_pancreas", "rank_lung_atlas", "rank_immune_cell_hum", "rank_immune_cell_hum_mou", "rank_mouse_brain", "rank_simulations_1_1", "rank_simulations_2", "package_rank", "paper_rank", "time_rank", "memory_rank"),
-    function(x) { scale_minmax(-x) }
+    function(x) {
+      scale_minmax(-x)
+    }
   ) |>
   as.data.frame()
 
@@ -111,35 +113,35 @@ glimpse(scib_summary_plot)
 The first step in plotting the figure is to create a data frame describing how we want to plot the columns.
 
 ```{r summary-cols}
-column_info <- tribble(# tribble_start
-                              ~id,                   ~id_color,                   ~name,    ~geom,         ~group,                                                      ~options,
-                             "id",                          NA,                  "Rank",   "text",       "Method",                                               list(hjust = 0),
-                         "method",                          NA,                "Method",   "text",       "Method",                                    list(hjust = 0, width = 5),
-                     "output_img",                          NA,                "Output",  "image",       "Method",                                                        list(),
-                       "features",                  "features",              "Features",   "text",       "Method",                         list(palette = "features", width = 2),
-                        "scaling",                          NA,               "Scaling",   "text",       "Method",                                       list(fontface = "bold"),
-               "overall_pancreas",             "rank_pancreas",              "Pancreas",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),
-                 "label_pancreas",                          NA,                      NA,   "text",          "RNA",                              list(hjust = .1, overlay = TRUE),
-             "overall_lung_atlas",           "rank_lung_atlas",                  "Lung",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),
-               "label_lung_atlas",                          NA,                      NA,   "text",          "RNA",                              list(hjust = .1, overlay = TRUE),
-        "overall_immune_cell_hum",      "rank_immune_cell_hum",        "Immune (human)",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),
-          "label_immune_cell_hum",                          NA,                      NA,   "text",          "RNA",                              list(hjust = .1, overlay = TRUE),
-    "overall_immune_cell_hum_mou",  "rank_immune_cell_hum_mou",  "Immune (human/mouse)",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),
-      "label_immune_cell_hum_mou",                          NA,                      NA,   "text",          "RNA",                              list(hjust = .1, overlay = TRUE),
-            "overall_mouse_brain",          "rank_mouse_brain",           "Mouse brain",    "bar",          "RNA",    list(palette = "blues", width = 1.5, draw_outline = FALSE),
-              "label_mouse_brain",                          NA,                      NA,   "text",          "RNA",                              list(hjust = .1, overlay = TRUE),
-        "overall_simulations_1_1",      "rank_simulations_1_1",                 "Sim 1",    "bar",  "Simulations",   list(palette = "greens", width = 1.5, draw_outline = FALSE),
-          "label_simulations_1_1",                          NA,                      NA,   "text",  "Simulations",                              list(hjust = .1, overlay = TRUE),
-          "overall_simulations_2",        "rank_simulations_2",                 "Sim 2",    "bar",  "Simulations",   list(palette = "greens", width = 1.5, draw_outline = FALSE),
-            "label_simulations_2",                          NA,                      NA,   "text",  "Simulations",                              list(hjust = .1, overlay = TRUE),
-                  "package_score",              "package_rank",               "Package",    "bar",    "Usability",  list(palette = "oranges", width = 1.5, draw_outline = FALSE),
-                  "package_label",                          NA,                      NA,   "text",    "Usability",                              list(hjust = .1, overlay = TRUE),
-                    "paper_score",                "paper_rank",                 "Paper",    "bar",    "Usability",  list(palette = "oranges", width = 1.5, draw_outline = FALSE),
-                    "paper_label",                          NA,                      NA,   "text",    "Usability",                              list(hjust = .1, overlay = TRUE),
-                     "time_score",                 "time_rank",                  "Time",    "bar",  "Scalability",    list(palette = "greys", width = 1.5, draw_outline = FALSE),
-                     "time_label",                          NA,                      NA,   "text",  "Scalability",                              list(hjust = .1, overlay = TRUE),
-                   "memory_score",               "memory_rank",                "Memory",    "bar",  "Scalability",    list(palette = "greys", width = 1.5, draw_outline = FALSE),
-                   "memory_label",                          NA,                      NA,   "text",  "Scalability",                              list(hjust = .1, overlay = TRUE)
+column_info <- tribble( # tribble_start
+  ~id, ~id_color, ~name, ~geom, ~group, ~options,
+  "id", NA, "Rank", "text", "Method", list(hjust = 0),
+  "method", NA, "Method", "text", "Method", list(hjust = 0, width = 5),
+  "output_img", NA, "Output", "image", "Method", list(),
+  "features", "features", "Features", "text", "Method", list(palette = "features", width = 2),
+  "scaling", NA, "Scaling", "text", "Method", list(fontface = "bold"),
+  "overall_pancreas", "rank_pancreas", "Pancreas", "bar", "RNA", list(palette = "blues", width = 1.5, draw_outline = FALSE),
+  "label_pancreas", NA, NA, "text", "RNA", list(hjust = .1, overlay = TRUE),
+  "overall_lung_atlas", "rank_lung_atlas", "Lung", "bar", "RNA", list(palette = "blues", width = 1.5, draw_outline = FALSE),
+  "label_lung_atlas", NA, NA, "text", "RNA", list(hjust = .1, overlay = TRUE),
+  "overall_immune_cell_hum", "rank_immune_cell_hum", "Immune (human)", "bar", "RNA", list(palette = "blues", width = 1.5, draw_outline = FALSE),
+  "label_immune_cell_hum", NA, NA, "text", "RNA", list(hjust = .1, overlay = TRUE),
+  "overall_immune_cell_hum_mou", "rank_immune_cell_hum_mou", "Immune (human/mouse)", "bar", "RNA", list(palette = "blues", width = 1.5, draw_outline = FALSE),
+  "label_immune_cell_hum_mou", NA, NA, "text", "RNA", list(hjust = .1, overlay = TRUE),
+  "overall_mouse_brain", "rank_mouse_brain", "Mouse brain", "bar", "RNA", list(palette = "blues", width = 1.5, draw_outline = FALSE),
+  "label_mouse_brain", NA, NA, "text", "RNA", list(hjust = .1, overlay = TRUE),
+  "overall_simulations_1_1", "rank_simulations_1_1", "Sim 1", "bar", "Simulations", list(palette = "greens", width = 1.5, draw_outline = FALSE),
+  "label_simulations_1_1", NA, NA, "text", "Simulations", list(hjust = .1, overlay = TRUE),
+  "overall_simulations_2", "rank_simulations_2", "Sim 2", "bar", "Simulations", list(palette = "greens", width = 1.5, draw_outline = FALSE),
+  "label_simulations_2", NA, NA, "text", "Simulations", list(hjust = .1, overlay = TRUE),
+  "package_score", "package_rank", "Package", "bar", "Usability", list(palette = "oranges", width = 1.5, draw_outline = FALSE),
+  "package_label", NA, NA, "text", "Usability", list(hjust = .1, overlay = TRUE),
+  "paper_score", "paper_rank", "Paper", "bar", "Usability", list(palette = "oranges", width = 1.5, draw_outline = FALSE),
+  "paper_label", NA, NA, "text", "Usability", list(hjust = .1, overlay = TRUE),
+  "time_score", "time_rank", "Time", "bar", "Scalability", list(palette = "greys", width = 1.5, draw_outline = FALSE),
+  "time_label", NA, NA, "text", "Scalability", list(hjust = .1, overlay = TRUE),
+  "memory_score", "memory_rank", "Memory", "bar", "Scalability", list(palette = "greys", width = 1.5, draw_outline = FALSE),
+  "memory_label", NA, NA, "text", "Scalability", list(hjust = .1, overlay = TRUE)
 ) # tribble_end
 
 column_info
@@ -151,12 +153,12 @@ We also describe the various column groups.
 
 ```{r summary-col-groups}
 column_groups <- tribble(
-        ~ group,     ~ palette,      ~ level1,
-       "Method",       "black",      "Method",
-          "RNA",       "blues",         "RNA",
-  "Simulations",      "greens", "Simulations",
-    "Usability",     "oranges",   "Usability",
-  "Scalability",       "greys", "Scalability",
+  ~group, ~palette, ~level1,
+  "Method", "black", "Method",
+  "RNA", "blues", "RNA",
+  "Simulations", "greens", "Simulations",
+  "Usability", "oranges", "Usability",
+  "Scalability", "greys", "Scalability",
 )
 
 column_groups

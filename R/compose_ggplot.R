@@ -1,7 +1,6 @@
 compose_ggplot <- function(
-  geom_positions,
-  position_args
-) {
+    geom_positions,
+    position_args) {
   # start ggplot
   g <-
     ggplot() +

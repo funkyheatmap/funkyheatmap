@@ -51,15 +51,17 @@ verify_legends <- function(legends, palettes, column_info, data) {
   palettes_in_col_info <- na.omit(unique(column_info$palette))
   palettes_in_palette_names <- names(palettes)
   used_palettes <- intersect(palettes_in_col_info, palettes_in_palette_names)
-  
+
   palettes_in_legends <- sapply(legends, function(legend) {
     if (is.list(legend)) {
       legend$palette
     } else {
       NULL
     }
-  }) %>% unlist %>% unique
-  
+  }) %>%
+    unlist() %>%
+    unique()
+
   missing_palettes <- setdiff(used_palettes, palettes_in_legends)
 
   if (length(missing_palettes) > 0) {
@@ -126,16 +128,16 @@ verify_legends <- function(legends, palettes, column_info, data) {
       legend$enabled <- FALSE
       return(legend)
     }
-    
+
     # check labels
     if (!legend %has_name% "labels") {
       cli_alert_info(paste0("Legend ", i, " did not contain labels, inferring from the geom."))
       if (legend$geom == "pie" && legend %has_name% "palette") {
         legend$labels <- names(palettes[[legend$palette]])
-      # } else if (legend$geom == "continuous") {
-      #   legend$labels <- c("min", "max")
-      # } else if (legend$geom == "discrete") {
-      #   legend$labels <- c("min", "max")
+        # } else if (legend$geom == "continuous") {
+        #   legend$labels <- c("min", "max")
+        # } else if (legend$geom == "discrete") {
+        #   legend$labels <- c("min", "max")
       } else if (legend$geom %in% c("circle", "funkyrect", "rect")) {
         legend$labels <- c("0", "", "0.2", "", "0.4", "", "0.6", "", "0.8", "", "1")
       } else if (legend$geom == "text") {
@@ -166,7 +168,7 @@ verify_legends <- function(legends, palettes, column_info, data) {
     if (length(legend$size) == 1L) {
       legend$size <- rep(legend$size, length(legend$labels))
     }
-    
+
     # check colour/color
     if (legend %has_name% "colour") {
       legend$color <- legend$colour

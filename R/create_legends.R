@@ -10,17 +10,16 @@
 #' plot, such as row and column dimensions, annotation details, and the
 #' expansion directions of the plot. See `position_arguments()` for more information.
 #' @param values Used as value for the 'image' and 'text' geom.
-#' 
+#'
 #' @noRd
 create_generic_geom_legend <- function(
-  title,
-  geom = c("circle", "rect", "funkyrect"),
-  labels,
-  size,
-  color,
-  position_args = position_arguments(),
-  label_hjust = .5
-) {
+    title,
+    geom = c("circle", "rect", "funkyrect"),
+    labels,
+    size,
+    color,
+    position_args = position_arguments(),
+    label_hjust = .5) {
   geom <- match.arg(geom)
 
   start_x <- 0
@@ -34,9 +33,9 @@ create_generic_geom_legend <- function(
     tibble(
       size_value = size,
       color_value = color,
-      xmin = - size * legend_size / 2,
+      xmin = -size * legend_size / 2,
       xmax = size * legend_size / 2,
-      ymin = - size * legend_size / 2,
+      ymin = -size * legend_size / 2,
       ymax = size * legend_size / 2,
       label = labels,
       colour = color,
@@ -104,18 +103,17 @@ create_generic_geom_legend <- function(
 }
 
 #' Create a funkyrect legend
-#' 
+#'
 #' @inheritParams create_generic_geom_legend
-#' 
+#'
 #' @noRd
 create_funkyrect_legend <- function(
-  title,
-  labels,
-  size,
-  color,
-  position_args = position_arguments(),
-  label_hjust = .5
-) {
+    title,
+    labels,
+    size,
+    color,
+    position_args = position_arguments(),
+    label_hjust = .5) {
   create_generic_geom_legend(
     title = title,
     geom = "funkyrect",
@@ -128,18 +126,17 @@ create_funkyrect_legend <- function(
 }
 
 #' Create a rect legend
-#' 
+#'
 #' @inheritParams create_generic_geom_legend
-#' 
+#'
 #' @noRd
 create_rect_legend <- function(
-  title,
-  labels,
-  size,
-  color,
-  position_args = position_arguments(),
-  label_hjust = .5
-) {
+    title,
+    labels,
+    size,
+    color,
+    position_args = position_arguments(),
+    label_hjust = .5) {
   create_generic_geom_legend(
     title = title,
     geom = "rect",
@@ -152,18 +149,17 @@ create_rect_legend <- function(
 }
 
 #' Create a circle legend
-#' 
+#'
 #' @inheritParams create_generic_geom_legend
-#' 
+#'
 #' @noRd
 create_circle_legend <- function(
-  title,
-  labels,
-  size,
-  color,
-  position_args = position_arguments(),
-  label_hjust = .5
-) {
+    title,
+    labels,
+    size,
+    color,
+    position_args = position_arguments(),
+    label_hjust = .5) {
   create_generic_geom_legend(
     title = title,
     geom = "circle",
@@ -177,17 +173,16 @@ create_circle_legend <- function(
 
 #' Create a pie legend
 #' @inheritParams create_generic_geom_legend
-#' 
+#'
 #' @noRd
 create_pie_legend <- function(
-  title,
-  labels,
-  size, # not used
-  color,
-  position_args = position_arguments(),
-  # TODO: if we could determine the width of the labels, this would not be needed
-  label_width = 2
-) {
+    title,
+    labels,
+    size, # not used
+    color,
+    position_args = position_arguments(),
+    # TODO: if we could determine the width of the labels, this would not be needed
+    label_width = 2) {
   start_x <- 0
   start_y <- 0
   row_height <- position_args$row_height
@@ -278,25 +273,24 @@ create_pie_legend <- function(
 
 #' Create a text legend
 #' @inheritParams create_generic_geom_legend
-#' 
+#'
 #' @noRd
-#' 
+#'
 #' @examples
 #' title <- "Greys"
 #' labels <- c("A", "B", "C")
 #' values <- c("One", "Two", "Three")
 #' create_text_legend(title, values = values, labels = labels)
 create_text_legend <- function(
-  title,
-  labels,
-  size,
-  color,
-  values,
-  position_args = position_arguments(),
-  # TODO: if we could determine the width of the labels, this would not be needed
-  label_width = 1,
-  value_width = 2
-) {
+    title,
+    labels,
+    size,
+    color,
+    values,
+    position_args = position_arguments(),
+    # TODO: if we could determine the width of the labels, this would not be needed
+    label_width = 1,
+    value_width = 2) {
   start_x <- 0
   start_y <- 0
   row_height <- position_args$row_height
@@ -309,7 +303,7 @@ create_text_legend <- function(
       size = size,
       vjust = .5,
       hjust = 0,
-      lab_y = - row_height * (seq_along(labels) - 1)
+      lab_y = -row_height * (seq_along(labels) - 1)
     )
 
   text_data <- bind_rows(

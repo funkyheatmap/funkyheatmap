@@ -70,7 +70,7 @@ verify_column_info <- function(column_info, data) {
   }
   check_geom <-
     (is.character(column_info$geom) | is.factor(column_info$geom)) &
-    column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image")
+      column_info$geom %in% c("funkyrect", "circle", "rect", "bar", "pie", "text", "image")
   assert_that(
     all(check_geom),
     msg = paste0("Invalid geom types for columns: '", paste0(column_info$id[!check_geom], collapse = "', '"), "'")

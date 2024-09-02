@@ -14,10 +14,10 @@
 #' * `id` (`character`, required): A column name in `data` to plot. Determines the
 #'   size of the resulting geoms, and also the color unless `color` is
 #'   specified.
-#' 
+#'
 #' * `id_color` (`character`): A column name in `data` to use for the color
 #'   of the resulting geoms. If `NA`, the `id` column will be used.
-#' 
+#'
 #' * `id_size` (`character`): A column name in `data` to use for the size
 #'   of the resulting geoms. If `NA`, the `id` column will be used.
 #'
@@ -104,7 +104,7 @@
 #'
 #' * `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`, `"Greens"`
 #' * `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
-#' 
+#'
 #' @param legends A list of legends to add to the plot. Each entry in
 #' `column_info$legend` should have a corresponding entry in this object.
 #' Each entry should be a list with the following names:
@@ -129,7 +129,7 @@
 #'  * `value_width` (`numeric`, optional): The width of the values
 #'    (only for `geom = "text"`). Defaults to `2`.
 #'  * `label_hjust` (`numeric`, optional): The horizontal alignment of the
-#'    labels (only when geom is `circle`, `rect` or `funkyrect`). 
+#'    labels (only when geom is `circle`, `rect` or `funkyrect`).
 #'    Defaults to `0.5`.
 #'
 #' @param position_args Sets parameters that affect positioning within a
@@ -164,20 +164,19 @@
 #'
 #' funky_heatmap(data)
 funky_heatmap <- function(
-  data,
-  column_info = NULL,
-  row_info = NULL,
-  column_groups = NULL,
-  row_groups = NULL,
-  palettes = NULL,
-  legends = NULL,
-  position_args = position_arguments(),
-  scale_column = TRUE,
-  add_abc = TRUE,
-  col_annot_offset,
-  col_annot_angle,
-  expand
-) {
+    data,
+    column_info = NULL,
+    row_info = NULL,
+    column_groups = NULL,
+    row_groups = NULL,
+    palettes = NULL,
+    legends = NULL,
+    position_args = position_arguments(),
+    scale_column = TRUE,
+    add_abc = TRUE,
+    col_annot_offset,
+    col_annot_angle,
+    expand) {
   # validate input objects
   data <- verify_data(data)
   column_info <- verify_column_info(column_info, data)
@@ -252,7 +251,7 @@ funky_heatmap <- function(
 
   legend_widths <- map_dbl(legend_plots, ~ .x$width)
   legend_heights <- map_dbl(legend_plots, ~ .x$height)
-  
+
   heights <- main_plot$height
   width <- main_plot$width
 

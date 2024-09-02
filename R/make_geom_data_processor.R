@@ -1,10 +1,9 @@
 make_geom_data_processor <- function(
-  data,
-  column_pos,
-  row_pos,
-  scale_column,
-  palettes
-) {
+    data,
+    column_pos,
+    row_pos,
+    scale_column,
+    palettes) {
   function(geom_types, fun) {
     column_sels <-
       column_pos %>%

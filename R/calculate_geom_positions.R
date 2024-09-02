@@ -1,14 +1,13 @@
 calculate_geom_positions <- function(
-  data,
-  column_info,
-  row_info,
-  column_groups,
-  row_groups,
-  palettes,
-  position_args,
-  scale_column,
-  add_abc
-) {
+    data,
+    column_info,
+    row_info,
+    column_groups,
+    row_groups,
+    palettes,
+    position_args,
+    scale_column,
+    add_abc) {
   # short-hand notations
   row_height <- position_args[["row_height"]]
   row_space <- position_args[["row_space"]]

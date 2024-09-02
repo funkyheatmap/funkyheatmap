@@ -22,19 +22,18 @@
 #' @examples
 #' position_arguments(row_height = 1.2, col_width = 1.5, expand_xmax = 3)
 position_arguments <- function(
-  row_height = 1,
-  row_space = .1,
-  row_bigspace = 1.2,
-  col_width = 1,
-  col_space = .1,
-  col_bigspace = .5,
-  col_annot_offset = 3,
-  col_annot_angle = 30,
-  expand_xmin = 0,
-  expand_xmax = 2,
-  expand_ymin = 0,
-  expand_ymax = 0
-) {
+    row_height = 1,
+    row_space = .1,
+    row_bigspace = 1.2,
+    col_width = 1,
+    col_space = .1,
+    col_bigspace = .5,
+    col_annot_offset = 3,
+    col_annot_angle = 30,
+    expand_xmin = 0,
+    expand_xmax = 2,
+    expand_ymin = 0,
+    expand_ymax = 0) {
   list(
     row_height = row_height,
     row_space = row_space,
