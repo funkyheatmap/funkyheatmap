@@ -45,8 +45,7 @@ Suggests:
   kableExtra,
   quarto,
   testthat (>= 3.0.0),
-  magick,
-  pkgdown
+  magick
 VignetteBuilder: quarto
 RdMacros: Rdpack
 Depends: 
@@ -55,5 +54,3 @@ LazyData: true
 URL: https://funkyheatmap.github.io/funkyheatmap/, https://github.com/funkyheatmap/funkyheatmap
 BugReports: https://github.com/funkyheatmap/funkyheatmap/issues
 Config/testthat/edition: 3
-Remotes:
-  rcannood/pkgdown
