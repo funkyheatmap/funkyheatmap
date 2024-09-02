@@ -10,7 +10,9 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Recreating the scIB figures">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="scIB_files/libs/quarto-html/popper.min.js"></script><script src="scIB_files/libs/quarto-html/tippy.umd.min.js"></script><link href="scIB_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="scIB_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Recreating the scIB figures">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -36,7 +38,6 @@
 <li><a class="dropdown-item" href="../articles/dynbenchmark.html">Recreating the dynbenchmark figures</a></li>
     <li><a class="dropdown-item" href="../articles/executable.html">Standalone executable</a></li>
     <li><a class="dropdown-item" href="../articles/mtcars.html">Demo with mtcars</a></li>
-    <li><a class="dropdown-item" href="../articles/nextflow.html">Nextflow module</a></li>
     <li><a class="dropdown-item" href="../articles/scIB.html">Recreating the scIB figures</a></li>
   </ul>
 </li>
@@ -52,36 +53,30 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Recreating the scIB figures</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/0.5.0/vignettes/scIB.Rmd" class="external-link"><code>vignettes/scIB.Rmd</code></a></small>
-      <div class="d-none name"><code>scIB.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/main/vignettes/scIB.qmd" class="external-link"><code>vignettes/scIB.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+
+
+
+
+
+    <section class="level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <a href="https://theislab.github.io/scib-reproducibility/" class="external-link">single-cell
-integration benchmarking (scIB)</a> project was an effort to evaluate
-and compare the performance of methods for integrating single-cell RNA
-and ATAC sequencing datasets <span class="citation">(Luecken et al.
-2021)</span>. Many of the results were displayed using custom scripts to
-create visualisations similar to those produced by
-<code>funkyheatmap</code>.</p>
-<p>In this vignette we will show how these figures can be reproduced
-using <code>funkyheatmap</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>The <a href="https://theislab.github.io/scib-reproducibility/" class="external-link">single-cell integration benchmarking (scIB)</a> project was an effort to evaluate and compare the performance of methods for integrating single-cell RNA and ATAC sequencing datasets <span class="citation" data-cites="scib_Luecken2021">(<a href="#ref-scib_Luecken2021" role="doc-biblioref">Luecken et al. 2021</a>)</span>. Many of the results were displayed using custom scripts to create visualisations similar to those produced by <code>funkyheatmap</code>.</p>
+<p>In this vignette we will show how these figures can be reproduced using <code>funkyheatmap</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -94,68 +89,54 @@ using <code>funkyheatmap</code>.</p>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="summary-figure">Summary figure<a class="anchor" aria-label="anchor" href="#summary-figure"></a>
+</section><section class="level2"><h2 id="summary-figure">Summary figure<a class="anchor" aria-label="anchor" href="#summary-figure"></a>
 </h2>
-<p>The first figure we will recreate is the summary figure showing the
-performance of all methods on RNA data. Here is the original for
-reference:</p>
-<div class="float">
-<img src="https://github.com/theislab/scib-reproducibility/blob/main/data/img/best-RNA.png?raw=true" style="width:100.0%" alt="scIB RNA summary figure"><div class="figcaption">scIB RNA summary figure</div>
+<p>The first figure we will recreate is the summary figure showing the performance of all methods on RNA data. Here is the original for reference:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img src="https://github.com/theislab/scib-reproducibility/blob/main/data/img/best-RNA.png?raw=true" style="width:100.0%"></p>
+<figcaption>scIB RNA summary figure</figcaption></figure>
 </div>
-<div class="section level3">
-<h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+<section class="level3"><h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h3>
-<p>The steps for summarising the raw metric scores are quite complex so
-we have included a pre-processed summary table as part of
-<code>funkyheatmap</code> which is produced from the files available in
-the <a href="https://github.com/theislab/scib-reproducibility" class="external-link">scIB
-reproducibility repository</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>The steps for summarising the raw metric scores are quite complex so we have included a pre-processed summary table as part of <code>funkyheatmap</code> which is produced from the files available in the <a href="https://github.com/theislab/scib-reproducibility" class="external-link">scIB reproducibility repository</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"scib_summary"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">scib_summary</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 20</span></span>
 <span><span class="co">#&gt; Columns: 27</span></span>
-<span><span class="co">#&gt; $ method                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "scANVI*", "Scanorama", "scVI", "FastMNN",…</span></span>
-<span><span class="co">#&gt; $ output                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Embedding", "Embedding", "Embedding", "Em…</span></span>
-<span><span class="co">#&gt; $ features                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "HVG", "HVG", "HVG", "HVG", "HVG", "HVG", …</span></span>
-<span><span class="co">#&gt; $ scaling                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Unscaled", "Scaled", "Unscaled", "Unscale…</span></span>
-<span><span class="co">#&gt; $ avg_rank                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4.6, 8.0, 9.4, 10.4, 13.2, 13.2, 18.0, 21.…</span></span>
-<span><span class="co">#&gt; $ overall_immune_cell_hum     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8217139, 0.8484369, 0.7880395, 0.8456189…</span></span>
-<span><span class="co">#&gt; $ overall_immune_cell_hum_mou <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.6275154, 0.6415929, 0.6367120, 0.6049282…</span></span>
-<span><span class="co">#&gt; $ overall_lung_atlas          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7557935, 0.7088485, 0.7196019, 0.7083853…</span></span>
-<span><span class="co">#&gt; $ overall_mouse_brain         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7331990, 0.6725443, 0.6773415, 0.6062384…</span></span>
-<span><span class="co">#&gt; $ overall_pancreas            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7238847, 0.7034837, 0.7134047, 0.7200626…</span></span>
-<span><span class="co">#&gt; $ overall_simulations_1_1     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8528483, 0.8522969, 0.8141741, 0.7446178…</span></span>
-<span><span class="co">#&gt; $ overall_simulations_2       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7365843, 0.5265792, 0.5022136, 0.7052069…</span></span>
-<span><span class="co">#&gt; $ rank_immune_cell_hum        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 1, 14, 2, 5, 7, 10, 21, 20, 47, 48, 19,…</span></span>
-<span><span class="co">#&gt; $ rank_immune_cell_hum_mou    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4.0, 2.0, 3.0, 9.0, 25.0, 1.0, 15.0, 33.0,…</span></span>
-<span><span class="co">#&gt; $ rank_lung_atlas             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3.0, 6.0, 5.0, 7.0, 28.0, 2.0, 15.0, 23.0,…</span></span>
-<span><span class="co">#&gt; $ rank_mouse_brain            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 10, 9, 21, 7, 50, 27, 12, 50, 2, 6, 50,…</span></span>
-<span><span class="co">#&gt; $ rank_pancreas               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 11, 21, 16, 13, 1, 6, 23, 17, 2, 14, 33, 4…</span></span>
-<span><span class="co">#&gt; $ rank_simulations_1_1        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 4, 13, 35, 38, 23, 46, 25, 57, 53, 21, …</span></span>
-<span><span class="co">#&gt; $ rank_simulations_2          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 25, 28, 6, 8, 2, 12, 23, 61, 19, 26, 20…</span></span>
-<span><span class="co">#&gt; $ package_score               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8102822, 0.7686694, 0.8831989, 0.7993550…</span></span>
-<span><span class="co">#&gt; $ package_rank                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.0, 10.0, 5.0, 8.0, 6.0, 12.0, 8.0, 10.0,…</span></span>
-<span><span class="co">#&gt; $ paper_score                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.43750, 0.87500, 0.65625, 0.25000, 1.0000…</span></span>
-<span><span class="co">#&gt; $ paper_rank                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 14.5, 5.0, 12.0, 16.0, 1.5, 13.0, 16.0, 5.…</span></span>
-<span><span class="co">#&gt; $ time_score                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.5540645, 0.6355258, 0.5682302, 0.6434753…</span></span>
-<span><span class="co">#&gt; $ time_rank                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36, 17, 28, 16, 10, 50, 16, 17, 32, 3, 2, …</span></span>
-<span><span class="co">#&gt; $ memory_score                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.4905173, 0.4046461, 0.5201664, 0.4347876…</span></span>
-<span><span class="co">#&gt; $ memory_rank                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 3, 21, 1, 14, 10, 22, 14, 21, 45, 2, 11, 1…</span></span></code></pre></div>
-<p>This data frame contains several columns: details of the method
-version and output, an average rank used to order the table, overall
-scores and ranks for the performance on each dataset, usability scores
-and ranks (for the package and paper), and scalability scores and ranks
-(for both time and memory). All of these will go into the summary
-table.</p>
-<p>The dataset requires some preparation for the
-<code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> function. We will create an <code>id</code>
-column using the row numbers (the data is already sorted by performance
-ranking). We also create label columns for each of the scores showing
-the top 3 performers and relabel some of the columns. Finally, we subset
-to a the set of columns we want to plot.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; $ method                      &lt;chr&gt; "scANVI*", "Scanorama", "scVI", "FastMNN",…</span></span>
+<span><span class="co">#&gt; $ output                      &lt;chr&gt; "Embedding", "Embedding", "Embedding", "Em…</span></span>
+<span><span class="co">#&gt; $ features                    &lt;chr&gt; "HVG", "HVG", "HVG", "HVG", "HVG", "HVG", …</span></span>
+<span><span class="co">#&gt; $ scaling                     &lt;chr&gt; "Unscaled", "Scaled", "Unscaled", "Unscale…</span></span>
+<span><span class="co">#&gt; $ avg_rank                    &lt;dbl&gt; 4.6, 8.0, 9.4, 10.4, 13.2, 13.2, 18.0, 21.…</span></span>
+<span><span class="co">#&gt; $ overall_immune_cell_hum     &lt;dbl&gt; 0.8217139, 0.8484369, 0.7880395, 0.8456189…</span></span>
+<span><span class="co">#&gt; $ overall_immune_cell_hum_mou &lt;dbl&gt; 0.6275154, 0.6415929, 0.6367120, 0.6049282…</span></span>
+<span><span class="co">#&gt; $ overall_lung_atlas          &lt;dbl&gt; 0.7557935, 0.7088485, 0.7196019, 0.7083853…</span></span>
+<span><span class="co">#&gt; $ overall_mouse_brain         &lt;dbl&gt; 0.7331990, 0.6725443, 0.6773415, 0.6062384…</span></span>
+<span><span class="co">#&gt; $ overall_pancreas            &lt;dbl&gt; 0.7238847, 0.7034837, 0.7134047, 0.7200626…</span></span>
+<span><span class="co">#&gt; $ overall_simulations_1_1     &lt;dbl&gt; 0.8528483, 0.8522969, 0.8141741, 0.7446178…</span></span>
+<span><span class="co">#&gt; $ overall_simulations_2       &lt;dbl&gt; 0.7365843, 0.5265792, 0.5022136, 0.7052069…</span></span>
+<span><span class="co">#&gt; $ rank_immune_cell_hum        &lt;dbl&gt; 4, 1, 14, 2, 5, 7, 10, 21, 20, 47, 48, 19,…</span></span>
+<span><span class="co">#&gt; $ rank_immune_cell_hum_mou    &lt;dbl&gt; 4.0, 2.0, 3.0, 9.0, 25.0, 1.0, 15.0, 33.0,…</span></span>
+<span><span class="co">#&gt; $ rank_lung_atlas             &lt;dbl&gt; 3.0, 6.0, 5.0, 7.0, 28.0, 2.0, 15.0, 23.0,…</span></span>
+<span><span class="co">#&gt; $ rank_mouse_brain            &lt;dbl&gt; 1, 10, 9, 21, 7, 50, 27, 12, 50, 2, 6, 50,…</span></span>
+<span><span class="co">#&gt; $ rank_pancreas               &lt;dbl&gt; 11, 21, 16, 13, 1, 6, 23, 17, 2, 14, 33, 4…</span></span>
+<span><span class="co">#&gt; $ rank_simulations_1_1        &lt;dbl&gt; 3, 4, 13, 35, 38, 23, 46, 25, 57, 53, 21, …</span></span>
+<span><span class="co">#&gt; $ rank_simulations_2          &lt;dbl&gt; 4, 25, 28, 6, 8, 2, 12, 23, 61, 19, 26, 20…</span></span>
+<span><span class="co">#&gt; $ package_score               &lt;dbl&gt; 0.8102822, 0.7686694, 0.8831989, 0.7993550…</span></span>
+<span><span class="co">#&gt; $ package_rank                &lt;dbl&gt; 7.0, 10.0, 5.0, 8.0, 6.0, 12.0, 8.0, 10.0,…</span></span>
+<span><span class="co">#&gt; $ paper_score                 &lt;dbl&gt; 0.43750, 0.87500, 0.65625, 0.25000, 1.0000…</span></span>
+<span><span class="co">#&gt; $ paper_rank                  &lt;dbl&gt; 14.5, 5.0, 12.0, 16.0, 1.5, 13.0, 16.0, 5.…</span></span>
+<span><span class="co">#&gt; $ time_score                  &lt;dbl&gt; 0.5540645, 0.6355258, 0.5682302, 0.6434753…</span></span>
+<span><span class="co">#&gt; $ time_rank                   &lt;dbl&gt; 36, 17, 28, 16, 10, 50, 16, 17, 32, 3, 2, …</span></span>
+<span><span class="co">#&gt; $ memory_score                &lt;dbl&gt; 0.4905173, 0.4046461, 0.5201664, 0.4347876…</span></span>
+<span><span class="co">#&gt; $ memory_rank                 &lt;dbl&gt; 3, 21, 1, 14, 10, 22, 14, 21, 45, 2, 11, 1…</span></span></code></pre></div>
+</div>
+<p>This data frame contains several columns: details of the method version and output, an average rank used to order the table, overall scores and ranks for the performance on each dataset, usability scores and ranks (for the package and paper), and scalability scores and ranks (for both time and memory). All of these will go into the summary table.</p>
+<p>The dataset requires some preparation for the <code><a href="../reference/funky_heatmap.html">funky_heatmap()</a></code> function. We will create an <code>id</code> column using the row numbers (the data is already sorted by performance ranking). We also create label columns for each of the scores showing the top 3 performers and relabel some of the columns. Finally, we subset to a the set of columns we want to plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A small helper function for creating rank labels for each column.</span></span>
 <span><span class="co"># It takes a scores, ranks them and returns a character vector with labels for</span></span>
 <span><span class="co"># the top 3 scores. Any additional arguments are passed to the `rank()`</span></span>
@@ -214,58 +195,57 @@ to a the set of columns we want to plot.</p>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">scib_summary_plot</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 20</span></span>
 <span><span class="co">#&gt; Columns: 40</span></span>
-<span><span class="co">#&gt; $ method                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "scANVI*", "Scanorama", "scVI", "FastMNN",…</span></span>
-<span><span class="co">#&gt; $ output                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Embedding", "Embedding", "Embedding", "Em…</span></span>
-<span><span class="co">#&gt; $ features                    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> HVG, HVG, HVG, HVG, HVG, HVG, HVG, HVG, HV…</span></span>
-<span><span class="co">#&gt; $ scaling                     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> -, +, -, -, -, -, -, +, +, -, -, +, -, -, …</span></span>
-<span><span class="co">#&gt; $ avg_rank                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4.6, 8.0, 9.4, 10.4, 13.2, 13.2, 18.0, 21.…</span></span>
-<span><span class="co">#&gt; $ overall_immune_cell_hum     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8217139, 0.8484369, 0.7880395, 0.8456189…</span></span>
-<span><span class="co">#&gt; $ overall_immune_cell_hum_mou <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.6275154, 0.6415929, 0.6367120, 0.6049282…</span></span>
-<span><span class="co">#&gt; $ overall_lung_atlas          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7557935, 0.7088485, 0.7196019, 0.7083853…</span></span>
-<span><span class="co">#&gt; $ overall_mouse_brain         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7331990, 0.6725443, 0.6773415, 0.6062384…</span></span>
-<span><span class="co">#&gt; $ overall_pancreas            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7238847, 0.7034837, 0.7134047, 0.7200626…</span></span>
-<span><span class="co">#&gt; $ overall_simulations_1_1     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8528483, 0.8522969, 0.8141741, 0.7446178…</span></span>
-<span><span class="co">#&gt; $ overall_simulations_2       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.7365843, 0.5265792, 0.5022136, 0.7052069…</span></span>
-<span><span class="co">#&gt; $ rank_immune_cell_hum        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.95081967, 1.00000000, 0.78688525, 0.9836…</span></span>
-<span><span class="co">#&gt; $ rank_immune_cell_hum_mou    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.95238095, 0.98412698, 0.96825397, 0.8730…</span></span>
-<span><span class="co">#&gt; $ rank_lung_atlas             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.9850746, 0.9402985, 0.9552239, 0.9253731…</span></span>
-<span><span class="co">#&gt; $ rank_mouse_brain            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.0000000, 0.8163265, 0.8367347, 0.5918367…</span></span>
-<span><span class="co">#&gt; $ rank_pancreas               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.84126984, 0.68253968, 0.76190476, 0.8095…</span></span>
-<span><span class="co">#&gt; $ rank_simulations_1_1        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.0000000, 0.9848485, 0.8484848, 0.5151515…</span></span>
-<span><span class="co">#&gt; $ rank_simulations_2          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.9661017, 0.6101695, 0.5593220, 0.9322034…</span></span>
-<span><span class="co">#&gt; $ package_score               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8102822, 0.7686694, 0.8831989, 0.7993550…</span></span>
-<span><span class="co">#&gt; $ package_rank                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.62068966, 0.41379310, 0.75862069, 0.5517…</span></span>
-<span><span class="co">#&gt; $ paper_score                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.43750, 0.87500, 0.65625, 0.25000, 1.0000…</span></span>
-<span><span class="co">#&gt; $ paper_rank                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.1034483, 0.7586207, 0.2758621, 0.0000000…</span></span>
-<span><span class="co">#&gt; $ time_score                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.5540645, 0.6355258, 0.5682302, 0.6434753…</span></span>
-<span><span class="co">#&gt; $ time_rank                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.29166667, 0.68750000, 0.45833333, 0.7083…</span></span>
-<span><span class="co">#&gt; $ memory_score                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.4905173, 0.4046461, 0.5201664, 0.4347876…</span></span>
-<span><span class="co">#&gt; $ memory_rank                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.9629630, 0.6296296, 1.0000000, 0.7592593…</span></span>
-<span><span class="co">#&gt; $ id                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "2", "3", "4", "5", "6", "7", "8", "9…</span></span>
-<span><span class="co">#&gt; $ output_img                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "images/embedding.png", "images/embedding.…</span></span>
-<span><span class="co">#&gt; $ label_pancreas              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "1", "3", "", "", "2", "",…</span></span>
-<span><span class="co">#&gt; $ label_lung_atlas            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "", "3", "", "", "1", "", "", "", "",…</span></span>
-<span><span class="co">#&gt; $ label_immune_cell_hum       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "3", "1", "", "2", "", "", "", "", "", "",…</span></span>
-<span><span class="co">#&gt; $ label_immune_cell_hum_mou   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "2", "3", "", "", "1", "", "", "", "",…</span></span>
-<span><span class="co">#&gt; $ label_mouse_brain           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "", "", "", "", "", "", "", "", "2", …</span></span>
-<span><span class="co">#&gt; $ label_simulations_1_1       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "2", "", "", "", "", "", "", "", "", …</span></span>
-<span><span class="co">#&gt; $ label_simulations_2         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "", "", "3", "", "1", "", "", "", "",…</span></span>
-<span><span class="co">#&gt; $ package_label               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "1", "", "…</span></span>
-<span><span class="co">#&gt; $ paper_label                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "1", "", "", "", "", "3", …</span></span>
-<span><span class="co">#&gt; $ time_label                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "", "2", "…</span></span>
-<span><span class="co">#&gt; $ memory_label                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "3", "", "1", "", "", "", "", "", "", "2",…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ method                      &lt;chr&gt; "scANVI*", "Scanorama", "scVI", "FastMNN",…</span></span>
+<span><span class="co">#&gt; $ output                      &lt;chr&gt; "Embedding", "Embedding", "Embedding", "Em…</span></span>
+<span><span class="co">#&gt; $ features                    &lt;fct&gt; HVG, HVG, HVG, HVG, HVG, HVG, HVG, HVG, HV…</span></span>
+<span><span class="co">#&gt; $ scaling                     &lt;fct&gt; -, +, -, -, -, -, -, +, +, -, -, +, -, -, …</span></span>
+<span><span class="co">#&gt; $ avg_rank                    &lt;dbl&gt; 4.6, 8.0, 9.4, 10.4, 13.2, 13.2, 18.0, 21.…</span></span>
+<span><span class="co">#&gt; $ overall_immune_cell_hum     &lt;dbl&gt; 0.8217139, 0.8484369, 0.7880395, 0.8456189…</span></span>
+<span><span class="co">#&gt; $ overall_immune_cell_hum_mou &lt;dbl&gt; 0.6275154, 0.6415929, 0.6367120, 0.6049282…</span></span>
+<span><span class="co">#&gt; $ overall_lung_atlas          &lt;dbl&gt; 0.7557935, 0.7088485, 0.7196019, 0.7083853…</span></span>
+<span><span class="co">#&gt; $ overall_mouse_brain         &lt;dbl&gt; 0.7331990, 0.6725443, 0.6773415, 0.6062384…</span></span>
+<span><span class="co">#&gt; $ overall_pancreas            &lt;dbl&gt; 0.7238847, 0.7034837, 0.7134047, 0.7200626…</span></span>
+<span><span class="co">#&gt; $ overall_simulations_1_1     &lt;dbl&gt; 0.8528483, 0.8522969, 0.8141741, 0.7446178…</span></span>
+<span><span class="co">#&gt; $ overall_simulations_2       &lt;dbl&gt; 0.7365843, 0.5265792, 0.5022136, 0.7052069…</span></span>
+<span><span class="co">#&gt; $ rank_immune_cell_hum        &lt;dbl&gt; 0.95081967, 1.00000000, 0.78688525, 0.9836…</span></span>
+<span><span class="co">#&gt; $ rank_immune_cell_hum_mou    &lt;dbl&gt; 0.95238095, 0.98412698, 0.96825397, 0.8730…</span></span>
+<span><span class="co">#&gt; $ rank_lung_atlas             &lt;dbl&gt; 0.9850746, 0.9402985, 0.9552239, 0.9253731…</span></span>
+<span><span class="co">#&gt; $ rank_mouse_brain            &lt;dbl&gt; 1.0000000, 0.8163265, 0.8367347, 0.5918367…</span></span>
+<span><span class="co">#&gt; $ rank_pancreas               &lt;dbl&gt; 0.84126984, 0.68253968, 0.76190476, 0.8095…</span></span>
+<span><span class="co">#&gt; $ rank_simulations_1_1        &lt;dbl&gt; 1.0000000, 0.9848485, 0.8484848, 0.5151515…</span></span>
+<span><span class="co">#&gt; $ rank_simulations_2          &lt;dbl&gt; 0.9661017, 0.6101695, 0.5593220, 0.9322034…</span></span>
+<span><span class="co">#&gt; $ package_score               &lt;dbl&gt; 0.8102822, 0.7686694, 0.8831989, 0.7993550…</span></span>
+<span><span class="co">#&gt; $ package_rank                &lt;dbl&gt; 0.62068966, 0.41379310, 0.75862069, 0.5517…</span></span>
+<span><span class="co">#&gt; $ paper_score                 &lt;dbl&gt; 0.43750, 0.87500, 0.65625, 0.25000, 1.0000…</span></span>
+<span><span class="co">#&gt; $ paper_rank                  &lt;dbl&gt; 0.1034483, 0.7586207, 0.2758621, 0.0000000…</span></span>
+<span><span class="co">#&gt; $ time_score                  &lt;dbl&gt; 0.5540645, 0.6355258, 0.5682302, 0.6434753…</span></span>
+<span><span class="co">#&gt; $ time_rank                   &lt;dbl&gt; 0.29166667, 0.68750000, 0.45833333, 0.7083…</span></span>
+<span><span class="co">#&gt; $ memory_score                &lt;dbl&gt; 0.4905173, 0.4046461, 0.5201664, 0.4347876…</span></span>
+<span><span class="co">#&gt; $ memory_rank                 &lt;dbl&gt; 0.9629630, 0.6296296, 1.0000000, 0.7592593…</span></span>
+<span><span class="co">#&gt; $ id                          &lt;chr&gt; "1", "2", "3", "4", "5", "6", "7", "8", "9…</span></span>
+<span><span class="co">#&gt; $ output_img                  &lt;chr&gt; "images/embedding.png", "images/embedding.…</span></span>
+<span><span class="co">#&gt; $ label_pancreas              &lt;chr&gt; "", "", "", "", "1", "3", "", "", "2", "",…</span></span>
+<span><span class="co">#&gt; $ label_lung_atlas            &lt;chr&gt; "2", "", "3", "", "", "1", "", "", "", "",…</span></span>
+<span><span class="co">#&gt; $ label_immune_cell_hum       &lt;chr&gt; "3", "1", "", "2", "", "", "", "", "", "",…</span></span>
+<span><span class="co">#&gt; $ label_immune_cell_hum_mou   &lt;chr&gt; "", "2", "3", "", "", "1", "", "", "", "",…</span></span>
+<span><span class="co">#&gt; $ label_mouse_brain           &lt;chr&gt; "1", "", "", "", "", "", "", "", "", "2", …</span></span>
+<span><span class="co">#&gt; $ label_simulations_1_1       &lt;chr&gt; "1", "2", "", "", "", "", "", "", "", "", …</span></span>
+<span><span class="co">#&gt; $ label_simulations_2         &lt;chr&gt; "2", "", "", "3", "", "1", "", "", "", "",…</span></span>
+<span><span class="co">#&gt; $ package_label               &lt;chr&gt; "", "", "", "", "", "", "", "", "1", "", "…</span></span>
+<span><span class="co">#&gt; $ paper_label                 &lt;chr&gt; "", "", "", "", "1", "", "", "", "", "3", …</span></span>
+<span><span class="co">#&gt; $ time_label                  &lt;chr&gt; "", "", "", "", "", "", "", "", "", "2", "…</span></span>
+<span><span class="co">#&gt; $ memory_label                &lt;chr&gt; "3", "", "1", "", "", "", "", "", "", "2",…</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="column-information">Column information<a class="anchor" aria-label="anchor" href="#column-information"></a>
+</section><section class="level3"><h3 id="column-information">Column information<a class="anchor" aria-label="anchor" href="#column-information"></a>
 </h3>
-<p>The first step in plotting the figure is to create a data frame
-describing how we want to plot the columns.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The first step in plotting the figure is to create a data frame describing how we want to plot the columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">column_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span><span class="co"># tribble_start</span></span>
 <span>                              <span class="op">~</span><span class="va">id</span>,                   <span class="op">~</span><span class="va">id_color</span>,                   <span class="op">~</span><span class="va">name</span>,    <span class="op">~</span><span class="va">geom</span>,         <span class="op">~</span><span class="va">group</span>,                                                      <span class="op">~</span><span class="va">options</span>,</span>
 <span>                             <span class="st">"id"</span>,                          <span class="cn">NA</span>,                  <span class="st">"Rank"</span>,   <span class="st">"text"</span>,       <span class="st">"Method"</span>,                                               <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
 <span>                         <span class="st">"method"</span>,                          <span class="cn">NA</span>,                <span class="st">"Method"</span>,   <span class="st">"text"</span>,       <span class="st">"Method"</span>,                                    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span>                     <span class="st">"output_img"</span>,                          <span class="cn">NA</span>,                <span class="st">"Output"</span>,  <span class="st">"image"</span>,       <span class="st">"Method"</span>,                                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                    <span class="co">#  "output_img",                          NA,                "Output",  "image",       "Method",                                                        list(),</span></span>
 <span>                       <span class="st">"features"</span>,                  <span class="st">"features"</span>,              <span class="st">"Features"</span>,   <span class="st">"text"</span>,       <span class="st">"Method"</span>,                         <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"features"</span>, width <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                        <span class="st">"scaling"</span>,                          <span class="cn">NA</span>,               <span class="st">"Scaling"</span>,   <span class="st">"text"</span>,       <span class="st">"Method"</span>,                                       <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
 <span>               <span class="st">"overall_pancreas"</span>,             <span class="st">"rank_pancreas"</span>,              <span class="st">"Pancreas"</span>,    <span class="st">"bar"</span>,          <span class="st">"RNA"</span>,    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"blues"</span>, width <span class="op">=</span> <span class="fl">1.5</span>, draw_outline <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -293,26 +273,25 @@ describing how we want to plot the columns.</p>
 <span><span class="op">)</span> <span class="co"># tribble_end</span></span>
 <span></span>
 <span><span class="va">column_info</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27 × 6</span></span></span>
+<span><span class="co">#&gt; # A tibble: 26 × 6</span></span>
 <span><span class="co">#&gt;    id                      id_color             name    geom  group options     </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> id                      <span style="color: #BB0000;">NA</span>                   Rank    text  Meth… <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> method                  <span style="color: #BB0000;">NA</span>                   Method  text  Meth… <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> output_img              <span style="color: #BB0000;">NA</span>                   Output  image Meth… <span style="color: #949494;">&lt;list [0]&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> features                features             Featur… text  Meth… <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> scaling                 <span style="color: #BB0000;">NA</span>                   Scaling text  Meth… <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> overall_pancreas        rank_pancreas        Pancre… bar   RNA   <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> label_pancreas          <span style="color: #BB0000;">NA</span>                   <span style="color: #BB0000;">NA</span>      text  RNA   <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> overall_lung_atlas      rank_lung_atlas      Lung    bar   RNA   <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> label_lung_atlas        <span style="color: #BB0000;">NA</span>                   <span style="color: #BB0000;">NA</span>      text  RNA   <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> overall_immune_cell_hum rank_immune_cell_hum Immune… bar   RNA   <span style="color: #949494;">&lt;named list&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 17 more rows</span></span></span></code></pre></div>
-<p>As shown in the other vignettes this table includes the type of geom
-for each each column and how they are grouped as well as some
-configuration options for how they are displayed. Note that we overlay
-the labels for each score over the corresponding bars.</p>
+<span><span class="co">#&gt;    &lt;chr&gt;                   &lt;chr&gt;                &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;list&gt;      </span></span>
+<span><span class="co">#&gt;  1 id                      &lt;NA&gt;                 Rank    text  Meth… &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  2 method                  &lt;NA&gt;                 Method  text  Meth… &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  3 features                features             Featur… text  Meth… &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  4 scaling                 &lt;NA&gt;                 Scaling text  Meth… &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  5 overall_pancreas        rank_pancreas        Pancre… bar   RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  6 label_pancreas          &lt;NA&gt;                 &lt;NA&gt;    text  RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  7 overall_lung_atlas      rank_lung_atlas      Lung    bar   RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  8 label_lung_atlas        &lt;NA&gt;                 &lt;NA&gt;    text  RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt;  9 overall_immune_cell_hum rank_immune_cell_hum Immune… bar   RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt; 10 label_immune_cell_hum   &lt;NA&gt;                 &lt;NA&gt;    text  RNA   &lt;named list&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 16 more rows</span></span></code></pre></div>
+</div>
+<p>As shown in the other vignettes this table includes the type of geom for each each column and how they are grouped as well as some configuration options for how they are displayed. Note that we overlay the labels for each score over the corresponding bars.</p>
 <p>We also describe the various column groups.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">column_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>        <span class="op">~</span> <span class="va">group</span>,     <span class="op">~</span> <span class="va">palette</span>,      <span class="op">~</span> <span class="va">level1</span>,</span>
 <span>       <span class="st">"Method"</span>,       <span class="st">"black"</span>,      <span class="st">"Method"</span>,</span>
@@ -323,23 +302,21 @@ the labels for each score over the corresponding bars.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">column_groups</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 3</span></span>
 <span><span class="co">#&gt;   group       palette level1     </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Method      black   Method     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RNA         blues   RNA        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Simulations greens  Simulations</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Usability   oranges Usability  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Scalability greys   Scalability</span></span></code></pre></div>
-<p>There isn’t much customisation here, we are mostly just defining the
-labels for each group.</p>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt; 1 Method      black   Method     </span></span>
+<span><span class="co">#&gt; 2 RNA         blues   RNA        </span></span>
+<span><span class="co">#&gt; 3 Simulations greens  Simulations</span></span>
+<span><span class="co">#&gt; 4 Usability   oranges Usability  </span></span>
+<span><span class="co">#&gt; 5 Scalability greys   Scalability</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="row-information">Row information<a class="anchor" aria-label="anchor" href="#row-information"></a>
+<p>There isn’t much customisation here, we are mostly just defining the labels for each group.</p>
+</section><section class="level3"><h3 id="row-information">Row information<a class="anchor" aria-label="anchor" href="#row-information"></a>
 </h3>
-<p>We aren’t applying any grouping to the rows so the row information is
-very basic.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>We aren’t applying any grouping to the rows so the row information is very basic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">row_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">scib_summary_plot</span><span class="op">$</span><span class="va">id</span>, group <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">row_info</span></span>
@@ -365,12 +342,11 @@ very basic.</p>
 <span><span class="co">#&gt; 19 19  &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 20 20  &lt;NA&gt;</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="palettes">Palettes<a class="anchor" aria-label="anchor" href="#palettes"></a>
+</section><section class="level3"><h3 id="palettes">Palettes<a class="anchor" aria-label="anchor" href="#palettes"></a>
 </h3>
-<p>The palettes are mostly the default palettes, with the addition of
-the features, oranges and black palettes.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>The palettes are mostly the default palettes, with the addition of the features, oranges and black palettes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">palettes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>FULL <span class="op">=</span> <span class="st">"#4c4c4c"</span>, HVG <span class="op">=</span> <span class="st">"#006300"</span><span class="op">)</span>,</span>
 <span>  blues <span class="op">=</span> <span class="st">"Blues"</span>,</span>
@@ -380,10 +356,10 @@ the features, oranges and black palettes.</p>
 <span>  black <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="legends">Legends<a class="anchor" aria-label="anchor" href="#legends"></a>
+</section><section class="level3"><h3 id="legends">Legends<a class="anchor" aria-label="anchor" href="#legends"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">legends</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Scaling"</span>,</span>
@@ -422,12 +398,11 @@ the features, oranges and black palettes.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="figure">Figure<a class="anchor" aria-label="anchor" href="#figure"></a>
+</section><section class="level3"><h3 id="figure">Figure<a class="anchor" aria-label="anchor" href="#figure"></a>
 </h3>
-<p>Now that we have defined everything we can make the summary
-figure.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>Now that we have defined everything we can make the summary figure.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">scib_summary_plot</span>,</span>
 <span>  column_info <span class="op">=</span> <span class="va">column_info</span>,</span>
@@ -440,41 +415,136 @@ figure.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  scale_column <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 2 did not contain color, inferring from the palette.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 3 did not contain color, inferring from the palette.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 4 did not contain color, inferring from the palette.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 5 did not contain color, inferring from the palette.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain a geom, inferring from the column info.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 6 did not contain labels, inferring from the geom.</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 6 has geom 'text' but no specified labels, so disabling this legend for now.</span></span>
+<span><span class="co">#&gt; ℹ Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; ℹ Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; ℹ Legend 2 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; ℹ Legend 3 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; ℹ Legend 4 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; ℹ Legend 5 did not contain color, inferring from the palette.</span></span>
+<span><span class="co">#&gt; ℹ Legend 6 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; ℹ Legend 6 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; ! Legend 6 has geom 'text' but no specified labels, so disabling this legend for now.</span></span>
 <span><span class="co">#&gt; Warning: Removed 12 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_rect()`).</span></span></code></pre></div>
-<p><img src="scIB_files/figure-html/summary-figure-1.png" width="768"></p>
-<p>This isn’t exactly like the original figure but it is fairly close.
-Most of the differences are cosmetic such as alignment of labels and the
-lack of fancy headings. If you compare closely to the original figure
-you may also notice some changes in the method ranking compared to the
-original figure due to small difference in the pre-processing of the raw
-data.</p>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="scIB_files/figure-html/summary-figure-1.png" width="768"></p>
+</figure>
 </div>
 </div>
-<div class="section level2 unnumbered">
-<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</div>
+<p>This isn’t exactly like the original figure but it is fairly close. Most of the differences are cosmetic such as alignment of labels and the lack of fancy headings. If you compare closely to the original figure you may also notice some changes in the method ranking compared to the original figure due to small difference in the pre-processing of the raw data.</p>
+</section></section><section class="level2 unnumbered"><h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-scib_Luecken2021" class="csl-entry">
-Luecken, Malte D, M Büttner, K Chaichoompu, A Danese, M Interlandi, M F
-Mueller, D C Strobl, et al. 2021. <span>“<span class="nocase">Benchmarking atlas-level data integration in single-cell
-genomics</span>.”</span> <em>Nature Methods</em>, December. <a href="https://doi.org/10.1038/s41592-021-01336-8" class="external-link">https://doi.org/10.1038/s41592-021-01336-8</a>.
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-scib_Luecken2021" class="csl-entry" role="listitem">
+Luecken, Malte D, M Büttner, K Chaichoompu, A Danese, M Interlandi, M F Mueller, D C Strobl, et al. 2021. <span>“<span class="nocase">Benchmarking atlas-level data integration in single-cell genomics</span>.”</span> <em>Nature Methods</em>, December. <a href="https://doi.org/10.1038/s41592-021-01336-8" class="external-link">https://doi.org/10.1038/s41592-021-01336-8</a>.
 </div>
 </div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+</section><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'light-border',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">

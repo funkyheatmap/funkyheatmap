@@ -10,7 +10,9 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Standalone executable">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="executable_files/libs/quarto-html/popper.min.js"></script><script src="executable_files/libs/quarto-html/tippy.umd.min.js"></script><link href="executable_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="executable_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Standalone executable">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -36,7 +38,6 @@
 <li><a class="dropdown-item" href="../articles/dynbenchmark.html">Recreating the dynbenchmark figures</a></li>
     <li><a class="dropdown-item" href="../articles/executable.html">Standalone executable</a></li>
     <li><a class="dropdown-item" href="../articles/mtcars.html">Demo with mtcars</a></li>
-    <li><a class="dropdown-item" href="../articles/nextflow.html">Nextflow module</a></li>
     <li><a class="dropdown-item" href="../articles/scIB.html">Recreating the scIB figures</a></li>
   </ul>
 </li>
@@ -52,48 +53,38 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Standalone executable</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/0.5.0/vignettes/executable.Rmd" class="external-link"><code>vignettes/executable.Rmd</code></a></small>
-      <div class="d-none name"><code>executable.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/main/vignettes/executable.qmd" class="external-link"><code>vignettes/executable.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p><code>funkyheatmap</code> is available as a standalone executable.
-The data formats are very similar as the underlying R function. Instead
-of data frames you should pass TSV files and instead of a named list
-(for the palettes) you should pass a yaml file.</p>
-<div class="section level2">
-<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+
+
+
+
+
+    <p><code>funkyheatmap</code> is available as a standalone executable. The data formats are very similar as the underlying R function. Instead of data frames you should pass TSV files and instead of a named list (for the palettes) you should pass a yaml file.</p>
+<section class="level2"><h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">wget</span> https://github.com/funkyheatmap/funkyheatmap/releases/latest/download/executable.zip</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">unzip</span> executable.zip <span class="at">-d</span> funky_heatmap</span></code></pre></div>
-<p>In order for this to work, you need to have Docker and Bash installed
-(nothing else).</p>
-</div>
-<div class="section level2">
-<h2 id="view-help">View help<a class="anchor" aria-label="anchor" href="#view-help"></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/funkyheatmap/funkyheatmap/releases/latest/download/executable.zip</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> executable.zip <span class="at">-d</span> funky_heatmap</span></code></pre></div>
+<p>In order for this to work, you need to have Docker and Bash installed (nothing else).</p>
+</section><section class="level2"><h2 id="view-help">View help<a class="anchor" aria-label="anchor" href="#view-help"></a>
 </h2>
-<p>Run <code>--help</code> to get more information on the arguments of
-funky heatmap.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">./funky_heatmap</span> <span class="at">--help</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<p>Run <code>--help</code> to get more information on the arguments of funky heatmap.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./funky_heatmap</span> <span class="at">--help</span></span></code></pre></div>
+</section><section class="level2"><h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>We also processed the <code>mtcars</code> dataset and stored it as a
-tsv file. To generate a plot with it, use the following commands:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">./funky_heatmap</span> <span class="at">--data</span> funky_heatmap/example_data.tsv <span class="at">--output</span> plot.pdf</span></code></pre></div>
+<p>We also processed the <code>mtcars</code> dataset and stored it as a tsv file. To generate a plot with it, use the following commands:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./funky_heatmap</span> <span class="at">--data</span> funky_heatmap/example_data.tsv <span class="at">--output</span> plot.pdf</span></code></pre></div>
 <pre><code>ℹ Could not find column 'id' in data. Using rownames as 'id'.
 ℹ No column info was provided, assuming all columns in `data` are to be plotted.
 ℹ Column info did not contain column `name`, using `id` to generate it.
@@ -105,17 +96,113 @@ tsv file. To generate a plot with it, use the following commands:</p>
 ℹ Row info did not contain group information, assuming rows are ungrouped.
 ℹ No palettes were provided, trying to automatically assign palettes.
 ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</code></pre>
-</div>
-<div class="section level2">
-<h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
+</section><section class="level2"><h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
-<p>See the <a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap home
-page</a> for more information and documentation.</p>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+<p>See the <a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap home page</a> for more information and documentation.</p>
+</section><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'light-border',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">
