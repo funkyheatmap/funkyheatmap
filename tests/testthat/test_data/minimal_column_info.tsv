@@ -20,6 +20,6 @@
 "categories1"	"Pie 1"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
 "categories2"	"Pie 2"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
 "categories3"	"Pie 3"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
-"image"	"Image 1"	"image"	"image"	NA	NA	NA	NA	"./test/data/"	"png"
-"image_with_ext"	"Image 2"	"image"	"image"	NA	NA	NA	NA	"./test/data/"	NA
+"image"	"Image 1"	"image"	"image"	NA	NA	NA	NA	"tests/testthat/test_data"	"png"
+"image_with_ext"	"Image 2"	"image"	"image"	NA	NA	NA	NA	"tests/testthat/test_data"	NA
 "image_full"	"Image 3"	"image"	"image"	NA	NA	NA	NA	NA	NA

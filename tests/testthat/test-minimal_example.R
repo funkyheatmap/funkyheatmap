@@ -2,8 +2,8 @@ require(dplyr)
 require(jsonlite)
 require(readr)
 
-dir <- "test_data/minimal_"
-# dir <- "tests/testthat/test_data/minimal_"
+# dir <- "test_data/minimal_"
+dir <- "tests/testthat/test_data/minimal_"
 
 data <- readr::read_tsv(paste0(dir, "data.tsv")) %>%
   mutate_at(
@@ -40,7 +40,8 @@ test_that("minimal example funky_heatmap works", {
     column_groups = column_groups,
     row_info = row_info,
     row_groups = row_groups,
-    palettes = palettes
+    palettes = palettes,
+    legends = legends
   )
   expect_true(ggplot2::is.ggplot(g))
   ggsave(nullfile(), g, device = "pdf")
