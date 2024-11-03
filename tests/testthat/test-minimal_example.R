@@ -29,7 +29,16 @@ legends <- list(
     enabled = TRUE,
     geom = "text",
     labels = c("propA", "propB", "propC"),
-    values = c("Property of A", "Property of B", "Property of C")
+    values = c("A", "B", "C")
+  ),
+  list(
+    title = "Image",
+    palette = "black_text",
+    enabled = TRUE,
+    geom = "image",
+    size = 3.88,
+    labels = c("tests/testthat/test_data/one.png", "tests/testthat/test_data/two.png", "tests/testthat/test_data/three.png"),
+    values = c("One", "Two", "Three")
   )
 )
 
