@@ -68,7 +68,8 @@ Suggests:
   knitr,
   quarto,
   testthat (>= 3.0.0),
-  magick
+  magick,
+  readr
 VignetteBuilder: quarto
 RdMacros: Rdpack
 Depends: 
