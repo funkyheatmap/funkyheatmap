@@ -238,7 +238,7 @@ calculate_geom_positions <- function(
         y = (.data$ymin + .data$ymax) / 2
       )
 
-    palette_mids <- map_chr(palettes, function(x) x[round(length(x) / 2)])
+    palette_mids <- map_chr(palettes, function(x) x[ceiling(length(x) / 2)]) #ceiling allows palettes with just one color
 
     column_annotation <-
       col_join %>%
@@ -351,6 +351,9 @@ calculate_geom_positions <- function(
       pct = (.data$rad_end - .data$rad_start) / 2 / pi
     )
     # plot 100% pies as circles
+    # remove color_value from both dataframes, conlift wrt datatype
+    circle_data <- circle_data %>% select(-color_value)
+    pie_data <- pie_data %>% select(-color_value)
     circle_data <- bind_rows(
       circle_data,
       pie_data %>% filter(.data$pct >= (1 - 1e-10)) %>% select(-"label_value")

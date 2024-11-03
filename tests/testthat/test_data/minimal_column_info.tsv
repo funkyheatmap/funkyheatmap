@@ -1,0 +1,25 @@
+"id"	"name"	"geom"	"group"	"palette"	"width"	"label"	"overlay"	"directory"	"extension"
+"id"	""	"text"	"text"	NA	1	NA	NA	NA	NA
+"text1"	"Text 1"	"text"	"text"	NA	3	NA	NA	NA	NA
+"text2"	"Text 2"	"text"	"text"	NA	4	NA	NA	NA	NA
+"numerical1"	"Bar 1"	"bar"	"bar"	"bar"	2	NA	NA	NA	NA
+"numerical2"	"Bar 2"	"bar"	"bar"	"bar"	2	NA	NA	NA	NA
+"numerical3"	"Bar 3"	"bar"	"bar"	"bar"	2	NA	NA	NA	NA
+"numerical1"	"Circle 1"	"circle"	"circle"	"circle"	NA	NA	NA	NA	NA
+"numerical2"	"Circle 2"	"circle"	"circle"	"circle"	NA	NA	NA	NA	NA
+"numerical3"	"Circle 3"	"circle"	"circle"	"circle"	NA	NA	NA	NA	NA
+"numerical1"	"FunkyRect 1"	"funkyrect"	"funkyrect"	"funkyrect"	NA	NA	NA	NA	NA
+"numerical2"	"FunkyRect 2"	"funkyrect"	"funkyrect"	"funkyrect"	NA	NA	NA	NA	NA
+"numerical3"	"FunkyRect 3"	"funkyrect"	"funkyrect"	"funkyrect"	NA	NA	NA	NA	NA
+"numerical1"	"Rect 1"	"rect"	"rect"	"rect"	NA	NA	NA	NA	NA
+"numerical1"	""	"text"	NA	"black6white4"	NA	"numerical1_str"	TRUE	NA	NA
+"numerical2"	"Rect 2"	"rect"	"rect"	"rect"	NA	NA	NA	NA	NA
+"numerical2"	""	"text"	NA	"black6white4"	NA	"numerical2_str"	TRUE	NA	NA
+"numerical3"	"Rect 3"	"rect"	"rect"	"rect"	NA	NA	NA	NA	NA
+"numerical3"	""	"text"	NA	"black6white4"	NA	"numerical3_str"	TRUE	NA	NA
+"categories1"	"Pie 1"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
+"categories2"	"Pie 2"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
+"categories3"	"Pie 3"	"pie"	"pie"	"pie"	NA	NA	NA	NA	NA
+"image"	"Image 1"	"image"	"image"	NA	NA	NA	NA	"./test/data/"	"png"
+"image_with_ext"	"Image 2"	"image"	"image"	NA	NA	NA	NA	"./test/data/"	NA
+"image_full"	"Image 3"	"image"	"image"	NA	NA	NA	NA	NA	NA
