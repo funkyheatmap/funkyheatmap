@@ -2,8 +2,8 @@ require(dplyr)
 require(jsonlite)
 require(readr)
 
-# dir <- "test_data/minimal_"
-dir <- "tests/testthat/test_data/minimal_"
+dir <- "test_data/minimal_"
+# dir <- "tests/testthat/test_data/minimal_"
 
 data <- readr::read_tsv(paste0(dir, "data.tsv")) %>%
   mutate_at(
