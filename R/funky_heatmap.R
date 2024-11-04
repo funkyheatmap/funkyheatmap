@@ -227,7 +227,8 @@ funky_heatmap <- function(
     rect = create_rect_legend,
     pie = create_pie_legend,
     text = create_text_legend,
-    image = create_image_legend
+    image = create_image_legend,
+    bar = create_bar_legend
     # todo: add bar legend
   )
   legend_plots <- list()

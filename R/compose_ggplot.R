@@ -80,6 +80,44 @@ compose_ggplot <- function(
     )
   }
 
+  # PLOT BARS
+  if (nrow(geom_positions$bar_data %||% tibble()) > 0) {
+    # add defaults for optional values
+    geom_positions$bar_data <- geom_positions$bar_data %>%
+      add_column_if_missing(
+        alpha = 1,
+        border = TRUE,
+        border_colour = "black"
+      )
+
+    colour_gradient = scale_fill_gradientn(name = NULL, colours = geom_positions$bar_data$colour[[1]])
+
+    bar_data <- tibble(
+      xmin = geom_positions$bar_data$xmin,
+      xmax = geom_positions$bar_data$xmax,
+      ymin = geom_positions$bar_data$ymin,
+      ymax = geom_positions$bar_data$ymax,
+      alpha = geom_positions$bar_data$alpha,
+      border_colour = geom_positions$bar_data$border_colour,
+    )
+
+    fake_data <- data.frame(x=1:100, val = seq(0, 1, length.out = 100), type = 1)
+
+    g <- g + geom_rect(
+      aes(
+        xmin = bar_data$xmin,
+        xmax = bar_data$xmax,
+        ymin = bar_data$ymin,
+        ymax = bar_data$ymax,
+        fill = val,
+        colour = bar_data$border_colour,
+        alpha = bar_data$alpha
+      ),
+      data = fake_data,
+      linewidth = .25
+      ) + colour_gradient
+  }
+
   # PLOT CIRCLES
   if (nrow(geom_positions$circle_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_circle(

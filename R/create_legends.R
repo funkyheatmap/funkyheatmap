@@ -267,7 +267,53 @@ create_pie_legend <- function(
 }
 
 
+create_bar_legend <- function(
+  title,
+  labels,
+  size,
+  color,
+  position_args = position_arguments(),
+  label_hjust = .5) {
 
+  legend_width <- 5
+  legend_height <- 1
+
+  # title data
+  start_x <- 0
+  start_y <- 0
+  title_df <-
+    tibble(
+      xmin = start_x,
+      xmax = start_x + legend_width,
+      ymin = start_y - 1.5,
+      ymax = start_y - .5,
+      label_value = title,
+      hjust = 0,
+      vjust = 1,
+      fontface = "bold",
+      colour = "black"
+    )
+
+  # label data
+
+  # bar data
+  bar_data <-
+    tibble(
+      labels = list(labels),
+      colour = list(color),
+      xmin = start_x,
+      xmax = start_x + legend_width,
+      ymin = start_y - 2,
+      ymax = start_y - 2 - legend_height,
+    )
+
+  geom_positions <- lst(
+    "text_data" = title_df,
+    "bar_data" = bar_data
+  )
+
+  compose_ggplot(geom_positions, list())
+}
 
 
 
