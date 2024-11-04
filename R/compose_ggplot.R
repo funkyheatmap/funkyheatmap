@@ -90,8 +90,6 @@ compose_ggplot <- function(
         border_colour = "black"
       )
 
-    colour_gradient = scale_fill_gradientn(name = NULL, colours = geom_positions$bar_data$colour[[1]])
-
     bar_data <- tibble(
       xmin = geom_positions$bar_data$xmin,
       xmax = geom_positions$bar_data$xmax,
@@ -101,21 +99,27 @@ compose_ggplot <- function(
       border_colour = geom_positions$bar_data$border_colour,
     )
 
-    fake_data <- data.frame(x=1:100, val = seq(0, 1, length.out = 100), type = 1)
+    fake_data <- data.frame(x=seq(bar_data$xmin,bar_data$xmax, length.out = 500), val = seq(0, 1, length.out = 500))
+    colours <- geom_positions$bar_data$colour[[1]]
+    # g <- g + geom_ribbon(
+    #   aes(
+    #     x = x,
+    #     y = val,
+    #     ymin = bar_data$ymin,
+    #     ymax = bar_data$ymax,
+    #     colour = bar_data$border_colour,
+    #     alpha = bar_data$alpha
+    #   ),
+    #   data = fake_data,
+    #   linewidth = .25
+    #   ) + geom_col(aes(x = x, y = bar_data$ymax, fill = val), data = fake_data) +
+    #   scale_fill_gradient(low = colours[1], high = colours[length(colours)])
 
-    g <- g + geom_rect(
-      aes(
-        xmin = bar_data$xmin,
-        xmax = bar_data$xmax,
-        ymin = bar_data$ymin,
-        ymax = bar_data$ymax,
-        fill = val,
-        colour = bar_data$border_colour,
-        alpha = bar_data$alpha
-      ),
-      data = fake_data,
-      linewidth = .25
-      ) + colour_gradient
+    g <- g + geom_col(aes(x = x, y = bar_data$ymax, fill = val), data = fake_data) +
+        scale_fill_gradient2(low = colours[1], mid = colours[6], high = colours[length(colours)]) +
+        geom_rect(aes(xmin = bar_data$xmin, xmax = bar_data$xmax, ymin = bar_data$ymin, ymax = bar_data$ymax, alpha = 0, colour = bar_data$border_colour))
+
+
   }
 
   # PLOT CIRCLES

@@ -285,8 +285,8 @@ create_bar_legend <- function(
     tibble(
       xmin = start_x,
       xmax = start_x + legend_width,
-      ymin = start_y - 1.5,
-      ymax = start_y - .5,
+      ymin = start_y + 5,
+      ymax = start_y + 1.5,
       label_value = title,
       hjust = 0,
       vjust = 1,
@@ -303,8 +303,8 @@ create_bar_legend <- function(
       colour = list(color),
       xmin = start_x,
       xmax = start_x + legend_width,
-      ymin = start_y - 2,
-      ymax = start_y - 2 - legend_height,
+      ymin = start_y,
+      ymax = start_y - legend_height,
     )
 
   geom_positions <- lst(
