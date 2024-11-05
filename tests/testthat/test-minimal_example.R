@@ -62,7 +62,7 @@ legends <- list(
   )
 )
 
-# test_that("minimal example funky_heatmap works", {
+#  test_that("minimal example funky_heatmap works", {
   g <- funkyheatmap::funky_heatmap(
     data = data,
     column_info = column_info,
@@ -75,4 +75,4 @@ legends <- list(
   expect_true(ggplot2::is.ggplot(g))
   ggsave("minimal_example.pdf", g, device = "pdf")
   ggsave(nullfile(), g, device = "pdf")
-# })
+#  })

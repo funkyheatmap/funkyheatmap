@@ -285,8 +285,8 @@ create_bar_legend <- function(
     tibble(
       xmin = start_x,
       xmax = start_x + legend_width,
-      ymin = start_y + 5,
-      ymax = start_y + 1.5,
+      ymin = start_y - 1.5,
+      ymax = start_y - .5,
       label_value = title,
       hjust = 0,
       vjust = 1,
@@ -299,17 +299,29 @@ create_bar_legend <- function(
   # bar data
   bar_data <-
     tibble(
-      labels = list(labels),
       colour = list(color),
       xmin = start_x,
       xmax = start_x + legend_width,
-      ymin = start_y,
-      ymax = start_y - legend_height,
+      ymin = start_y - 2,
+      ymax = start_y - 2 - legend_height,
+      i = 0
+    )
+
+  # should generate a bunch of small rectangles with different colors
+  n_col <- 500
+  rect_data <- 
+    tibble(
+      xmin = start_x + seq(0, legend_width, length.out = n_col),
+      xmax = start_x + seq(0, legend_width, length.out = n_col) + legend_width / n_col,
+      ymin = start_y - 2,
+      ymax = start_y - 2 - legend_height,
+      i = seq_len(n_col),
+      colour = list(color)
     )
 
   geom_positions <- lst(
     "text_data" = title_df,
-    "bar_data" = bar_data
+    "bar_data" = rbind(bar_data, rect_data)
   )
 
   compose_ggplot(geom_positions, list())
