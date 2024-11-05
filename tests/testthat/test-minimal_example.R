@@ -2,7 +2,7 @@ require(dplyr)
 require(jsonlite)
 require(readr)
 
-DEBUG <- TRUE
+DEBUG <- FALSE
 
 dir <- "test_data/minimal_"
 image_dir_test <- ""
@@ -62,7 +62,7 @@ legends <- list(
   )
 )
 
-#  test_that("minimal example funky_heatmap works", {
+test_that("minimal example funky_heatmap works", {
   g <- funkyheatmap::funky_heatmap(
     data = data,
     column_info = column_info,
@@ -73,6 +73,5 @@ legends <- list(
     legends = legends
   )
   expect_true(ggplot2::is.ggplot(g))
-  ggsave("minimal_example.pdf", g, device = "pdf")
   ggsave(nullfile(), g, device = "pdf")
-#  })
+})
