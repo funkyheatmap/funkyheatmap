@@ -304,7 +304,10 @@ create_bar_legend <- function(
       xmax = start_x + legend_width,
       ymin = start_y - 2,
       ymax = start_y - 2 - legend_height,
-      i = 0
+      alpha = 0,
+      border_colour = "black",
+      linewidth = .25,
+      i = NA
     )
 
   # should generate a bunch of small rectangles with different colors
@@ -316,7 +319,10 @@ create_bar_legend <- function(
       ymin = start_y - 2,
       ymax = start_y - 2 - legend_height,
       i = seq_len(n_col),
-      colour = list(color)
+      colour = list(color),
+      alpha = 1,
+      border_colour = NA,
+      linewidth = 0
     )
 
   geom_positions <- lst(
