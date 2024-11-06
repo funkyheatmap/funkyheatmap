@@ -80,6 +80,28 @@ compose_ggplot <- function(
     )
   }
 
+  # PLOT BARS
+  if (nrow(geom_positions$bar_data %||% tibble()) > 0) {
+    # we do not add defaults for optional values, the NA's are informative and we wish to keep them
+
+    colours <- geom_positions$bar_data$colour[[1]]
+
+    g <- g + geom_rect(
+      aes(
+        xmin = .data$xmin,
+        xmax = .data$xmax,
+        ymin = .data$ymin,
+        ymax = .data$ymax,
+        fill = .data$i,
+        color = .data$border_colour,
+        linewidth = .data$linewidth,
+        alpha = .data$alpha
+      ),
+      data = geom_positions$bar_data
+    ) + scale_fill_gradientn(colors = colours)
+
+  }
+
   # PLOT CIRCLES
   if (nrow(geom_positions$circle_data %||% tibble()) > 0) {
     g <- g + ggforce::geom_circle(
