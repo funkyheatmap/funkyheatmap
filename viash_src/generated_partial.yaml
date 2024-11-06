@@ -1,286 +1,281 @@
-functionality:
-  name: funky_heatmap
-  version: 0.5.0
+name: funky_heatmap
+version: 0.6.0
+description: |-
+  Generate a funky heatmaps for benchmarks
+
+  Allows generating heatmap-like visualisations for benchmark data frames.
+  Funky heatmaps can be fine-tuned by providing annotations of the columns
+  and rows, which allows assigning multiple palettes or geometries or
+  grouping rows and columns together in categories.
+authors:
+- name: Robrecht Cannoodt
+  email: rcannood@gmail.com
+  info:
+    orcid: 0000-0003-3641-729X
+    github: rcannood
+  roles:
+  - Author
+  - Maintainer
+- name: Wouter Saelens
+  email: wouter.saelens@gmail.com
+  info:
+    orcid: 0000-0002-7114-6248
+    github: zouter
+  roles: Author
+- name: Louise Deconinck
+  email: louise.deconinck@gmail.com
+  info:
+    orcid: 0000-0001-8100-6823
+    github: LouiseDck
+  roles: Contributor
+- name: Artuur Couckuyt
+  email: ~
+  info:
+    orcid: 0000-0001-7858-6521
+  roles: Contributor
+- name: Nick Markov
+  email: ~
+  info:
+    orcid: 0000-0002-3659-4387
+    github: mxposed
+  roles: Contributor
+- name: Luke Zappia
+  email: luke@lazappi.id.au
+  info:
+    orcid: 0000-0001-7744-8565
+    github: lazappi
+  roles: Contributor
+arguments:
+- name: --data
   description: |-
-    Generate a funky heatmaps for benchmarks
+    A data frame with items by row and features in the columns. Must
+    contain one column named `"id"`.
+  type: file
+  direction: input
+  required: no
+  example: data.tsv
+  multiple: no
+- name: --column_info
+  description: |-
+    A data frame describing which columns in `data` to plot. This data
+    frame should contain the following columns:
 
-    Allows generating heatmap-like visualisations for benchmark data frames.
-    Funky heatmaps can be fine-tuned by providing annotations of the columns
-    and rows, which allows assigning multiple palettes or geometries or
-    grouping rows and columns together in categories.
-  authors:
-  - name: Robrecht Cannoodt
-    email: rcannood@gmail.com
-    info:
-      orcid: 0000-0003-3641-729X
-      github: rcannood
-    roles:
-    - Author
-    - Maintainer
-  - name: Wouter Saelens
-    email: wouter.saelens@gmail.com
-    info:
-      orcid: 0000-0002-7114-6248
-      github: zouter
-    roles: Author
-  arguments:
-  - name: --data
-    description: |-
-      A data frame with items by row and features in the columns. Must
-      contain one column named `"id"`.
-    type: file
-    direction: input
-    required: no
-    example: data.tsv
-    multiple: no
-  - name: --column_info
-    description: |-
-      A data frame describing which columns in `data` to plot. This data
-      frame should contain the following columns:
+    -   `id` (`character`, required): A column name in `data` to plot.
+        Determines the size of the resulting geoms, and also the color
+        unless `color` is specified.
 
-      -   `id` (`character`, required): A column name in `data` to plot.
-          Determines the size of the resulting geoms, and also the color
-          unless `color` is specified.
+    -   `id_color` (`character`): A column name in `data` to use for the
+        color of the resulting geoms. If `NA`, the `id` column will be
+        used.
 
-      -   `id_color` (`character`): A column name in `data` to use for the
-          color of the resulting geoms. If `NA`, the `id` column will be
-          used.
+    -   `id_size` (`character`): A column name in `data` to use for the
+        size of the resulting geoms. If `NA`, the `id` column will be
+        used.
 
-      -   `id_size` (`character`): A column name in `data` to use for the
-          size of the resulting geoms. If `NA`, the `id` column will be
-          used.
+    -   `name` (`character`): A label for the column. If `NA` or `""`,
+        no label will be plotted. If this column is missing, `id` will
+        be used to generate the `name` column.
 
-      -   `name` (`character`): A label for the column. If `NA` or `""`,
-          no label will be plotted. If this column is missing, `id` will
-          be used to generate the `name` column.
+    -   `geom` (`character`): The geom of the column. Must be one of:
+        `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`
+        or `"image"`. For `"text"`, the corresponding column in `data`
+        must be a `character`. For `"pie"`, the column must be a list of
+        named numeric vectors. For all other geoms, the column must be a
+        `numeric`.
 
-      -   `geom` (`character`): The geom of the column. Must be one of:
-          `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`
-          or `"image"`. For `"text"`, the corresponding column in `data`
-          must be a `character`. For `"pie"`, the column must be a list of
-          named numeric vectors. For all other geoms, the column must be a
-          `numeric`.
+    -   `group` (`character`): The grouping id of each column, must
+        match with `column_groups$group`. If this column is missing or
+        all values are `NA`, columns are assumed not to be grouped.
 
-      -   `group` (`character`): The grouping id of each column, must
-          match with `column_groups$group`. If this column is missing or
-          all values are `NA`, columns are assumed not to be grouped.
+    -   `palette` (`character`): Which palette to colour the geom by.
+        Each value should have a matching value in `palettes$palette`.
 
-      -   `palette` (`character`): Which palette to colour the geom by.
-          Each value should have a matching value in `palettes$palette`.
+    -   `width`: Custom width for this column (default: 1).
 
-      -   `width`: Custom width for this column (default: 1).
+    -   `overlay`: Whether to overlay this column over the previous
+        column. If so, the width of that column will be inherited.
 
-      -   `overlay`: Whether to overlay this column over the previous
-          column. If so, the width of that column will be inherited.
+    -   `legend`: Whether or not to add a legend for this column.
 
-      -   `legend`: Whether or not to add a legend for this column.
+    -   `hjust`: Horizontal alignment of the bar, must be between
+        \[0,1\] (only for `geom = "bar"`).
 
-      -   `hjust`: Horizontal alignment of the bar, must be between
-          \[0,1\] (only for `geom = "bar"`).
+    -   `vjust`: Vertical alignment of the label, must be between
+        \[0,1\] (only for `geom = "text"`).
 
-      -   `vjust`: Vertical alignment of the label, must be between
-          \[0,1\] (only for `geom = "text"`).
+    -   `size`: Size of the label, must be a numeric value (only for
+        `geom = "text"`).
 
-      -   `size`: Size of the label, must be a numeric value (only for
-          `geom = "text"`).
+    -   `label`: Which column to use as a label (only for
+        `geom = "text"`).
 
-      -   `label`: Which column to use as a label (only for
-          `geom = "text"`).
+    -   `directory`: Which directory to use to find the images (only for
+        `geom = "image"`).
 
-      -   `directory`: Which directory to use to find the images (only for
-          `geom = "image"`).
+    -   `extension`: The extension of the images (only for
+        `geom = "image"`).
 
-      -   `extension`: The extension of the images (only for
-          `geom = "image"`).
+    -   `draw_outline`: Whether or not to draw bounding guides (only for
+        `geom == "bar"`). Default: `TRUE`.
 
-      -   `draw_outline`: Whether or not to draw bounding guides (only for
-          `geom == "bar"`). Default: `TRUE`.
+    -   `options` (`list` or `json`): Any of the options above. Any
+        values in this column will be spread across the other columns.
+        This is useful for not having to provide a data frame with 1000s
+        of columns. This column can be a json string.
+  type: file
+  direction: input
+  required: no
+  example: column_info.tsv
+  multiple: no
+- name: --row_info
+  description: |-
+    A data frame describing the rows of `data`. This data should contain
+    two columns:
 
-      -   `options` (`list` or `json`): Any of the options above. Any
-          values in this column will be spread across the other columns.
-          This is useful for not having to provide a data frame with 1000s
-          of columns. This column can be a json string.
-    type: file
-    direction: input
-    required: no
-    example: column_info.tsv
-    multiple: no
-  - name: --row_info
-    description: |-
-      A data frame describing the rows of `data`. This data should contain
-      two columns:
+    -   `id` (`character`): Corresponds to the column `data$id`.
 
-      -   `id` (`character`): Corresponds to the column `data$id`.
+    -   `group` (`character`): The group of the row. If all are `NA`,
+        the rows will not be split up into groups.
+  type: file
+  direction: input
+  required: no
+  example: row_info.tsv
+  multiple: no
+- name: --column_groups
+  description: |-
+    A data frame describing of how to group the columns in
+    `column_info`. Can consist of the following columns:
 
-      -   `group` (`character`): The group of the row. If all are `NA`,
-          the rows will not be split up into groups.
-    type: file
-    direction: input
-    required: no
-    example: row_info.tsv
-    multiple: no
-  - name: --column_groups
-    description: |-
-      A data frame describing of how to group the columns in
-      `column_info`. Can consist of the following columns:
+    -   `group` (`character`): The corresponding group in
+        `column_info$group`.
 
-      -   `group` (`character`): The corresponding group in
-          `column_info$group`.
+    -   `palette` (`character`, optional): The palette used to colour
+        the column group backgrounds.
 
-      -   `palette` (`character`, optional): The palette used to colour
-          the column group backgrounds.
+    -   `level1` (`character`): The label at the highest level.
 
-      -   `level1` (`character`): The label at the highest level.
+    -   `level2` (`character`, optional): The label at the middle level.
 
-      -   `level2` (`character`, optional): The label at the middle level.
+    -   `level3` (`character`, optional): The label at the lowest level
+        (not recommended).
+  type: file
+  direction: input
+  required: no
+  example: column_groups.tsv
+  multiple: no
+- name: --row_groups
+  description: |-
+    A data frame describing of how to group the rows in `row_info`. Can
+    consist of the following columns:
 
-      -   `level3` (`character`, optional): The label at the lowest level
-          (not recommended).
-    type: file
-    direction: input
-    required: no
-    example: column_groups.tsv
-    multiple: no
-  - name: --row_groups
-    description: |-
-      A data frame describing of how to group the rows in `row_info`. Can
-      consist of the following columns:
+    -   `group` (`character`): The corresponding group in
+        `row_info$group`.
 
-      -   `group` (`character`): The corresponding group in
-          `row_info$group`.
+    -   `level1` (`character`): The label at the highest level.
 
-      -   `level1` (`character`): The label at the highest level.
+    -   `level2` (`character`, optional): The label at the middle level.
 
-      -   `level2` (`character`, optional): The label at the middle level.
+    -   `level3` (`character`, optional): The label at the lowest level
+        (not recommended).
+  type: file
+  direction: input
+  required: no
+  example: row_groups.tsv
+  multiple: no
+- name: --palettes
+  description: |-
+    A named list of palettes. Each entry in `column_info$palette` should
+    have an entry in this object. If an entry is missing, the type of
+    the column will be inferred (categorical or numerical) and one of
+    the default palettes will be applied. Alternatively, the name of one
+    of the standard palette names can be used:
 
-      -   `level3` (`character`, optional): The label at the lowest level
-          (not recommended).
-    type: file
-    direction: input
-    required: no
-    example: row_groups.tsv
-    multiple: no
-  - name: --palettes
-    description: |-
-      A named list of palettes. Each entry in `column_info$palette` should
-      have an entry in this object. If an entry is missing, the type of
-      the column will be inferred (categorical or numerical) and one of
-      the default palettes will be applied. Alternatively, the name of one
-      of the standard palette names can be used:
+    -   `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`,
+        `"Greens"`
 
-      -   `numerical`: `"Greys"`, `"Blues"`, `"Reds"`, `"YlOrBr"`,
-          `"Greens"`
+    -   `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
+  type: file
+  direction: input
+  required: no
+  example: palettes.yaml
+  multiple: no
+- name: --legends
+  description: |-
+    A list of legends to add to the plot. Each entry in
+    `column_info$legend` should have a corresponding entry in this
+    object. Each entry should be a list with the following names:
 
-      -   `categorical`: `"Set3"`, `"Set1"`, `"Set2"`, `"Dark2"`
-    type: file
-    direction: input
-    required: no
-    example: palettes.yaml
-    multiple: no
-  - name: --legends
-    description: |-
-      A list of legends to add to the plot. Each entry in
-      `column_info$legend` should have a corresponding entry in this
-      object. Each entry should be a list with the following names:
+    -   `palette` (`character`): The palette to use for the legend. Must
+        be a value in `palettes`.
 
-      -   `palette` (`character`): The palette to use for the legend. Must
-          be a value in `palettes`.
+    -   `geom` (`character`): The geom of the legend. Must be one of:
+        `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`,
+        `"image"`.
 
-      -   `geom` (`character`): The geom of the legend. Must be one of:
-          `"funkyrect"`, `"circle"`, `"rect"`, `"bar"`, `"pie"`, `"text"`,
-          `"image"`.
+    -   `title` (`character`, optional): The title of the legend.
+        Defaults to the palette name.
 
-      -   `title` (`character`, optional): The title of the legend.
-          Defaults to the palette name.
+    -   `enabled` (`logical`, optional): Whether or not to add the
+        legend. Defaults to `TRUE`.
 
-      -   `enabled` (`logical`, optional): Whether or not to add the
-          legend. Defaults to `TRUE`.
+    -   `labels` (`character`, optional): The labels to use for the
+        legend. The defaults depend on the selected geom.
 
-      -   `labels` (`character`, optional): The labels to use for the
-          legend. The defaults depend on the selected geom.
+    -   `size` (`numeric`, optional): The size of the listed geoms. The
+        defaults depend on the selected geom.
 
-      -   `size` (`numeric`, optional): The size of the listed geoms. The
-          defaults depend on the selected geom.
+    -   `color` (`character`, optional): The color of the listed geoms.
+        The defaults depend on the selected geom.
 
-      -   `color` (`character`, optional): The color of the listed geoms.
-          The defaults depend on the selected geom.
+    -   `values` (optional): Used as values for the text and image
+        geoms.
 
-      -   `values` (optional): Used as values for the text and image
-          geoms.
+    -   `label_width` (`numeric`, optional): The width of the labels
+        (only when geom is `text` or `pie`). Defaults to `1` for text
+        and `2` for images.
 
-      -   `label_width` (`numeric`, optional): The width of the labels
-          (only when geom is `text` or `pie`). Defaults to `1` for text
-          and `2` for images.
+    -   `value_width` (`numeric`, optional): The width of the values
+        (only for `geom = "text"`). Defaults to `2`.
 
-      -   `value_width` (`numeric`, optional): The width of the values
-          (only for `geom = "text"`). Defaults to `2`.
-
-      -   `label_hjust` (`numeric`, optional): The horizontal alignment of
-          the labels (only when geom is `circle`, `rect` or `funkyrect`).
-          Defaults to `0.5`.
-    type: file
-    direction: input
-    required: no
-    example: legends.tsv
-    multiple: no
-  - name: --position_args
-    description: |-
-      Sets parameters that affect positioning within a plot, such as row
-      and column dimensions, annotation details, and the expansion
-      directions of the plot. See `position_arguments()` for more
-      information.
-    type: file
-    direction: input
-    required: no
-    example: position_args.tsv
-    multiple: no
-  - name: --scale_column
-    description: Whether or not to apply min-max scaling to each numerical column.
-    type: boolean
-    direction: input
-    required: no
-    default: yes
-    multiple: no
-  - name: --add_abc
-    description: |-
-      Whether or not to add subfigure labels to the different columns
-      groups.
-    type: boolean
-    direction: input
-    required: no
-    default: yes
-    multiple: no
-  - name: --col_annot_offset
-    description: |-
-      DEPRECATED: use
-      `position_args = position_arguments(col_annot_offset = ...)`
-      instead.
-    type: double
-    direction: input
-    required: no
-    multiple: no
-  - name: --col_annot_angle
-    description: |-
-      DEPRECATED: use
-      `position_args = position_arguments(col_annot_angle = ...)` instead.
-    type: file
-    direction: input
-    required: no
-    example: col_annot_angle.tsv
-    multiple: no
-  - name: --expand
-    description: |-
-      DEPRECATED: use `position_args = position_arguments(expand_* = ...)`
-      instead.
-    type: double
-    direction: input
-    required: no
-    multiple: yes
-    multiple_sep: ':'
-  - name: --output
-    description: A funky heatmap.
-    type: file
-    direction: output
-    required: yes
-    example: output.pdf
-    multiple: no
+    -   `label_hjust` (`numeric`, optional): The horizontal alignment of
+        the labels (only when geom is `circle`, `rect` or `funkyrect`).
+        Defaults to `0.5`.
+  type: file
+  direction: input
+  required: no
+  example: legends.tsv
+  multiple: no
+- name: --position_args
+  description: |-
+    Sets parameters that affect positioning within a plot, such as row
+    and column dimensions, annotation details, and the expansion
+    directions of the plot. See `position_arguments()` for more
+    information.
+  type: file
+  direction: input
+  required: no
+  example: position_args.tsv
+  multiple: no
+- name: --scale_column
+  description: Whether or not to apply min-max scaling to each numerical column.
+  type: boolean
+  direction: input
+  required: no
+  default: yes
+  multiple: no
+- name: --add_abc
+  description: |-
+    Whether or not to add subfigure labels to the different columns
+    groups.
+  type: boolean
+  direction: input
+  required: no
+  default: yes
+  multiple: no
+- name: --output
+  description: A funky heatmap.
+  type: file
+  direction: output
+  required: yes
+  example: output.pdf
+  multiple: no

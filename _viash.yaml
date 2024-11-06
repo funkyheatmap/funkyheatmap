@@ -1,1 +1,9 @@
-viash_version: 0.8.5
+name: funkyheatmap
+version: 0.6.0
+organization: funkyheatmap
+links:
+  docker_registry: ghcr.io
+  repository: https://github.com/funkyheatmap/funkyheatmap/
+
+viash_version: 0.9.0
+source: viash_src

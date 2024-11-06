@@ -15,6 +15,8 @@
 #' )
 #' verify_data(data)
 verify_data <- function(data) {
+  data <- if_list_to_tibble(data)
+
   if (is.matrix(data)) {
     data <- as.data.frame(data)
   }

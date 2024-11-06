@@ -1,27 +1,23 @@
 # this config inherits from a partial yaml containing
 # all of the arguments.
 __merge__: generated_partial.yaml
-functionality:
-  name: funky_heatmap
-  description: |-
-    Generate a funky heatmaps for benchmarks
+name: funky_heatmap
+description: |-
+  Generate a funky heatmaps for benchmarks
 
-    Allows generating heatmap-like visualisations for benchmark data frames.
-    Funky heatmaps can be fine-tuned by providing annotations of the columns
-    and rows, which allows assigning multiple palettes or geometries or
-    grouping rows and columns together in categories.
-  resources:
-    - type: r_script
-      path: script.R
-  test_resources:
-    - type: r_script
-      path: test.R
-platforms:
+  Allows generating heatmap-like visualisations for benchmark data frames.
+  Funky heatmaps can be fine-tuned by providing annotations of the columns
+  and rows, which allows assigning multiple palettes or geometries or
+  grouping rows and columns together in categories.
+resources:
+  - type: r_script
+    path: script.R
+test_resources:
+  - type: r_script
+    path: test.R
+engines:
   - type: docker
     image: eddelbuettel/r2u:22.04
-    target_registry: ghcr.io
-    target_organization: dynverse
-    target_image_source: https://github.com/funkyheatmap/funkyheatmap/
     setup:
       - type: r
         github: funkyheatmap/funkyheatmap
@@ -29,4 +25,6 @@ platforms:
           - readr
           - yaml
           - processx
+runners:
+  - type: executable
   - type: nextflow
