@@ -48,12 +48,10 @@ arg_tib <-
     direction = ifelse(name == "output", "output", "input"),
     required = name %in% c("input", "output"),
     example = map2(name, type, function(name, type) {
-      if (name == "palettes") {
-        paste0(name, ".yaml")
-      } else if (name == "output") {
+      if (name == "output") {
         paste0(name, ".pdf")
       } else if (type == "file") {
-        paste0(name, ".tsv")
+        paste0(name, ".yaml")
       } else {
         NA_character_
       }
