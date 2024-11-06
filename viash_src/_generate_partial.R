@@ -33,7 +33,8 @@ arg_desc <- html2md(data$sections[[1]]$contents)
 arg_ix <- grep("^[^: ]", arg_desc)
 arg_tib <-
   map2_df(arg_ix, c(arg_ix[-1] - 1, length(arg_desc)), function(from, to) {
-    aname <- arg_desc[[from]]
+    # remove links from argument names
+    aname <- arg_desc[[from]] |> stringr::str_replace("\\[\\]\\(#.*", "")
     adesc <- arg_desc[seq(from + 2, to)] %>% sub("^....", "", .)
     tibble(name = aname, description = stringr::str_trim(paste(adesc, collapse = "\n")))
   }) %>%
@@ -67,14 +68,15 @@ arg_tib <-
     multiple = name %in% c("expand"),
     multiple_sep = ifelse(multiple, ":", NA_character_),
     name = paste0("--", name)
-  )
+  ) |>
+  filter(!grepl("DEPRECATED", description))
 
 arguments <- purrr::transpose(arg_tib) %>% map(function(x) {
   x[map_lgl(x, function(y) length(y) >= 1 && !is.na(y[[1]]))]
 })
 
 # generate authors
-role_map <- c(aut = "Author", cre = "Maintainer")
+role_map <- c(aut = "Author", cre = "Maintainer", ctb = "Contributor")
 authors <- map(pkg$desc$get_authors(), function(aut) {
   info <- as.list(aut$comment)
   names(info) <- tolower(names(info))
@@ -88,15 +90,11 @@ authors <- map(pkg$desc$get_authors(), function(aut) {
 
 # create config
 config <- list(
-  functionality = list(
-    name = data$name,
-    version = pkg$version,
-    description = description,
-    authors = authors,
-    arguments = arguments
-  )
+  name = data$name,
+  version = pkg$version,
+  description = description,
+  authors = authors,
+  arguments = arguments
 )
 
 yaml::write_yaml(config, "viash_src/generated_partial.yaml")
-
-
