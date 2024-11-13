@@ -4,7 +4,8 @@ vignette: >
   %\VignetteIndexEntry{Demo with mtcars}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
-resources: images
+resources:
+  - "images/*.png"
 editor_options: 
   chunk_output_type: console
 knitr:
