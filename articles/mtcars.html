@@ -10,9 +10,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="mtcars_files/libs/quarto-html/popper.min.js"></script><script src="mtcars_files/libs/quarto-html/tippy.umd.min.js"></script><link href="mtcars_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="mtcars_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Demo with mtcars">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Demo with mtcars">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">funkyheatmap</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,32 +51,31 @@
 
 
   </div>
-</nav><div class="container template-quarto">
+</nav><div class="container template-article">
+
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Demo with mtcars</h1>
-
-
-
-
-      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/main/vignettes/mtcars.qmd" class="external-link"><code>vignettes/mtcars.qmd</code></a></small>
-      <div class="d-none name"><code></code></div>
+            
+      
+      <small class="dont-index">Source: <a href="https://github.com/funkyheatmap/funkyheatmap/blob/main/vignettes/mtcars.Rmd" class="external-link"><code>vignettes/mtcars.Rmd</code></a></small>
+      <div class="d-none name"><code>mtcars.Rmd</code></div>
     </div>
 
-
-
-
-
-
-    <!--
+    
+    
+<!--
 rerun this to update tribble formatting:
 ```r
 dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 ```
---><p>Load data</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+-->
+<p>Load data</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -91,44 +88,36 @@ dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"images/ice.png"</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"images/electric.png"</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-<p>We can plot this data frame without any additional formatting, though it doesn’t look very nice:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<p>We can plot this data frame without any additional formatting, though
+it doesn’t look very nice:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ No column info was provided, assuming all columns in `data` are to be plotted.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain column `name`, using `id` to generate it.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain information on which columns to plot, inferring from `data` types.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain group information, assuming columns are ungrouped.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain a column called 'width', generating options based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; ℹ Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span></span>
-<span><span class="co">#&gt; ℹ No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
-<span><span class="co">#&gt; ℹ Row info did not contain group information, assuming rows are ungrouped.</span></span>
-<span><span class="co">#&gt; ℹ No palettes were provided, trying to automatically assign palettes.</span></span>
-<span><span class="co">#&gt; ℹ Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
-<span><span class="co">#&gt; ℹ No legends were provided, trying to automatically infer legends.</span></span>
-<span><span class="co">#&gt; ℹ Some palettes were not used in the column info, adding legends for them.</span></span>
-<span><span class="co">#&gt; ℹ Legend 1 did not contain a geom, inferring from the column info.</span></span>
-<span><span class="co">#&gt; ℹ Legend 1 did not contain labels, inferring from the geom.</span></span>
-<span><span class="co">#&gt; ℹ Legend 1 did not contain size, inferring from the labels.</span></span>
-<span><span class="co">#&gt; ℹ Legend 1 did not contain color, inferring from the palette.</span></span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No column info was provided, assuming all columns in `data` are to be plotted.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain column `name`, using `id` to generate it.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain information on which columns to plot, inferring from `data` types.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain group information, assuming columns are ungrouped.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'palette', generating palettes based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'width', generating options based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Column info did not contain a column called 'legend', generating options based on the 'geom' column.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No row info was provided, assuming all rows in `data` are to be plotted.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Row info did not contain group information, assuming rows are ungrouped.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No palettes were provided, trying to automatically assign palettes.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Palette named 'numerical_palette' was not defined. Assuming palette is numerical. Automatically selected palette 'Blues'.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain labels, inferring from the geom.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain size, inferring from the labels.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain color, inferring from the palette.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="mtcars_files/figure-html/heatmap_preview-1.png" width="628"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>By defining a few additional formatting parameters, we can get the plot to look much nicer.</p>
-<section class="level2"><h2 id="column-info">Column info<a class="anchor" aria-label="anchor" href="#column-info"></a>
+<p><img src="mtcars_files/figure-html/heatmap_preview-1.png" width="628.8"></p>
+<p>By defining a few additional formatting parameters, we can get the
+plot to look much nicer.</p>
+<div class="section level2">
+<h2 id="column-info">Column info<a class="anchor" aria-label="anchor" href="#column-info"></a>
 </h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">column_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">id</span>,     <span class="op">~</span><span class="va">group</span>,         <span class="op">~</span><span class="va">name</span>,                      <span class="op">~</span><span class="va">geom</span>,        <span class="op">~</span><span class="va">palette</span>,    <span class="op">~</span><span class="va">options</span>,</span>
 <span>  <span class="st">"id"</span>,    <span class="cn">NA</span>,             <span class="st">""</span>,                         <span class="st">"text"</span>,       <span class="cn">NA</span>,          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
@@ -142,13 +131,11 @@ dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 <span>  <span class="st">"vs"</span>,    <span class="st">"group2"</span>,       <span class="st">"Engine"</span>,                   <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="st">"am"</span>,    <span class="st">"group2"</span>,       <span class="st">"Transmission"</span>,             <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="st">"gear"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Forward gears"</span>,          <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  <span class="st">"carb"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Carburetors"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span><span class="co">#,</span></span>
-<span>  <span class="co">#"type",  "group2",       "Type of engine",           "image",      NA,          lst()</span></span>
+<span>  <span class="st">"carb"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Carburetors"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"type"</span>,  <span class="st">"group2"</span>,       <span class="st">"Type of engine"</span>,           <span class="st">"image"</span>,      <span class="cn">NA</span>,          <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</div>
 <p>Define column groups</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">column_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span> <span class="co"># tribble_start</span></span>
 <span>  <span class="op">~</span><span class="va">Category</span>,  <span class="op">~</span><span class="va">group</span>,         <span class="op">~</span><span class="va">palette</span>,</span>
 <span>  <span class="st">"Overall"</span>,  <span class="st">"overall"</span>,      <span class="st">"overall"</span>,</span>
@@ -156,19 +143,19 @@ dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 <span>  <span class="st">"Group 2"</span>,  <span class="st">"group2"</span>,       <span class="st">"palette2"</span></span>
 <span><span class="op">)</span> <span class="co"># tribble_end</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="row-info">Row info<a class="anchor" aria-label="anchor" href="#row-info"></a>
+<div class="section level2">
+<h2 id="row-info">Row info<a class="anchor" aria-label="anchor" href="#row-info"></a>
 </h2>
 <p>Determine method grouping</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">row_info</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute</a></span><span class="op">(</span><span class="va">id</span>, group <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span></span>
 <span><span class="va">row_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Group <span class="op">=</span> <span class="st">"Test"</span>, group <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="palettes">Palettes<a class="anchor" aria-label="anchor" href="#palettes"></a>
+<div class="section level2">
+<h2 id="palettes">Palettes<a class="anchor" aria-label="anchor" href="#palettes"></a>
 </h2>
 <p>Determine palettes</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">palettes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">palette</span>,             <span class="op">~</span><span class="va">colours</span>,</span>
 <span>  <span class="st">"overall"</span>,            <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Greys"</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">101</span><span class="op">)</span>,</span>
@@ -176,11 +163,11 @@ dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 <span>  <span class="st">"palette2"</span>,           <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"Reds"</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">8</span><span class="op">:</span><span class="op">-</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">101</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="funky-heatmap">Funky heatmap<a class="anchor" aria-label="anchor" href="#funky-heatmap"></a>
+<div class="section level2">
+<h2 id="funky-heatmap">Funky heatmap<a class="anchor" aria-label="anchor" href="#funky-heatmap"></a>
 </h2>
 <p>Generate funky heatmap</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  column_info <span class="op">=</span> <span class="va">column_info</span>,</span>
@@ -194,130 +181,24 @@ dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
 <span>  <span class="op">)</span>,</span>
 <span>  add_abc <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ No legends were provided, trying to automatically infer legends.</span></span>
-<span><span class="co">#&gt; ℹ Some palettes were not used in the column info, adding legends for them.</span></span>
-<span><span class="co">#&gt; ℹ Legend 1 did not contain a geom, inferring from the column info.</span></span>
-<span><span class="co">#&gt; ! Legend 1 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
-<span><span class="co">#&gt; ℹ Legend 2 did not contain a geom, inferring from the column info.</span></span>
-<span><span class="co">#&gt; ! Legend 2 has geom 'bar', which is not yet implemented. Disabling for now.</span></span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No legends were provided, trying to automatically infer legends.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Some palettes were not used in the column info, adding legends for them.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 1 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 1 has geom 'bar', which is not yet implemented. Disabling for now.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Legend 2 did not contain a geom, inferring from the column info.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Legend 2 has geom 'bar', which is not yet implemented. Disabling for now.</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="mtcars_files/figure-html/heatmap-1.png" width="708"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><code>funkyheatmap</code> automatically recommends a width and height for the generated plot. To save your plot, run:</p>
+<p><img src="mtcars_files/figure-html/heatmap-1.png" width="734.4"></p>
+<p><code>funkyheatmap</code> automatically recommends a width and height
+for the generated plot. To save your plot, run:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span><span class="st">"path_to_plot.pdf"</span>, <span class="va">g</span>, device <span class="op">=</span> <span class="va">cairo_pdf</span>, width <span class="op">=</span> <span class="va">g</span><span class="op">$</span><span class="va">width</span>, height <span class="op">=</span> <span class="va">g</span><span class="op">$</span><span class="va">height</span><span class="op">)</span></span></code></pre></div>
-</section><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'light-border',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config);
-  }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
-      });
-    }
-  }
-});
-</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
+
 
 
     <footer><div class="pkgdown-footer-left">
@@ -325,7 +206,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
