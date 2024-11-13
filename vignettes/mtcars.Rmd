@@ -4,8 +4,6 @@ vignette: >
   %\VignetteIndexEntry{Demo with mtcars}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-resources:
-  - "images/*.png"
 ---
 
 
@@ -36,7 +34,7 @@ data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg)) %>%
   head(20) %>%
-  mutate(type = c(rep("ice.png", 10), rep("electric.png", 10)))
+  mutate(type = c(rep("images/ice.png", 10), rep("images/electric.png", 10)))
 ```
 
 We can plot this data frame without any additional formatting, though it doesn't look very nice:
