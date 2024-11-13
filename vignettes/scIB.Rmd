@@ -3,16 +3,16 @@ title: "Recreating the scIB figures"
 vignette: >
   %\VignetteIndexEntry{Recreating the scIB figures}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{quarto::html}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: ../inst/REFERENCES.bib
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "#>"
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ## Introduction
 

@@ -36,6 +36,8 @@ verify_row_groups <- function(row_groups, row_info) {
     return(NULL)
   }
 
+  row_groups <- if_list_to_tibble(row_groups)
+
   assert_that(
     is.data.frame(row_groups),
     row_groups %has_name% "group",
