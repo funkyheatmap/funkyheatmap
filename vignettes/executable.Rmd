@@ -3,9 +3,7 @@ title: "Standalone executable"
 vignette: >
   %\VignetteIndexEntry{Standalone executable}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{quarto::html}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 `funkyheatmap` is available as a standalone executable. The data formats
