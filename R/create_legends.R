@@ -355,16 +355,85 @@ create_text_legend <- function(
 
 
 
-# #' Create an image legend
-# #' @inheritParams create_generic_geom_legend
-# create_image_legend <- function(
-#   title,
-#   labels,
-#   size,
-#   color,
-#   values,
-#   position_args = position_arguments()
-# ) {
-#   warning("Image legend not yet implemented.")
-#   NULL
-# }
+#' Create an image legend
+#' @inheritParams create_generic_geom_legend
+create_image_legend <- function(
+  title,
+  labels,
+  size,
+  color,
+  values,
+  position_args = position_arguments(),
+  label_width = 1,
+  value_width = 2
+) {
+
+  start_x <- 0
+  start_y <- 0
+  row_height <- position_args$row_height
+
+  data_df <-
+    tibble(
+      name = labels,
+      value = values,
+      colour = color,
+      size = size,
+      vjust = .5,
+      hjust = 0,
+      lab_y = -row_height * (seq_along(labels) - 1)
+    )
+
+  text_data <- bind_rows(
+    tibble(
+      x = start_x,
+      y = start_y - 1,
+      label_value = title,
+      hjust = 0,
+      vjust = 1,
+      fontface = "bold",
+      colour = "black"
+    ),
+    data_df %>%
+      transmute(
+        x = start_x + 2 * .5 + label_width,
+        y = start_y - 2 + .data$lab_y,
+        label_value = as.character(.data$value),
+        .data$vjust,
+        .data$hjust,
+        .data$colour
+      )
+  ) %>%
+    mutate(
+      # todo: need to find a better width
+      xwidth = 2 * .5 + value_width + label_width,
+      yheight = row_height,
+      xmin = .data$x - .data$xwidth * .data$hjust,
+      xmax = .data$x + .data$xwidth * (1 - .data$hjust),
+      ymin = .data$y - .data$yheight * .data$vjust,
+      ymax = .data$y + .data$yheight * (1 - .data$vjust)
+    )
+
+  size <- min(2 * .5 + label_width, row_height)
+  image_data <- data_df %>%
+    transmute(
+      path = .data$name,
+      vjust = 0.5,
+      hjust = 1,
+      lab_y = -row_height * (seq_along(labels) - 1),
+      x = start_x + 2 * .5 + label_width,
+      y = start_y - 2 + .data$lab_y,
+      width = 2 * .5 + label_width,
+      height = row_height,
+      xmin = x - width * hjust,
+      ymin = y - height * vjust,
+
+    )
+
+  geom_positions <- lst(
+    "img_data" = image_data,
+    "text_data" = text_data
+  )
+
+  compose_ggplot(geom_positions, list())
+
+}
