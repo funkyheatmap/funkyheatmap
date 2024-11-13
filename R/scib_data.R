@@ -8,8 +8,9 @@
 #' It is used in the scIB vignette (`vignette("scIB")`) to reproduce
 #' the overall summary figure in Luecken et al. 2021.
 #'
-#' @references
+#' @references{
 #' \insertRef{scib_Luecken2021}{funkyheatmap}
+#' }
 #'
 #' @docType data
 "scib_summary"

@@ -4,42 +4,30 @@ library(funkyheatmap, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
-  "data" = "data.tsv",
-  "column_info" = NULL,
-  "row_info" = NULL,
-  "column_groups" = NULL,
-  "row_groups" = NULL,
-  "palettes" = NULL,
-  "legends" = NULL,
-  "position_args" = NULL,
-  "scale_column" = TRUE,
-  "add_abc" = TRUE,
-  "col_annot_offset" = NULL,
-  "col_annot_angle" = NULL,
-  "expand" = NULL,
-  "output" = "output.pdf"
+  ...
 )
 ## VIASH END
 
-# read in tsv files and preprocess other inputs
-preproc <- list(
-  data = readr::read_tsv,
-  column_info = readr::read_tsv,
-  row_info = readr::read_tsv,
-  column_groups = readr::read_tsv,
-  row_groups = readr::read_tsv,
-  palettes = yaml::read_yaml,
-  legends = yaml::read_yaml,
-  position_args = yaml::read_yaml,
-  expand = function(x) {
-    setNames(x, c("xmin", "xmax", "ymin", "ymax"))
-  }
-)
-
 for (name in names(par)) {
-  if (!is.null(par[[name]]) && name %in% names(preproc)) {
-    cat("Applying preproc function on ", name, "\n", sep = "")
-    par[[name]] <- preproc[[name]](par[[name]])
+  if (!is.null(par[[name]]) && is.character(par[[name]]) && file.exists(par[[name]])) {
+    fun <-
+      if (grepl("\\.tsv$", par[[name]])) {
+        readr::read_tsv
+      } else if (grepl("\\.yaml$", par[[name]])) {
+        yaml::read_yaml
+      } else if (grepl("\\.csv$", par[[name]])) {
+        readr::read_csv
+      } else if (grepl("\\.json$", par[[name]])) {
+        jsonlite::fromJSON
+      } else {
+        NULL
+      }
+
+    if (!is.null(fun)) {
+      ext <- tools::file_ext(par[[name]])
+      cat("Trying to parse argument ", name, " as a ", ext, " (", par[[name]], ")\n", sep = "")
+      par[[name]] <- fun(par[[name]])
+    }
   }
 }
 

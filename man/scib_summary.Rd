@@ -20,6 +20,8 @@ It is used in the scIB vignette (\code{vignette("scIB")}) to reproduce
 the overall summary figure in Luecken et al. 2021.
 }
 \references{
+{
 \insertRef{scib_Luecken2021}{funkyheatmap}
+}
 }
 \keyword{datasets}

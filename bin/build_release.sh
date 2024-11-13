@@ -1,16 +1,15 @@
 #!/bin/bash
 
-# make executable zip
-viash build viash_src/config.vsh.yaml -p docker -o bin/docker --setup cachedbuildifneedbe
-bin/docker/funky_heatmap ---setup pushifneedbe
-quarto render vignettes/executable.Rmd --output - --to gfm > bin/docker/README.md
-cp bin/data.tsv bin/docker/example_data.tsv
-pushd bin/docker; zip ../executable.zip *; popd
-# zip bin/executable.zip bin/docker/*
+viash ns build --setup cb --parallel
+
+# make executable
+EXE_DIR=target/executable/funky_heatmap
+$EXE_DIR/funky_heatmap ---setup push ---engine docker
+quarto render vignettes/executable.qmd --output - --to gfm > $EXE_DIR/README.md
+cp bin/data.tsv $EXE_DIR/example_data.tsv
+pushd $EXE_DIR; zip ../executable.zip *; popd
 
 # make nextflow module
-viash build viash_src/config.vsh.yaml -p nextflow -o bin/nextflow
-quarto render vignettes/nextflow.Rmd --output - --to gfm > bin/nextflow/README.md
-cp bin/data.tsv bin/nextflow/example_data.tsv
-# zip bin/nextflow.zip bin/nextflow/*
-pushd bin/nextflow; zip ../nextflow.zip *; popd
+NF_DIR=target/nextflow/funky_heatmap
+cp bin/data.tsv $NF_DIR/example_data.tsv
+pushd $NF_DIR; zip ../nextflow.zip *; popd
