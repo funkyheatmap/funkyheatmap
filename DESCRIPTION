@@ -69,7 +69,7 @@ Suggests:
   quarto,
   testthat (>= 3.0.0),
   magick
-VignetteBuilder: quarto
+VignetteBuilder: knitr, quarto
 RdMacros: Rdpack
 Depends: 
   R (>= 2.10)
