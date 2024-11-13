@@ -3,9 +3,7 @@ title: "Standalone executable"
 vignette: >
   %\VignetteIndexEntry{Standalone executable}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{quarto::html}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 `funkyheatmap` is available as a standalone executable. The data formats
@@ -17,7 +15,7 @@ you should pass a yaml file.
 
 ```bash
 wget https://github.com/funkyheatmap/funkyheatmap/releases/latest/download/executable.zip
-unzip executable.zip -d funky_heatmap
+unzip executable.zip -d bin
 ```
 
 In order for this to work, you need to have Docker and Bash installed (nothing else).
@@ -28,7 +26,7 @@ In order for this to work, you need to have Docker and Bash installed (nothing e
 Run `--help` to get more information on the arguments of funky heatmap.
 
 ```bash
-./funky_heatmap --help
+bin/funky_heatmap --help
 ```
 
 ## Example
@@ -37,7 +35,7 @@ We also processed the `mtcars` dataset and stored it as a tsv file.
 To generate a plot with it, use the following commands:
 
 ```bash
-./funky_heatmap --data funky_heatmap/example_data.tsv --output plot.pdf
+bin/funky_heatmap --data funky_heatmap/example_data.tsv --output plot.pdf
 ```
 
     ℹ Could not find column 'id' in data. Using rownames as 'id'.

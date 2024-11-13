@@ -3,14 +3,16 @@ title: "Demo with mtcars"
 vignette: >
   %\VignetteIndexEntry{Demo with mtcars}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{quarto::html}
-editor_options: 
-  chunk_output_type: console
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "#>"
+  %\VignetteEngine{knitr::rmarkdown}
 ---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 <!--
 rerun this to update tribble formatting:

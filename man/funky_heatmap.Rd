@@ -155,7 +155,7 @@ columns groups.}
 }
 \value{
 A ggplot. \code{.$width} and \code{.$height} are suggested dimensions for
-storing the plot with \code{\link[=ggsave]{ggsave()}}.
+storing the plot with \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.
 }
 \description{
 Allows generating heatmap-like visualisations for benchmark data

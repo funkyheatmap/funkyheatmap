@@ -25,6 +25,9 @@ verify_column_info <- function(column_info, data) {
     cli_alert_info("No column info was provided, assuming all columns in `data` are to be plotted.")
     column_info <- tibble(id = colnames(data))
   }
+
+  column_info <- if_list_to_tibble(column_info)
+
   assert_that(
     is.data.frame(column_info),
     column_info %has_name% "id",
