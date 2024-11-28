@@ -1,4 +1,23 @@
 url: https://funkyheatmap.github.io/funkyheatmap/
 template:
   bootstrap: 5
-
+  opengraph:
+    image:
+      src: https://raw.githubusercontent.com/funkyheatmap/logo/refs/heads/main/src/funkyheatmap_edited.png
+      alt: "FunkyHeatmap logo"
+home:
+  sidebar:
+    structure:
+      - links
+      - license
+      - implementations
+      - citation
+      - authors
+      - dev
+    components:
+      implementations:
+        title: Implementations
+        text: >
+          [JavaScript](https://www.npmjs.com/package/funkyheatmapjs) <br>
+          [Python](https://funkyheatmap.github.io/funkyheatmappy/) <br>
+          [R](index.html)
