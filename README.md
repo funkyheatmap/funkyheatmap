@@ -1,18 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `{funkyheatmap}`: Visualising data frames with mixed data types
+# {funkyheatmap} <img src="https://raw.githubusercontent.com/funkyheatmap/logo/refs/heads/main/src/funkyheatmap_edited.png" align="right" alt="" width=120 />
 
 <!-- badges: start -->
 
+[![cran](https://www.r-pkg.org/badges/version-last-release/funkyheatmap)](https://cran.r-project.org/package=funkyheatmap)
 [![R-CMD-check](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`{funkyheatmap}` allows generating heatmap-like visualisations for
-benchmark data frames. Funky heatmaps can be fine-tuned by providing
-annotations of the columns and rows, which allows assigning multiple
-palettes or geometries or grouping rows and columns together in
-categories.
+**{funkyheatmap}** allows generating heatmap-like visualisations for
+data frames. Funky heatmaps can be fine-tuned by providing annotations
+of the columns and rows, which allows assigning multiple palettes or
+geometries or grouping rows and columns together in categories.
 
 ## Installation
 
@@ -22,7 +22,7 @@ You can install funkyheatmap like so:
 install.packages("funkyheatmap")
 ```
 
-You can also download `{funkyheatmap}` as a [standalone
+You can also download **{funkyheatmap}** as a [standalone
 executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
 or a [Nextflow
 pipeline](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
@@ -38,27 +38,16 @@ library(dplyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
-```
 
-You can visualise the dataset as follows.
-
-``` r
-funky_heatmap(mtcars)
-```
-
-<img src="man/figures/README-heatmap1-1.png" width="100%" />
-
-## Customising the plot
-
-However, this plot can look so much better if you provide additional
-metadata for the rows and columns. See more information on how you can
-customise.
-
-``` r
 data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg))
+```
 
+You need to provide some information on how each column should be
+rendered, fox example:
+
+``` r
 column_info <- tribble(
   ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
   "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
@@ -76,6 +65,8 @@ column_info <- tribble(
 )
 ```
 
+Now you can generate the funky heatmap:
+
 ``` r
 funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 ```
@@ -84,23 +75,23 @@ funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
 
 ## More information
 
--   The [reference
-    documentation](https://funkyheatmap.github.io/funkyheatmap/reference/index.html)
-    on `funky_heatmap()` details the exact formats of each annotation
-    object that you can pass to it.
+- The [reference
+  documentation](https://funkyheatmap.github.io/funkyheatmap/reference/index.html)
+  on `funky_heatmap()` details the exact formats of each annotation
+  object that you can pass to it.
 
--   Check out the vignette
-    [`vignette("mtcars", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html)
-    for more information on how to customize this visualisation.
+- Check out the vignette
+  [`vignette("mtcars", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html)
+  for more information on how to customize this visualisation.
 
--   In
-    [`vignette("dynbenchmark", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html)
-    we use funkyheatmap to regenerate the figures from Saelens et
-    al. (2019)
-    [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
+- In
+  [`vignette("dynbenchmark", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html)
+  we use funkyheatmap to regenerate the figures from Saelens et
+  al. (2019)
+  [doi:10.1038/s41587-019-0071-9](https://doi.org/10.1038/s41587-019-0071-9).
 
--   We used [Viash](https://viash.io) to wrap the
-    `funkyheatmap::funky_heatmap()` function as a [standalone
-    executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
-    and [Nextflow
-    module](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
+- We used [Viash](https://viash.io) to wrap the
+  `funkyheatmap::funky_heatmap()` function as a [standalone
+  executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
+  and [Nextflow
+  module](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
