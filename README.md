@@ -9,11 +9,10 @@
 [![R-CMD-check](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-{funkyheatmap} allows generating heatmap-like visualisations for
-benchmark data frames. Funky heatmaps can be fine-tuned by providing
-annotations of the columns and rows, which allows assigning multiple
-palettes or geometries or grouping rows and columns together in
-categories.
+**{funkyheatmap}** allows generating heatmap-like visualisations for
+data frames. Funky heatmaps can be fine-tuned by providing annotations
+of the columns and rows, which allows assigning multiple palettes or
+geometries or grouping rows and columns together in categories.
 
 ## Installation
 
@@ -23,7 +22,7 @@ You can install funkyheatmap like so:
 install.packages("funkyheatmap")
 ```
 
-You can also download {funkyheatmap} as a [standalone
+You can also download **{funkyheatmap}** as a [standalone
 executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html)
 or a [Nextflow
 pipeline](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
