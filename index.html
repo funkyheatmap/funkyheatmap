@@ -8,11 +8,13 @@
 <title>Generating Funky Heatmaps for Data Frames • funkyheatmap</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Generating Funky Heatmaps for Data Frames">
 <meta name="description" content="Allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories. Saelens et al. (2019) &lt;doi:10.1038/s41587-019-0071-9&gt;.">
 <meta property="og:description" content="Allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories. Saelens et al. (2019) &lt;doi:10.1038/s41587-019-0071-9&gt;.">
+<meta property="og:image" content="https://raw.githubusercontent.com/funkyheatmap/logo/refs/heads/main/src/funkyheatmap_edited.png">
+<meta property="og:image:alt" content="FunkyHeatmap logo">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -56,19 +58,18 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="funkyheatmap-visualising-data-frames-with-mixed-data-types">
-<code>{funkyheatmap}</code>: Visualising data frames with mixed data types<a class="anchor" aria-label="anchor" href="#funkyheatmap-visualising-data-frames-with-mixed-data-types"></a>
+<div class="page-header"><h1 id="funkyheatmap-">{funkyheatmap} <img src="https://raw.githubusercontent.com/funkyheatmap/logo/refs/heads/main/src/funkyheatmap_edited.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#funkyheatmap-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap</a> allows generating heatmap-like visualisations for benchmark data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.</p>
+<p><strong>{funkyheatmap}</strong> allows generating heatmap-like visualisations for data frames. Funky heatmaps can be fine-tuned by providing annotations of the columns and rows, which allows assigning multiple palettes or geometries or grouping rows and columns together in categories.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install funkyheatmap like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"funkyheatmap"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also download <a href="https://funkyheatmap.github.io/funkyheatmap/">funkyheatmap</a> as a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/executable.html">standalone executable</a> or a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html">Nextflow pipeline</a>.</p>
+<p>You can also download <strong>{funkyheatmap}</strong> as a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/executable.html">standalone executable</a> or a <a href="https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html">Nextflow pipeline</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -79,22 +80,14 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span></code></pre></div>
-<p>You can visualise the dataset as follows.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-heatmap1-1.png" width="100%"></p>
-</div>
-<div class="section level2">
-<h2 id="customising-the-plot">Customising the plot<a class="anchor" aria-label="anchor" href="#customising-the-plot"></a>
-</h2>
-<p>However, this plot can look so much better if you provide additional metadata for the rows and columns. See more information on how you can customise.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mtcars"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">column_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>You need to provide some information on how each column should be rendered, fox example:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">column_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">id</span>,     <span class="op">~</span><span class="va">group</span>,         <span class="op">~</span><span class="va">name</span>,                      <span class="op">~</span><span class="va">geom</span>,        <span class="op">~</span><span class="va">palette</span>,    <span class="op">~</span><span class="va">options</span>,</span>
 <span>  <span class="st">"id"</span>,    <span class="st">""</span>,             <span class="st">""</span>,                         <span class="st">"text"</span>,       <span class="cn">NA</span>,          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>  <span class="st">"mpg"</span>,   <span class="st">"overall"</span>,      <span class="st">"Miles / gallon"</span>,           <span class="st">"bar"</span>,        <span class="st">"palette1"</span>,  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>, legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -109,7 +102,8 @@
 <span>  <span class="st">"gear"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Forward gears"</span>,          <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="st">"carb"</span>,  <span class="st">"group2"</span>,       <span class="st">"# Carburetors"</span>,            <span class="st">"circle"</span>,     <span class="st">"palette2"</span>,  <span class="fu"><a href="https://tibble.tidyverse.org/reference/lst.html" class="external-link">lst</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Now you can generate the funky heatmap:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/funky_heatmap.html">funky_heatmap</a></span><span class="op">(</span><span class="va">data</span>, column_info <span class="op">=</span> <span class="va">column_info</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xmax <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-heatmap2-1.png" width="100%"></p>
 </div>
@@ -141,6 +135,12 @@
 </ul>
 </div>
 
+<div class="implementations">
+<h2 data-toc-skip>Implementations</h2>
+<ul class="list-unstyled">
+<li><p><a href="https://www.npmjs.com/package/funkyheatmapjs" class="external-link">JavaScript</a> (incomplete) <br><a href="https://funkyheatmap.github.io/funkyheatmappy/">Python</a> <br><a href="index.html">R</a></p></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -161,6 +161,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=funkyheatmap" class="external-link"><img src="https://www.r-pkg.org/badges/version-last-release/funkyheatmap" alt="cran"></a></li>
 <li><a href="https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
