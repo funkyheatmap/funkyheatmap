@@ -8,115 +8,111 @@ authors:
 - name: Robrecht Cannoodt*
   orcid: 0000-0003-3641-729X
   email: robrecht@data-intuitive.com
-  affiliations:
-	- ref: di
-	- ref: dambi
-	- ref: twist
+  affiliation: [1,2,3]
 - name: Louise Deconinck*
   orcid: 0000-0001-8100-6823
   email: louise.deconinck@ugent.be
-  affiliations:
-    - ref: dambi
-    - ref: twist
+  affiliation: [1,2]
 - name: Artuur Couckuyt*
   orcid: 0000-0001-7858-6521
   email: artuur.couckuyt@ugent.be
-  affiliations:
-    - ref: dambi
-    - ref: twist
+  affiliation: [1,2]
 - name: Nikolay S. Markov*
   orcid: 0000-0002-3659-4387
   email: nikolai.markov@icloud.com
-  affiliations:
-    - ref: nu
+  affiliation: [6]
 - name: Luke Zappia
   orcid: 0000-0001-7744-8565
-  affiliations:
-    - ref: di
-    - ref: icb
-    - ref: tum-ma
+  affiliation: [3,7,9]
 - name: Malte D. Luecken
   orcid: 0000-0001-7464-7921
-  affiliations:
-    - ref: icb
-    - ref: lhi
+  affiliation: [7,9]
 - name: Marta Interlandi
   orcid: 0000-0002-6863-2552
   email: marta.interlandi01@gmail.com
-  affiliations:
-    - ref: imi
+  affiliation: [5]
 - name: Yvan Saeys†
   orcid: 0000-0002-0415-1506
   email: yvan.saeys@ugent.be
-  affiliations:
-    - ref: dambi
-    - ref: twist
+  affiliation: [1,2]
 - name: Wouter Saelens†
   orcid: 0000-0002-7114-6248
   email: w.saelens@epfl.ch
-  affiliations:
-    - ref: dambi
-    - ref: twist
+  affiliation: [5,10]
 
 affiliations:
   - id: dambi
+    index: 1
     department: Data Mining and Modelling for Biomedicine group
     name: VIB Center for Inflammation Research
     city: Ghent
     country: Belgium
   - id: twist
+    index: 2
     department: Department of Applied Mathematics, Computer Science, and Statistics
     name: Ghent University
     city: Ghent
     country: Belgium
   - id: di
+    index: 3
     name: Data Intuitive
     city: Lebbeke
     country: Belgium
-  - id: epfl
-    name: École Polytechnique Fédérale de Lausanne (EPFL)
-    department: Institute of Bioengineering, School of Life Sciences
-    city: Lausanne
-    country: Switzerland
+  - id: lmcb
+    index: 5
+    name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration
+    department: VIB Center for Inflammation Research
+    city: Ghent
+    country: Belgium
   - id: imi
+    index: 5
     department: Institute of Medical Informatics
     name: University of Muenster
     city: Muenster
     country: Germany
   - id: nu
+    index: 6
     name: Northwestern University
     department: Division of Pulmonary and Critical Care Medicine
     city: Chicago
     country: USA
   - id: icb
+    index: 7
     name: Helmholtz Munich
     department: Institute of Computational Biology, Computational Health Center
     city: Munich
     country: Germany
   - id: tum-ma
+    index: 8
     name: Technical University of Munich
     department: Department of Mathematics, School of Computation, Information and Technology
     city: Munich
     country: Germany
   - id: lhi
+    index: 9
     name: Institute of Lung Health and Immunity (LHI), Helmholtz Munich, Comprehensive Pneumology Center (CPC-M), Germany; Member of the German Center for Lung Research (DZL)
-    city: Munic
+    city: Munich
     country: Germany
+  - id: dbmb
+    index: 10
+    name: Ghent University
+    department: Department of Biomedical Molecular Biology
+    city: Ghent
+    country: Belgium
+
 engine: knitr
 bibliography: paper.bib
 ---
 
 *: Shared first authors, †: Shared last authors.
 
-# funkyheatmap: Visualising data frames with mixed data types
-
-## Summary
+# Summary
 
 The `{funkyheatmap}` package offers a flexible and user-friendly solution for visualising data frames containing a mixture of categorical, proportional, and text-based data. It simplifies the creation of informative and visually appealing heatmaps while providing extensive customization options to tailor the output. This tool is especially valuable in research settings for summarising and communicating complex results, such as those encountered in benchmarking studies.
 
 The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap) and [PyPI](https://pypi.org/project/funkyheatmappy/) and has a JavaScript port in development. For detailed examples and vignettes, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
 
-## Statement of need
+# Statement of need
 Data visualisation is fundamental to exploratory data analysis and communicating findings. While powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types. `{funkyheatmap}` addresses this challenge by:
 
 * **Seamless Handling of Mixed Data**: Automates the selection of appropriate visualisations (rectangles, bars, pie charts, text) based on data types.
@@ -125,7 +121,7 @@ Data visualisation is fundamental to exploratory data analysis and communicating
 
 `{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
 
-## Functionality
+# Functionality
 \autoref{fig-dynbenchmark-1} showcases the functionality of `{funkyheatmap}`, namely:
 
 * **Diverse Geometries**: Supports a range of geometries (rectangles, bars, pie charts, text, images) to effectively represent different data types.
