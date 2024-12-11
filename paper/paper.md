@@ -123,18 +123,18 @@ Data visualisation is fundamental to exploratory data analysis and communicating
 * **Customization**: Provides granular control over colours, groupings, geometries, and annotations for tailored results.
 * **Accessibility**: Offers a simplified interface for basic use and detailed documentation for advanced customization.
 
-`{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023, comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
+`{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
 
 ## Functionality
-Figure \autoref{fig:dynbenchmark} showcases the functionality of `{funkyheatmap}`, namely:
+\autoref{fig-dynbenchmark-1} showcases the functionality of `{funkyheatmap}`, namely:
 
 * **Diverse Geometries**: Supports a range of geometries (rectangles, bars, pie charts, text, images) to effectively represent different data types.
 * **Hierarchical Categorical Grouping**: Facilitates the organisation of rows and columns into semantic groups with distinct colour palettes.
 * **Documentation and Testing**: Includes comprehensive documentation, vignettes, and a test suite for quality and ease of use.
 
-![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].](utils_files/figure-gfm/fig-dynbenchmark-1.png)
+![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].\label{fig-dynbenchmark-1}](utils_files/figure-gfm/fig-dynbenchmark-1.png)
 
-See table \autoref{tbl-geoms} for more information regarding the recommended geom for different types of data.
+See \autoref{tbl-geoms} for more information regarding the recommended geom for different types of data.
 
 | Data type         | Example                          | Recommended geom    |
 |:------------------|:---------------------------------|:--------------------|
@@ -144,7 +144,7 @@ See table \autoref{tbl-geoms} for more information regarding the recommended geo
 | Categorical data  | R or Python                      | text or image       |
 | Proportional data | 80% success, 10% OOM, 10% failed | pie                 |
 
-[Recommended geometries in `{funkyheatmap}` for different data types. The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data."]{label=tbl-geoms}
+Recommended geometries in `{funkyheatmap}` for different data types. The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data. \label{tbl-geoms}
 
 # Conclusion
 `{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The ongoing development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.
