@@ -1,0 +1,38 @@
+---
+title: Utils for the paper
+output:
+  md_document:
+    variant: gfm
+---
+
+```{r fig.width=22.1, fig.height=18.14, warning=FALSE}
+#| label: fig-dynbenchmark
+#| fig-cap: "An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019]."
+
+library(funkyheatmap)
+
+funky_heatmap(
+  data = dynbenchmark_data$data,
+  column_info = dynbenchmark_data$column_info,
+  column_groups = dynbenchmark_data$column_groups,
+  row_info = dynbenchmark_data$row_info,
+  row_groups = dynbenchmark_data$row_groups,
+  palettes = dynbenchmark_data$palettes,
+  col_annot_offset = 3.2
+)
+```
+
+```{r echo=FALSE}
+#| label: tbl-geoms
+#| tbl-cap: "Recommended geometries in `{funkyheatmap}` for different data types. The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data."
+
+df <- tibble::tribble(
+  ~"Data type", ~Example, ~"Recommended geom",
+  "Numerical data", "Scores from 0 to 1", "funkyrect",
+  "Aggregated data", "The mean of scores", "bar",
+  "Measurement data", "3MB or 4h", "rect + text overlay",
+  "Categorical data", "R or Python", "text or image",
+  "Proportional data", "80% success, 10% OOM, 10% failed", "pie"
+)
+knitr::kable(df)
+```
