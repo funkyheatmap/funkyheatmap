@@ -16,6 +16,8 @@ It is used in the vignette named "\code{vignette("dynbenchmark")}" to regenerate
 the results figures in Saelens et al. 2019.
 }
 \references{
+{
 \insertRef{comparisonsinglecell_saelens2019}{funkyheatmap}
+}
 }
 \keyword{datasets}

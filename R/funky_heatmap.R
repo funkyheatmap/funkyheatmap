@@ -151,7 +151,7 @@
 #' @importFrom patchwork wrap_plots plot_spacer
 #'
 #' @returns A ggplot. `.$width` and `.$height` are suggested dimensions for
-#' storing the plot with [ggsave()].
+#' storing the plot with [ggplot2::ggsave()].
 #'
 #' @export
 #'

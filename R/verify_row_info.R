@@ -25,11 +25,13 @@
 #' verify_row_info(row_info, data)
 verify_row_info <- function(row_info, data) {
   # assume data and palettes are already verified
-
   if (is.null(row_info)) {
     cli_alert_info("No row info was provided, assuming all rows in `data` are to be plotted.")
     row_info <- tibble(id = data$id)
   }
+
+  row_info <- if_list_to_tibble(row_info)
+
   assert_that(
     is.data.frame(row_info),
     row_info %has_name% "id",

@@ -4,8 +4,9 @@
 #' It is used in the vignette named "`vignette("dynbenchmark")`" to regenerate
 #' the results figures in Saelens et al. 2019.
 #'
-#' @references
+#' @references{
 #' \insertRef{comparisonsinglecell_saelens2019}{funkyheatmap}
+#' }
 #'
 #' @docType data
 "dynbenchmark_data"
