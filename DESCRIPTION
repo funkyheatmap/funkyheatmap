@@ -67,7 +67,8 @@ Suggests:
   kableExtra,
   knitr,
   testthat (>= 3.0.0),
-  magick
+  magick,
+  readr
 VignetteBuilder: knitr
 RdMacros: Rdpack
 Depends: 
