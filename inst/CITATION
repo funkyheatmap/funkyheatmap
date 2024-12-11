@@ -33,9 +33,49 @@ bibentry(
     person(
       "Robrecht",
       "Cannoodt",
-      email = "rcannood@gmail.com",
+      email = "robrecht@data-intuitive.com",
       role = c("aut", "cre"),
       comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Louise",
+      "Deconinck",
+      email = "louise.deconinck@gmail.com",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0001-8100-6823", github = "LouiseDck")
+    ),
+    person(
+      "Artuur",
+      "Couckuyt",
+      email = "artuur.couckuyt@ugent.be",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0001-7858-6521", github = "artuurC")
+    ),
+    person(
+      "Nikolay",
+      "S. Markov",
+      email = "nikolai.markov@icloud.com",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0002-3659-4387", github = "mxposed")
+    ),
+    person(
+      "Luke",
+      "Zappia",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0001-7744-8565", github = "lazappia")
+    ),
+    person(
+      "Malte",
+      "D. Luecken",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0001-7464-7921", github = "LuckyMD")
+    ),
+    person(
+      "Yvan",
+      "Saeys",
+      email = "yvan.saeys@ugent.be"
+      role = c("aut"),
+      comment = c(ORCID = "0000-0002-0415-1506", github = "ysaeys")
     ),
     person(
       "Wouter",
@@ -46,6 +86,6 @@ bibentry(
     )
   ),
   title = "funkyheatmap: Generating Funky Heatmaps for Data Frames.",
-  journal = "In Progress",
-  year = "2023"
+  journal = "Journal of Open Source Software (submitted)",
+  year = "2024"
 )
