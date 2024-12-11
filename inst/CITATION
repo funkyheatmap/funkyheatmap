@@ -73,7 +73,7 @@ bibentry(
     person(
       "Yvan",
       "Saeys",
-      email = "yvan.saeys@ugent.be"
+      email = "yvan.saeys@ugent.be",
       role = c("aut"),
       comment = c(ORCID = "0000-0002-0415-1506", github = "ysaeys")
     ),
