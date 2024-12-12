@@ -1,11 +1,11 @@
 Package: funkyheatmap
 Title: Generating Funky Heatmaps for Data Frames
-Description: Allows generating heatmap-like visualisations for benchmark data 
+Description: Allows generating heatmap-like visualisations for data 
   frames. Funky heatmaps can be fine-tuned by providing annotations of the 
   columns and rows, which allows assigning multiple palettes or geometries
   or grouping rows and columns together in categories.
   Saelens et al. (2019) <doi:10.1038/s41587-019-0071-9>.
-Version: 0.6.0
+Version: 0.5.0.9000
 Authors@R: c(
   person(
     "Robrecht", 
