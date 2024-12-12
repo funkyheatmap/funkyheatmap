@@ -16,13 +16,14 @@ knitr::opts_chunk$set(
 # dynbenchmark::reformat_tribbles("README.Rmd")
 ```
 
-# `{funkyheatmap}`: Visualising data frames with mixed data types
+# {funkyheatmap} <img src="https://raw.githubusercontent.com/funkyheatmap/logo/refs/heads/main/src/funkyheatmap_edited.png" align="right" alt="" width=120 />
 
 <!-- badges: start -->
+[![cran](https://www.r-pkg.org/badges/version-last-release/funkyheatmap)](https://cran.r-project.org/package=funkyheatmap)
 [![R-CMD-check](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/funkyheatmap/funkyheatmap/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`{funkyheatmap}` allows generating heatmap-like visualisations for benchmark data 
+**{funkyheatmap}** allows generating heatmap-like visualisations for data 
 frames. Funky heatmaps can be fine-tuned by providing annotations of the 
 columns and rows, which allows assigning multiple palettes or geometries
 or grouping rows and columns together in categories.
@@ -35,7 +36,7 @@ You can install funkyheatmap like so:
 install.packages("funkyheatmap")
 ```
 
-You can also download `{funkyheatmap}` as a [standalone executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html) 
+You can also download **{funkyheatmap}** as a [standalone executable](https://funkyheatmap.github.io/funkyheatmap/articles/executable.html) 
 or a [Nextflow pipeline](https://funkyheatmap.github.io/funkyheatmap/articles/nextflow.html).
 
 ## Example
@@ -48,33 +49,15 @@ library(dplyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)
 
 data("mtcars")
-```
 
-You can visualise the dataset as follows.
-
-```{r include=FALSE}
-g <- funky_heatmap(mtcars)
-# set width and height for upcoming plot
-knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
-```
-
-```{r eval=FALSE}
-funky_heatmap(mtcars)
-```
-
-```{r heatmap1, echo=FALSE}
-g
-```
-
-## Customising the plot
-However, this plot can look so much better if you provide additional metadata
-for the rows and columns. See more information on how you can customise.
-
-```{r example-with-colinfo}
 data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg))
+```
 
+You need to provide some information on how each column should be rendered, fox example:
+
+```{r example-with-colinfo}
 column_info <- tribble(
   ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
   "id",    "",             "",                         "text",       NA,          list(hjust = 0, width = 6),
@@ -91,6 +74,8 @@ column_info <- tribble(
   "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst()
 )
 ```
+
+Now you can generate the funky heatmap:
 
 ```{r include=FALSE}
 g <- funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
