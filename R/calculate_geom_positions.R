@@ -360,7 +360,13 @@ calculate_geom_positions <- function(
     }
     circle_data <- bind_rows(
       circle_data,
-      pie_data %>% filter(.data$pct >= (1 - 1e-10)) %>% select(-"label_value")
+      pie_data %>%
+        filter(.data$pct >= (1 - 1e-10)) %>%
+        # '$color_value' might be a character in pie_data,
+        # so we'll set this to 1
+        mutate(color_value = 1) %>%
+        # '$label_value' doesn't make sense in this context
+        select(-"label_value")
     )
     pie_data <- pie_data %>% filter(.data$pct < (1 - 1e-10))
   }
