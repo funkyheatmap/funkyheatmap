@@ -297,7 +297,7 @@ create_bar_legend <- function(
       colour = "black"
     )
 
-  width <- rep(legend_width / length(labels), length(labels))
+  width <- rep((legend_width / length(labels)) - legend_space, length(labels))
   height <- rep(legend_height, length(labels))
 
   # label data
