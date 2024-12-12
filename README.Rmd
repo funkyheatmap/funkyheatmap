@@ -55,7 +55,7 @@ data <- mtcars %>%
   arrange(desc(mpg))
 ```
 
-You need to provide some information on how each column should be rendered, fox example:
+You need to provide some information on how each column should be rendered, for example:
 
 ```{r example-with-colinfo}
 column_info <- tribble(
