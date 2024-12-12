@@ -34,7 +34,7 @@ legends <- list(
 )
 
 test_that("minimal example funky_heatmap works", {
-  g <- funkyheatmap::funky_heatmap(
+  g <- funky_heatmap(
     data = data,
     column_info = column_info,
     column_groups = column_groups,
