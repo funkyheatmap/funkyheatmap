@@ -29,7 +29,7 @@ row_groups <- readr::read_tsv(paste0(dir, "row_groups.tsv"))
 palettes <- jsonlite::read_json(paste0(dir, "palettes.json"), simplifyVector = TRUE)
 palettes$pie <- unlist(palettes$pie)
 
-if(DEBUG){
+if (DEBUG){
   column_info <- column_info %>% 
     mutate(directory = if_else(is.na(directory), NA, paste0(image_dir_test, "test_data")) )
   data <- data %>%
