@@ -351,13 +351,6 @@ calculate_geom_positions <- function(
       pct = (.data$rad_end - .data$rad_start) / 2 / pi
     )
     # plot 100% pies as circles
-    # remove color_value from both dataframes, conlift wrt datatype
-    if("color_value" %in% colnames(circle_data)) {
-      circle_data <- circle_data %>% select(-color_value)
-    }
-    if("color_value" %in% colnames(pie_data)) {
-      pie_data <- pie_data %>% select(-color_value)
-    }
     circle_data <- bind_rows(
       circle_data,
       pie_data %>%
