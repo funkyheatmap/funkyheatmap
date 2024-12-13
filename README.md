@@ -45,7 +45,7 @@ data <- mtcars %>%
 ```
 
 You need to provide some information on how each column should be
-rendered, fox example:
+rendered, for example:
 
 ``` r
 column_info <- tribble(
