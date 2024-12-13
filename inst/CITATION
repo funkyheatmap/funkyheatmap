@@ -47,13 +47,13 @@ bibentry(
     person(
       "Luke",
       "Zappia",
-      role = c("aut"),
-      comment = c(ORCID = "0000-0001-7744-8565", github = "lazappia")
+      role = c("ctb"),
+      comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")
     ),
     person(
       "Malte",
       "D. Luecken",
-      role = c("aut"),
+      role = c("ctb"),
       comment = c(ORCID = "0000-0001-7464-7921", github = "LuckyMD")
     ),
     person(
