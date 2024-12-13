@@ -21,7 +21,7 @@ legends <- list(
   list(title = "Bar", palette = "benchmark", enabled = FALSE, geom = "bar"),
   list(title = "Bar", palette = "scaling", enabled = FALSE, geom = "bar"),
   list(title = "Bar", palette = "stability", enabled = FALSE, geom = "bar"),
-  list(title = "Error reason", palette = "error_reasons", enabled = TRUE, geom = "pie"),
+  list(title = "Error reason", palette = "error_reasons", enabled = TRUE, geom = "pie", label_width = 8),
   list(title = "Score", palette = "overall", enabled = TRUE, geom = "funkyrect")
 )
 
