@@ -45,20 +45,6 @@ bibentry(
       comment = c(ORCID = "0000-0001-8100-6823", github = "LouiseDck")
     ),
     person(
-      "Artuur",
-      "Couckuyt",
-      email = "artuur.couckuyt@ugent.be",
-      role = c("aut"),
-      comment = c(ORCID = "0000-0001-7858-6521", github = "artuurC")
-    ),
-    person(
-      "Nikolay",
-      "S. Markov",
-      email = "nikolai.markov@icloud.com",
-      role = c("aut"),
-      comment = c(ORCID = "0000-0002-3659-4387", github = "mxposed")
-    ),
-    person(
       "Luke",
       "Zappia",
       role = c("aut"),
