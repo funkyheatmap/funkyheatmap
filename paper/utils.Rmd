@@ -5,11 +5,25 @@ output:
     variant: gfm
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'svg') # set output device to svg
+```
+
 ```{r fig.width=22.1, fig.height=18.14, warning=FALSE}
 #| label: fig-dynbenchmark
 #| fig-cap: "An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019]."
 
 library(funkyheatmap)
+library(tidyverse)
+
+legends <- list(
+  list(title = "Bar", palette = "qc", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "benchmark", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "scaling", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "stability", enabled = FALSE, geom = "bar"),
+  list(title = "Error reason", palette = "error_reasons", enabled = TRUE, geom = "pie"),
+  list(title = "Score", palette = "overall", enabled = TRUE, geom = "funkyrect")
+)
 
 funky_heatmap(
   data = dynbenchmark_data$data,
@@ -18,6 +32,7 @@ funky_heatmap(
   row_info = dynbenchmark_data$row_info,
   row_groups = dynbenchmark_data$row_groups,
   palettes = dynbenchmark_data$palettes,
+  legends = legends,
   col_annot_offset = 3.2
 )
 ```

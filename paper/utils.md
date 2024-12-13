@@ -1,5 +1,28 @@
 ``` r
 library(funkyheatmap)
+library(tidyverse)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+legends <- list(
+  list(title = "Bar", palette = "qc", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "benchmark", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "scaling", enabled = FALSE, geom = "bar"),
+  list(title = "Bar", palette = "stability", enabled = FALSE, geom = "bar"),
+  list(title = "Error reason", palette = "error_reasons", enabled = TRUE, geom = "pie"),
+  list(title = "Score", palette = "overall", enabled = TRUE, geom = "funkyrect")
+)
 
 funky_heatmap(
   data = dynbenchmark_data$data,
@@ -8,48 +31,23 @@ funky_heatmap(
   row_info = dynbenchmark_data$row_info,
   row_groups = dynbenchmark_data$row_groups,
   palettes = dynbenchmark_data$palettes,
+  legends = legends,
   col_annot_offset = 3.2
 )
 ```
 
-    ## ℹ No legends were provided, trying to automatically infer legends.
-
     ## ℹ Some palettes were not used in the column info, adding legends for them.
-
-    ## ℹ Legend 1 did not contain a geom, inferring from the column info.
-
-    ## ! Legend 1 has geom 'bar', which is not yet implemented. Disabling for now.
-
-    ## ℹ Legend 2 did not contain a geom, inferring from the column info.
-
-    ## ! Legend 2 has geom 'bar', which is not yet implemented. Disabling for now.
-
-    ## ℹ Legend 3 did not contain a geom, inferring from the column info.
-
-    ## ! Legend 3 has geom 'bar', which is not yet implemented. Disabling for now.
-
-    ## ℹ Legend 4 did not contain a geom, inferring from the column info.
-
-    ## ! Legend 4 has geom 'bar', which is not yet implemented. Disabling for now.
-
-    ## ℹ Legend 5 did not contain a geom, inferring from the column info.
-
-    ## ! Legend 5 has geom 'bar', which is not yet implemented. Disabling for now.
-
-    ## ℹ Legend 6 did not contain a geom, inferring from the column info.
-
+    ## ℹ Legend 5 did not contain labels, inferring from the geom.
+    ## ℹ Legend 5 did not contain color, inferring from the palette.
     ## ℹ Legend 6 did not contain labels, inferring from the geom.
-
+    ## ℹ Legend 6 did not contain size, inferring from the labels.
     ## ℹ Legend 6 did not contain color, inferring from the palette.
-
     ## ℹ Legend 7 did not contain a geom, inferring from the column info.
-
     ## ℹ Legend 7 did not contain labels, inferring from the geom.
-
     ## ! Legend 7 has geom text but no specified labels, so disabling this legend for now.
 
 <figure>
-<img src="utils_files/figure-gfm/fig-dynbenchmark-1.png"
+<img src="utils_files/figure-gfm/fig-dynbenchmark-1.svg"
 alt="An example of a {funkyheatmap} visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019]." />
 <figcaption aria-hidden="true">An example of a
 <code>{funkyheatmap}</code> visualisation using data from a benchmarking

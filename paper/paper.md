@@ -38,7 +38,7 @@ authors:
 - name: Wouter Saelens†
   orcid: 0000-0002-7114-6248
   email: w.saelens@epfl.ch
-  affiliation: [5,10]
+  affiliation: [4,10]
 
 affiliations:
   - id: dambi
@@ -59,7 +59,7 @@ affiliations:
     city: Lebbeke
     country: Belgium
   - id: lmcb
-    index: 5
+    index: 4
     name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration
     department: VIB Center for Inflammation Research
     city: Ghent
@@ -126,11 +126,12 @@ Data visualisation is fundamental to exploratory data analysis and communicating
 
 * **Diverse Geometries**: Supports a range of geometries (rectangles, bars, pie charts, text, images) to effectively represent different data types.
 * **Hierarchical Categorical Grouping**: Facilitates the organisation of rows and columns into semantic groups with distinct colour palettes.
-* **Documentation and Testing**: Includes comprehensive documentation, vignettes, and a test suite for quality and ease of use.
 
-![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].\label{fig-dynbenchmark-1}](utils_files/figure-gfm/fig-dynbenchmark-1.png)
+Besides this, the package includes comprehensive documentation, vignettes, and a test suite.
 
-See \autoref{tbl-geoms} for more information regarding the recommended geom for different types of data.
+![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].\label{fig-dynbenchmark-1}](utils_files/figure-gfm/fig-dynbenchmark-1.svg)
+
+See the following \autoref{tbl-geoms} for more information regarding the recommended geom for different types of data.
 
 | Data type         | Example                          | Recommended geom    |
 |:------------------|:---------------------------------|:--------------------|
@@ -143,7 +144,7 @@ See \autoref{tbl-geoms} for more information regarding the recommended geom for 
 Recommended geometries in `{funkyheatmap}` for different data types. The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data. \label{tbl-geoms}
 
 # Conclusion
-`{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The ongoing development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.
+`{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.
 
 # Acknowledgements
 <!-- Acknowledgement of any financial support. -->
