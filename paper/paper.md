@@ -129,7 +129,7 @@ Data visualisation is fundamental to exploratory data analysis and communicating
 
 Besides this, the package includes comprehensive documentation, vignettes, and a test suite.
 
-![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].\label{fig-dynbenchmark-1}](utils_files/figure-gfm/fig-dynbenchmark-1.svg)
+![An example of a `{funkyheatmap}` visualisation using data from a benchmarking study of trajectory inference methods [@comparisonsinglecell_saelens2019].\label{fig-dynbenchmark-1}](figure1.svg)
 
 See the following \autoref{tbl-geoms} for more information regarding the recommended geom for different types of data.
 
@@ -153,5 +153,4 @@ L.D. acknowledges support from the Research Foundation - Flanders (FWO) (1SF3822
 Y.S. acknowledges support from the Flemish Government under the “Onderzoeksprogramma Artificiële Intelligentie (AI) Vlaanderen” program.
 A.C. and Y.S. are funded by an FWO TBM grant (Research Foundation – Flanders, T000119N), and Ghent University Special Research Fund (BOF18-GOA-024).
 W.S. was supported by a Marie Skłodowska-Curie fellowship (101028476).
-
 
