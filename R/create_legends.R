@@ -267,7 +267,93 @@ create_pie_legend <- function(
 }
 
 
+create_bar_legend <- function(
+  title,
+  labels,
+  size,
+  color,
+  position_args = position_arguments(),
+  label_hjust = .5) {
 
+  legend_width <- 5
+  legend_height <- 1
+  legend_space <- .2
+
+  # title data
+  start_x <- 0
+  start_y <- 0
+  title_df <-
+    tibble(
+      width = legend_width,
+      height = legend_height,
+      xmin = start_x,
+      xmax = start_x + legend_width,
+      ymin = start_y - 1.5,
+      ymax = start_y - .5,
+      label_value = title,
+      hjust = 0,
+      vjust = 1,
+      fontface = "bold",
+      colour = "black"
+    )
+
+  width <- rep((legend_width / length(labels)) - legend_space, length(labels))
+  height <- rep(legend_height, length(labels))
+
+  # label data
+  label_df <-
+    tibble(
+      label_value = labels,
+      width = width,
+      height = height,
+      hjust = label_hjust,
+      vjust = 0,
+      fontface = "plain",
+      colour = "black"
+    ) %>% mutate(
+        xmin = cumsum(width + legend_space) - width - legend_space,
+        xmin = xmin - min(xmin),
+        xmax = xmin + width,
+        ymin = -3.5,
+        ymax = ymin + height
+    )
+
+  # bar data
+  bar_data <-
+    tibble(
+      colour = list(color),
+      xmin = start_x,
+      xmax = start_x + legend_width,
+      ymin = start_y - 2.5,
+      ymax = start_y - 2.5 + legend_height,
+      alpha = 0,
+      border_colour = "black",
+      linewidth = .25,
+      i = NA
+    )
+
+  # should generate a bunch of small rectangles with different colors
+  n_col <- 500
+  rect_data <- 
+    tibble(
+      xmin = start_x + seq(0, legend_width, length.out = n_col),
+      xmax = start_x + seq(0, legend_width, length.out = n_col) + legend_width / n_col,
+      ymin = start_y - 2.5,
+      ymax = start_y - 2.5 + legend_height,
+      i = seq_len(n_col),
+      colour = list(color),
+      alpha = 1,
+      border_colour = NA,
+      linewidth = 0
+    )
+
+  geom_positions <- lst(
+    "text_data" = rbind(title_df, label_df),
+    "bar_data" = rbind(bar_data, rect_data)
+  )
+
+  compose_ggplot(geom_positions, list())
+}
 
 
 

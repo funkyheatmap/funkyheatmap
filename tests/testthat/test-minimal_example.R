@@ -2,9 +2,15 @@ require(dplyr)
 require(jsonlite)
 require(readr)
 
+DEBUG <- FALSE
 
 dir <- "test_data/minimal_"
+image_dir_test <- ""
 
+if (DEBUG) {
+  dir <- "tests/testthat/test_data/minimal_"
+  image_dir_test <- "tests/testthat/"
+}
 
 data <- readr::read_tsv(paste0(dir, "data.tsv")) %>%
   mutate_at(
@@ -23,7 +29,20 @@ row_groups <- readr::read_tsv(paste0(dir, "row_groups.tsv"))
 palettes <- jsonlite::read_json(paste0(dir, "palettes.json"), simplifyVector = TRUE)
 palettes$pie <- unlist(palettes$pie)
 
+if (DEBUG){
+  column_info <- column_info %>% 
+    mutate(directory = if_else(is.na(directory), NA, paste0(image_dir_test, "test_data")) )
+  data <- data %>%
+    mutate(image_full = paste0(image_dir_test, image_full))
+}
+
 legends <- list(
+  list(
+    title = "Bar",
+    palette = "bar",
+    enabled = TRUE,
+    geom = "bar"
+  ),
   list(
     title = "Text",
     palette = "black_text",
@@ -38,7 +57,7 @@ legends <- list(
     enabled = TRUE,
     geom = "image",
     size = 3.88,
-    labels = c("test_data/one.png", "test_data/two.png", "test_data/three.png"),
+    labels = c(paste0(image_dir_test, "test_data/one.png"), paste0(image_dir_test, "test_data/two.png"), paste0(image_dir_test, "test_data/three.png")),
     values = c("One", "Two", "Three")
   )
 )
