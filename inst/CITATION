@@ -33,9 +33,28 @@ bibentry(
     person(
       "Robrecht",
       "Cannoodt",
-      email = "rcannood@gmail.com",
+      email = "robrecht@data-intuitive.com",
       role = c("aut", "cre"),
       comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Louise",
+      "Deconinck",
+      email = "louise.deconinck@gmail.com",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0001-8100-6823", github = "LouiseDck")
+    ),
+    person(
+      "Luke",
+      "Zappia",
+      role = c("ctb"),
+      comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")
+    ),
+    person(
+      "Malte",
+      "D. Luecken",
+      role = c("ctb"),
+      comment = c(ORCID = "0000-0001-7464-7921", github = "LuckyMD")
     ),
     person(
       "Wouter",
@@ -46,6 +65,6 @@ bibentry(
     )
   ),
   title = "funkyheatmap: Generating Funky Heatmaps for Data Frames.",
-  journal = "In Progress",
-  year = "2023"
+  journal = "Journal of Open Source Software (submitted)",
+  year = "2024"
 )
