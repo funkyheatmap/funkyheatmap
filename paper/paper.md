@@ -110,7 +110,7 @@ bibliography: paper.bib
 
 The `{funkyheatmap}` package offers a flexible and user-friendly solution for visualising data frames containing a mixture of categorical, proportional, and text-based data. It simplifies the creation of informative and visually appealing heatmaps while providing extensive customization options to tailor the output. This tool is especially valuable in research settings for summarising and communicating complex results, such as those encountered in benchmarking studies.
 
-The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap) and [PyPI](https://pypi.org/project/funkyheatmappy/) and has a JavaScript port in development. For detailed examples and vignettes, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
+The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap) and [PyPI](https://pypi.org/project/funkyheatmappy/) and has a JavaScript port in development. For a showcase of examples and an overview of the different implementations, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
 
 # Statement of need
 Data visualisation is fundamental to exploratory data analysis and communicating findings. While powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types. `{funkyheatmap}` addresses this challenge by:
