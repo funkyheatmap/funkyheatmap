@@ -2,8 +2,9 @@ require(dplyr)
 require(jsonlite)
 require(readr)
 
+
 dir <- "test_data/minimal_"
-# dir <- "tests/testthat/test_data/minimal_"
+
 
 data <- readr::read_tsv(paste0(dir, "data.tsv")) %>%
   mutate_at(
@@ -29,7 +30,16 @@ legends <- list(
     enabled = TRUE,
     geom = "text",
     labels = c("propA", "propB", "propC"),
-    values = c("Property of A", "Property of B", "Property of C")
+    values = c("A", "B", "C")
+  ),
+  list(
+    title = "Image",
+    palette = "black_text",
+    enabled = TRUE,
+    geom = "image",
+    size = 3.88,
+    labels = c("test_data/one.png", "test_data/two.png", "test_data/three.png"),
+    values = c("One", "Two", "Three")
   )
 )
 
