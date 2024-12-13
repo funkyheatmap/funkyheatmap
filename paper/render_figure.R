@@ -18,7 +18,9 @@ g <- funky_heatmap(
   row_groups = dynbenchmark_data$row_groups,
   palettes = dynbenchmark_data$palettes,
   legends = legends,
-  col_annot_offset = 3.2
+  position_args = position_arguments(
+    col_annot_offset = 3.2
+  )
 )
 ggsave("paper/figure1.svg", g, width = g$width, height = g$height)
 
