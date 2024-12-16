@@ -8,37 +8,37 @@ authors:
 - name: Robrecht Cannoodt*
   orcid: 0000-0003-3641-729X
   email: robrecht@data-intuitive.com
-  affiliation: [1,2,3]
+  affiliation: "1, 2, 3"
 - name: Louise Deconinck*
   orcid: 0000-0001-8100-6823
   email: louise.deconinck@ugent.be
-  affiliation: [1,2]
+  affiliation: "1, 2"
 - name: Artuur Couckuyt*
   orcid: 0000-0001-7858-6521
   email: artuur.couckuyt@ugent.be
-  affiliation: [1,2]
+  affiliation: "1, 2"
 - name: Nikolay S. Markov*
   orcid: 0000-0002-3659-4387
   email: nikolai.markov@icloud.com
-  affiliation: [6]
+  affiliation: 6
 - name: Luke Zappia
   orcid: 0000-0001-7744-8565
-  affiliation: [3,7,9]
+  affiliation: "3, 7, 9"
 - name: Malte D. Luecken
   orcid: 0000-0001-7464-7921
-  affiliation: [7,9]
+  affiliation: "7, 9"
 - name: Marta Interlandi
   orcid: 0000-0002-6863-2552
   email: marta.interlandi01@gmail.com
-  affiliation: [5]
+  affiliation: 5
 - name: Yvan Saeys†
   orcid: 0000-0002-0415-1506
   email: yvan.saeys@ugent.be
-  affiliation: [1,2]
+  affiliation: "1, 2"
 - name: Wouter Saelens†
   orcid: 0000-0002-7114-6248
   email: w.saelens@epfl.ch
-  affiliation: [4,10]
+  affiliation: "4, 10"
 
 affiliations:
   - id: dambi
