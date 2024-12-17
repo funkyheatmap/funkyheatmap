@@ -43,62 +43,34 @@ authors:
 affiliations:
   - id: dambi
     index: 1
-    department: Data Mining and Modelling for Biomedicine group
-    name: VIB Center for Inflammation Research
-    city: Ghent
-    country: Belgium
+    name: Data Mining and Modelling for Biomedicine group, VIB Center for Inflammation Research, Ghent, Belgium
   - id: twist
     index: 2
-    department: Department of Applied Mathematics, Computer Science, and Statistics
-    name: Ghent University
-    city: Ghent
-    country: Belgium
+    name: Department of Applied Mathematics, Computer Science, and Statistics, Ghent University, Belgium
   - id: di
     index: 3
-    name: Data Intuitive
-    city: Lebbeke
-    country: Belgium
+    name: Data Intuitive, Lebbeke, Belgium
   - id: lmcb
     index: 4
-    name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration
-    department: VIB Center for Inflammation Research
-    city: Ghent
-    country: Belgium
+    name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration, VIB Center for Inflammation Research, Ghent, Belgium
   - id: imi
     index: 5
-    department: Institute of Medical Informatics
-    name: University of Muenster
-    city: Muenster
-    country: Germany
+    name: Institute of Medical Informatics, University of Muenster, Muenster, Germany
   - id: nu
     index: 6
-    name: Northwestern University
-    department: Division of Pulmonary and Critical Care Medicine
-    city: Chicago
-    country: USA
+    name:Division of Pulmonary and Critical Care Medicine, Northwestern University, Chicago, USA
   - id: icb
     index: 7
-    name: Helmholtz Munich
-    department: Institute of Computational Biology, Computational Health Center
-    city: Munich
-    country: Germany
+    department: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany
   - id: tum-ma
     index: 8
-    name: Technical University of Munich
-    department: Department of Mathematics, School of Computation, Information and Technology
-    city: Munich
-    country: Germany
+    name: Department of Mathematics, School of Computation, Information and Technology, Technical University of Munich, Munich, Germany
   - id: lhi
     index: 9
     name: Institute of Lung Health and Immunity (LHI), Helmholtz Munich, Comprehensive Pneumology Center (CPC-M), Germany; Member of the German Center for Lung Research (DZL)
-    city: Munich
-    country: Germany
   - id: dbmb
     index: 10
-    name: Ghent University
-    department: Department of Biomedical Molecular Biology
-    city: Ghent
-    country: Belgium
+    name: Department of Biomedical Molecular Biology, Ghent University, Ghent, Belgium
 
 engine: knitr
 bibliography: paper.bib
