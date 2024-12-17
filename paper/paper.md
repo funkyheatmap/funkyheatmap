@@ -61,7 +61,7 @@ affiliations:
     name: Division of Pulmonary and Critical Care Medicine, Northwestern University, Chicago, USA
   - id: icb
     index: 7
-    department: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany
+    name: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany
   - id: tum-ma
     index: 8
     name: Department of Mathematics, School of Computation, Information and Technology, Technical University of Munich, Munich, Germany
