@@ -58,7 +58,7 @@ affiliations:
     name: Institute of Medical Informatics, University of Muenster, Muenster, Germany
   - id: nu
     index: 6
-    name:Division of Pulmonary and Critical Care Medicine, Northwestern University, Chicago, USA
+    name: Division of Pulmonary and Critical Care Medicine, Northwestern University, Chicago, USA
   - id: icb
     index: 7
     department: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany
