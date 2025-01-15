@@ -6,7 +6,7 @@
 #' or grouping rows and columns together in categories.
 #'
 #' To learn more about funkyheatmap, please visit the
-#' [project page](https://funkyheatmap.github.io/funkyheatmap).
+#' [project page](https://funkyheatmap.github.io/funkyheatmap/).
 #'
 #' This package heavily depends on the functions provided by
 #' [`ggplot2`](https://ggplot2.tidyverse.org/) and

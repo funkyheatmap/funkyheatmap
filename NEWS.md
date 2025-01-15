@@ -1,4 +1,4 @@
-# funkyheatmap (development version)
+# funkyheatmap 0.5.1
 
 ## MINOR CHANGES
 

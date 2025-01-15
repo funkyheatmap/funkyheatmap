@@ -353,10 +353,10 @@ calculate_geom_positions <- function(
     # plot 100% pies as circles
     # remove color_value from both dataframes, conlift wrt datatype
     if("color_value" %in% colnames(circle_data)) {
-      circle_data <- circle_data %>% select(-color_value)
+      circle_data <- circle_data %>% select(-"color_value")
     }
     if("color_value" %in% colnames(pie_data)) {
-      pie_data <- pie_data %>% select(-color_value)
+      pie_data <- pie_data %>% select(-"color_value")
     }
     circle_data <- bind_rows(
       circle_data,

@@ -21,3 +21,4 @@
 ^vignettes/dynbenchmark
 ^vignettes/*_files$
 ^\.vscode$
+^paper$

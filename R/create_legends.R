@@ -176,13 +176,14 @@ create_circle_legend <- function(
 #'
 #' @noRd
 create_pie_legend <- function(
-    title,
-    labels,
-    size, # not used
-    color,
-    position_args = position_arguments(),
-    # TODO: if we could determine the width of the labels, this would not be needed
-    label_width = 2) {
+  title,
+  labels,
+  size, # not used
+  color,
+  position_args = position_arguments(),
+  # TODO: if we could determine the width of the labels, this would not be needed
+  label_width = 2
+) {
   start_x <- 0
   start_y <- 0
   row_height <- position_args$row_height
@@ -311,11 +312,11 @@ create_bar_legend <- function(
       fontface = "plain",
       colour = "black"
     ) %>% mutate(
-        xmin = cumsum(width + legend_space) - width - legend_space,
-        xmin = xmin - min(xmin),
-        xmax = xmin + width,
-        ymin = -3.5,
-        ymax = ymin + height
+      xmin = cumsum(width + legend_space) - width - legend_space,
+      xmin = .data$xmin - min(.data$xmin),
+      xmax = .data$xmin + width,
+      ymin = -3.5,
+      ymax = .data$ymin + height
     )
 
   # bar data
@@ -443,6 +444,7 @@ create_text_legend <- function(
 
 #' Create an image legend
 #' @inheritParams create_generic_geom_legend
+#' @noRd
 create_image_legend <- function(
   title,
   labels,
@@ -510,8 +512,8 @@ create_image_legend <- function(
       y = start_y - 2 + .data$lab_y,
       width = 2 * .5 + label_width,
       height = row_height,
-      xmin = x - width * hjust,
-      ymin = y - height * vjust,
+      xmin = .data$x - .data$width * .data$hjust,
+      ymin = .data$y - .data$height * .data$vjust,
 
     )
 
