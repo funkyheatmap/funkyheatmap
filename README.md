@@ -68,7 +68,11 @@ column_info <- tribble(
 Now you can generate the funky heatmap:
 
 ``` r
-funky_heatmap(data, column_info = column_info, expand = list(xmax = 4))
+funky_heatmap(
+  data,
+  column_info = column_info,
+  position_args = position_arguments(expand_xmax = 4)
+)
 ```
 
 <img src="man/figures/README-heatmap2-1.png" width="100%" />
