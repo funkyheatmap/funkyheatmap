@@ -1,5 +1,6 @@
 library(funkyheatmap)
 library(tidyverse)
+library(Cairo)
 
 legends <- list(
   list(title = "Bar", palette = "qc", enabled = FALSE, geom = "bar"),
@@ -66,4 +67,10 @@ g2 <- funky_heatmap(
   position_args = position_arguments(expand_xmax = 4)
 )
 
-ggsave("paper/figure2.jpg", g2, width = g2$width, height = g2$height)
+Cairo::CairoPNG("paper/figure2.png", width = g2$width * 3, height = g2$height * 3, units = "cm", dpi = 300)
+g2
+dev.off()
+
+Cairo::CairoPNG("paper/figure2.svg", width = g2$width, height = g2$height)
+g2
+dev.off()
