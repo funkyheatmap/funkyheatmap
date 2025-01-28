@@ -23,7 +23,10 @@ g <- funky_heatmap(
     col_annot_offset = 3.2
   )
 )
-ggsave("paper/figure1.svg", g, width = g$width, height = g$height)
+
+Cairo::CairoSVG("paper/figure1.svg", width = g$width, height = g$height)
+g
+dev.off()
 
 df <- tibble::tribble(
   ~"Data type", ~Example, ~"Recommended geom",
@@ -66,10 +69,6 @@ g2 <- funky_heatmap(
   column_info = column_info,
   position_args = position_arguments(expand_xmax = 4)
 )
-
-Cairo::CairoPNG("paper/figure2.png", width = g2$width * 3, height = g2$height * 3, units = "cm", dpi = 300)
-g2
-dev.off()
 
 Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 1.5, height = g2$height * 1.5)
 g2
