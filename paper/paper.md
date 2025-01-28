@@ -157,7 +157,7 @@ funky_heatmap(
 
 ```
 
-![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.svg)
+![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.svg){width="12cm"}
 
 # Conclusion
 `{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.

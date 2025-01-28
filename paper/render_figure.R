@@ -71,6 +71,6 @@ Cairo::CairoPNG("paper/figure2.png", width = g2$width * 3, height = g2$height * 
 g2
 dev.off()
 
-Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 2.5, height = g2$height * 2.5)
+Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 1.5, height = g2$height * 1.5)
 g2
 dev.off()
