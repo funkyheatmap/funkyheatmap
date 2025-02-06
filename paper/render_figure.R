@@ -1,5 +1,6 @@
 library(funkyheatmap)
 library(tidyverse)
+library(Cairo)
 
 legends <- list(
   list(title = "Bar", palette = "qc", enabled = FALSE, geom = "bar"),
@@ -22,7 +23,10 @@ g <- funky_heatmap(
     col_annot_offset = 3.2
   )
 )
-ggsave("paper/figure1.svg", g, width = g$width, height = g$height)
+
+Cairo::CairoSVG("paper/figure1.svg", width = g$width, height = g$height)
+g
+dev.off()
 
 df <- tibble::tribble(
   ~"Data type", ~Example, ~"Recommended geom",
@@ -33,3 +37,35 @@ df <- tibble::tribble(
   "Proportional data", "80% success, 10% OOM, 10% failed", "pie"
 )
 knitr::kable(df)
+
+data("mtcars")
+
+data <- mtcars %>%
+  rownames_to_column("id") %>%
+  arrange(desc(mpg))
+
+column_info <- tribble(
+  ~id,     ~group,         ~name,                      ~geom,        ~palette,   
+  "id",    "",             "",                         "text",       NA,         
+  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",
+  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",
+  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1", 
+  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1", 
+  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1", 
+  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1", 
+  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2", 
+  "vs",    "group2",       "Engine",                   "circle",     "palette2", 
+  "am",    "group2",       "Transmission",             "circle",     "palette2", 
+  "gear",  "group2",       "# Forward gears",          "circle",     "palette2", 
+  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",
+)
+
+g2 <- funky_heatmap(
+  data,
+  column_info = column_info,
+  position_args = position_arguments(expand_xmax = 4)
+)
+
+Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 1.5, height = g2$height * 1.5)
+g2
+dev.off()
