@@ -18,6 +18,6 @@ home:
       implementations:
         title: Implementations
         text: >
-          [JavaScript](https://www.npmjs.com/package/funkyheatmapjs) <br>
+          [JavaScript](https://funkyheatmap.github.io/funkyheatmapjs/) <br>
           [Python](https://funkyheatmap.github.io/funkyheatmappy/) <br>
           [R](index.html)
