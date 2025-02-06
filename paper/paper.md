@@ -115,14 +115,13 @@ See the following \autoref{tbl-geoms} for more information regarding the recomme
 
 The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data. \label{tbl-geoms}
 
-## Example useage
+## Example usage
 In order to produce a `{funkyheatmap}` visualisation, you need to provide the data in the form of a dataframe, which also must contain a column named `id`.
 If you provide no other information, a basic visualisation will be provided, but customization is possible by provinding additional information, such as a `column_info` dataframe which details how the columns in the dataframe get translated into different geoms, or a `row_groups` dataframe which allows you to group rows in the visualisation.
 
 As an example, the following code produces \autoref{fig-mtcars}.
 
 ```r
-
 library(funkyheatmap)
 library(dplyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)

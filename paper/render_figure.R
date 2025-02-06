@@ -38,10 +38,6 @@ df <- tibble::tribble(
 )
 knitr::kable(df)
 
-library(funkyheatmap)
-library(dplyr, warn.conflicts = FALSE)
-library(tibble, warn.conflicts = FALSE)
-
 data("mtcars")
 
 data <- mtcars %>%
