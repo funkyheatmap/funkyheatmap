@@ -98,11 +98,6 @@ While more powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matp
 
 `{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
 
-[^1]: https://gt.rstudio.com/index.html
-[^2]: https://github.com/raivokolde/pheatmap
-[^3]: https://github.com/rlbarter/superheat
-[^4]: https://github.com/jokergoo/ComplexHeatmap
-
 # Functionality
 \autoref{fig-dynbenchmark-1} showcases the functionality of `{funkyheatmap}`, namely:
 
