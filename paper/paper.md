@@ -86,8 +86,8 @@ The package is available on [CRAN](https://cran.r-project.org/package=funkyheatm
 
 # Statement of need
 Data visualisation is fundamental to exploratory data analysis and communicating findings. 
-Table-creating packages, such as gt, allow the user to create beautiful hierarchical tables, but these packages are limited to showing textual data.
-Heatmap-creating packages such as pheatmap, superheat and ComplexHeatmap require the central visualisation to remain a traditional heatmap and allow additional annotations to the side of this heatmap. Incorporating multiple datatypes is possible, but far from seamless.
+Table-creating packages, such as gt [@gt], allow the user to create beautiful hierarchical tables, but these packages are limited to showing textual data.
+Heatmap-creating packages such as pheatmap [@pheatmap], superheat [@superheat] and ComplexHeatmap [@complexheatmap1; @complexheatmap2] require the central visualisation to remain a traditional heatmap and allow additional annotations to the side of this heatmap. Incorporating multiple datatypes is possible, but far from seamless.
 While more powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
 
 `{funkyheatmap}` addresses this challenge by:
@@ -97,6 +97,11 @@ While more powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matp
 * **Accessibility**: Offers a simplified interface for basic use and detailed documentation for advanced customization.
 
 `{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
+
+[^1]: https://gt.rstudio.com/index.html
+[^2]: https://github.com/raivokolde/pheatmap
+[^3]: https://github.com/rlbarter/superheat
+[^4]: https://github.com/jokergoo/ComplexHeatmap
 
 # Functionality
 \autoref{fig-dynbenchmark-1} showcases the functionality of `{funkyheatmap}`, namely:
