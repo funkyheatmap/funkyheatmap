@@ -85,9 +85,14 @@ The `{funkyheatmap}` package offers a flexible and user-friendly solution for vi
 The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap), [PyPI](https://pypi.org/project/funkyheatmappy) and [npm](https://www.npmjs.com/package/funkyheatmapjs). For a showcase of examples and an overview of the different implementations, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
 
 # Statement of need
-Data visualisation is fundamental to exploratory data analysis and communicating findings. While powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types. `{funkyheatmap}` addresses this challenge by:
+Data visualisation is fundamental to exploratory data analysis and communicating findings. 
+Table-creating packages, such as gt [@gt], allow the user to create beautiful hierarchical tables, but these packages are limited to showing textual data.
+Heatmap-creating packages such as pheatmap [@pheatmap], superheat [@superheat] and ComplexHeatmap [@complexheatmap1; @complexheatmap2] require the central visualisation to remain a traditional heatmap and allow additional annotations to the side of this heatmap. Incorporating multiple datatypes is possible, but far from seamless.
+While more powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
 
-* **Seamless Handling of Mixed Data**: Automates the selection of appropriate visualisations (rectangles, bars, pie charts, text) based on data types.
+`{funkyheatmap}` addresses this challenge by:
+
+* **Seamless Handling of Mixed Data**: Automates the selection of appropriate visualisations (rectangles, bars, pie charts, text) based on data types. and allows easy mixing of datatypes in the same visualisation.
 * **Customization**: Provides granular control over colours, groupings, geometries, and annotations for tailored results.
 * **Accessibility**: Offers a simplified interface for basic use and detailed documentation for advanced customization.
 
