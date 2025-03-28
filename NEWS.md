@@ -1,3 +1,9 @@
+# funkyheatmap 0.5.2
+
+## MINOR CHANGES
+
+* Changed vignette `mtcars` to gradually explain a variety of functionality to customize plots.
+
 # funkyheatmap 0.5.1
 
 ## MINOR CHANGES
