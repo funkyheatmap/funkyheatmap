@@ -1,27 +1,27 @@
 ---
-title: "Demo with mtcars"
+title: "Functionality walkthrough (using the mtcars dataset)"
 vignette: >
-  %\VignetteIndexEntry{Demo with mtcars}
+  %\VignetteIndexEntry{Functionality walkthrough (using the mtcars dataset)}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dev = 'png',
+  fig.width=8, 
+  fig.height=11.5
 )
 ```
 
-<!--
-rerun this to update tribble formatting:
-```r
-dynbenchmark::reformat_tribbles("vignettes/mtcars.Rmd")
-```
--->
+We will use the mtcars dataset to showcase how you can use **{funkyheatmap}** to visualise a dataset. We will gradually add features to 
+the plot to show how you can customise it to your liking.
 
-Load data
+First, we load in the data. We move the rownames to a column named `id`, as that is required by **{funkyheatmap}** to display the names.
+Next, we sort the dataframe on the `mpg` column in descending order, and select the top 30 rows.
+
 ```{r load-data}
 library(funkyheatmap)
 library(dplyr, warn.conflicts = FALSE)
@@ -33,115 +33,263 @@ data("mtcars")
 data <- mtcars %>%
   rownames_to_column("id") %>%
   arrange(desc(mpg)) %>%
-  head(20) %>%
-  mutate(type = c(rep("images/ice.png", 10), rep("images/electric.png", 10)))
+  head(30)
 ```
 
 We can plot this data frame without any additional formatting, though it doesn't look very nice:
-
-```{r}
-g <- funky_heatmap(data)
+```{r basic-fh}
+funky_heatmap(data)
 ```
 
-```{r include=FALSE}
-# set width and height for upcoming plot
-knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
-```
+## Adding column_info
 
-```{r heatmap_preview}
-g
-```
+We can add column information to the heatmap by specifying the `column_info` argument. 
+This argument should be a dataframe or a tibble, with each row corresponding to a column in the heatmap.
+The dataframe should have the following column:
+- `id (character)`: the name of the column in the heatmap
 
+Other columns are optional and will determine the appearance of the heatmap.
+If you want to group some of the columns together, usually because they are semantically related,
+or another logical grouping exists, we need to sepficy the `group` column in the `column_info` dataframe.
 
-By defining a few additional formatting parameters, we can get the plot to look much nicer.
-
-## Column info 
-
-```{r column-info}
-column_info <- tribble(
-  ~id,     ~group,         ~name,                      ~geom,        ~palette,    ~options,
-  "id",    NA,             "",                         "text",       NA,          list(hjust = 0, width = 6),
-  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",  list(width = 4, legend = FALSE),
-  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",  list(width = 4, legend = FALSE),
-  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1",  lst(),
-  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1",  lst(),
-  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1",  lst(),
-  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1",  lst(),
-  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2",  lst(),
-  "vs",    "group2",       "Engine",                   "circle",     "palette2",  lst(),
-  "am",    "group2",       "Transmission",             "circle",     "palette2",  lst(),
-  "gear",  "group2",       "# Forward gears",          "circle",     "palette2",  lst(),
-  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",  lst(),
-  "type",  "group2",       "Type of engine",           "image",      NA,          lst()
+```{r column-group}
+cinfo <- tibble(
+  id = colnames(data),
+  group = c(NA, "Overall", "Engine", "Engine", "Engine", "Transmission", "Overall", "Performance", "Engine", "Transmission", "Transmission", "Engine"),
+  options = lapply(seq(12), function(x) lst())
 )
+cinfo
 ```
 
-Define column groups
-
-```{r column-groups}
-column_groups <- tribble( # tribble_start
-  ~Category,  ~group,         ~palette,
-  "Overall",  "overall",      "overall",
-  "Group 1",  "group1",       "palette1",
-  "Group 2",  "group2",       "palette2"
-) # tribble_end
+```{r column-info-fh}
+funky_heatmap(data, column_info = cinfo)
 ```
 
-## Row info
+We can see that this does not work: we need to manually rearrange the columns in the `column_info` dataframe
+so that the columns in the same column groups are adjacent to each other.
 
-Determine method grouping
+```{r column-group-sort}
+data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", "hp", "vs", "drat", "am", "gear")]
 
-```{r method-grouping}
-row_info <- data %>% transmute(id, group = "test")
-row_groups <- tibble(Group = "Test", group = "test")
-```
-
-
-## Palettes
-
-Determine palettes
-
-```{r column-grouping}
-palettes <- tribble(
-  ~palette,             ~colours,
-  "overall",            grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Greys")[-1]))(101),
-  "palette1",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Blues") %>% c("#011636")))(101),
-  "palette2",           grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(9, "Reds")[-8:-9]))(101)
+cinfo <- tibble(
+  id = colnames(data),
+  group = c(NA, "Performance", rep("Overall", 2), rep("Engine", 5), rep("Transmission", 3)),
+  options = lapply(seq(12), function(x) lst())
 )
+cinfo
+
+funky_heatmap(data, column_info = cinfo)
 ```
 
-## Funky heatmap
+We should probably also add a `name` column, to make the column labels more informative.
+```{r column-info-name}
+cinfo$name <- c("Model", "1/4 mile time", "Miles per gallon", "Weight", "Number of cylinders", "Carburetors", "Displacement", "Horsepower", "Engine type", "Rear axle ratio", "Transmission", "Forward gears")
+funky_heatmap(data, column_info = cinfo)
+```
 
-Generate funky heatmap
+This is better, we can at least read the column groups now. However, the column groups are not very clear: 
+we can add a `palette` column to the `column_info` dataframe to make the column groups more visually distinct.
 
-```{r make-plot}
-g <- funky_heatmap(
-  data = data,
-  column_info = column_info,
-  column_groups = column_groups,
-  row_info = row_info,
-  row_groups = row_groups,
-  palettes = palettes,
-  position_args = position_arguments(
-    expand_xmax = 4,
-    col_annot_offset = 4
-  ),
-  add_abc = FALSE
+## Adding palettes
+
+Just adding a `palette` column is not good enough: we need to specify a separate palette list as well.
+The easiest way to do this is by creating a named list of palettes, where the names correspond to the values 
+in the `palette` column of the `column_info` dataframe and use one of the predefined palettes. These are:
+
+for numerical data:
+- `Blues`
+- `Reds`
+- `Greens`
+- `YlOrBr`
+- `Greys`
+
+and for categorical data:
+- `Set1`
+- `Set2`
+- `Set3`
+- `Dark2`
+
+```{r column-info-palette}
+cinfo$palette <- c(NA, "perf_palette", rep("overall_palette", 2), rep("engine_palette", 5), rep("transmission_palette", 3))
+
+palettes <- list(perf_palette = "Blues", overall_palette = "Greens", engine_palette = "YlOrBr", transmission_palette = "Reds")
+
+funky_heatmap(data, column_info = cinfo, palettes = palettes)
+```
+
+## Adding column_groups
+
+That's already a lot more visually distinct! It would be nice if we could color the names of the column groups as well.
+We can do that by adding a `column_group` tibble or dataframe.
+It must have the following columns:
+- `Category (character)`: the name of the column group that will be displayd
+- `group (character)`: the group that the column group belongs to. This should correspond to the group label in the `column_info` dataframe
+- `palette (character)`: the palette to use for the column group. 
+
+```{r column-group-df}
+column_groups <- tibble(
+  Category = c("Performance", "Overall", "Engine", "Transmission"),
+  group = c("Performance", "Overall", "Engine", "Transmission"),
+  palette = c("perf_palette", "overall_palette", "engine_palette", "transmission_palette")
 )
+
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes)
 ```
 
-```{r include=FALSE}
-# set width and height for upcoming plot
-knitr::opts_chunk$set(fig.width = g$width, fig.height = g$height)
+## Specifying geoms
+It makes sense for some of the information to be presented in a different way.
+For instance, the number of cylinders and the number of carburetors are discrete values, so it would make sense to display them as 
+rectangles with a text overlay.
+
+```{r column-info-geom}
+cinfo$geom <- c("text", "bar", "bar", "bar", "rect", "rect", "funkyrect", "funkyrect", "circle", "funkyrect", "rect", "rect")
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes)
 ```
 
-```{r heatmap}
-g
+This looks nice, but we don't have the text overlay yet.
+```{r column-info-text}
+# column_info$options <- lapply(seq(12), function(x) lst())
+cinfo <- cinfo %>% 
+  add_row(id = "cyl", group = "Engine", name = "", geom = "text", options = lst(lst(overlay = TRUE)), palette = "black", .before = 6) %>%
+  add_row(id = "carb", group = "Engine", name = "", geom = "text", options = lst(lst(overlay = TRUE)), palette = "black", .before = 8) %>%
+  add_row(id = "am", group = "Transmission", name = "", geom = "text", options = lst(lst(overlay = TRUE)), palette = "black", .before = 14) %>%
+  add_row(id = "gear", group = "Transmission", name = "", geom = "text", options = lst(lst(overlay = TRUE)), palette = "black", .before = 17)
+
+cinfo
+
+palettes$black <- c(rep("black", 2))
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes)
 ```
 
-`funkyheatmap` automatically recommends a width and height for the generated plot.
-To save your plot, run:
+This is starting to look like a nice visualisation!
 
-``` r
-ggsave("path_to_plot.pdf", g, device = cairo_pdf, width = g$width, height = g$height)
+## Customising legends
+
+We can also customise the legends for the different columns.
+If we want multiple legends for a single palette, we just need to specify multiple entries in the `legends` list
+for that palette.
+
+```{r legends}
+palettes$funky_palette_grey <- RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev()
+
+legends <- list(
+    list(
+        palette = "perf_palette",
+        geom = "bar",
+        title = "1/4 mile time",
+        labels = c(paste0(min(data$qsec), "s"), rep("", 8), paste0(max(data$qsec), "s"))
+    ),
+    list(
+        palette = "overall_palette",
+        geom = "bar",
+        title = "Miles per gallon",
+        labels = c(paste0(min(data$mpg), "mpg"), rep("", 8), paste0(max(data$mpg), "mpg"))
+    ),
+    list(
+        palette = "overall_palette",
+        geom = "bar",
+        title = "Weight",
+        labels = c(paste0(min(data$wt), "lbs"), rep("", 8), paste0(max(data$wt), "lbs"))
+    ),
+    list(
+        palette = "funky_palette_grey",
+        geom = "funkyrect",
+        title = "Overall",
+        enabled = TRUE,
+        labels = c("0", "", "0.2", "", "0.4", "", "0.6", "", "0.8", "", "1")
+    )
+)
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes, legends = legends)
+```
+
+Now, we would like to disable the `engine_palette` and the `transmission_palette` legends, as they don't really add extra information anymore.
+We can do this with the `enabled` argument in `legends` list.
+
+```{r legends-disable}
+disabled_legends = list(
+    list(
+        palette = "engine_palette",
+        enabled = FALSE
+    ),
+    list(
+        palette = "transmission_palette",
+        enabled = FALSE
+    )
+)
+
+# append disabled_legends to legends
+legends <- c(legends, disabled_legends)
+
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes, legends = legends)
+```
+
+
+## Adding images
+
+The `transmission` and `engine type` columns are still not very informative: they basically just contain 0 or 1, with no information what this means.
+We can replace these values with images to make it more clear.
+If we want to replace their values with images, we need to specify the image locations.
+
+First we replace their values by the image names in the actual data.
+We will specify the directory and extension in the `column_info` dataframe.
+
+We also need to change the `geom` in `column_info` to `image` for the columns that should display images.
+
+```{r images}
+# change the am: if 0 go to "automatic", if 1 go to "manual"
+data[data$am == 0, "am"] <- "automatic"
+data[data$am == 1, "am"] <- "manual"
+
+# change the vs: if 0 go to "vengine", if 1 go to "straight"
+data[data$vs == 0, "vs"] <- "vengine"
+data[data$vs == 1, "vs"] <- "straight"
+
+cinfo$directory <- NA
+cinfo$extension <- NA
+
+# remove row 14
+cinfo <- cinfo[-14, ]
+
+cinfo[cinfo$id %in% c("vs", "am"), "directory"] <- "images"
+cinfo[cinfo$id %in% c("vs", "am"), "extension"] <- "png"
+cinfo[c(11, 13), "geom"] <- "image"
+
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes, legends = legends)
+```
+
+
+## Row grouping
+
+We can also group rows together. Let's say that in this case we especially want to highlight the Mercedes cars.
+For this, we need to rearrange the data so that the Mercedes cars are at the top of the dataframe.
+We can then add a `row_info` dataframe that specifies the grouping of the rows.
+
+```{r row-grouping}
+row_info <- data %>% transmute(id, group = ifelse(grepl("Merc", id), "Mercedes", "Other"))
+# sort Mercedes cars to the top of the data and the row_info dataframe
+data <- data[order(row_info$group), ]
+row_info <- row_info[order(row_info$group), ]
+
+row_groups <- tibble(level1 = c("Mercedes", "Other cars"), group = c("Mercedes", "Other"))
+
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes, legends = legends, row_info = row_info, row_groups = row_groups)
+```
+
+Now, we can perform some small tweaks with regard to spacing: e.g. the `Transmission` column group needs slightly more space.
+We can do this by specifying the `width` argument in the `options` list in the `column_info` dataframe.
+
+If there are still some small things you want to tweak, it is recommended to save this plot as an `.svg` file 
+and use a vector based graphics editor to make some final tweaks.
+
+```{r additions}
+# set options of performance column
+cinfo[[1, "options"]] <- list(list(width = 6))
+cinfo[[2, "options"]] <- list(list(width = 6))
+cinfo[[3, "options"]] <- list(list(width = 3))
+cinfo[[4, "options"]] <- list(list(width = 3))
+cinfo[[12, "options"]] <- list(list(width = 1.85))
+cinfo[[13, "options"]] <- list(list(width = 1.85))
+
+funky_heatmap(data, column_info = cinfo, column_groups = column_groups, palettes = palettes, legends = legends, row_info = row_info, row_groups = row_groups)
+
 ```
