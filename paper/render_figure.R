@@ -1,6 +1,7 @@
 library(funkyheatmap)
 library(tidyverse)
 library(Cairo)
+library(RColorBrewer)
 
 legends <- list(
   list(title = "Bar", palette = "qc", enabled = FALSE, geom = "bar"),
@@ -38,34 +39,113 @@ df <- tibble::tribble(
 )
 knitr::kable(df)
 
+# Load the data, add the `id` column and sort based on mpg
 data("mtcars")
-
 data <- mtcars %>%
   rownames_to_column("id") %>%
-  arrange(desc(mpg))
+  arrange(desc(mpg)) %>%
+  head(30)
+# sort the columns in logical groupings (see column_info group column)
+data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", "hp", "vs", "drat", "am", "gear")]
+
+# change data to use images
+# change the am: if 0 go to "automatic", if 1 go to "manual"
+data[data$am == 0, "am"] <- "automatic"
+data[data$am == 1, "am"] <- "manual"
+# change the vs: if 0 go to "vengine", if 1 go to "straight"
+data[data$vs == 0, "vs"] <- "vengine"
+data[data$vs == 1, "vs"] <- "straight"
 
 column_info <- tribble(
-  ~id,     ~group,         ~name,                      ~geom,        ~palette,   
-  "id",    "",             "",                         "text",       NA,         
-  "mpg",   "overall",      "Miles / gallon",           "bar",        "palette1",
-  "cyl",   "overall",      "Number of cylinders",      "bar",        "palette2",
-  "disp",  "group1",       "Displacement (cu.in.)",    "funkyrect",  "palette1", 
-  "hp",    "group1",       "Gross horsepower",         "funkyrect",  "palette1", 
-  "drat",  "group1",       "Rear axle ratio",          "funkyrect",  "palette1", 
-  "wt",    "group1",       "Weight (1000 lbs)",        "funkyrect",  "palette1", 
-  "qsec",  "group2",       "1/4 mile time",            "circle",     "palette2", 
-  "vs",    "group2",       "Engine",                   "circle",     "palette2", 
-  "am",    "group2",       "Transmission",             "circle",     "palette2", 
-  "gear",  "group2",       "# Forward gears",          "circle",     "palette2", 
-  "carb",  "group2",       "# Carburetors",            "circle",     "palette2",
+  ~id,     ~group,         ~name,                   ~geom,        ~palette,               ~options,
+  "id",    "",             "Model",                 "text",        NA,                    lst(),
+  "qsec",  "Performance",  "1/4 mile time",         "bar",        "perf_palette",         lst(),
+  "mpg",   "Overall",      "Number of cylinders",   "bar",        "overall_palette",      lst(),
+  "wt",    "Overall",      "Weight (1000 lbs)",     "bar",        "overall_palette",      lst(), 
+  "cyl",   "Engine",       "Number of cylinders",   "rect",       "engine_palette",       lst(),  
+  "cyl",   "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),
+  "carb",  "Engine",       "Carburetors",           "rect",       "engine_palette",       lst(),
+  "carb",  "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),    
+  "disp",  "Engine",       "Displacement",          "funkyrect",  "engine_palette",       lst(),
+  "hp",    "Engine",       "Horsepower",            "funkyrect",  "engine_palette",       lst(),
+  "vs",    "Engine",       "Engine type",           "image",      "engine_palette",       lst(directory = "vignettes/images", extension = "png"),
+  "drat",  "Transmission", "Rear axle ratio",       "funkyrect",  "transmission_palette", lst(),
+  "am",    "Transmission", "Transmission",          "image",      "transmission_palette", lst(directory = "vignettes/images", extension = "png"),
+  "gear",  "Transmission", "# Forward gears",       "rect",       "transmission_palette", lst(),
+  "gear",  "Transmission", "",                      "text",       "black",              lst(overlay = TRUE)  
 )
+
+column_groups <- tribble(
+  ~category,       ~group,          ~palette,
+  "Performance",   "Performance",   "perf_palette",
+  "Overall",       "Overall",       "overall_palette",
+  "Engine",        "Engine",        "engine_palette",
+  "Transmission",  "Transmission",  "transmission_palette"
+)
+
+palettes <- list(
+  perf_palette = "Blues",
+  overall_palette = "Greens",
+  engine_palette = "YlOrBr",
+  transmission_palette = "Reds",
+  black = c("black", "black"),
+  funky_palette_grey = RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev()
+)
+
+row_info <- data %>% transmute(id, group = ifelse(grepl("Merc", id), "Mercedes", "Other"))
+# sort Mercedes cars to the top of the data and the row_info dataframe
+data <- data[order(row_info$group), ]
+row_info <- row_info[order(row_info$group), ]
+
+row_groups <- tibble(level1 = c("Mercedes", "Other cars"), group = c("Mercedes", "Other"))
+
+legends <- list(
+    list(
+        palette = "perf_palette",
+        geom = "bar",
+        title = "1/4 mile time",
+        labels = c(paste0(min(data$qsec), "s"), rep("", 8), paste0(max(data$qsec), "s"))
+    ),
+    list(
+        palette = "overall_palette",
+        geom = "bar",
+        title = "Miles per gallon",
+        labels = c(paste0(min(data$mpg), "mpg"), rep("", 8), paste0(max(data$mpg), "mpg"))
+    ),
+    list(
+        palette = "overall_palette",
+        geom = "bar",
+        title = "Weight",
+        labels = c(paste0(min(data$wt), "lbs"), rep("", 8), paste0(max(data$wt), "lbs"))
+    ),
+    list(
+        palette = "funky_palette_grey",
+        geom = "funkyrect",
+        title = "Overall",
+        enabled = TRUE,
+        labels = c("0", "", "0.2", "", "0.4", "", "0.6", "", "0.8", "", "1")
+    ),
+    list(
+        palette = "engine_palette",
+        enabled = FALSE
+    ),
+    list(
+        palette = "transmission_palette",
+        enabled = FALSE
+    )
+)
+
 
 g2 <- funky_heatmap(
   data,
   column_info = column_info,
-  position_args = position_arguments(expand_xmax = 4)
+  column_groups = column_groups,
+  row_info = row_info,
+  row_groups = row_groups,
+  palettes = palettes,
+  legends = legends
 )
-
+print(getwd())
 Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 1.5, height = g2$height * 1.5)
 g2
 dev.off()
