@@ -57,37 +57,45 @@ data[data$am == 1, "am"] <- "manual"
 data[data$vs == 0, "vs"] <- "vengine"
 data[data$vs == 1, "vs"] <- "straight"
 
-column_info <- tibble(
-  id = colnames(data),
-  group = c("", "Performance", "Overall", "Overall", "Engine", "Engine", "Engine", 
-           "Engine", "Engine", "Engine", "Transmission", "Transmission", 
-           "Transmission"),
-  name = c("Model", "1/4 mile time", "Miles per gallon", "Weight (1000 lbs)", 
-           "Number of cylinders", "Carburetors", "Displacement", "Horsepower", 
-           "Engine type", "Rear axle ratio", "Transmission", "# Forward gears"),
-  geom = c("text", "bar", "bar", "bar", "rect", "rect", "funkyrect",
-           "funkyrect", "image", "funkyrect", "image", "rect", "text"),
-  palette = c()
+column_info_part1 <- tribble(
+  ~id,     ~group,         ~name,                   ~geom,
+  "id",    "",             "Model",                 "text",
+  "qsec",  "Performance",  "1/4 mile time",         "bar",
+  "mpg",   "Overall",      "Number of cylinders",   "bar",
+  "wt",    "Overall",      "Weight (1000 lbs)",     "bar", 
+  "cyl",   "Engine",       "Number of cylinders",   "rect",  
+  "cyl",   "Engine",       "",                      "text",
+  "carb",  "Engine",       "Carburetors",           "rect",
+  "carb",  "Engine",       "",                      "text",    
+  "disp",  "Engine",       "Displacement",          "funkyrect",
+  "hp",    "Engine",       "Horsepower",            "funkyrect",
+  "vs",    "Engine",       "Engine type",           "image",
+  "drat",  "Transmission", "Rear axle ratio",       "funkyrect",
+  "am",    "Transmission", "Transmission",          "image",
+  "gear",  "Transmission", "# Forward gears",       "rect",
+  "gear",  "Transmission", "",                      "text"
 )
 
-column_info <- tribble(
-  ~id,     ~group,         ~name,                   ~geom,        ~palette,               ~options,
-  "id",    "",             "Model",                 "text",        NA,                    lst(),
-  "qsec",  "Performance",  "1/4 mile time",         "bar",        "perf_palette",         lst(),
-  "mpg",   "Overall",      "Number of cylinders",   "bar",        "overall_palette",      lst(),
-  "wt",    "Overall",      "Weight (1000 lbs)",     "bar",        "overall_palette",      lst(), 
-  "cyl",   "Engine",       "Number of cylinders",   "rect",       "engine_palette",       lst(),  
-  "cyl",   "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),
-  "carb",  "Engine",       "Carburetors",           "rect",       "engine_palette",       lst(),
-  "carb",  "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),    
-  "disp",  "Engine",       "Displacement",          "funkyrect",  "engine_palette",       lst(),
-  "hp",    "Engine",       "Horsepower",            "funkyrect",  "engine_palette",       lst(),
-  "vs",    "Engine",       "Engine type",           "image",      "engine_palette",       lst(directory = "vignettes/images", extension = "png"),
-  "drat",  "Transmission", "Rear axle ratio",       "funkyrect",  "transmission_palette", lst(),
-  "am",    "Transmission", "Transmission",          "image",      "transmission_palette", lst(directory = "vignettes/images", extension = "png"),
-  "gear",  "Transmission", "# Forward gears",       "rect",       "transmission_palette", lst(),
-  "gear",  "Transmission", "",                      "text",       "black",              lst(overlay = TRUE)  
+column_info_part2 <- tribble(
+  ~palette,               ~options,
+  NA,                    lst(),
+  "perf_palette",         lst(),
+  "overall_palette",      lst(),
+  "overall_palette",      lst(), 
+  "engine_palette",       lst(),  
+  "black",              lst(overlay = TRUE),
+  "engine_palette",       lst(),
+  "black",              lst(overlay = TRUE),    
+  "engine_palette",       lst(),
+  "engine_palette",       lst(),
+  "engine_palette",       lst(directory = "vignettes/images", extension = "png"),
+  "transmission_palette", lst(),
+  "transmission_palette", lst(directory = "vignettes/images", extension = "png"),
+  "transmission_palette", lst(),
+  "black",              lst(overlay = TRUE)  
 )
+
+column_info <- bind_cols(column_info_part1, column_info_part2)
 
 column_groups <- tribble(
   ~category,       ~group,          ~palette,
