@@ -46,7 +46,8 @@ data <- mtcars %>%
   arrange(desc(mpg)) %>%
   head(30)
 # sort the columns in logical groupings (see column_info group column)
-data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", "hp", "vs", "drat", "am", "gear")]
+data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", 
+                 "hp", "vs", "drat", "am", "gear")]
 
 # change data to use images
 # change the am: if 0 go to "automatic", if 1 go to "manual"
@@ -55,6 +56,19 @@ data[data$am == 1, "am"] <- "manual"
 # change the vs: if 0 go to "vengine", if 1 go to "straight"
 data[data$vs == 0, "vs"] <- "vengine"
 data[data$vs == 1, "vs"] <- "straight"
+
+column_info <- tibble(
+  id = colnames(data),
+  group = c("", "Performance", "Overall", "Overall", "Engine", "Engine", "Engine", 
+           "Engine", "Engine", "Engine", "Transmission", "Transmission", 
+           "Transmission"),
+  name = c("Model", "1/4 mile time", "Miles per gallon", "Weight (1000 lbs)", 
+           "Number of cylinders", "Carburetors", "Displacement", "Horsepower", 
+           "Engine type", "Rear axle ratio", "Transmission", "# Forward gears"),
+  geom = c("text", "bar", "bar", "bar", "rect", "rect", "funkyrect",
+           "funkyrect", "image", "funkyrect", "image", "rect", "text"),
+  palette = c()
+)
 
 column_info <- tribble(
   ~id,     ~group,         ~name,                   ~geom,        ~palette,               ~options,
@@ -146,6 +160,10 @@ g2 <- funky_heatmap(
   legends = legends
 )
 print(getwd())
-Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 1.5, height = g2$height * 1.5)
+Cairo::CairoSVG("paper/figure2.svg", width = g2$width * 2, height = g2$height * 2)
+g2
+dev.off()
+
+Cairo::CairoPDF("paper/figure2.pdf", width = g2$width * 1.5, height = g2$height * 1.5)
 g2
 dev.off()

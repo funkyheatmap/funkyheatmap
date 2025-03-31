@@ -74,6 +74,7 @@ affiliations:
 
 engine: knitr
 bibliography: paper.bib
+code-block-font-size: \tiny
 ---
 
 *: Shared first authors, †: Shared last authors.
@@ -124,7 +125,7 @@ The table presents the suggested visualisation methods (geoms) based on the data
 In order to produce a `{funkyheatmap}` visualisation, you need to provide the data in the form of a dataframe, which also must contain a column named `id`.
 If you provide no other information, a basic visualisation will be provided, but customization is possible by provinding additional information, such as a `column_info` dataframe which details how the columns in the dataframe get translated into different geoms, or a `row_groups` dataframe which allows you to group rows in the visualisation.
 
-As an example, the following code produces \autoref{fig-mtcars}. An in-depth explanation of how we come to 
+As an example, the following code produces \autoref{fig-mtcars}. For an in-depth explanation of how we come to 
 all these data structures and tribbles, please refer to the vignette named `mtcars`.
 
 ```r
@@ -139,7 +140,9 @@ data <- mtcars %>%
   arrange(desc(mpg)) %>%
   head(30)
 # sort the columns in logical groupings (see column_info group column)
-data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", "hp", "vs", "drat", "am", "gear")]
+# sort the columns in logical groupings (see column_info group column)
+data <- data[, c("id", "qsec", "mpg", "wt", "cyl", "carb", "disp", 
+                 "hp", "vs", "drat", "am", "gear")]
 
 # change data to use images
 # change the am: if 0 go to "automatic", if 1 go to "manual"
@@ -149,24 +152,45 @@ data[data$am == 1, "am"] <- "manual"
 data[data$vs == 0, "vs"] <- "vengine"
 data[data$vs == 1, "vs"] <- "straight"
 
-column_info <- tribble(
-  ~id,     ~group,         ~name,                   ~geom,        ~palette,               ~options,
-  "id",    "",             "Model",                 "text",        NA,                    lst(),
-  "qsec",  "Performance",  "1/4 mile time",         "bar",        "perf_palette",         lst(),
-  "mpg",   "Overall",      "Number of cylinders",   "bar",        "overall_palette",      lst(),
-  "wt",    "Overall",      "Weight (1000 lbs)",     "bar",        "overall_palette",      lst(), 
-  "cyl",   "Engine",       "Number of cylinders",   "rect",       "engine_palette",       lst(),  
-  "cyl",   "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),
-  "carb",  "Engine",       "Carburetors",           "rect",       "engine_palette",       lst(),
-  "carb",  "Engine",       "",                      "text",       "black",              lst(overlay = TRUE),    
-  "disp",  "Engine",       "Displacement",          "funkyrect",  "engine_palette",       lst(),
-  "hp",    "Engine",       "Horsepower",            "funkyrect",  "engine_palette",       lst(),
-  "vs",    "Engine",       "Engine type",           "image",      "engine_palette",       lst(directory = "vignettes/images", extension = "png"),
-  "drat",  "Transmission", "Rear axle ratio",       "funkyrect",  "transmission_palette", lst(),
-  "am",    "Transmission", "Transmission",          "image",      "transmission_palette", lst(directory = "vignettes/images", extension = "png"),
-  "gear",  "Transmission", "# Forward gears",       "rect",       "transmission_palette", lst(),
-  "gear",  "Transmission", "",                      "text",       "black",              lst(overlay = TRUE)  
+column_info_part1 <- tribble(
+  ~id,     ~group,         ~name,                   ~geom,
+  "id",    "",             "Model",                 "text",
+  "qsec",  "Performance",  "1/4 mile time",         "bar",
+  "mpg",   "Overall",      "Number of cylinders",   "bar",
+  "wt",    "Overall",      "Weight (1000 lbs)",     "bar", 
+  "cyl",   "Engine",       "Number of cylinders",   "rect",  
+  "cyl",   "Engine",       "",                      "text",
+  "carb",  "Engine",       "Carburetors",           "rect",
+  "carb",  "Engine",       "",                      "text",    
+  "disp",  "Engine",       "Displacement",          "funkyrect",
+  "hp",    "Engine",       "Horsepower",            "funkyrect",
+  "vs",    "Engine",       "Engine type",           "image",
+  "drat",  "Transmission", "Rear axle ratio",       "funkyrect",
+  "am",    "Transmission", "Transmission",          "image",
+  "gear",  "Transmission", "# Forward gears",       "rect",
+  "gear",  "Transmission", "",                      "text"
 )
+
+column_info_part2 <- tribble(
+  ~palette,               ~options,
+  NA,                     lst(),
+  "perf_palette",         lst(),
+  "overall_palette",      lst(),
+  "overall_palette",      lst(),
+  "engine_palette",       lst(),
+  "black",                lst(overlay = TRUE),
+  "engine_palette",       lst(),
+  "black",                lst(overlay = TRUE),
+  "engine_palette",       lst(),
+  "engine_palette",       lst(),
+  "engine_palette",       lst(directory = "vignettes/images", extension = "png"),
+  "transmission_palette", lst(),
+  "transmission_palette", lst(directory = "vignettes/images", extension = "png"),
+  "transmission_palette", lst(),
+  "black",                lst(overlay = TRUE)
+)
+
+column_info <- bind_cols(column_info_part1, column_info_part2)
 
 column_groups <- tribble(
   ~category,       ~group,          ~palette,
@@ -185,12 +209,14 @@ palettes <- list(
   funky_palette_grey = RColorBrewer::brewer.pal(9, "Greys")[-1] %>% rev()
 )
 
-row_info <- data %>% transmute(id, group = ifelse(grepl("Merc", id), "Mercedes", "Other"))
+row_info <- data %>% 
+            transmute(id, group = ifelse(grepl("Merc", id), "Mercedes", "Other"))
 # sort Mercedes cars to the top of the data and the row_info dataframe
 data <- data[order(row_info$group), ]
 row_info <- row_info[order(row_info$group), ]
 
-row_groups <- tibble(level1 = c("Mercedes", "Other cars"), group = c("Mercedes", "Other"))
+row_groups <- tibble(level1 = c("Mercedes", "Other cars"), 
+                     group = c("Mercedes", "Other"))
 
 legends <- list(
     list(
@@ -240,7 +266,7 @@ funky_heatmap(
 
 ```
 
-![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.svg)
+![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.pdf){width="15cm"}
 
 # Conclusion
 `{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.
