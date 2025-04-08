@@ -140,4 +140,12 @@ Y.S. acknowledges support from the Flemish Government under the “Onderzoekspro
 A.C. and Y.S. are funded by an FWO TBM grant (Research Foundation – Flanders, T000119N), and Ghent University Special Research Fund (BOF18-GOA-024).
 W.S. was supported by a Marie Skłodowska-Curie fellowship (101028476).
 
+# Author Contribution
+R.C. and W.S. conceived the visualisation method and added the `dynbenchmark` example.
+R.C., W.S. and L.D. authored the R version of the package.
+L.D. and A.C. authored the Python version of the package.
+N.M. authored the Javascript version of the package.
+L.Z., M.I. and M.L. added the `scIB` example and made indirect code contributions by creating a derived version of the original scripts.
+Y.S. supervised the original `dynbenchmark` work and encouraged the creation of the software package.
+
 # References
