@@ -26,12 +26,13 @@ on_cran <- !identical(Sys.getenv("NOT_CRAN"), "true")
 if (on_cran) {
   knitr::opts_chunk$set(eval = FALSE)
   knitr::asis_output(paste0(
-    "**WARNING:** The outputs of this vignette are not rendered on CRAN due to package size limitations. ",
+    "<span style=\"color: red;\">**WARNING:** The outputs of this vignette are not rendered on CRAN due to package size limitations. ",
     "Please check the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) ",
-    "vignette in the package documentation."
+    "vignette in the package documentation. </span>"
   ))
 }
 ```
+
 
 ## Loading the data
 
