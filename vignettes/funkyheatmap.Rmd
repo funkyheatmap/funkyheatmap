@@ -24,7 +24,7 @@ the plot to show how you can customise it to your liking.
 on_cran <- !identical(Sys.getenv("NOT_CRAN"), "true")
 
 if (on_cran) {
-  knitr::asis_output("Note: The outputs of this vignette are not rendered on CRAN due to package size limitations. Please check the ['Getting started'](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) vignette in the package documentation.")
+  knitr::asis_output("Note: The outputs of this vignette are not rendered on CRAN due to package size limitations. Please check the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) vignette in the package documentation.")
 } else {
   knitr::opts_chunk$set(eval = FALSE)
 }
