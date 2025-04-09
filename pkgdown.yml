@@ -4,9 +4,9 @@ pkgdown_sha: ~
 articles:
   dynbenchmark: dynbenchmark.html
   executable: executable.html
-  mtcars: mtcars.html
+  funkyheatmap: funkyheatmap.html
   scIB: scIB.html
-last_built: 2025-04-08T14:00Z
+last_built: 2025-04-09T08:45Z
 urls:
   reference: https://funkyheatmap.github.io/funkyheatmap/reference
   article: https://funkyheatmap.github.io/funkyheatmap/articles
