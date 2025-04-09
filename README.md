@@ -84,9 +84,10 @@ funky_heatmap(
   on `funky_heatmap()` details the exact formats of each annotation
   object that you can pass to it.
 
-- Check out the vignette
-  [`vignette("mtcars", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/mtcars.html)
-  for more information on how to customize this visualisation.
+- Check out the [Getting
+  started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html)
+  article in the package documentation for more information on how to
+  customize this visualisation.
 
 - In
   [`vignette("dynbenchmark", "funkyheatmap")`](https://funkyheatmap.github.io/funkyheatmap/articles/dynbenchmark.html)
