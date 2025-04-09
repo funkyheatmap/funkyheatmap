@@ -1,7 +1,7 @@
 ---
-title: "Functionality walkthrough (using the mtcars dataset)"
+title: "Getting started with funkyheatmap"
 vignette: >
-  %\VignetteIndexEntry{Functionality walkthrough (using the mtcars dataset)}
+  %\VignetteIndexEntry{Getting started with funkyheatmap"}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -10,14 +10,27 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  dev = 'png',
-  fig.width=8, 
-  fig.height=11.5
+  dev = "png",
+  fig.width = 8,
+  fig.height = 11.5
 )
+
 ```
 
 We will use the mtcars dataset to showcase how you can use **{funkyheatmap}** to visualise a dataset. We will gradually add features to 
 the plot to show how you can customise it to your liking.
+
+```{r check_on_cran, include=FALSE}
+on_cran <- !identical(Sys.getenv("NOT_CRAN"), "true")
+
+if (on_cran) {
+  knitr::asis_output("Note: The outputs of this vignette are not rendered on CRAN due to package size limitations. Please check the ['Getting started'](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) vignette in the package documentation.")
+} else {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+```
+
+## Loading the data
 
 First, we load in the data. We move the rownames to a column named `id`, as that is required by **{funkyheatmap}** to display the names.
 Next, we sort the dataframe on the `mpg` column in descending order, and select the top 30 rows.
@@ -82,6 +95,7 @@ funky_heatmap(data, column_info = cinfo)
 ```
 
 We should probably also add a `name` column, to make the column labels more informative.
+
 ```{r column-info-name}
 cinfo$name <- c("Model", "1/4 mile time", "Miles per gallon", "Weight", "Number of cylinders", "Carburetors", "Displacement", "Horsepower", "Engine type", "Rear axle ratio", "Transmission", "Forward gears")
 funky_heatmap(data, column_info = cinfo)
