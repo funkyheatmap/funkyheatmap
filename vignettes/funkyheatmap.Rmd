@@ -20,13 +20,16 @@ knitr::opts_chunk$set(
 We will use the mtcars dataset to showcase how you can use **{funkyheatmap}** to visualise a dataset. We will gradually add features to 
 the plot to show how you can customise it to your liking.
 
-```{r check_on_cran, include=FALSE}
+```{r check_on_cran, message=FALSE, warning=FALSE, echo=FALSE}
 on_cran <- !identical(Sys.getenv("NOT_CRAN"), "true")
 
 if (on_cran) {
-  knitr::asis_output("Note: The outputs of this vignette are not rendered on CRAN due to package size limitations. Please check the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) vignette in the package documentation.")
-} else {
   knitr::opts_chunk$set(eval = FALSE)
+  knitr::asis_output(paste0(
+    "**WARNING:** The outputs of this vignette are not rendered on CRAN due to package size limitations. ",
+    "Please check the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) ",
+    "vignette in the package documentation."
+  ))
 }
 ```
 
