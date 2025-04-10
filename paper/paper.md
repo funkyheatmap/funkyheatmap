@@ -20,17 +20,17 @@ authors:
 - name: Nikolay S. Markov*
   orcid: 0000-0002-3659-4387
   email: nikolai.markov@icloud.com
-  affiliation: 6
+  affiliation: 4
 - name: Luke Zappia
   orcid: 0000-0001-7744-8565
-  affiliation: "3, 7, 9"
+  affiliation: "3, 5, 6"
 - name: Malte D. Luecken
   orcid: 0000-0001-7464-7921
-  affiliation: "7, 9"
+  affiliation: "5, 7"
 - name: Marta Interlandi
   orcid: 0000-0002-6863-2552
   email: marta.interlandi01@gmail.com
-  affiliation: 5
+  affiliation: 8
 - name: Yvan Saeys†
   orcid: 0000-0002-0415-1506
   email: yvan.saeys@ugent.be
@@ -38,7 +38,7 @@ authors:
 - name: Wouter Saelens†
   orcid: 0000-0002-7114-6248
   email: w.saelens@epfl.ch
-  affiliation: "4, 10"
+  affiliation: "9, 10"
 
 affiliations:
   - id: dambi
@@ -50,24 +50,24 @@ affiliations:
   - id: di
     index: 3
     name: Data Intuitive, Lebbeke, Belgium
-  - id: lmcb
-    index: 4
-    name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration, VIB Center for Inflammation Research, Ghent, Belgium
-  - id: imi
-    index: 5
-    name: Institute of Medical Informatics, University of Muenster, Muenster, Germany
   - id: nu
-    index: 6
+    index: 4
     name: Division of Pulmonary and Critical Care Medicine, Northwestern University, Chicago, USA
   - id: icb
-    index: 7
-    name: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany
+    index: 5
+    name: Institute of Computational Biology, Computational Health Center, Helmholtz Munich, Munich, Germany  
   - id: tum-ma
-    index: 8
+    index: 6
     name: Department of Mathematics, School of Computation, Information and Technology, Technical University of Munich, Munich, Germany
   - id: lhi
-    index: 9
+    index: 7
     name: Institute of Lung Health and Immunity (LHI), Helmholtz Munich, Comprehensive Pneumology Center (CPC-M), Germany; Member of the German Center for Lung Research (DZL)
+  - id: imi
+    index: 8
+    name: Institute of Medical Informatics, University of Muenster, Muenster, Germany
+  - id: lmcb
+    index: 9
+    name: Laboratory of Myeloid Cell Biology in tissue homeostasis and regeneration, VIB Center for Inflammation Research, Ghent, Belgium
   - id: dbmb
     index: 10
     name: Department of Biomedical Molecular Biology, Ghent University, Ghent, Belgium
