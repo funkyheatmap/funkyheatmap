@@ -83,21 +83,21 @@ code-block-font-size: \tiny
 
 The `{funkyheatmap}` package offers a flexible and user-friendly solution for visualising data frames containing a mixture of categorical, proportional, and text-based data. It simplifies the creation of informative and visually appealing heatmaps while providing extensive customization options to tailor the output. This tool is especially valuable in research settings for summarising and communicating complex results, such as those encountered in benchmarking studies.
 
-The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap), [PyPI](https://pypi.org/project/funkyheatmappy) and [npm](https://www.npmjs.com/package/funkyheatmapjs). For a showcase of examples and an overview of the different implementations, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
+The package is available on [CRAN](https://cran.r-project.org/package=funkyheatmap), [PyPI](https://pypi.org/project/funkyheatmappy), and [npm](https://www.npmjs.com/package/funkyheatmapjs). For a showcase of examples and an overview of the different implementations, visit the project website [funkyheatmap.github.io](https://funkyheatmap.github.io).
 
 # Statement of need
 Data visualisation is fundamental to exploratory data analysis and communicating findings. 
 Table-creating packages, such as gt [@gt], allow the user to create beautiful hierarchical tables, but these packages are limited to showing textual data.
-Heatmap-creating packages such as pheatmap [@pheatmap], superheat [@superheat] and ComplexHeatmap [@complexheatmap1; @complexheatmap2] require the central visualisation to remain a traditional heatmap and allow additional annotations to the side of this heatmap. Incorporating multiple datatypes is possible, but far from seamless.
-While more powerful tools like ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007] and D3.js [@d3datadriven_bostock2011] exist, they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
+Heatmap-creating packages such as pheatmap [@pheatmap], superheat [@superheat], and ComplexHeatmap [@complexheatmap1; @complexheatmap2] require the central visualisation to remain a traditional heatmap and allow additional annotations on the sides of this heatmap. Incorporating multiple data types is possible, but far from seamless.
+While more powerful tools exist, e.g., ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007], or D3.js [@d3datadriven_bostock2011], they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
 
 `{funkyheatmap}` addresses this challenge by:
 
-* **Seamless Handling of Mixed Data**: Automates the selection of appropriate visualisations (rectangles, bars, pie charts, text) based on data types. and allows easy mixing of datatypes in the same visualisation.
+* **Seamless Handling of Mixed Data**: Automates the selection of appropriate visualisations (rectangles, bars, pie charts, text) based on data type and allows inclusion of various data types in the same visualisation.
 * **Customization**: Provides granular control over colours, groupings, geometries, and annotations for tailored results.
 * **Accessibility**: Offers a simplified interface for basic use and detailed documentation for advanced customization.
 
-`{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023], but its applications extend to diverse fields where visualisation of mixed data types is needed.
+`{funkyheatmap}` has proven its utility in benchmarking studies within single-cell omics [@comparisonsinglecell_saelens2019; @benchmarkingatlaslevel_luecken2020; @benchmarkingintegrationmethods_yan2022; @spotlessreproduciblepipeline_sangaram2023; @definingbenchmarkingopen_luecken2023; @comprehensivebenchmarkingpractical_li2023] and its applications extend to diverse fields where visualisation of mixed data types is needed.
 
 # Functionality
 \autoref{fig-dynbenchmark-1} showcases the functionality of `{funkyheatmap}`, namely:
@@ -122,10 +122,10 @@ See the following \autoref{tbl-geoms} for more information regarding the recomme
 The table presents the suggested visualisation methods (geoms) based on the data type of the columns. These recommendations provide a starting point for users to select the most appropriate visual representation for their specific data. \label{tbl-geoms}
 
 ## Example usage
-In order to produce a `{funkyheatmap}` visualisation, you need to provide the data in the form of a dataframe, which also must contain a column named `id`.
+In order to produce a `{funkyheatmap}` visualisation, you need to provide the data in the form of a dataframe, which must contain a column named `id`.
 If you provide no other information, a basic visualisation will be provided, but customization is possible by provinding additional information, such as a `column_info` dataframe which details how the columns in the dataframe get translated into different geoms, or a `row_groups` dataframe which allows you to group rows in the visualisation.
 
-As an example, \autoref{fig-mtcars} shows a visualisation of the mtcars dataset. For an in-depth explanation on how to fine-tune this figure and the different data structures involved, please see the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) article in the package documentation.
+As an example, \autoref{fig-mtcars} shows a visualisation of the `mtcars` dataset. For an in-depth explanation on how to fine-tune this figure and the different data structures involved, please see the [Getting started](https://funkyheatmap.github.io/funkyheatmap/articles/funkyheatmap.html) article in the package documentation.
 
 ![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.pdf){width="15cm"}
 
