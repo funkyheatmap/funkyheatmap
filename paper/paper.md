@@ -145,6 +145,7 @@ R.C. and W.S. conceived the visualisation method and added the `dynbenchmark` ex
 R.C., W.S. and L.D. authored the R version of the package.
 L.D. and A.C. authored the Python version of the package.
 N.M. authored the Javascript version of the package.
+R.C., L.D., L.Z., A.C. and N.M. participated in design meetings and discussions that shaped the software design and functionality of all packages.
 L.Z., M.I. and M.L. added the `scIB` example and made indirect code contributions by creating a derived version of the original scripts.
 Y.S. supervised the original `dynbenchmark` work and encouraged the creation of the software package.
 
