@@ -130,7 +130,8 @@ As an example, \autoref{fig-mtcars} shows a visualisation of the mtcars dataset.
 ![An example of a `{funkyheatmap}` visualisation using the mtcars dataset.\label{fig-mtcars}](figure2.pdf){width="15cm"}
 
 # Conclusion
-`{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. The development of `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript) will further expand the accessibility and functionality of this visualisation solution.
+`{funkyheatmap}` streamlines the creation of publication-quality visualisation for mixed data types, empowering researchers and data scientists to communicate their results effectively. 
+The package has been ported to other programming languages, as `funkyheatmappy` (Python) and `funkyheatmapjs` (JavaScript). This expands the accessibility of this type of visualisation to non-R users. The JavaScript port incorporates interactive elements, expanding on the visualization's functionality.
 
 # Acknowledgements
 <!-- Acknowledgement of any financial support. -->
