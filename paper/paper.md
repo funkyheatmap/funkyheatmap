@@ -89,7 +89,7 @@ The package is available on [CRAN](https://cran.r-project.org/package=funkyheatm
 Data visualisation is fundamental to exploratory data analysis and communicating findings. 
 Table-creating packages, such as gt [@gt], allow the user to create beautiful hierarchical tables, but these packages are limited to showing textual data.
 Heatmap-creating packages such as pheatmap [@pheatmap], superheat [@superheat], and ComplexHeatmap [@complexheatmap1; @complexheatmap2] require the central visualisation to remain a traditional heatmap and allow additional annotations on the sides of this heatmap. Incorporating multiple data types is possible, but far from seamless.
-While more powerful tools exist, e.g., ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007], or D3.js [@d3datadriven_bostock2011], they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
+While more powerful tools exist, e.g., ggplot2 [@ggplot2_wickham2009], Matplotlib [@matplotlib2dgraphics_hunter2007], and D3.js [@d3datadriven_bostock2011], they often require complex scripting to generate comprehensive visualisations for data frames containing a mix of data types.
 
 `{funkyheatmap}` addresses this challenge by:
 
@@ -141,7 +141,7 @@ Y.S. acknowledges support from the Flemish Government under the “Onderzoekspro
 A.C. and Y.S. are funded by an FWO TBM grant (Research Foundation – Flanders, T000119N), and Ghent University Special Research Fund (BOF18-GOA-024).
 W.S. was supported by a Marie Skłodowska-Curie fellowship (101028476).
 
-# Author Contribution
+# Author Contributions
 R.C. and W.S. conceived the visualisation method and added the `dynbenchmark` example.
 R.C., W.S. and L.D. authored the R version of the package.
 L.D. and A.C. authored the Python version of the package.
