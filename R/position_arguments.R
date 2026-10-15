@@ -16,6 +16,8 @@
 #' @param expand_xmax The maximum expansion of the plot in the x direction.
 #' @param expand_ymin The minimum expansion of the plot in the y direction.
 #' @param expand_ymax The maximum expansion of the plot in the y direction.
+#' @param col_annot_vjust Vertical justification of the column annotation labels:
+#'   0 (default) aligns the bottom, 0.5 the middle, and 1 the top.
 #'
 #' @return A list of plot positioning parameters.
 #' @export
@@ -33,7 +35,8 @@ position_arguments <- function(
     expand_xmin = 0,
     expand_xmax = 2,
     expand_ymin = 0,
-    expand_ymax = 0) {
+    expand_ymax = 0,
+    col_annot_vjust = 0) {
   list(
     row_height = row_height,
     row_space = row_space,
@@ -43,6 +46,7 @@ position_arguments <- function(
     col_bigspace = col_bigspace,
     col_annot_offset = col_annot_offset,
     col_annot_angle = col_annot_angle,
+    col_annot_vjust = col_annot_vjust,
     expand_xmin = expand_xmin,
     expand_xmax = expand_xmax,
     expand_ymin = expand_ymin,

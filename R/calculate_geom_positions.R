@@ -17,6 +17,7 @@ calculate_geom_positions <- function(
   col_bigspace <- position_args[["col_bigspace"]]
   col_annot_offset <- position_args[["col_annot_offset"]]
   col_annot_angle <- position_args[["col_annot_angle"]]
+  col_annot_vjust <- position_args[["col_annot_vjust"]] %||% 0
 
   # DETERMINE ROW POSITIONS
   if (!"group" %in% colnames(row_info) || all(is.na(row_info$group))) {
@@ -326,7 +327,7 @@ calculate_geom_positions <- function(
           ymin = 0,
           ymax = col_annot_offset,
           angle = col_annot_angle,
-          vjust = 0,
+          vjust = col_annot_vjust,
           hjust = 0,
           label_value = .data$name
         )
