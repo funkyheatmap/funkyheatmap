@@ -16,7 +16,8 @@ position_arguments(
   expand_xmin = 0,
   expand_xmax = 2,
   expand_ymin = 0,
-  expand_ymax = 0
+  expand_ymax = 0,
+  col_annot_vjust = 0
 )
 }
 \arguments{
@@ -43,6 +44,9 @@ position_arguments(
 \item{expand_ymin}{The minimum expansion of the plot in the y direction.}
 
 \item{expand_ymax}{The maximum expansion of the plot in the y direction.}
+
+\item{col_annot_vjust}{Vertical justification of the column annotation labels:
+0 (default) aligns the bottom, 0.5 the middle, and 1 the top.}
 }
 \value{
 A list of plot positioning parameters.

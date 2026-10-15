@@ -2,6 +2,8 @@
 
 ## MINOR CHANGES
 
+* Allow setting column annotation vertical justification with e.g. `position_arguments(col_annot_vjust = 0.5)`.
+
 * Changed vignette `mtcars` to gradually explain a variety of functionality to customize plots.
 
 # funkyheatmap 0.5.1
